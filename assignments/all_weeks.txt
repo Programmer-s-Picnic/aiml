@@ -1,0 +1,6 @@
+
+Week1: Python tasks
+Week2: Data tasks
+Week3: Regression tasks
+Week4: Classification tasks
+Week5: NLP tasks

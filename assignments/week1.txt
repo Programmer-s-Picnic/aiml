@@ -1,0 +1,11 @@
+Assignment Day 1:
+Take user input and print a summary.
+
+Assignment Day 2:
+Build a marks calculator.
+
+Assignment Day 3:
+Use lists and loops.
+
+Assignment Day 4:
+Create a grading function.
