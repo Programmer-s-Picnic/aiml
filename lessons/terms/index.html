@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI-ML Terminology from Ground Level | Programmer's Picnic</title>
+  <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+  <meta name="description" content="A comprehensive beginner-friendly HTML lesson explaining AI and Machine Learning terminology from the ground level." />
+  <meta name="theme-color" content="#f59e0b" />
+  <style>
+    :root{
+      --bg:#fffaf0;
+      --bg2:#fff4d6;
+      --card:#ffffff;
+      --text:#2b2112;
+      --muted:#6b5a3d;
+      --line:#efdfb2;
+      --brand:#d97706;
+      --brand2:#f59e0b;
+      --brand3:#fbbf24;
+      --shadow:0 14px 40px rgba(128,81,0,.12);
+      --radius:24px;
+      --max:1100px;
+      --ok:#166534;
+      --soft:#fff7e6;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font:17px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(251,191,36,.20), transparent 32%),
+        radial-gradient(circle at top right, rgba(245,158,11,.18), transparent 28%),
+        linear-gradient(180deg,#fff9ef 0%,#fffdf8 100%);
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max);margin:auto;padding:0 18px}
+    .topbar{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter:blur(12px);
+      background:rgba(255,250,240,.88);
+      border-bottom:1px solid rgba(239,223,178,.8);
+    }
+    .nav{
+      min-height:74px;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+    }
+    .brand{display:flex;align-items:center;gap:14px;font-weight:800}
+    .logo{
+      width:48px;height:48px;border-radius:18px;
+      display:grid;place-items:center;color:#fff;
+      background:linear-gradient(135deg,var(--brand),var(--brand3));
+      box-shadow:var(--shadow);
+      font-weight:900;
+    }
+    .navlinks{display:flex;gap:10px;flex-wrap:wrap}
+    .navlinks a{
+      text-decoration:none;
+      padding:10px 14px;border-radius:999px;color:var(--muted);
+    }
+    .navlinks a:hover{background:#fff;border:1px solid var(--line);color:var(--text)}
+    .hero{padding:34px 0 20px}
+    .hero-card,.card{
+      background:var(--card);
+      border:1px solid rgba(239,223,178,.85);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .hero-card{padding:30px}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      border:1px solid #f3ddb1;background:#fffaf0;color:#8a5f09;
+      font-size:13px;font-weight:700;
+    }
+    h1,h2,h3{line-height:1.15;margin:0 0 14px}
+    h1{font-size:clamp(2rem,4vw,3.7rem);letter-spacing:-.03em}
+    h2{font-size:clamp(1.35rem,2vw,2rem);margin-bottom:12px}
+    h3{font-size:1.08rem;margin-bottom:10px}
+    p{margin:0 0 14px}
+    .muted{color:var(--muted)}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-height:46px;padding:0 16px;border-radius:14px;font-weight:800;
+      text-decoration:none;border:1px solid transparent;
+    }
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 12px 24px rgba(217,119,6,.24)}
+    .btn-secondary{background:#fff;border-color:var(--line);color:var(--text)}
+    .section{padding:18px 0}
+    .card{padding:22px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .toc a{
+      display:block;text-decoration:none;
+      padding:8px 10px;border-radius:10px;color:var(--text);
+    }
+    .toc a:hover{background:var(--soft)}
+    .term{
+      padding:18px;border-radius:20px;border:1px solid var(--line);
+      background:#fffdf9;margin-bottom:14px;
+    }
+    .term .mini{
+      display:inline-block;padding:6px 10px;border-radius:999px;
+      background:#fff4d9;border:1px solid #f3ddb1;color:#7c5712;
+      font-size:12px;font-weight:800;margin-bottom:10px;
+    }
+    .example{
+      background:var(--soft);border:1px solid var(--line);
+      border-radius:16px;padding:14px;margin-top:12px;
+    }
+    .analogy{
+      background:#f8fff7;border:1px solid #cfe8d4;color:#1f5130;
+      border-radius:16px;padding:14px;margin-top:12px;
+    }
+    .code{
+      background:#2b2112;color:#fff7e6;border-radius:16px;padding:14px;
+      overflow:auto;font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      margin-top:12px;
+      white-space:pre-wrap;
+    }
+    ul{margin:0;padding-left:20px}
+    li{margin:8px 0}
+    .footer{padding:28px 0 54px;color:var(--muted)}
+    .badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .badge{
+      display:inline-flex;align-items:center;padding:7px 11px;border-radius:999px;
+      background:#fff4d9;border:1px solid #f3ddb1;color:#7c5712;
+      font-size:13px;font-weight:700;
+    }
+    .quote{
+      border-left:4px solid var(--brand);
+      padding:10px 14px;background:#fff8ea;border-radius:0 12px 12px 0;
+      margin:12px 0;
+    }
+    @media (max-width:900px){
+      .grid-2,.grid-3{grid-template-columns:1fr}
+    }
+    @media (max-width:760px){
+      .navlinks{display:none}
+      .hero-card,.card{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo">PP</div>
+        <div>
+          Programmer's Picnic
+          <div class="muted" style="font-size:13px;font-weight:700">AI-ML Terminology Lesson</div>
+        </div>
+      </div>
+      <div class="navlinks">
+        <a href="#start">Start</a>
+        <a href="#core">Core Terms</a>
+        <a href="#ml">ML Terms</a>
+        <a href="#deep">Deep Learning</a>
+        <a href="#quick">Quick Revision</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="hero" id="start">
+      <div class="hero-card">
+        <div class="pill">📘 Ground-level lesson</div>
+        <h1>AI-ML Terminology from Ground Level</h1>
+        <p class="muted">
+          This page explains the words you keep hearing in AI and Machine Learning, starting from absolute beginner level.
+          The goal is not just to define terms, but to make them easy to understand and remember.
+        </p>
+        <div class="badge-row">
+          <span class="badge">Beginner-friendly</span>
+          <span class="badge">Comprehensive</span>
+          <span class="badge">Examples included</span>
+          <span class="badge">Plain English</span>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="#toc">Jump to Topics</a>
+          <a class="btn btn-secondary" href="#quick">Revision Sheet</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="toc">
+      <div class="grid-2">
+        <div class="card">
+          <h2>How to read this lesson</h2>
+          <p class="muted">
+            Read the early sections carefully. Later terms become much easier once you clearly understand
+            words like data, model, training, feature, label, and prediction.
+          </p>
+          <div class="quote">
+            In AI-ML, many difficult-looking words are just simple ideas with technical names.
+          </div>
+          <ul>
+            <li>First understand the basic idea.</li>
+            <li>Then read the example.</li>
+            <li>Then read the analogy.</li>
+            <li>Then move to the next term.</li>
+          </ul>
+        </div>
+        <div class="card toc">
+          <h2>Table of contents</h2>
+          <a href="#what-ai">1. What is AI?</a>
+          <a href="#what-ml">2. What is Machine Learning?</a>
+          <a href="#data">3. Data</a>
+          <a href="#dataset">4. Dataset</a>
+          <a href="#feature">5. Feature</a>
+          <a href="#label">6. Label / Target</a>
+          <a href="#model">7. Model</a>
+          <a href="#train">8. Training</a>
+          <a href="#testing">9. Testing</a>
+          <a href="#prediction">10. Prediction</a>
+          <a href="#regression">11. Regression</a>
+          <a href="#classification">12. Classification</a>
+          <a href="#supervised">13. Supervised Learning</a>
+          <a href="#unsupervised">14. Unsupervised Learning</a>
+          <a href="#overfitting">15. Overfitting</a>
+          <a href="#underfitting">16. Underfitting</a>
+          <a href="#accuracy">17. Accuracy</a>
+          <a href="#loss">18. Loss</a>
+          <a href="#deep-learning">19. Deep Learning</a>
+          <a href="#neural-network">20. Neural Network</a>
+          <a href="#quick">21. Quick Revision</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="core">
+      <div class="card">
+        <h2>Part 1: Ground-level ideas</h2>
+        <p class="muted">These are the most important starting words.</p>
+
+        <div class="term" id="what-ai">
+          <div class="mini">FOUNDATION</div>
+          <h3>1. Artificial Intelligence (AI)</h3>
+          <p>
+            Artificial Intelligence means making a computer system perform tasks that usually need human intelligence.
+            These tasks may include understanding language, recognizing images, making decisions, solving problems, or learning from experience.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> A chatbot answering questions, a phone unlocking by face, or a map suggesting the best route.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> AI is like a broad umbrella. Many smaller topics come under it, and Machine Learning is one of them.
+          </div>
+        </div>
+
+        <div class="term" id="what-ml">
+          <div class="mini">FOUNDATION</div>
+          <h3>2. Machine Learning (ML)</h3>
+          <p>
+            Machine Learning is a part of AI where a computer learns patterns from data instead of being told every rule manually.
+          </p>
+          <p>
+            In old-style programming, we write rules directly. In Machine Learning, we give examples, and the system learns the rule by itself.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> Instead of writing hundreds of spam rules by hand, you show many spam and non-spam messages to the model and let it learn the difference.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> It is like teaching a child with examples instead of writing a giant rulebook.
+          </div>
+        </div>
+
+        <div class="term" id="data">
+          <div class="mini">VERY IMPORTANT</div>
+          <h3>3. Data</h3>
+          <p>
+            Data is the raw information used by the system. It can be numbers, text, images, sound, clicks, marks, prices, or anything that can be stored and processed.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> Student marks, attendance, house prices, product reviews, and email messages are all data.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> If AI is a car, data is the fuel.
+          </div>
+        </div>
+
+        <div class="term" id="dataset">
+          <div class="mini">VERY IMPORTANT</div>
+          <h3>4. Dataset</h3>
+          <p>
+            A dataset is a collection of related data, usually arranged in a table or structured format.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> A file containing columns like Name, Study Hours, Attendance, and Marks is a dataset.
+          </div>
+          <div class="code">Name      Hours   Attendance   Marks
+Aman      2       80           45
+Riya      5       90           70
+Karan     6       95           82</div>
+        </div>
+
+        <div class="term" id="feature">
+          <div class="mini">CORE TERM</div>
+          <h3>5. Feature</h3>
+          <p>
+            A feature is an input piece of information used by the model to make a decision or prediction.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> In a marks predictor, study hours and attendance can be features.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> Features are clues given to the model.
+          </div>
+        </div>
+
+        <div class="term" id="label">
+          <div class="mini">CORE TERM</div>
+          <h3>6. Label / Target</h3>
+          <p>
+            A label, also called target, is the correct answer the model is trying to learn.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> If the input is study hours and attendance, then the output marks may be the label.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> The label is the answer at the back of the book.
+          </div>
+        </div>
+
+        <div class="term" id="model">
+          <div class="mini">CORE TERM</div>
+          <h3>7. Model</h3>
+          <p>
+            A model is the learned system that takes inputs and gives outputs. It is the thing that has learned from data.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> After training on many examples of study hours and marks, the model can guess marks for a new student.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> The model is like the trained brain of the system.
+          </div>
+        </div>
+
+        <div class="term" id="train">
+          <div class="mini">CORE TERM</div>
+          <h3>8. Training</h3>
+          <p>
+            Training is the process of showing data to the model so it can learn patterns.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> You give the model many examples of hours studied and actual marks, and it learns the relationship.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> Training is like practice before an exam.
+          </div>
+        </div>
+
+        <div class="term" id="testing">
+          <div class="mini">CORE TERM</div>
+          <h3>9. Testing</h3>
+          <p>
+            Testing means checking whether the trained model works well on new data it did not see during training.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> You hide some records from the model, then later use those hidden records to check performance.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> Training is practice; testing is the real exam.
+          </div>
+        </div>
+
+        <div class="term" id="prediction">
+          <div class="mini">CORE TERM</div>
+          <h3>10. Prediction</h3>
+          <p>
+            Prediction is the output the model gives for new input data.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> “Predicted marks = 78” or “Predicted class = spam”.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ml">
+      <div class="card">
+        <h2>Part 2: Core Machine Learning terminology</h2>
+
+        <div class="term" id="regression">
+          <div class="mini">ML TASK</div>
+          <h3>11. Regression</h3>
+          <p>
+            Regression is used when the output is a number.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> Predicting marks, price, temperature, salary, or sales.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> Regression answers “how much?”
+          </div>
+        </div>
+
+        <div class="term" id="classification">
+          <div class="mini">ML TASK</div>
+          <h3>12. Classification</h3>
+          <p>
+            Classification is used when the output is a category or class.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> Spam / not spam, pass / fail, cat / dog, positive / negative.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> Classification answers “which group?”
+          </div>
+        </div>
+
+        <div class="term" id="supervised">
+          <div class="mini">LEARNING TYPE</div>
+          <h3>13. Supervised Learning</h3>
+          <p>
+            Supervised learning means training with inputs and correct outputs together.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> A table with study hours as input and marks as correct output.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> A teacher is supervising because the correct answers are known.
+          </div>
+        </div>
+
+        <div class="term" id="unsupervised">
+          <div class="mini">LEARNING TYPE</div>
+          <h3>14. Unsupervised Learning</h3>
+          <p>
+            Unsupervised learning means the system only gets data, not correct answers, and it tries to discover structure or patterns by itself.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> Grouping customers by similar buying patterns.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> It is like sorting similar objects without being told the category names.
+          </div>
+        </div>
+
+        <div class="term" id="algorithm">
+          <div class="mini">METHOD</div>
+          <h3>15. Algorithm</h3>
+          <p>
+            An algorithm is the method or technique used to train the model.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> Linear Regression, Decision Tree, KNN, Naive Bayes.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> The algorithm is the recipe. The model is the final dish prepared using that recipe.
+          </div>
+        </div>
+
+        <div class="term" id="overfitting">
+          <div class="mini">COMMON PROBLEM</div>
+          <h3>16. Overfitting</h3>
+          <p>
+            Overfitting happens when the model memorizes training data too much and fails on new data.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> The model gets almost every training example right but performs poorly on testing data.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> A student memorized solved questions only, but cannot handle a fresh question in the exam.
+          </div>
+        </div>
+
+        <div class="term" id="underfitting">
+          <div class="mini">COMMON PROBLEM</div>
+          <h3>17. Underfitting</h3>
+          <p>
+            Underfitting happens when the model is too weak to learn the pattern properly.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> It performs badly on both training data and testing data.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> A student did not study enough even for practice questions.
+          </div>
+        </div>
+
+        <div class="term" id="accuracy">
+          <div class="mini">EVALUATION</div>
+          <h3>18. Accuracy</h3>
+          <p>
+            Accuracy tells us how many predictions were correct out of the total.
+          </p>
+          <div class="code">Accuracy = Correct Predictions / Total Predictions</div>
+          <div class="example">
+            <strong>Example:</strong> If 90 out of 100 predictions are correct, the accuracy is 90%.
+          </div>
+        </div>
+
+        <div class="term" id="loss">
+          <div class="mini">EVALUATION</div>
+          <h3>19. Loss</h3>
+          <p>
+            Loss measures how wrong the model’s predictions are. Smaller loss is better.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> If the actual marks are 80 but the model predicts 20, the loss is high.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> Loss is like error pain. The training process tries to reduce that pain.
+          </div>
+        </div>
+
+        <div class="term" id="epoch">
+          <div class="mini">TRAINING TERM</div>
+          <h3>20. Epoch</h3>
+          <p>
+            An epoch means one full pass through the training data during learning.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> If your dataset has 100 rows and the model reads all 100 once, that is one epoch.
+          </div>
+        </div>
+
+        <div class="term" id="bias-variance">
+          <div class="mini">ADVANCED IDEA</div>
+          <h3>21. Bias and Variance</h3>
+          <p>
+            Bias is error from being too simple. Variance is error from being too sensitive to the training data.
+          </p>
+          <div class="example">
+            <strong>Simple summary:</strong> High bias often causes underfitting. High variance often causes overfitting.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="deep">
+      <div class="card">
+        <h2>Part 3: Deep Learning terminology</h2>
+
+        <div class="term" id="deep-learning">
+          <div class="mini">DEEP LEARNING</div>
+          <h3>22. Deep Learning</h3>
+          <p>
+            Deep Learning is a part of Machine Learning that uses layered neural networks to learn complex patterns.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> Image recognition, speech recognition, advanced language models.
+          </div>
+          <div class="analogy">
+            <strong>Analogy:</strong> If basic ML is like solving with a few simple steps, deep learning is like solving through many layers of thinking.
+          </div>
+        </div>
+
+        <div class="term" id="neural-network">
+          <div class="mini">DEEP LEARNING</div>
+          <h3>23. Neural Network</h3>
+          <p>
+            A neural network is a model made of connected layers that transform input step by step into output.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> It can take pixel values from an image and finally predict “cat”.
+          </div>
+        </div>
+
+        <div class="term" id="input-layer">
+          <div class="mini">NETWORK PART</div>
+          <h3>24. Input Layer</h3>
+          <p>
+            The input layer is where the model receives data.
+          </p>
+        </div>
+
+        <div class="term" id="hidden-layer">
+          <div class="mini">NETWORK PART</div>
+          <h3>25. Hidden Layer</h3>
+          <p>
+            Hidden layers are the internal processing layers where the network learns patterns.
+          </p>
+        </div>
+
+        <div class="term" id="output-layer">
+          <div class="mini">NETWORK PART</div>
+          <h3>26. Output Layer</h3>
+          <p>
+            The output layer gives the final prediction.
+          </p>
+        </div>
+
+        <div class="term" id="weights">
+          <div class="mini">NETWORK TERM</div>
+          <h3>27. Weights</h3>
+          <p>
+            Weights are numbers inside the model that tell it how important different inputs are.
+          </p>
+        </div>
+
+        <div class="term" id="activation">
+          <div class="mini">NETWORK TERM</div>
+          <h3>28. Activation Function</h3>
+          <p>
+            An activation function helps the neural network decide how strongly a neuron should respond.
+          </p>
+          <div class="example">
+            <strong>Common names:</strong> ReLU, Sigmoid, Tanh.
+          </div>
+        </div>
+
+        <div class="term" id="backprop">
+          <div class="mini">TRAINING TERM</div>
+          <h3>29. Backpropagation</h3>
+          <p>
+            Backpropagation is the method used to send the error backward through the network and adjust weights.
+          </p>
+        </div>
+
+        <div class="term" id="optimizer">
+          <div class="mini">TRAINING TERM</div>
+          <h3>30. Optimizer</h3>
+          <p>
+            An optimizer is the method used to update the model so that loss becomes smaller.
+          </p>
+          <div class="example">
+            <strong>Example:</strong> Gradient Descent, Adam.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid-3">
+        <div class="card">
+          <h2>Important distinction</h2>
+          <ul>
+            <li>AI is the broad field.</li>
+            <li>ML is one part of AI.</li>
+            <li>Deep Learning is one part of ML.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Three questions to ask</h2>
+          <ul>
+            <li>What is the input?</li>
+            <li>What is the output?</li>
+            <li>What pattern must the model learn?</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>How terms connect</h2>
+          <ul>
+            <li>Dataset contains data.</li>
+            <li>Features are inputs.</li>
+            <li>Labels are answers.</li>
+            <li>Training builds the model.</li>
+            <li>Testing checks the model.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="quick">
+      <div class="card">
+        <h2>Quick Revision Sheet</h2>
+        <div class="grid-2">
+          <div>
+            <div class="term">
+              <h3>Fast definitions</h3>
+              <ul>
+                <li><strong>AI:</strong> making computers do intelligent tasks</li>
+                <li><strong>ML:</strong> learning patterns from data</li>
+                <li><strong>Data:</strong> raw information</li>
+                <li><strong>Dataset:</strong> collection of data</li>
+                <li><strong>Feature:</strong> input clue</li>
+                <li><strong>Label:</strong> correct answer</li>
+                <li><strong>Model:</strong> learned system</li>
+                <li><strong>Training:</strong> learning from examples</li>
+                <li><strong>Testing:</strong> checking on new examples</li>
+                <li><strong>Prediction:</strong> model output</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div class="term">
+              <h3>Fast task types</h3>
+              <ul>
+                <li><strong>Regression:</strong> predict a number</li>
+                <li><strong>Classification:</strong> predict a category</li>
+                <li><strong>Supervised:</strong> train with answers</li>
+                <li><strong>Unsupervised:</strong> find patterns without answers</li>
+                <li><strong>Overfitting:</strong> memorized too much</li>
+                <li><strong>Underfitting:</strong> learned too little</li>
+                <li><strong>Accuracy:</strong> how many were correct</li>
+                <li><strong>Loss:</strong> how wrong the model is</li>
+                <li><strong>Deep Learning:</strong> ML with layered neural networks</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="quote">
+          Best learning rule: whenever you hear a new term, ask, “Is this an input, an output, a method, a model, a problem, or a result?”
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h2>Final message</h2>
+        <p>
+          AI-ML terminology looks heavy only at the beginning. Once you connect each word to a simple idea,
+          the subject becomes much easier. Learn the words slowly, connect them to examples, and use them while building small projects.
+        </p>
+        <p class="muted">
+          Real understanding grows when you read the term, see it in code, and use it in a project.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    <div class="card">
+      <h3>Programmer's Picnic</h3>
+      <p class="muted">AI-ML terminology lesson designed for absolute beginners.</p>
+    </div>
+  </footer>
+   <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+</body>
+</html>
