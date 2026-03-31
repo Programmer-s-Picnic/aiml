@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Linear Regression from First Principles, Correlation, and Prediction in Classification | Programmer's Picnic</title>
+  <meta name="description" content="A complete lesson on implementing linear regression from first principles, coefficient of correlation, understanding prediction, and the use of prediction in classification." />
+  <meta name="theme-color" content="#f59e0b" />
+  <style>
+    :root{--card:#ffffff;--text:#2b2112;--muted:#6b5a3d;--line:#efdfb2;--brand:#d97706;--brand2:#f59e0b;--brand3:#fbbf24;--shadow:0 14px 40px rgba(128,81,0,.12);--radius:24px;--max:1180px}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font:16px/1.75 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;color:var(--text);background:radial-gradient(circle at top left, rgba(251,191,36,.22), transparent 34%),radial-gradient(circle at top right, rgba(245,158,11,.18), transparent 28%),linear-gradient(180deg, #fff9ef 0%, #fffdf7 100%)}
+    a{color:inherit;text-decoration:none} code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .wrap{max-width:var(--max);margin:auto;padding:0 18px}.hero,.section,.footer{padding:24px 0}
+    .card{background:var(--card);border:1px solid rgba(239,223,178,.85);border-radius:var(--radius);box-shadow:var(--shadow)} .pad{padding:24px}
+    h1,h2,h3{line-height:1.15;margin:0 0 14px} h1{font-size:clamp(2.1rem,4vw,3.8rem);letter-spacing:-.03em} h2{font-size:clamp(1.35rem,2.2vw,2.1rem)} h3{font-size:1.08rem} p{margin:0 0 14px}
+    .muted{color:var(--muted)} .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #f3ddb1;background:#fffaf0;color:#8a5f09;font-size:13px;font-weight:700}
+    .chip{display:inline-flex;align-items:center;padding:7px 11px;border-radius:999px;background:#fff4d9;border:1px solid #f3ddb1;color:#7c5712;font-size:13px;font-weight:700;margin:6px 6px 0 0}
+    .grid-2,.grid-3{display:grid;gap:18px}.grid-2{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(3,1fr)} .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+    .code{background:#2b2112;color:#fff7e6;border-radius:18px;padding:16px;overflow:auto;font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap}
+    .box,.summary{border:1px solid var(--line);background:#fffdf8;border-radius:18px;padding:16px}.summary{border-style:dashed;background:#fffaf0}
+    ul,ol{margin:0;padding-left:20px} li{margin:6px 0}
+    table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden} th,td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top} th{background:#fff7e6}
+    .editor-shell{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#fff}
+    .editor-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);background:#fffaf0;flex-wrap:wrap}
+    iframe{width:100%;height:78vh;border:0;display:block;background:#fff}
+    .speak-bank{display:none}
+    @media (max-width:960px){.hero-grid,.grid-3,.grid-2{grid-template-columns:1fr} iframe{height:68vh}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="card pad">
+          <div class="pill">📈 Linear Regression Deep Dive</div>
+          <h1>Linear Regression from First Principles</h1>
+          <p class="muted">This lesson explains how linear regression works without hiding the core logic inside a library. It also explains what prediction means, how prediction is used in regression, how coefficient of correlation connects to linear relationships, and how the same idea appears in classification.</p>
+          <div><span class="chip">First principles</span><span class="chip">Slope</span><span class="chip">Intercept</span><span class="chip">Prediction</span><span class="chip">Correlation</span><span class="chip">Classification</span><span class="chip">Python editor</span></div>
+        </div>
+        <div class="card pad">
+          <h2>Lesson Roadmap</h2>
+          <ol>
+            <li>Prediction in machine learning</li>
+            <li>Linear regression from first principles</li>
+            <li>Error and loss</li>
+            <li>Closed-form slope and intercept</li>
+            <li>Coefficient of correlation</li>
+            <li>Manual Python implementation</li>
+            <li>Prediction in classification</li>
+            <li>How classification uses prediction differently</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section"><div class="card pad"><h2>1. What is Prediction?</h2><p>In machine learning, prediction means using a learned pattern to estimate an output for a new input.</p><p>Example: if a model has learned the relationship between study hours and marks, then for a new student who studies 6 hours, it can predict the marks that student may score.</p><div class="summary"><strong>Simple idea:</strong><p>A prediction is the model's best guess based on the pattern it learned from past data.</p></div></div></section>
+
+    <section class="section"><div class="grid-3">
+      <div class="box"><h3>Regression prediction</h3><p>The output is a number. Example: marks, price, temperature, salary.</p></div>
+      <div class="box"><h3>Classification prediction</h3><p>The output is a category or class. Example: spam or not spam, pass or fail.</p></div>
+      <div class="box"><h3>Common idea</h3><p>Both use input data and learned patterns. The difference is the type of output.</p></div>
+    </div></section>
+
+    <section class="section"><div class="card pad"><h2>2. Linear Regression from First Principles</h2><p>Linear regression assumes that the relationship between input and output can be represented by a straight line.</p><div class="code">y = mx + c</div><p>Here, x is the input, y is the predicted output, m is the slope, and c is the intercept.</p><p>The central question is: how do we find the best values of m and c from data?</p></div></section>
+
+    <section class="section"><div class="grid-2">
+      <div class="card pad"><h2>3. Meaning of Slope</h2><p>The slope tells us how much the output changes when the input increases by 1 unit.</p><p>If slope is positive, the output increases as input increases. If slope is negative, the output decreases as input increases.</p></div>
+      <div class="card pad"><h2>4. Meaning of Intercept</h2><p>The intercept tells us the predicted output when the input is 0.</p><p>It is the point where the line cuts the vertical axis.</p></div>
+    </div></section>
+
+    <section class="section"><div class="card pad">
+      <h2>5. Training Data Example</h2>
+      <table><thead><tr><th>Study Hours (x)</th><th>Marks (y)</th></tr></thead><tbody><tr><td>1</td><td>20</td></tr><tr><td>2</td><td>30</td></tr><tr><td>3</td><td>40</td></tr><tr><td>4</td><td>50</td></tr><tr><td>5</td><td>60</td></tr></tbody></table>
+      <p>The goal is to find a line that comes as close as possible to all these points.</p>
+    </div></section>
+
+    <section class="section"><div class="card pad"><h2>6. What Does Best Line Mean?</h2><p>The best line is the line whose predictions are closest to the actual values.</p><p>For each point, the model predicts a value. The difference between actual and predicted values is called the error.</p><div class="code">error = actual - predicted</div><p>We want these errors to be as small as possible for all training points.</p></div></section>
+
+    <section class="section"><div class="grid-2">
+      <div class="card pad"><h2>7. Why Square the Error?</h2><p>Positive and negative errors can cancel each other. Squaring avoids that.</p><p>Squaring also gives more penalty to large mistakes.</p><div class="code">squared error = (actual - predicted) ** 2</div></div>
+      <div class="card pad"><h2>8. Loss Function</h2><p>In linear regression, we often minimize the sum of squared errors or the mean squared error.</p><div class="code">MSE = average of (actual - predicted)^2</div><p>The lower the loss, the better the line fits the data.</p></div>
+    </div></section>
+
+    <section class="section"><div class="card pad"><h2>9. First-Principles Formula for Slope and Intercept</h2><p>For simple linear regression with one input variable, the slope and intercept can be calculated directly.</p><div class="code">m = Σ((x - mean_x)(y - mean_y)) / Σ((x - mean_x)^2)
+
+c = mean_y - m * mean_x</div><p>These formulas give the best-fit line for one-variable linear regression.</p></div></section>
+
+    <section class="section"><div class="card pad"><h2>10. Coefficient of Correlation</h2><p>The coefficient of correlation measures the strength and direction of the linear relationship between two variables.</p><div class="code">r = Σ((x - mean_x)(y - mean_y)) / √(Σ((x - mean_x)^2) × Σ((y - mean_y)^2))</div><p>The value of r lies between minus 1 and plus 1.</p><ul><li><strong>r = 1</strong> means perfect positive linear relationship</li><li><strong>r = -1</strong> means perfect negative linear relationship</li><li><strong>r = 0</strong> means no linear relationship</li></ul><div class="summary"><strong>Important idea:</strong><p>Correlation does not directly give the prediction line, but it tells us how strongly the variables are linearly related.</p></div></div></section>
+
+    <section class="section"><div class="grid-2">
+      <div class="card pad"><h2>11. Interpreting Correlation</h2><table><thead><tr><th>Value of r</th><th>Interpretation</th></tr></thead><tbody><tr><td>Near +1</td><td>Strong positive relationship</td></tr><tr><td>Near -1</td><td>Strong negative relationship</td></tr><tr><td>Near 0</td><td>Weak or no linear relationship</td></tr></tbody></table></div>
+      <div class="card pad"><h2>12. Correlation and Regression</h2><p>Regression gives us a line for prediction.</p><p>Correlation tells us how strong the linear relationship is.</p><p>If correlation is strong and positive, the regression line often has a positive slope. If correlation is strong and negative, the regression line often has a negative slope.</p></div>
+    </div></section>
+
+    <section class="section"><div class="card pad"><h2>13. Manual Correlation Calculation in Python</h2><div class="code">x = [1, 2, 3, 4, 5]
+y = [20, 30, 40, 50, 60]
+
+mean_x = sum(x) / len(x)
+mean_y = sum(y) / len(y)
+
+num = 0
+den_x = 0
+den_y = 0
+
+for i in range(len(x)):
+    num += (x[i] - mean_x) * (y[i] - mean_y)
+    den_x += (x[i] - mean_x) ** 2
+    den_y += (y[i] - mean_y) ** 2
+
+r = num / ((den_x * den_y) ** 0.5)
+
+print("Coefficient of correlation:", r)</div><p>This computes correlation directly from first principles.</p></div></section>
+
+    <section class="section"><div class="card pad"><h2>14. Manual Python Implementation from First Principles</h2><div class="code">x = [1, 2, 3, 4, 5]
+y = [20, 30, 40, 50, 60]
+
+mean_x = sum(x) / len(x)
+mean_y = sum(y) / len(y)
+
+numerator = 0
+denominator = 0
+
+for i in range(len(x)):
+    numerator += (x[i] - mean_x) * (y[i] - mean_y)
+    denominator += (x[i] - mean_x) ** 2
+
+m = numerator / denominator
+c = mean_y - m * mean_x
+
+print("Slope:", m)
+print("Intercept:", c)</div><p>This code calculates the line without using scikit-learn.</p></div></section>
+
+    <section class="section"><div class="card pad"><h2>15. Manual Prediction Using the Learned Line</h2><div class="code">new_x = 6
+predicted_y = m * new_x + c
+
+print("Prediction for x = 6:", predicted_y)</div><p>Once we know the slope and intercept, prediction is easy. We simply put the new input value into the line equation.</p></div></section>
+
+    <section class="section"><div class="grid-2">
+      <div class="card pad"><h2>16. Complete First-Principles Program</h2><div class="code">x = [1, 2, 3, 4, 5]
+y = [20, 30, 40, 50, 60]
+
+mean_x = sum(x) / len(x)
+mean_y = sum(y) / len(y)
+
+numerator = 0
+denominator = 0
+
+for i in range(len(x)):
+    numerator += (x[i] - mean_x) * (y[i] - mean_y)
+    denominator += (x[i] - mean_x) ** 2
+
+m = numerator / denominator
+c = mean_y - m * mean_x
+
+num = 0
+den_x = 0
+den_y = 0
+for i in range(len(x)):
+    num += (x[i] - mean_x) * (y[i] - mean_y)
+    den_x += (x[i] - mean_x) ** 2
+    den_y += (y[i] - mean_y) ** 2
+
+r = num / ((den_x * den_y) ** 0.5)
+
+print("Slope:", m)
+print("Intercept:", c)
+print("Correlation:", r)
+
+for value in x:
+    prediction = m * value + c
+    print("x =", value, "prediction =", prediction)
+
+new_x = 6
+print("Prediction for x = 6:", m * new_x + c)</div></div>
+      <div class="card pad"><h2>17. What This Program Teaches</h2><ul><li>How averages are used</li><li>How slope is computed from data</li><li>How intercept is calculated</li><li>How prediction is produced</li><li>How coefficient of correlation is computed</li><li>How a line summarizes the trend in the dataset</li></ul></div>
+    </div></section>
+
+    <section class="section"><div class="card pad"><h2>18. Same Idea with NumPy</h2><div class="code">import numpy as np
+
+x = np.array([1, 2, 3, 4, 5], dtype=float)
+y = np.array([20, 30, 40, 50, 60], dtype=float)
+
+mean_x = np.mean(x)
+mean_y = np.mean(y)
+
+m = np.sum((x - mean_x) * (y - mean_y)) / np.sum((x - mean_x) ** 2)
+c = mean_y - m * mean_x
+
+r = np.sum((x - mean_x) * (y - mean_y)) / np.sqrt(np.sum((x - mean_x) ** 2) * np.sum((y - mean_y) ** 2))
+
+print("Slope:", m)
+print("Intercept:", c)
+print("Correlation:", r)
+
+new_x = 6
+print("Prediction:", m * new_x + c)</div><p>NumPy makes the implementation shorter and cleaner.</p></div></section>
+
+    <section class="section"><div class="card pad"><h2>19. Comparison with scikit-learn</h2><div class="code">import numpy as np
+from sklearn.linear_model import LinearRegression
+
+x = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
+y = np.array([20, 30, 40, 50, 60])
+
+model = LinearRegression()
+model.fit(x, y)
+
+print("Slope:", model.coef_[0])
+print("Intercept:", model.intercept_)
+print("Prediction for 6:", model.predict([[6]])[0])</div><p>The first-principles version teaches the logic. The scikit-learn version is practical for real projects.</p></div></section>
+
+    <section class="section"><div class="card pad"><h2>20. What Prediction Means in Classification</h2><p>In classification, prediction still means the model gives an output for a new input, but the output is not usually a continuous number like marks or price.</p><p>Instead, the output is a class, category, or label such as:</p><ul><li>Spam or not spam</li><li>Pass or fail</li><li>Cat or dog</li><li>Positive or negative review</li></ul></div></section>
+
+    <section class="section"><div class="grid-2">
+      <div class="card pad"><h2>21. Prediction in Regression</h2><p>Regression predicts a real number.</p><div class="code">Predicted marks = 68.5</div></div>
+      <div class="card pad"><h2>22. Prediction in Classification</h2><p>Classification predicts a label or class.</p><div class="code">Predicted class = "Pass"</div></div>
+    </div></section>
+
+    <section class="section"><div class="card pad"><h2>23. How Classification Uses Prediction</h2><p>Classification models often first produce a score or probability and then convert it into a class label.</p><p>Example:</p><div class="code">Probability of spam = 0.92
+
+Final class = Spam</div><p>So classification also uses prediction, but the predicted quantity is often interpreted differently.</p></div></section>
+
+    <section class="section"><div class="grid-3">
+      <div class="box"><h3>Regression</h3><p>Predicts a continuous value like 72.3 or 145000.</p></div>
+      <div class="box"><h3>Classification</h3><p>Predicts a class label like pass, fail, spam, or not spam.</p></div>
+      <div class="box"><h3>Shared idea</h3><p>Both take input features and generate a prediction from learned patterns.</p></div>
+    </div></section>
+
+    <section class="section"><div class="card pad"><h2>24. Simple Classification Example</h2><p>Suppose we want to classify whether a student will pass or fail based on study hours.</p><table><thead><tr><th>Study Hours</th><th>Class</th></tr></thead><tbody><tr><td>1</td><td>Fail</td></tr><tr><td>2</td><td>Fail</td></tr><tr><td>4</td><td>Pass</td></tr><tr><td>5</td><td>Pass</td></tr></tbody></table><p>A classification model would learn from this data and then predict a class for a new student.</p></div></section>
+
+    <section class="section"><div class="card pad"><h2>25. Important Difference</h2><div class="summary"><strong>Regression asks:</strong><p>What number should I predict?</p><strong>Classification asks:</strong><p>Which category should I assign?</p></div></div></section>
+
+    <section class="section"><div class="card pad"><h2>26. Using Our Python Editor</h2><p>Use the embedded Programmer’s Picnic Python editor below to run the first-principles regression code, modify datasets, and experiment with predictions.</p><div class="editor-shell"><div class="editor-toolbar"><div><span class="chip">Embedded Python Editor</span><span class="chip">Programmer's Picnic</span></div><a class="chip" href="https://editor.learnwithchampak.live/python-starter/editor/super/" target="_blank" rel="noopener">Open in New Tab</a></div><iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/" title="Programmer's Picnic Python Editor" loading="lazy" allow="clipboard-read; clipboard-write; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div></section>
+
+    <section class="section"><div class="grid-3">
+      <div class="box"><h3>Practice Task 1</h3><p>Change the dataset and compute slope and intercept manually.</p></div>
+      <div class="box"><h3>Practice Task 2</h3><p>Calculate coefficient of correlation manually and explain the result.</p></div>
+      <div class="box"><h3>Practice Task 3</h3><p>Write a paragraph explaining the difference between regression prediction and classification prediction.</p></div>
+    </div></section>
+
+    <section class="section"><div class="card pad"><h2>27. Practice Questions</h2><ol><li>What does a linear regression model try to learn?</li><li>What is the meaning of slope?</li><li>What is the meaning of intercept?</li><li>Why do we square errors?</li><li>How do we calculate prediction after learning slope and intercept?</li><li>What is the coefficient of correlation?</li><li>What does a correlation near plus one mean?</li><li>What is the difference between regression prediction and classification prediction?</li><li>Why is first-principles implementation useful for learning?</li></ol></div></section>
+
+    <section class="section"><div class="card pad"><h2>28. Speak Paragraphs</h2><p class="muted">Hidden narration paragraphs with IDs are included below for speech and guided reading systems.</p><div class="speak-bank" aria-hidden="true">
+      <p id="speak0">Welcome to this lesson on linear regression from first principles.</p>
+      <p id="speak1">In machine learning, prediction means using a learned pattern to estimate an output for a new input.</p>
+      <p id="speak2">Regression prediction produces a numeric value, while classification prediction produces a category or class label.</p>
+      <p id="speak3">Linear regression assumes that the relationship between input and output can be represented by a straight line.</p>
+      <p id="speak4">The line equation is y equals m x plus c.</p>
+      <p id="speak5">The slope tells us how much the output changes when the input changes by one unit.</p>
+      <p id="speak6">The intercept tells us the predicted output when the input is zero.</p>
+      <p id="speak7">The best line is the line whose predictions are closest to the actual values.</p>
+      <p id="speak8">The difference between actual and predicted values is called the error.</p>
+      <p id="speak9">We square errors so that positive and negative errors do not cancel out and large mistakes get more penalty.</p>
+      <p id="speak10">A common loss function in linear regression is mean squared error.</p>
+      <p id="speak11">For simple linear regression, the slope can be calculated directly from the data using the closed form formula.</p>
+      <p id="speak12">The intercept can then be calculated from the mean of y minus slope times the mean of x.</p>
+      <p id="speak13">Once slope and intercept are known, prediction is made by putting a new x value into the line equation.</p>
+      <p id="speak14">The coefficient of correlation measures the strength and direction of the linear relationship between two variables.</p>
+      <p id="speak15">The value of the coefficient of correlation always lies between minus one and plus one.</p>
+      <p id="speak16">A correlation of plus one means a perfect positive linear relationship.</p>
+      <p id="speak17">A correlation of minus one means a perfect negative linear relationship.</p>
+      <p id="speak18">A correlation near zero means weak or no linear relationship.</p>
+      <p id="speak19">Correlation tells us how strong the linear relationship is, while regression gives us a line for prediction.</p>
+      <p id="speak20">NumPy can be used to calculate slope, intercept, prediction, and correlation more cleanly.</p>
+      <p id="speak21">Scikit-learn is practical for real projects, but first principles help us understand the core logic.</p>
+      <p id="speak22">In classification, prediction often starts as a score or probability and then becomes a class label.</p>
+      <p id="speak23">Regression asks what number should I predict, while classification asks which category should I assign.</p>
+      <p id="speak24">This lesson showed how to calculate linear regression and coefficient of correlation from first principles.</p>
+      <p id="speak25">This also explained how prediction works in both regression and classification.</p>
+    </div></div></section>
+
+    <section class="section"><div class="card pad"><h2>29. Conclusion</h2><p>Linear regression from first principles teaches the heart of machine learning: learn a pattern from data, measure error, and use the learned pattern to make predictions.</p><p>Coefficient of correlation helps us understand how strongly two variables are linearly related.</p><p>Classification also uses prediction, but instead of returning a continuous number, it returns a class or label, often after computing a score or probability.</p></div></section>
+  </main>
+
+  <footer class="wrap footer"><div class="card pad"><strong>Programmer's Picnic</strong><p class="muted">Lesson page on linear regression from first principles, coefficient of correlation, prediction, and the use of prediction in classification.</p></div></footer>
+    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+
+</body>
+</html>
