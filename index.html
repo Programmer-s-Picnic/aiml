@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI Builder Program V2 | Programmer’s Picnic</title>
+  <title>AI Builder Program V3 Premium | Programmer’s Picnic</title>
 
   <script
     async
@@ -13,29 +13,33 @@
 
   <meta
     name="description"
-    content="Student and teacher portals for the AI Builder Program V2."
+    content="AI Builder Program V3 Premium with student and teacher portals, progress tracking, assignments, class links, premium modules preview, testimonials, and WhatsApp support."
   />
   <meta name="theme-color" content="#f59e0b" />
 
   <style>
     :root{
       --bg1:#fff9ef;
-      --bg2:#fffdf7;
-      --card:#ffffff;
-      --card-soft:#fffdf7;
+      --bg2:#fffdf8;
+      --panel:#ffffff;
+      --panel-soft:#fffaf0;
+      --panel-soft-2:#fff6e0;
       --text:#2b2112;
       --muted:#6b5a3d;
       --line:#efdfb2;
       --brand:#d97706;
       --brand2:#f59e0b;
       --brand3:#fbbf24;
-      --brand4:#fff3cd;
-      --success:#166534;
+      --brand4:#fde68a;
+      --ok:#166534;
+      --info:#92400e;
       --shadow:0 14px 40px rgba(128,81,0,.12);
-      --shadow-strong:0 16px 32px rgba(217,119,6,.22);
-      --radius-xl:28px;
-      --radius-lg:22px;
-      --radius-md:16px;
+      --shadow-strong:0 18px 40px rgba(217,119,6,.22);
+      --radius-xl:30px;
+      --radius-lg:24px;
+      --radius-md:18px;
+      --radius-sm:14px;
+      --maxw:1180px;
     }
 
     *{box-sizing:border-box}
@@ -47,185 +51,174 @@
     body{
       margin:0;
       min-height:100vh;
-      padding:24px;
-      display:grid;
-      place-items:center;
       font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top left, rgba(251,191,36,.22), transparent 34%),
+        radial-gradient(circle at top left, rgba(251,191,36,.22), transparent 32%),
         radial-gradient(circle at top right, rgba(245,158,11,.18), transparent 28%),
         linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
     }
 
     a{
       color:inherit;
+      text-decoration:none;
     }
 
-    .card{
-      width:min(1040px,100%);
-      background:var(--card);
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    .container{
+      width:min(var(--maxw), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .site-shell{
+      padding:24px 0 40px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:18px;
+      padding:12px 14px;
+      border:1px solid rgba(239,223,178,.9);
+      border-radius:999px;
+      background:rgba(255,255,255,.75);
+      backdrop-filter:blur(10px);
+      box-shadow:0 8px 24px rgba(128,81,0,.06);
+      position:sticky;
+      top:10px;
+      z-index:10;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-weight:900;
+      background:linear-gradient(135deg,var(--brand),var(--brand3));
+      box-shadow:0 12px 24px rgba(217,119,6,.22);
+      flex:0 0 auto;
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-text strong{
+      display:block;
+      line-height:1.1;
+      font-size:1rem;
+    }
+
+    .brand-text span{
+      display:block;
+      color:var(--muted);
+      font-size:.9rem;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .top-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:flex-end;
+    }
+
+    .chip-link{
+      min-height:40px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff9ef;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      transition:.2s ease;
+    }
+
+    .chip-link:hover{
+      transform:translateY(-1px);
+      background:#fff3da;
+    }
+
+    .hero-card{
       border:1px solid rgba(239,223,178,.85);
       border-radius:var(--radius-xl);
+      background:linear-gradient(180deg, #ffffff 0%, #fffdf8 100%);
       box-shadow:var(--shadow);
-      padding:30px;
-      position:relative;
       overflow:hidden;
+      position:relative;
     }
 
-    .card::before{
+    .hero-card::before{
       content:"";
       position:absolute;
-      inset:auto -60px -60px auto;
-      width:220px;
-      height:220px;
-      background:radial-gradient(circle, rgba(251,191,36,.14), transparent 70%);
+      right:-80px;
+      top:-80px;
+      width:260px;
+      height:260px;
+      background:radial-gradient(circle, rgba(251,191,36,.18), transparent 70%);
       pointer-events:none;
     }
 
     .hero{
       display:grid;
       grid-template-columns:1.2fr .8fr;
-      gap:20px;
-      align-items:start;
-      margin-bottom:22px;
+      gap:24px;
+      padding:30px;
+      align-items:center;
     }
 
-    .hero-copy{
-      min-width:0;
-    }
-
-    .hero-side{
-      display:grid;
-      gap:14px;
-    }
-
-    .badge{
+    .eyebrow{
       display:inline-flex;
       align-items:center;
       gap:10px;
       padding:8px 14px;
       border-radius:999px;
       border:1px solid var(--line);
-      background:linear-gradient(180deg,#fff8e8,#fff3cd);
+      background:linear-gradient(180deg,#fff8e8,#fff2ca);
       color:#8a5704;
       font-weight:800;
-      font-size:.92rem;
-      margin-bottom:14px;
-    }
-
-    .logo{
-      width:64px;
-      height:64px;
-      border-radius:20px;
-      display:grid;
-      place-items:center;
-      color:#fff;
-      font-weight:900;
-      font-size:1.1rem;
-      background:linear-gradient(135deg,var(--brand),var(--brand3));
-      box-shadow:0 12px 24px rgba(217,119,6,.24);
       margin-bottom:16px;
+      box-shadow:0 8px 18px rgba(217,119,6,.08);
     }
 
     h1{
-      margin:0 0 12px;
-      line-height:1.08;
-      font-size:clamp(2rem,4vw,3.25rem);
-      letter-spacing:-0.02em;
+      margin:0 0 14px;
+      line-height:1.05;
+      letter-spacing:-.02em;
+      font-size:clamp(2.2rem,5vw,4rem);
     }
 
-    h2{
-      margin:0 0 12px;
-      line-height:1.2;
-      font-size:1.45rem;
-    }
-
-    h3{
-      margin:0 0 8px;
-      font-size:1rem;
-    }
-
-    p{
+    .hero p{
       margin:0 0 18px;
       color:var(--muted);
+      max-width:68ch;
     }
 
-    .intro{
-      font-size:1.04rem;
-      max-width:70ch;
-    }
-
-    .summary{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-    }
-
-    .summary-card{
-      padding:14px 16px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg,#fffdf9,#fff8ee);
-      border-radius:18px;
-    }
-
-    .summary-card strong{
-      display:block;
-      margin-bottom:4px;
-      font-size:1rem;
-    }
-
-    .summary-card span{
-      color:var(--muted);
-      font-size:.94rem;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-      margin-top:10px;
-    }
-
-    .pane{
-      padding:22px;
-      border:1px solid var(--line);
-      border-radius:var(--radius-lg);
-      background:var(--card-soft);
-      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-      position:relative;
-    }
-
-    .pane:hover{
-      transform:translateY(-4px);
-      box-shadow:0 18px 30px rgba(128,81,0,.08);
-      border-color:#e7c873;
-    }
-
-    .pane-head{
+    .hero-actions{
       display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:10px;
-    }
-
-    .tag{
-      flex:0 0 auto;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:.8rem;
-      font-weight:800;
-      border:1px solid var(--line);
-      background:#fff7e8;
-      color:#8a5704;
-    }
-
-    .actions{
-      display:flex;
-      gap:12px;
       flex-wrap:wrap;
-      margin-top:16px;
+      gap:12px;
+      margin:20px 0 18px;
     }
 
     .btn{
@@ -236,9 +229,7 @@
       align-items:center;
       justify-content:center;
       font-weight:800;
-      text-decoration:none;
       transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-      outline:none;
     }
 
     .btn:hover{
@@ -246,13 +237,14 @@
     }
 
     .btn:focus-visible{
-      box-shadow:0 0 0 4px rgba(245,158,11,.22);
+      outline:none;
+      box-shadow:0 0 0 4px rgba(245,158,11,.2);
     }
 
     .btn-primary{
       color:#fff;
       background:linear-gradient(135deg,var(--brand),var(--brand2));
-      box-shadow:0 12px 24px rgba(217,119,6,.24);
+      box-shadow:0 14px 28px rgba(217,119,6,.24);
     }
 
     .btn-primary:hover{
@@ -265,79 +257,494 @@
       color:var(--text);
     }
 
-    .btn-secondary:hover{
-      border-color:#e2bd62;
-      box-shadow:0 10px 24px rgba(128,81,0,.08);
+    .btn-whatsapp{
+      background:#ecfdf3;
+      border:1px solid #b7ebca;
+      color:#166534;
     }
 
-    ul{
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .point{
+      padding:14px 14px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:linear-gradient(180deg,#fffdf9,#fff7eb);
+    }
+
+    .point strong{
+      display:block;
+      margin-bottom:4px;
+      font-size:.98rem;
+    }
+
+    .point span{
+      color:var(--muted);
+      font-size:.93rem;
+    }
+
+    .hero-visual{
+      position:relative;
+      min-height:430px;
+      border-radius:26px;
+      border:1px solid var(--line);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(251,191,36,.28), transparent 26%),
+        radial-gradient(circle at 80% 20%, rgba(245,158,11,.18), transparent 22%),
+        linear-gradient(180deg,#fff9ef 0%,#fff3da 100%);
+      overflow:hidden;
+      padding:18px;
+    }
+
+    .floating-card{
+      position:absolute;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      box-shadow:0 16px 28px rgba(128,81,0,.1);
+      padding:14px;
+    }
+
+    .fc-1{ top:20px; left:18px; width:185px; animation:floaty 5s ease-in-out infinite; }
+    .fc-2{ top:88px; right:18px; width:170px; animation:floaty 6.2s ease-in-out infinite; }
+    .fc-3{ bottom:18px; left:24px; width:210px; animation:floaty 5.6s ease-in-out infinite; }
+    .fc-4{ bottom:48px; right:20px; width:180px; animation:floaty 6.8s ease-in-out infinite; }
+
+    .screen{
+      position:absolute;
+      inset:90px 52px 92px 52px;
+      border-radius:24px;
+      border:1px solid #eacb84;
+      background:#fff;
+      box-shadow:0 18px 36px rgba(128,81,0,.12);
+      overflow:hidden;
+    }
+
+    .screen-top{
+      height:52px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:0 16px;
+      border-bottom:1px solid var(--line);
+      background:#fff7e6;
+    }
+
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:#f59e0b;
+      opacity:.75;
+    }
+
+    .screen-body{
+      display:grid;
+      grid-template-columns:180px 1fr;
+      min-height:300px;
+    }
+
+    .sidebar{
+      border-right:1px solid var(--line);
+      background:#fffaf0;
+      padding:14px;
+    }
+
+    .side-item{
+      height:38px;
+      border-radius:12px;
+      background:#fff;
+      border:1px solid var(--line);
+      margin-bottom:10px;
+    }
+
+    .content-area{
+      padding:16px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      background:
+        linear-gradient(180deg,rgba(255,249,239,.6),rgba(255,255,255,1));
+    }
+
+    .module-box,
+    .stats-box,
+    .editor-box,
+    .tasks-box{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fff;
+      padding:12px;
+      min-height:88px;
+    }
+
+    .bars{
+      display:grid;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .bar{
+      height:10px;
+      border-radius:999px;
+      background:#fff1cc;
+      overflow:hidden;
+      border:1px solid #f4de9f;
+      position:relative;
+    }
+
+    .bar::after{
+      content:"";
+      display:block;
+      height:100%;
+      width:var(--w,70%);
+      background:linear-gradient(90deg,var(--brand),var(--brand3));
+      border-radius:999px;
+    }
+
+    .kpis{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-top:18px;
+      padding:0 30px 28px;
+    }
+
+    .kpi{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      text-align:center;
+      box-shadow:0 10px 20px rgba(128,81,0,.06);
+    }
+
+    .kpi .num{
+      display:block;
+      font-size:1.8rem;
+      font-weight:900;
+      line-height:1.1;
+      color:#9a5400;
+      margin-bottom:6px;
+    }
+
+    .kpi .label{
+      color:var(--muted);
+      font-weight:700;
+      font-size:.95rem;
+    }
+
+    .section{
+      margin-top:22px;
+      border:1px solid rgba(239,223,178,.85);
+      border-radius:var(--radius-xl);
+      background:#fff;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .section-head{
+      padding:24px 24px 0;
+    }
+
+    .section-head h2{
+      margin:0 0 10px;
+      font-size:clamp(1.5rem,3vw,2.2rem);
+      line-height:1.15;
+    }
+
+    .section-head p{
       margin:0;
-      padding-left:20px;
       color:var(--muted);
     }
 
-    li+li{
+    .portal-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      padding:24px;
+    }
+
+    .portal-card{
+      padding:22px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:linear-gradient(180deg,#fffdf8,#fff8ec);
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .portal-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 30px rgba(128,81,0,.08);
+      border-color:#e4c26d;
+    }
+
+    .portal-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .portal-head h3{
+      margin:0;
+      font-size:1.35rem;
+    }
+
+    .tag{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff6df;
+      color:#8a5704;
+      font-size:.8rem;
+      font-weight:800;
+      flex:0 0 auto;
+    }
+
+    .portal-card p{
+      margin:0 0 12px;
+      color:var(--muted);
+    }
+
+    .portal-card ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+    }
+
+    .portal-card li+li{
       margin-top:8px;
     }
 
-    .foot{
-      margin-top:22px;
-      padding-top:18px;
-      border-top:1px solid var(--line);
-      display:flex;
-      gap:14px;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      align-items:center;
+    .note{
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:14px;
+      font-size:.94rem;
+      border:1px dashed var(--line);
+      background:#fffaf0;
+      color:#8a5704;
     }
 
-    .foot-note{
+    .note.ok{
+      background:#f5fff7;
+      border-color:#bde2c0;
+      color:var(--ok);
+    }
+
+    .portal-actions{
+      margin-top:16px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .features-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      padding:24px;
+    }
+
+    .feature-card{
+      padding:18px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:linear-gradient(180deg,#fffdf9,#fff7ea);
+    }
+
+    .feature-icon{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-size:1.2rem;
+      background:linear-gradient(135deg,#fff0c2,#ffe5a3);
+      margin-bottom:12px;
+      border:1px solid #efd28a;
+    }
+
+    .feature-card h3{
+      margin:0 0 8px;
+      font-size:1.08rem;
+    }
+
+    .feature-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:.96rem;
+    }
+
+    .modules-wrap{
+      padding:24px;
+    }
+
+    .modules-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .module-card{
+      border:1px solid var(--line);
+      border-radius:20px;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    .module-top{
+      min-height:90px;
+      padding:16px;
+      background:
+        radial-gradient(circle at top right, rgba(251,191,36,.32), transparent 42%),
+        linear-gradient(135deg,#fff5dc,#fff1cb);
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:flex-end;
+      font-weight:900;
+      font-size:1.02rem;
+      color:#7a4a06;
+    }
+
+    .module-body{
+      padding:16px;
+    }
+
+    .module-body p{
+      margin:0 0 12px;
       color:var(--muted);
       font-size:.95rem;
     }
 
-    .quick-links{
+    .module-body ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      font-size:.94rem;
+    }
+
+    .testimonials-grid{
+      padding:24px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .testimonial{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:#fffdf8;
+      padding:18px;
+    }
+
+    .stars{
+      color:#d97706;
+      letter-spacing:1px;
+      font-size:1rem;
+      margin-bottom:10px;
+    }
+
+    .testimonial p{
+      margin:0 0 14px;
+      color:var(--muted);
+    }
+
+    .person{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .avatar{
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:#7a4a06;
+      background:linear-gradient(135deg,#ffe6ad,#ffd37d);
+      border:1px solid #efcf84;
+      flex:0 0 auto;
+    }
+
+    .person-meta strong{
+      display:block;
+      line-height:1.1;
+    }
+
+    .person-meta span{
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    .cta-strip{
+      margin-top:22px;
+      border:1px solid rgba(239,223,178,.85);
+      border-radius:var(--radius-xl);
+      background:linear-gradient(135deg,#fff1d3,#fff8e9);
+      box-shadow:var(--shadow);
+      padding:26px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .cta-copy h2{
+      margin:0 0 8px;
+      font-size:clamp(1.4rem,3vw,2.1rem);
+    }
+
+    .cta-copy p{
+      margin:0;
+      color:var(--muted);
+      max-width:70ch;
+    }
+
+    .footer{
+      margin-top:22px;
+      padding:18px 4px 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .footer p{
+      margin:0;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    .footer-links{
       display:flex;
       flex-wrap:wrap;
       gap:10px;
     }
 
-    .mini-link{
+    .footer-links a{
+      min-height:40px;
+      padding:0 14px;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-height:40px;
-      padding:0 14px;
       border-radius:999px;
-      text-decoration:none;
       border:1px solid var(--line);
       background:#fffaf0;
-      color:var(--text);
       font-weight:700;
     }
 
-    .mini-link:hover{
-      background:#fff3da;
-    }
-
-    .teacher-note{
-      margin-top:12px;
-      padding:12px 14px;
-      border-radius:14px;
-      background:#fff7e8;
-      border:1px dashed #e9c46a;
-      color:#7a5411;
-      font-size:.94rem;
-    }
-
-    .student-note{
-      margin-top:12px;
-      padding:12px 14px;
-      border-radius:14px;
-      background:#f7fff6;
-      border:1px dashed #b7ddb8;
-      color:var(--success);
-      font-size:.94rem;
+    .footer-links a:hover{
+      background:#fff0d8;
     }
 
     .sr-only{
@@ -352,154 +759,573 @@
       border:0;
     }
 
-    @media (max-width:900px){
+    @keyframes floaty{
+      0%,100%{ transform:translateY(0) }
+      50%{ transform:translateY(-8px) }
+    }
+
+    @media (max-width:1100px){
+      .modules-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .features-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .testimonials-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width:980px){
       .hero{
         grid-template-columns:1fr;
       }
-      .summary{
+      .kpis{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .portal-grid{
         grid-template-columns:1fr;
+      }
+      .hero-points{
+        grid-template-columns:1fr;
+      }
+      .screen{
+        position:relative;
+        inset:auto;
+        height:320px;
+        margin:84px 16px 70px;
+      }
+      .hero-visual{
+        min-height:500px;
       }
     }
 
-    @media (max-width:800px){
-      body{
-        padding:16px;
-      }
-      .card{
-        padding:22px;
+    @media (max-width:760px){
+      .topbar{
         border-radius:24px;
+        align-items:flex-start;
       }
-      .grid{
+      .topbar,
+      .brand{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .top-links{
+        justify-content:flex-start;
+      }
+      .kpis{
+        padding:0 20px 20px;
+      }
+      .features-grid,
+      .testimonials-grid,
+      .modules-grid{
         grid-template-columns:1fr;
+      }
+      .content-area{
+        grid-template-columns:1fr;
+      }
+      .screen-body{
+        grid-template-columns:1fr;
+      }
+      .sidebar{
+        display:none;
       }
     }
 
-    @media (max-width:520px){
-      .card{
-        padding:18px;
+    @media (max-width:560px){
+      .container{
+        width:min(var(--maxw), calc(100% - 18px));
       }
-      .pane{
-        padding:18px;
+      .site-shell{
+        padding:12px 0 24px;
       }
-      .actions{
+      .hero{
+        padding:20px;
+      }
+      .section-head{
+        padding:20px 20px 0;
+      }
+      .portal-grid,
+      .features-grid,
+      .modules-wrap,
+      .testimonials-grid{
+        padding:20px;
+      }
+      .kpis{
+        grid-template-columns:1fr;
+      }
+      .hero-actions,
+      .portal-actions{
         flex-direction:column;
       }
       .btn{
         width:100%;
       }
-      .foot{
-        align-items:flex-start;
+      .fc-1,.fc-2,.fc-3,.fc-4{
+        transform:none !important;
       }
     }
   </style>
 </head>
 <body>
-  <main class="card" aria-labelledby="speak0">
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="badge" id="speak0">
-          🚀 Programmer’s Picnic Learning Platform
+  <div class="site-shell">
+    <div class="container">
+
+      <header class="topbar" aria-label="Top navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">PP</div>
+          <div class="brand-text">
+            <strong id="speak0">Programmer’s Picnic</strong>
+            <span id="speak1">AI Builder Program V3 Premium</span>
+          </div>
         </div>
 
-        <div class="logo" aria-hidden="true">PP</div>
+        <nav class="top-links" aria-label="Quick links">
+          <a class="chip-link" href="./student/">Student Portal</a>
+          <a class="chip-link" href="./teacher/">Teacher Portal</a>
+          <a class="chip-link" href="#modules">Modules</a>
+          <a class="chip-link" href="#testimonials">Testimonials</a>
+        </nav>
+      </header>
 
-        <h1 id="speak1">AI Builder Program V2</h1>
+      <main>
+        <section class="hero-card" aria-labelledby="speak2">
+          <div class="hero">
+            <div class="hero-copy">
+              <div class="eyebrow" id="speak2">🚀 Premium AI Learning Experience</div>
 
-        <p class="intro" id="speak2">
-          Choose the version you want to open. Teacher access stays password protected.
-          V2 adds progress tracking, assignment handling, lesson sharing links, a teacher
-          batch panel, and direct class and community links.
+              <h1 id="speak3">AI Builder Program V3 Premium</h1>
+
+              <p id="speak4">
+                Build, learn, teach, track, share, and grow in one premium platform.
+                This version gives students a smoother learning path and gives teachers
+                stronger control over planning, lessons, links, assignments, and class flow.
+              </p>
+
+              <p id="speak5">
+                V3 Premium adds a richer landing experience, module previews, social proof,
+                premium course presentation, stronger calls to action, and clean mobile-first access
+                to both student and teacher portals.
+              </p>
+
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="./student/">Open Student Portal</a>
+                <a class="btn btn-secondary" href="./teacher/">Open Teacher Portal</a>
+                <a
+                  class="btn btn-whatsapp"
+                  href="https://wa.me/919335874326?text=Hi%20Champak%20Roy,%20I%20am%20interested%20in%20the%20AI%20Builder%20Program."
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Join via WhatsApp
+                </a>
+              </div>
+
+              <div class="hero-points" aria-label="Program highlights">
+                <div class="point">
+                  <strong id="speak6">Structured learning</strong>
+                  <span id="speak7">Students move from basics to real AI projects in an organized flow.</span>
+                </div>
+                <div class="point">
+                  <strong id="speak8">Teacher efficiency</strong>
+                  <span id="speak9">Batches, notes, links, and lesson control stay clean and manageable.</span>
+                </div>
+                <div class="point">
+                  <strong id="speak10">Faster access</strong>
+                  <span id="speak11">Open the correct portal quickly from a polished premium homepage.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+              <div class="floating-card fc-1">
+                <strong>Progress</strong>
+                <div class="bars">
+                  <div class="bar" style="--w:82%"></div>
+                  <div class="bar" style="--w:64%"></div>
+                  <div class="bar" style="--w:91%"></div>
+                </div>
+              </div>
+
+              <div class="floating-card fc-2">
+                <strong>Assignments</strong>
+                <p style="margin:8px 0 0;color:#6b5a3d;font-size:.92rem;">
+                  Submit, track, and review class work in one place.
+                </p>
+              </div>
+
+              <div class="floating-card fc-3">
+                <strong>Teacher Batch Panel</strong>
+                <p style="margin:8px 0 0;color:#6b5a3d;font-size:.92rem;">
+                  Plan sessions, notes, and lessons for each batch.
+                </p>
+              </div>
+
+              <div class="floating-card fc-4">
+                <strong>Share Links</strong>
+                <p style="margin:8px 0 0;color:#6b5a3d;font-size:.92rem;">
+                  Generate lesson links and send them directly to learners.
+                </p>
+              </div>
+
+              <div class="screen">
+                <div class="screen-top">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </div>
+
+                <div class="screen-body">
+                  <div class="sidebar">
+                    <div class="side-item"></div>
+                    <div class="side-item"></div>
+                    <div class="side-item"></div>
+                    <div class="side-item"></div>
+                  </div>
+
+                  <div class="content-area">
+                    <div class="module-box">
+                      <strong>Module Roadmap</strong>
+                      <div class="bars">
+                        <div class="bar" style="--w:72%"></div>
+                        <div class="bar" style="--w:48%"></div>
+                        <div class="bar" style="--w:85%"></div>
+                      </div>
+                    </div>
+
+                    <div class="stats-box">
+                      <strong>Class Stats</strong>
+                      <div class="bars">
+                        <div class="bar" style="--w:66%"></div>
+                        <div class="bar" style="--w:78%"></div>
+                        <div class="bar" style="--w:54%"></div>
+                      </div>
+                    </div>
+
+                    <div class="editor-box">
+                      <strong>Teacher Editor</strong>
+                      <div class="bars">
+                        <div class="bar" style="--w:88%"></div>
+                        <div class="bar" style="--w:74%"></div>
+                      </div>
+                    </div>
+
+                    <div class="tasks-box">
+                      <strong>Student Tasks</strong>
+                      <div class="bars">
+                        <div class="bar" style="--w:60%"></div>
+                        <div class="bar" style="--w:80%"></div>
+                        <div class="bar" style="--w:40%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpis" aria-label="Program metrics">
+            <div class="kpi">
+              <span class="num" id="speak12">4+</span>
+              <span class="label" id="speak13">Core learning tracks</span>
+            </div>
+            <div class="kpi">
+              <span class="num" id="speak14">V3</span>
+              <span class="label" id="speak15">Premium platform version</span>
+            </div>
+            <div class="kpi">
+              <span class="num" id="speak16">24×7</span>
+              <span class="label" id="speak17">Student access to lessons</span>
+            </div>
+            <div class="kpi">
+              <span class="num" id="speak18">1</span>
+              <span class="label" id="speak19">Unified teacher workflow</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="speak20">
+          <div class="section-head">
+            <h2 id="speak20">Choose Your Portal</h2>
+            <p id="speak21">
+              Open the student space for learning and submissions, or the teacher space for planning,
+              editing, protected access, and class management.
+            </p>
+          </div>
+
+          <div class="portal-grid">
+            <article class="portal-card">
+              <div class="portal-head">
+                <h3 id="speak22">Student Portal</h3>
+                <span class="tag">Learner View</span>
+              </div>
+
+              <p id="speak23">
+                Designed for students who want guided learning, progress continuation, assignment flow,
+                and quick access to class content.
+              </p>
+
+              <ul>
+                <li id="speak24">Lesson progress tracker</li>
+                <li id="speak25">Assignment submission storage</li>
+                <li id="speak26">Hash-based lesson sharing links</li>
+                <li id="speak27">WhatsApp enrollment helper</li>
+                <li id="speak28">Easy lesson continuation for returning learners</li>
+              </ul>
+
+              <div class="note ok" id="speak29">
+                Best for learners who want a simple, guided, mobile-friendly study experience.
+              </div>
+
+              <div class="portal-actions">
+                <a class="btn btn-primary" href="./student/">Open Student Portal</a>
+              </div>
+            </article>
+
+            <article class="portal-card">
+              <div class="portal-head">
+                <h3 id="speak30">Teacher Portal</h3>
+                <span class="tag">Protected Access</span>
+              </div>
+
+              <p id="speak31">
+                Built for instructors who need secure access, planning tools, lesson generation support,
+                and batch-level classroom control.
+              </p>
+
+              <ul>
+                <li id="speak32">Password gate with hashed password</li>
+                <li id="speak33">Batch planner and class notes</li>
+                <li id="speak34">Lesson link generator</li>
+                <li id="speak35">Embedded teacher-mode editor</li>
+                <li id="speak36">Improved teacher workflow for organizing sessions</li>
+              </ul>
+
+              <div class="note" id="speak37">
+                Teacher access stays protected and should only be used by authorized instructors.
+              </div>
+
+              <div class="portal-actions">
+                <a class="btn btn-secondary" href="./teacher/">Open Teacher Portal</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="speak38">
+          <div class="section-head">
+            <h2 id="speak38">Why V3 Premium Feels Better</h2>
+            <p id="speak39">
+              This version improves both presentation and usability. It is not just a landing page.
+              It is the entry point to a more polished learning system.
+            </p>
+          </div>
+
+          <div class="features-grid">
+            <article class="feature-card">
+              <div class="feature-icon">🎯</div>
+              <h3 id="speak40">Clear entry flow</h3>
+              <p id="speak41">
+                Students and teachers instantly know where to go without confusion.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">📚</div>
+              <h3 id="speak42">Better course presentation</h3>
+              <p id="speak43">
+                Module previews help users understand the value of the full program.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">🧑‍🏫</div>
+              <h3 id="speak44">Stronger teacher tools</h3>
+              <p id="speak45">
+                Planning, editing, notes, and class control feel more organized.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">🧠</div>
+              <h3 id="speak46">Learning continuity</h3>
+              <p id="speak47">
+                Students can keep track of progress and return to their path easily.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">🔗</div>
+              <h3 id="speak48">Simple sharing</h3>
+              <p id="speak49">
+                Lesson links and quick access points make distribution faster and easier.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">📱</div>
+              <h3 id="speak50">Mobile-friendly premium UI</h3>
+              <p id="speak51">
+                The layout remains clean and usable on phones, tablets, and desktops.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="modules" aria-labelledby="speak52">
+          <div class="section-head">
+            <h2 id="speak52">Premium Course Modules Preview</h2>
+            <p id="speak53">
+              Show learners what they can expect inside the program. This preview makes the platform
+              feel richer and more trustworthy.
+            </p>
+          </div>
+
+          <div class="modules-wrap">
+            <div class="modules-grid">
+              <article class="module-card">
+                <div class="module-top">Module 1 — Foundations</div>
+                <div class="module-body">
+                  <p id="speak54">Start from the ground level and build confidence step by step.</p>
+                  <ul>
+                    <li id="speak55">What AI is</li>
+                    <li id="speak56">Core terminology</li>
+                    <li id="speak57">Basic workflows</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="module-card">
+                <div class="module-top">Module 2 — Data & Logic</div>
+                <div class="module-body">
+                  <p id="speak58">Understand the raw material that powers intelligent systems.</p>
+                  <ul>
+                    <li id="speak59">Data basics</li>
+                    <li id="speak60">Simple analysis</li>
+                    <li id="speak61">Patterns and rules</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="module-card">
+                <div class="module-top">Module 3 — Building Projects</div>
+                <div class="module-body">
+                  <p id="speak62">Apply learning through guided and practical mini projects.</p>
+                  <ul>
+                    <li id="speak63">Project design</li>
+                    <li id="speak64">Hands-on practice</li>
+                    <li id="speak65">Submission workflow</li>
+                  </ul>
+                </div>
+              </article>
+
+              <article class="module-card">
+                <div class="module-top">Module 4 — Teaching & Deployment</div>
+                <div class="module-body">
+                  <p id="speak66">Support teachers and advanced learners with structured delivery.</p>
+                  <ul>
+                    <li id="speak67">Lesson sharing</li>
+                    <li id="speak68">Batch planning</li>
+                    <li id="speak69">Teacher-mode tools</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="testimonials" aria-labelledby="speak70">
+          <div class="section-head">
+            <h2 id="speak70">What This Premium Experience Communicates</h2>
+            <p id="speak71">
+              These testimonials are sample premium presentation content and help the page feel more complete,
+              human, and confidence-building.
+            </p>
+          </div>
+
+          <div class="testimonials-grid">
+            <article class="testimonial">
+              <div class="stars">★★★★★</div>
+              <p id="speak72">
+                The student portal feels simple and welcoming. It helps learners continue without getting lost.
+              </p>
+              <div class="person">
+                <div class="avatar">A</div>
+                <div class="person-meta">
+                  <strong>Arjun</strong>
+                  <span>Student Experience View</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial">
+              <div class="stars">★★★★★</div>
+              <p id="speak73">
+                The teacher portal clearly looks like a real teaching system with planning, control, and protection.
+              </p>
+              <div class="person">
+                <div class="avatar">M</div>
+                <div class="person-meta">
+                  <strong>Meera</strong>
+                  <span>Teacher Workflow View</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial">
+              <div class="stars">★★★★★</div>
+              <p id="speak74">
+                The module preview and premium layout make the program look much more serious and valuable.
+              </p>
+              <div class="person">
+                <div class="avatar">R</div>
+                <div class="person-meta">
+                  <strong>Rohan</strong>
+                  <span>Course Showcase View</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="cta-strip" aria-labelledby="speak75">
+          <div class="cta-copy">
+            <h2 id="speak75">Start with the right portal now</h2>
+            <p id="speak76">
+              Open the student portal for guided learning, or open the teacher portal for protected class management.
+              You can also use WhatsApp to connect directly for enrollment or support.
+            </p>
+          </div>
+
+          <div class="hero-actions" style="margin:0">
+            <a class="btn btn-primary" href="./student/">Student Portal</a>
+            <a class="btn btn-secondary" href="./teacher/">Teacher Portal</a>
+            <a
+              class="btn btn-whatsapp"
+              href="https://wa.me/919335874326?text=Hi%20Champak%20Roy,%20I%20want%20to%20join%20the%20AI%20Builder%20Program."
+              target="_blank"
+              rel="noopener"
+            >
+              WhatsApp
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p id="speak77">
+          AI Builder Program V3 Premium — a polished landing page for students, teachers, and class growth.
         </p>
-      </div>
 
-      <aside class="hero-side" aria-label="Program highlights">
-        <div class="summary">
-          <div class="summary-card">
-            <strong id="speak3">Student-first learning</strong>
-            <span id="speak4">Track lessons, continue progress, and access shared class links easily.</span>
-          </div>
-          <div class="summary-card">
-            <strong id="speak5">Teacher control</strong>
-            <span id="speak6">Manage batches, notes, lesson sharing, and teacher-mode workflows.</span>
-          </div>
-          <div class="summary-card">
-            <strong id="speak7">Quick access design</strong>
-            <span id="speak8">Open the right portal fast from a clear, mobile-friendly landing page.</span>
-          </div>
+        <div class="footer-links">
+          <a href="./student/">Student</a>
+          <a href="./teacher/">Teacher</a>
+          <a href="#modules">Modules</a>
+          <a href="#testimonials">Testimonials</a>
         </div>
-      </aside>
-    </section>
-
-    <section class="grid" aria-label="Portal options">
-      <article class="pane">
-        <div class="pane-head">
-          <h2 id="speak9">Student Portal</h2>
-          <span class="tag">Learner View</span>
-        </div>
-
-        <ul>
-          <li id="speak10">Lesson progress tracker</li>
-          <li id="speak11">Assignment submission storage</li>
-          <li id="speak12">Hash-based lesson links</li>
-          <li id="speak13">WhatsApp enrollment helper</li>
-        </ul>
-
-        <div class="student-note" id="speak14">
-          Best for students who want a guided path, quick lesson access, and simple progress continuation.
-        </div>
-
-        <div class="actions">
-          <a
-            class="btn btn-primary"
-            href="./student/"
-            aria-label="Open Student Portal"
-          >
-            Open Student Portal
-          </a>
-        </div>
-      </article>
-
-      <article class="pane">
-        <div class="pane-head">
-          <h2 id="speak15">Teacher Portal</h2>
-          <span class="tag">Protected Access</span>
-        </div>
-
-        <ul>
-          <li id="speak16">Password gate with hashed password</li>
-          <li id="speak17">Batch planner and class notes</li>
-          <li id="speak18">Lesson link generator</li>
-          <li id="speak19">Embedded teacher-mode editor</li>
-        </ul>
-
-        <div class="teacher-note" id="speak20">
-          Teacher access is protected. Open this section only if you have the correct teacher credentials.
-        </div>
-
-        <div class="actions">
-          <a
-            class="btn btn-secondary"
-            href="./teacher/"
-            aria-label="Open Teacher Portal"
-          >
-            Open Teacher Portal
-          </a>
-        </div>
-      </article>
-    </section>
-
-    <footer class="foot">
-      <div class="foot-note" id="speak21">
-        AI Builder Program V2 is designed to keep student learning simple and teacher management structured.
-      </div>
-
-      <nav class="quick-links" aria-label="Quick links">
-        <a class="mini-link" href="./student/">Student</a>
-        <a class="mini-link" href="./teacher/">Teacher</a>
-        <a class="mini-link" href="/">Home</a>
-      </nav>
-    </footer>
-  </main>
+      </footer>
+    </div>
+  </div>
 
   <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
 </body>
