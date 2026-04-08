@@ -1,1956 +1,2544 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI-ML Course V3 Premium — V2 Ultra Course Map</title>
-
-  <script
-    async
-    crossorigin="anonymous"
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-  ></script>
-
-  <meta
-    name="description"
-    content="A premium 12-week AI-ML course roadmap covering Python, NumPy, pandas, statistics, machine learning, probability, projects, and deployment."
-  />
-  <meta name="theme-color" content="#f59e0b" />
-  <link rel="stylesheet" href="assets/css/theme.css" />
-
-  <style>
-    :root{
-      --bg:#fff9ef;
-      --panel:#ffffff;
-      --panel-soft:#fff7e8;
-      --panel-2:#fff2d6;
-      --text:#2b2112;
-      --muted:#6b5a3d;
-      --line:#ecd8ab;
-      --brand:#d97706;
-      --brand2:#f59e0b;
-      --brand3:#fbbf24;
-      --green:#166534;
-      --green-bg:#ecfdf5;
-      --blue:#1d4ed8;
-      --blue-bg:#eff6ff;
-      --red:#991b1b;
-      --red-bg:#fef2f2;
-      --shadow:0 20px 55px rgba(140, 88, 0, 0.12);
-      --shadow-soft:0 12px 30px rgba(140, 88, 0, 0.08);
-      --radius:24px;
-    }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(251,191,36,.22), transparent 24%),
-        radial-gradient(circle at left 20%, rgba(245,158,11,.10), transparent 22%),
-        linear-gradient(180deg, #fffaf2 0%, #fff6e9 100%);
-    }
-
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-
-    .top{
-      position:sticky;
-      top:0;
-      z-index:80;
-      backdrop-filter:blur(12px);
-      background:rgba(255,250,242,.88);
-      border-bottom:1px solid rgba(217,119,6,.14);
-    }
-
-    .navwrap{
-      width:min(1320px, calc(100% - 24px));
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:14px 0;
-    }
-
-    .brandline{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
-
-    .brandline strong{
-      color:#8a4b00;
-      font-size:1.05rem;
-    }
-
-    .brandline span{
-      color:var(--muted);
-      font-size:.92rem;
-    }
-
-    .navactions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .wrap{
-      width:min(1320px, calc(100% - 24px));
-      margin:0 auto;
-      padding:22px 0 48px;
-    }
-
-    .hero{
-      position:relative;
-      overflow:hidden;
-      border-radius:34px;
-      border:1px solid var(--line);
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.96), rgba(255,244,220,.96));
-      box-shadow:var(--shadow);
-      padding:28px;
-    }
-
-    .hero::before{
-      content:"";
-      position:absolute;
-      right:-80px;
-      top:-80px;
-      width:280px;
-      height:280px;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(245,158,11,.18), rgba(245,158,11,0));
-      pointer-events:none;
-    }
-
-    .hero::after{
-      content:"";
-      position:absolute;
-      left:-80px;
-      bottom:-80px;
-      width:240px;
-      height:240px;
-      border-radius:50%;
-      background:radial-gradient(circle, rgba(251,191,36,.16), rgba(251,191,36,0));
-      pointer-events:none;
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 14px;
-      border-radius:999px;
-      border:1px solid rgba(217,119,6,.18);
-      background:#fff2cc;
-      color:#8a4b00;
-      font-weight:800;
-      font-size:.9rem;
-    }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.2fr .85fr;
-      gap:22px;
-      margin-top:18px;
-      position:relative;
-      z-index:1;
-    }
-
-    .hero-copy h1{
-      margin:14px 0 10px;
-      font-size:clamp(2rem, 4vw, 3.35rem);
-      line-height:1.08;
-    }
-
-    .hero-copy p{
-      margin:10px 0;
-      color:var(--muted);
-      line-height:1.72;
-      font-size:1.04rem;
-      max-width:920px;
-    }
-
-    .hero-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-top:18px;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:11px 15px;
-      border-radius:14px;
-      border:1px solid rgba(217,119,6,.18);
-      background:#fff;
-      color:#7c4600;
-      font-weight:800;
-      cursor:pointer;
-      transition:.2s ease;
-      user-select:none;
-    }
-
-    .btn:hover{
-      transform:translateY(-1px);
-      box-shadow:0 10px 22px rgba(140,88,0,.10);
-    }
-
-    .btn.brand{
-      background:linear-gradient(135deg, var(--brand), var(--brand2));
-      color:#fff;
-      border-color:transparent;
-    }
-
-    .btn.soft{
-      background:#fff8ea;
-    }
-
-    .btn.locked::after,
-    .locked-link::after{
-      content:" 🔒";
-      font-size:.95em;
-    }
-
-    .hero-side{
-      display:grid;
-      gap:14px;
-    }
-
-    .hero-card{
-      background:rgba(255,255,255,.84);
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:18px;
-      box-shadow:var(--shadow-soft);
-    }
-
-    .hero-card h3,
-    .hero-card h2{
-      margin:0 0 10px;
-    }
-
-    .hero-card p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.65;
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:12px;
-      margin-top:12px;
-    }
-
-    .stat{
-      background:#fff;
-      border:1px solid rgba(217,119,6,.14);
-      border-radius:18px;
-      padding:14px;
-    }
-
-    .stat strong{
-      display:block;
-      font-size:1.35rem;
-      color:#8a4b00;
-      margin-bottom:4px;
-    }
-
-    .stat span{
-      color:var(--muted);
-      font-size:.95rem;
-      line-height:1.5;
-    }
-
-    .section{
-      margin-top:26px;
-    }
-
-    .section-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:end;
-      gap:18px;
-      margin-bottom:14px;
-    }
-
-    .section-head h2{
-      margin:0;
-      font-size:1.75rem;
-    }
-
-    .section-head p{
-      margin:0;
-      color:var(--muted);
-      max-width:820px;
-      line-height:1.65;
-    }
-
-    .info-grid{
-      display:grid;
-      grid-template-columns:repeat(4, minmax(0, 1fr));
-      gap:16px;
-    }
-
-    .info-card{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:18px;
-      box-shadow:var(--shadow-soft);
-    }
-
-    .info-card h3{
-      margin:0 0 8px;
-      font-size:1.08rem;
-    }
-
-    .info-card p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.65;
-    }
-
-    .journey{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:18px;
-    }
-
-    .journey-card,
-    .instructor-card,
-    .progress-card,
-    .cta-card{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:28px;
-      padding:22px;
-      box-shadow:var(--shadow-soft);
-    }
-
-    .timeline{
-      display:grid;
-      gap:12px;
-      margin-top:14px;
-    }
-
-    .timeline-item{
-      display:grid;
-      grid-template-columns:120px 1fr;
-      gap:14px;
-      align-items:start;
-      background:var(--panel-soft);
-      border:1px solid rgba(217,119,6,.12);
-      border-radius:18px;
-      padding:14px;
-    }
-
-    .timeline-item strong{
-      color:#8a4b00;
-      font-size:.95rem;
-    }
-
-    .timeline-item div{
-      color:var(--muted);
-      line-height:1.6;
-    }
-
-    .progress-bar{
-      height:16px;
-      background:#fff3dc;
-      border-radius:999px;
-      overflow:hidden;
-      border:1px solid rgba(217,119,6,.14);
-      margin:14px 0 10px;
-    }
-
-    .progress-fill{
-      width:8%;
-      height:100%;
-      background:linear-gradient(90deg, var(--brand), var(--brand2), var(--brand3));
-      border-radius:999px;
-    }
-
-    .pill-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:14px;
-    }
-
-    .pill{
-      padding:8px 12px;
-      border-radius:999px;
-      background:#fff8eb;
-      border:1px solid rgba(217,119,6,.14);
-      color:#8a4b00;
-      font-size:.9rem;
-      font-weight:700;
-    }
-
-    .weeks-grid{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:18px;
-    }
-
-    details.week-card{
-      border:1px solid var(--line);
-      border-radius:28px;
-      background:linear-gradient(180deg, #ffffff, #fffaf0);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    details.week-card[open]{
-      background:linear-gradient(180deg, #ffffff, #fff8eb);
-    }
-
-    summary.week-summary{
-      list-style:none;
-      cursor:pointer;
-      padding:22px;
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-      justify-content:space-between;
-    }
-
-    summary.week-summary::-webkit-details-marker{display:none}
-
-    .week-left{
-      display:grid;
-      gap:14px;
-      flex:1;
-    }
-
-    .week-head{
-      display:flex;
-      gap:14px;
-      justify-content:space-between;
-      align-items:flex-start;
-    }
-
-    .week-title-block h3{
-      margin:0 0 8px;
-      font-size:1.35rem;
-      line-height:1.24;
-    }
-
-    .week-title-block p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.65;
-    }
-
-    .week-no{
-      min-width:96px;
-      text-align:center;
-      background:linear-gradient(135deg, #fff2cc, #ffe7ad);
-      color:#8a4b00;
-      border:1px solid rgba(217,119,6,.18);
-      border-radius:18px;
-      padding:11px 12px;
-      font-weight:800;
-      font-size:.98rem;
-    }
-
-    .meta-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .meta-chip{
-      border:1px solid rgba(217,119,6,.16);
-      background:#fff;
-      color:#7a4d0d;
-      border-radius:999px;
-      padding:7px 11px;
-      font-size:.84rem;
-      font-weight:800;
-    }
-
-    .level-beginner{background:#edfdf3;color:#166534;border-color:#b7ebc6}
-    .level-intermediate{background:#fff7e6;color:#b45309;border-color:#f5d08a}
-    .level-advanced{background:#eff6ff;color:#1d4ed8;border-color:#bfd5ff}
-    .level-capstone{background:#fef2f2;color:#991b1b;border-color:#f7c3c3}
-
-    .expand-indicator{
-      min-width:42px;
-      height:42px;
-      display:grid;
-      place-items:center;
-      border-radius:14px;
-      border:1px solid rgba(217,119,6,.16);
-      background:#fff;
-      color:#8a4b00;
-      font-size:1.2rem;
-      font-weight:900;
-    }
-
-    details[open] .expand-indicator{
-      transform:rotate(180deg);
-    }
-
-    .week-body{
-      padding:0 22px 22px;
-      display:grid;
-      gap:16px;
-    }
-
-    .cols{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-
-    .subcard{
-      background:#fff;
-      border:1px solid rgba(217,119,6,.12);
-      border-radius:20px;
-      padding:16px;
-    }
-
-    .subcard h4{
-      margin:0 0 10px;
-      color:#8a4b00;
-      font-size:1rem;
-    }
-
-    .subcard p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.65;
-    }
-
-    .subcard ul{
-      margin:0;
-      padding-left:18px;
-    }
-
-    .subcard li{
-      margin:0 0 8px;
-      color:#40321d;
-      line-height:1.55;
-    }
-
-    .subcard li:last-child{margin-bottom:0}
-
-    .mini-grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0, 1fr));
-      gap:14px;
-    }
-
-    .project-list{
-      display:grid;
-      gap:10px;
-    }
-
-    .project-item{
-      background:var(--panel-2);
-      border:1px dashed rgba(217,119,6,.24);
-      border-radius:16px;
-      padding:12px 13px;
-    }
-
-    .project-item strong{
-      display:block;
-      margin-bottom:4px;
-      color:#8a4b00;
-    }
-
-    .project-item span{
-      display:block;
-      color:#604d2d;
-      line-height:1.55;
-    }
-
-    .tag-list{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-
-    .tag{
-      padding:7px 10px;
-      border-radius:999px;
-      background:#fff8ea;
-      border:1px solid rgba(217,119,6,.13);
-      color:#8a4b00;
-      font-size:.83rem;
-      font-weight:700;
-    }
-
-    .action-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .instructor-grid{
-      display:grid;
-      grid-template-columns:120px 1fr;
-      gap:18px;
-      align-items:center;
-    }
-
-    .avatar{
-      width:120px;
-      height:120px;
-      border-radius:26px;
-      background:linear-gradient(135deg, #fff0c2, #f59e0b);
-      display:grid;
-      place-items:center;
-      font-size:2.2rem;
-      color:#7c4600;
-      font-weight:900;
-      border:1px solid rgba(217,119,6,.18);
-      box-shadow:var(--shadow-soft);
-    }
-
-    .instructor-grid h3{
-      margin:0 0 10px;
-      font-size:1.35rem;
-    }
-
-    .instructor-grid p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.7;
-    }
-
-    .cta-card{
-      background:linear-gradient(135deg, rgba(255,255,255,1), rgba(255,244,220,1));
-    }
-
-    .cta-card h2{
-      margin:0 0 10px;
-    }
-
-    .cta-card p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.7;
-    }
-
-    .toast-wrap{
-      position:fixed;
-      inset:0;
-      z-index:9999;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      pointer-events:none;
-    }
-
-    .toast{
-      min-width:min(92vw, 420px);
-      max-width:min(92vw, 520px);
-      background:linear-gradient(135deg, #2b2112 0%, #5b3200 55%, #d97706 100%);
-      color:#fffaf0;
-      padding:24px 28px;
-      border-radius:24px;
-      border:2px solid rgba(255,255,255,.28);
-      box-shadow:
-        0 28px 70px rgba(43,33,18,.42),
-        0 0 0 10px rgba(245,158,11,.18),
-        0 0 40px rgba(251,191,36,.32);
-      text-align:center;
-      opacity:0;
-      transform:scale(.88) translateY(12px);
-      transition:opacity .28s ease, transform .28s ease;
-      font-weight:800;
-      letter-spacing:.2px;
-    }
-
-    .toast.show{
-      opacity:1;
-      transform:scale(1) translateY(0);
-    }
-
-    .toast-icon{
-      font-size:2.1rem;
-      line-height:1;
-      margin-bottom:10px;
-    }
-
-    .toast-title{
-      font-size:1.45rem;
-      margin-bottom:8px;
-    }
-
-    .toast small{
-      display:block;
-      font-size:1rem;
-      line-height:1.55;
-      font-weight:600;
-      color:rgba(255,248,235,.96);
-    }
-
-    .footer-note{
-      margin-top:26px;
-      padding:22px;
-      border-radius:24px;
-      border:1px solid var(--line);
-      background:#fff;
-      box-shadow:var(--shadow-soft);
-      color:var(--muted);
-      line-height:1.72;
-    }
-
-    .footer-note p{margin:0 0 10px}
-    .footer-note p:last-child{margin-bottom:0}
-
-    @media (max-width:1100px){
-      .hero-grid,
-      .journey,
-      .info-grid,
-      .weeks-grid,
-      .cols,
-      .mini-grid{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width:760px){
-      .navwrap,
-      .section-head,
-      .week-head,
-      .instructor-grid{
-        grid-template-columns:none;
-        flex-direction:column;
-        align-items:flex-start;
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AI-ML Course — Course Map: Champak Roy</title>
+
+    <script
+      async
+      crossorigin="anonymous"
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
+    ></script>
+
+    <meta
+      name="description"
+      content="A premium 12-week AI-ML course roadmap covering Python, NumPy, pandas, statistics, machine learning, probability, projects, and deployment."
+    />
+    <meta name="theme-color" content="#f59e0b" />
+    <link rel="stylesheet" href="assets/css/theme.css" />
+
+    <style>
+      :root {
+        --bg: #fff9ef;
+        --panel: #ffffff;
+        --panel-soft: #fff7e8;
+        --panel-2: #fff2d6;
+        --text: #2b2112;
+        --muted: #6b5a3d;
+        --line: #ecd8ab;
+        --brand: #d97706;
+        --brand2: #f59e0b;
+        --brand3: #fbbf24;
+        --green: #166534;
+        --green-bg: #ecfdf5;
+        --blue: #1d4ed8;
+        --blue-bg: #eff6ff;
+        --red: #991b1b;
+        --red-bg: #fef2f2;
+        --shadow: 0 20px 55px rgba(140, 88, 0, 0.12);
+        --shadow-soft: 0 12px 30px rgba(140, 88, 0, 0.08);
+        --radius: 24px;
       }
 
-      .navwrap{
-        flex-direction:column;
-        align-items:flex-start;
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
       }
 
-      .wrap{
-        width:min(100% - 16px, 1320px);
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at top right,
+            rgba(251, 191, 36, 0.22),
+            transparent 24%
+          ),
+          radial-gradient(
+            circle at left 20%,
+            rgba(245, 158, 11, 0.1),
+            transparent 22%
+          ),
+          linear-gradient(180deg, #fffaf2 0%, #fff6e9 100%);
       }
 
-      .hero,
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 80;
+        backdrop-filter: blur(12px);
+        background: rgba(255, 250, 242, 0.88);
+        border-bottom: 1px solid rgba(217, 119, 6, 0.14);
+      }
+
+      .navwrap {
+        width: min(1320px, calc(100% - 24px));
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 0;
+      }
+
+      .brandline {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .brandline strong {
+        color: #8a4b00;
+        font-size: 1.05rem;
+      }
+
+      .brandline span {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .navactions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .wrap {
+        width: min(1320px, calc(100% - 24px));
+        margin: 0 auto;
+        padding: 22px 0 48px;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 34px;
+        border: 1px solid var(--line);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.96),
+          rgba(255, 244, 220, 0.96)
+        );
+        box-shadow: var(--shadow);
+        padding: 28px;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        right: -80px;
+        top: -80px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(245, 158, 11, 0.18),
+          rgba(245, 158, 11, 0)
+        );
+        pointer-events: none;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        left: -80px;
+        bottom: -80px;
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(251, 191, 36, 0.16),
+          rgba(251, 191, 36, 0)
+        );
+        pointer-events: none;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(217, 119, 6, 0.18);
+        background: #fff2cc;
+        color: #8a4b00;
+        font-weight: 800;
+        font-size: 0.9rem;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.85fr;
+        gap: 22px;
+        margin-top: 18px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-copy h1 {
+        margin: 14px 0 10px;
+        font-size: clamp(2rem, 4vw, 3.35rem);
+        line-height: 1.08;
+      }
+
+      .hero-copy p {
+        margin: 10px 0;
+        color: var(--muted);
+        line-height: 1.72;
+        font-size: 1.04rem;
+        max-width: 920px;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 15px;
+        border-radius: 14px;
+        border: 1px solid rgba(217, 119, 6, 0.18);
+        background: #fff;
+        color: #7c4600;
+        font-weight: 800;
+        cursor: pointer;
+        transition: 0.2s ease;
+        user-select: none;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 22px rgba(140, 88, 0, 0.1);
+      }
+
+      .btn.brand {
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+        color: #fff;
+        border-color: transparent;
+      }
+
+      .btn.soft {
+        background: #fff8ea;
+      }
+
+      .btn.locked::after,
+      .locked-link::after {
+        content: " 🔒";
+        font-size: 0.95em;
+      }
+
+      .hero-side {
+        display: grid;
+        gap: 14px;
+      }
+
+      .hero-card {
+        background: rgba(255, 255, 255, 0.84);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 18px;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .hero-card h3,
+      .hero-card h2 {
+        margin: 0 0 10px;
+      }
+
+      .hero-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .stat {
+        background: #fff;
+        border: 1px solid rgba(217, 119, 6, 0.14);
+        border-radius: 18px;
+        padding: 14px;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.35rem;
+        color: #8a4b00;
+        margin-bottom: 4px;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      .section {
+        margin-top: 26px;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 18px;
+        margin-bottom: 14px;
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-size: 1.75rem;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--muted);
+        max-width: 820px;
+        line-height: 1.65;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .info-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 18px;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .info-card h3 {
+        margin: 0 0 8px;
+        font-size: 1.08rem;
+      }
+
+      .info-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .journey {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 18px;
+      }
+
       .journey-card,
       .instructor-card,
       .progress-card,
-      .cta-card,
-      .info-card,
-      .footer-note{
-        padding:18px;
+      .cta-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        padding: 22px;
+        box-shadow: var(--shadow-soft);
       }
 
-      summary.week-summary,
-      .week-body{
-        padding-left:18px;
-        padding-right:18px;
+      .timeline {
+        display: grid;
+        gap: 12px;
+        margin-top: 14px;
       }
 
-      .timeline-item{
-        grid-template-columns:1fr;
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 14px;
+        align-items: start;
+        background: var(--panel-soft);
+        border: 1px solid rgba(217, 119, 6, 0.12);
+        border-radius: 18px;
+        padding: 14px;
       }
 
-      .stats{
-        grid-template-columns:1fr 1fr;
-      }
-    }
-
-    @media (max-width:640px){
-      .stats{
-        grid-template-columns:1fr;
+      .timeline-item strong {
+        color: #8a4b00;
+        font-size: 0.95rem;
       }
 
-      .toast{
-        padding:20px 18px;
-        border-radius:20px;
+      .timeline-item div {
+        color: var(--muted);
+        line-height: 1.6;
       }
 
-      .toast-title{
-        font-size:1.2rem;
+      .progress-bar {
+        height: 16px;
+        background: #fff3dc;
+        border-radius: 999px;
+        overflow: hidden;
+        border: 1px solid rgba(217, 119, 6, 0.14);
+        margin: 14px 0 10px;
       }
 
-      .toast small{
-        font-size:.95rem;
+      .progress-fill {
+        width: 8%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--brand),
+          var(--brand2),
+          var(--brand3)
+        );
+        border-radius: 999px;
       }
-    }
-  </style>
-</head>
-<body>
-  <nav class="top">
-    <div class="navwrap">
-      <a class="brandline locked-link" href="index.html" data-locked-link="true">
-        <strong>AI-ML Course V3 Premium</strong>
-        <span data-pp-speak-title="true">Build real skills, real projects, and real deployment confidence</span>
-      </a>
 
-      <div class="navactions">
-        <a class="btn locked" href="index.html" data-locked-link="true">Home</a>
-        <a class="btn brand locked" href="course-map.html" data-locked-link="true">Course Map</a>
-        <a class="btn locked" href="projects/index.html" data-locked-link="true">Projects</a>
-        <a class="btn locked" href="README.md" data-locked-link="true">README</a>
-      </div>
-    </div>
-  </nav>
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
 
-  <main class="wrap">
-    <section class="hero">
-      <span class="badge">Flagship AI-ML Learning Experience</span>
+      .pill {
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: #fff8eb;
+        border: 1px solid rgba(217, 119, 6, 0.14);
+        color: #8a4b00;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
 
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <h1 id="speak0">From Python beginner to project-ready AI-ML builder in 12 structured weeks</h1>
+      .weeks-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
 
-          <p id="speak1">
-            This course is designed as a guided journey, not just a set of isolated lessons.
-            It begins with Python and data handling, develops statistical thinking and model-building skills,
-            and then moves into real datasets, machine learning workflows, and deployment-oriented projects.
-          </p>
+      details.week-card {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: linear-gradient(180deg, #ffffff, #fffaf0);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
 
-          <p id="speak2">
-            The goal is not merely to “cover topics.” The goal is to help learners become confident enough
-            to read data, think logically, build useful models, explain results clearly, and turn their work
-            into portfolio-worthy projects.
-          </p>
+      details.week-card[open] {
+        background: linear-gradient(180deg, #ffffff, #fff8eb);
+      }
 
-          <div class="hero-actions">
-            <a class="btn brand locked" href="week01/lesson.html" data-locked-link="true">Start Course</a>
-            <a class="btn soft locked" href="projects/index.html" data-locked-link="true">View Projects</a>
-            <a class="btn soft locked" href="README.md" data-locked-link="true">Explore Course Pack</a>
-          </div>
+      summary.week-summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 22px;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+
+      summary.week-summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .week-left {
+        display: grid;
+        gap: 14px;
+        flex: 1;
+      }
+
+      .week-head {
+        display: flex;
+        gap: 14px;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .week-title-block h3 {
+        margin: 0 0 8px;
+        font-size: 1.35rem;
+        line-height: 1.24;
+      }
+
+      .week-title-block p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .week-no {
+        min-width: 96px;
+        text-align: center;
+        background: linear-gradient(135deg, #fff2cc, #ffe7ad);
+        color: #8a4b00;
+        border: 1px solid rgba(217, 119, 6, 0.18);
+        border-radius: 18px;
+        padding: 11px 12px;
+        font-weight: 800;
+        font-size: 0.98rem;
+      }
+
+      .meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .meta-chip {
+        border: 1px solid rgba(217, 119, 6, 0.16);
+        background: #fff;
+        color: #7a4d0d;
+        border-radius: 999px;
+        padding: 7px 11px;
+        font-size: 0.84rem;
+        font-weight: 800;
+      }
+
+      .level-beginner {
+        background: #edfdf3;
+        color: #166534;
+        border-color: #b7ebc6;
+      }
+      .level-intermediate {
+        background: #fff7e6;
+        color: #b45309;
+        border-color: #f5d08a;
+      }
+      .level-advanced {
+        background: #eff6ff;
+        color: #1d4ed8;
+        border-color: #bfd5ff;
+      }
+      .level-capstone {
+        background: #fef2f2;
+        color: #991b1b;
+        border-color: #f7c3c3;
+      }
+
+      .expand-indicator {
+        min-width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        border: 1px solid rgba(217, 119, 6, 0.16);
+        background: #fff;
+        color: #8a4b00;
+        font-size: 1.2rem;
+        font-weight: 900;
+      }
+
+      details[open] .expand-indicator {
+        transform: rotate(180deg);
+      }
+
+      .week-body {
+        padding: 0 22px 22px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .subcard {
+        background: #fff;
+        border: 1px solid rgba(217, 119, 6, 0.12);
+        border-radius: 20px;
+        padding: 16px;
+      }
+
+      .subcard h4 {
+        margin: 0 0 10px;
+        color: #8a4b00;
+        font-size: 1rem;
+      }
+
+      .subcard p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .subcard ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      .subcard li {
+        margin: 0 0 8px;
+        color: #40321d;
+        line-height: 1.55;
+      }
+
+      .subcard li:last-child {
+        margin-bottom: 0;
+      }
+
+      .mini-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .project-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .project-item {
+        background: var(--panel-2);
+        border: 1px dashed rgba(217, 119, 6, 0.24);
+        border-radius: 16px;
+        padding: 12px 13px;
+      }
+
+      .project-item strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #8a4b00;
+      }
+
+      .project-item span {
+        display: block;
+        color: #604d2d;
+        line-height: 1.55;
+      }
+
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tag {
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: #fff8ea;
+        border: 1px solid rgba(217, 119, 6, 0.13);
+        color: #8a4b00;
+        font-size: 0.83rem;
+        font-weight: 700;
+      }
+
+      .action-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .instructor-grid {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 18px;
+        align-items: center;
+      }
+
+      .avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 26px;
+        background: linear-gradient(135deg, #fff0c2, #f59e0b);
+        display: grid;
+        place-items: center;
+        font-size: 2.2rem;
+        color: #7c4600;
+        font-weight: 900;
+        border: 1px solid rgba(217, 119, 6, 0.18);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .instructor-grid h3 {
+        margin: 0 0 10px;
+        font-size: 1.35rem;
+      }
+
+      .instructor-grid p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .cta-card {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 1),
+          rgba(255, 244, 220, 1)
+        );
+      }
+
+      .cta-card h2 {
+        margin: 0 0 10px;
+      }
+
+      .cta-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .toast-wrap {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        pointer-events: none;
+      }
+
+      .toast {
+        min-width: min(92vw, 420px);
+        max-width: min(92vw, 520px);
+        background: linear-gradient(
+          135deg,
+          #2b2112 0%,
+          #5b3200 55%,
+          #d97706 100%
+        );
+        color: #fffaf0;
+        padding: 24px 28px;
+        border-radius: 24px;
+        border: 2px solid rgba(255, 255, 255, 0.28);
+        box-shadow:
+          0 28px 70px rgba(43, 33, 18, 0.42),
+          0 0 0 10px rgba(245, 158, 11, 0.18),
+          0 0 40px rgba(251, 191, 36, 0.32);
+        text-align: center;
+        opacity: 0;
+        transform: scale(0.88) translateY(12px);
+        transition:
+          opacity 0.28s ease,
+          transform 0.28s ease;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+
+      .toast-icon {
+        font-size: 2.1rem;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+
+      .toast-title {
+        font-size: 1.45rem;
+        margin-bottom: 8px;
+      }
+
+      .toast small {
+        display: block;
+        font-size: 1rem;
+        line-height: 1.55;
+        font-weight: 600;
+        color: rgba(255, 248, 235, 0.96);
+      }
+
+      .footer-note {
+        margin-top: 26px;
+        padding: 22px;
+        border-radius: 24px;
+        border: 1px solid var(--line);
+        background: #fff;
+        box-shadow: var(--shadow-soft);
+        color: var(--muted);
+        line-height: 1.72;
+      }
+
+      .footer-note p {
+        margin: 0 0 10px;
+      }
+      .footer-note p:last-child {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 1100px) {
+        .hero-grid,
+        .journey,
+        .info-grid,
+        .weeks-grid,
+        .cols,
+        .mini-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .navwrap,
+        .section-head,
+        .week-head,
+        .instructor-grid {
+          grid-template-columns: none;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .navwrap {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .wrap {
+          width: min(100% - 16px, 1320px);
+        }
+
+        .hero,
+        .journey-card,
+        .instructor-card,
+        .progress-card,
+        .cta-card,
+        .info-card,
+        .footer-note {
+          padding: 18px;
+        }
+
+        summary.week-summary,
+        .week-body {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .timeline-item {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .stats {
+          grid-template-columns: 1fr;
+        }
+
+        .toast {
+          padding: 20px 18px;
+          border-radius: 20px;
+        }
+
+        .toast-title {
+          font-size: 1.2rem;
+        }
+
+        .toast small {
+          font-size: 0.95rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="top">
+      <div class="navwrap">
+        <a
+          class="brandline locked-link"
+          href="index.html"
+          data-locked-link="true"
+        >
+          <strong>AI-ML Course</strong>
+          <span data-pp-speak-title="true"
+            >Build real skills, real projects, and real deployment
+            confidence</span
+          >
+        </a>
+
+        <div class="navactions">
+          <a class="btn locked" href="index.html" data-locked-link="true"
+            >Home</a
+          >
+          <a
+            class="btn brand locked"
+            href="course-map.html"
+            data-locked-link="true"
+            >Course Map</a
+          >
+          <a
+            class="btn locked"
+            href="projects/index.html"
+            data-locked-link="true"
+            >Projects</a
+          >
+          <a class="btn locked" href="README.md" data-locked-link="true"
+            >README</a
+          >
         </div>
+      </div>
+    </nav>
 
-        <div class="hero-side">
-          <div class="hero-card">
-            <h2 id="speak3">Why this course stands out</h2>
-            <p id="speak4">
-              The course balances theory, coding, datasets, charts, supervised learning, probability,
-              guided projects, and final deployment. It is designed to feel practical, structured, and aspirational.
+    <main class="wrap">
+      <section class="hero">
+        <span class="badge">Premium AI-ML Learning Experience</span>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1 id="speak0">
+              From Python beginner to project-ready AI-ML builder in 12
+              structured weeks
+            </h1>
+
+            <p id="speak1">
+              This course is designed as a guided journey, not just a set of
+              isolated lessons. It begins with Python and data handling,
+              develops statistical thinking and model-building skills, and then
+              moves into real datasets, machine learning workflows, and
+              deployment-oriented projects.
             </p>
 
-            <div class="stats">
-              <div class="stat">
-                <strong>12</strong>
-                <span>carefully sequenced weeks</span>
-              </div>
-              <div class="stat">
-                <strong>4+</strong>
-                <span>major real-world project tracks</span>
-              </div>
-              <div class="stat">
-                <strong>3</strong>
-                <span>layers: coding, data, modeling</span>
-              </div>
-              <div class="stat">
-                <strong>1</strong>
-                <span>final capstone ready for showcase</span>
-              </div>
+            <p id="speak2">
+              The goal is not merely to “cover topics.” The goal is to help
+              learners become confident enough to read data, think logically,
+              build useful models, explain results clearly, and turn their work
+              into portfolio-worthy projects.
+            </p>
+
+            <div class="hero-actions">
+              <a
+                class="btn brand locked"
+                href="week01/lesson.html"
+                data-locked-link="true"
+                >Start Course</a
+              >
+              <a
+                class="btn soft locked"
+                href="projects/index.html"
+                data-locked-link="true"
+                >View Projects</a
+              >
+              <a
+                class="btn soft locked"
+                href="README.md"
+                data-locked-link="true"
+                >Explore Course Pack</a
+              >
             </div>
           </div>
 
-          <div class="hero-card">
-            <h3 id="speak5">By the end, learners should be able to</h3>
-            <div class="pill-row">
-              <span class="pill">Write Python confidently</span>
-              <span class="pill">Clean and analyze datasets</span>
-              <span class="pill">Build charts and summaries</span>
-              <span class="pill">Understand regression and classification</span>
-              <span class="pill">Reason with probability</span>
-              <span class="pill">Complete a capstone project</span>
+          <div class="hero-side">
+            <div class="hero-card">
+              <h2 id="speak3">Why this course stands out</h2>
+              <p id="speak4">
+                The course balances theory, coding, datasets, charts, supervised
+                learning, probability, guided projects, and final deployment. It
+                is designed to feel practical, structured, and aspirational.
+              </p>
+
+              <div class="stats">
+                <div class="stat">
+                  <strong>12</strong>
+                  <span>carefully sequenced weeks</span>
+                </div>
+                <div class="stat">
+                  <strong>4+</strong>
+                  <span>major real-world project tracks</span>
+                </div>
+                <div class="stat">
+                  <strong>3</strong>
+                  <span>layers: coding, data, modeling</span>
+                </div>
+                <div class="stat">
+                  <strong>1</strong>
+                  <span>final capstone ready for showcase</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-card">
+              <h3 id="speak5">By the end, learners should be able to</h3>
+              <div class="pill-row">
+                <span class="pill">Write Python confidently</span>
+                <span class="pill">Clean and analyze datasets</span>
+                <span class="pill">Build charts and summaries</span>
+                <span class="pill"
+                  >Understand regression and classification</span
+                >
+                <span class="pill">Reason with probability</span>
+                <span class="pill">Complete a capstone project</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section">
-      <div class="journey">
-        <div class="journey-card">
-          <div class="section-head" style="margin-bottom:0">
+      <section class="section">
+        <div class="journey">
+          <div class="journey-card">
+            <div class="section-head" style="margin-bottom: 0">
+              <div>
+                <h2 id="speak6">Student journey</h2>
+                <p id="speak7">
+                  The course is designed as a visible transformation. The
+                  learner starts with syntax and logic, then grows into a data
+                  thinker, and finally into a project builder with deployment
+                  awareness.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline">
+              <div class="timeline-item">
+                <strong id="speak8">Days 1–10</strong>
+                <div id="speak9">
+                  Learn Python logic, write small programs, and build confidence
+                  with variables, conditions, loops, and functions.
+                </div>
+              </div>
+              <div class="timeline-item">
+                <strong id="speak10">Days 11–25</strong>
+                <div id="speak11">
+                  Move into NumPy, pandas, charts, and data cleaning. Start
+                  handling real data rather than toy code alone.
+                </div>
+              </div>
+              <div class="timeline-item">
+                <strong id="speak12">Days 26–40</strong>
+                <div id="speak13">
+                  Understand statistics, relationships, regression,
+                  classification, and the logic behind prediction and model
+                  evaluation.
+                </div>
+              </div>
+              <div class="timeline-item">
+                <strong id="speak14">Days 41–60</strong>
+                <div id="speak15">
+                  Work with real datasets, guided project tracks, domain
+                  caution, and a final capstone that can be shown publicly.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-card">
+            <h2 id="speak16">Course release progress</h2>
+            <p id="speak17">
+              The course map is live and the sections are structured. Content
+              can be rolled out stage by stage. Locked sections help maintain a
+              clean experience while the rest of the platform is polished.
+            </p>
+
+            <div class="progress-bar" aria-label="Course release progress">
+              <div class="progress-fill"></div>
+            </div>
+
+            <p id="speak18">
+              <strong>Current visible release:</strong> early premium roadmap
+              state
+            </p>
+
+            <div class="pill-row">
+              <span class="pill">Course map ready</span>
+              <span class="pill">Projects planned</span>
+              <span class="pill">Lessons staged</span>
+              <span class="pill">Locked rollout enabled</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2 id="speak19">Core design pillars</h2>
+            <p id="speak20">
+              A strong course page should not only tell students what exists. It
+              should show them what they gain, why it matters, and what they can
+              build with it.
+            </p>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <h3 id="speak21">Structured progression</h3>
+            <p id="speak22">
+              The roadmap moves from foundations to analytics to machine
+              learning to real deployment in a way that feels intentional.
+            </p>
+          </div>
+          <div class="info-card">
+            <h3 id="speak23">Real-world orientation</h3>
+            <p id="speak24">
+              Weather, sports, finance, healthcare, and practical datasets make
+              the course feel alive and relevant.
+            </p>
+          </div>
+          <div class="info-card">
+            <h3 id="speak25">Project visibility</h3>
+            <p id="speak26">
+              Every week should point toward something buildable so learners
+              always see where the knowledge is heading.
+            </p>
+          </div>
+          <div class="info-card">
+            <h3 id="speak27">Confidence building</h3>
+            <p id="speak28">
+              Students should repeatedly feel, “I can do this now,” through mini
+              outcomes, small projects, and visible skill growth.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2 id="speak29">12-week roadmap</h2>
+            <p id="speak30">
+              Each week below includes difficulty level, expected outcome,
+              practical skills, project ideas, real-world uses, and locked
+              access links for staged launch.
+            </p>
+          </div>
+        </div>
+
+        <div class="weeks-grid">
+          <details class="week-card" id="week01">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak31">Week 1: Python Foundations I</h3>
+                    <p id="speak32">
+                      Start with the grammar of programming: variables, data
+                      types, expressions, input, output, and the basic structure
+                      of problem solving.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 01</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-beginner">Beginner</span>
+                  <span class="meta-chip">Duration: 6–8 hours</span>
+                  <span class="meta-chip">Focus: Python Basics</span>
+                  <span class="meta-chip"
+                    >Outcome: write small useful programs</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak33">What students learn</h4>
+                  <ul>
+                    <li>
+                      Variables, strings, numbers, and arithmetic expressions.
+                    </li>
+                    <li>Input and output flow.</li>
+                    <li>Expression evaluation and operator meaning.</li>
+                    <li>How to think in small executable steps.</li>
+                  </ul>
+                </div>
+
+                <div class="subcard">
+                  <h4 id="speak34">Why this matters</h4>
+                  <p>
+                    This week removes the fear of code. It gives students a base
+                    language for everything that follows. A learner who is
+                    comfortable here is far more likely to succeed later in data
+                    analysis and ML.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak35">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Basic coding</span>
+                    <span class="tag">Input handling</span>
+                    <span class="tag">Arithmetic logic</span>
+                    <span class="tag">Program flow</span>
+                  </div>
+                </div>
+
+                <div class="subcard">
+                  <h4 id="speak36">Real-world use</h4>
+                  <p>
+                    Foundational scripting, automation tasks, calculators, and
+                    data entry helpers all begin here.
+                  </p>
+                </div>
+
+                <div class="subcard">
+                  <h4 id="speak37">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Calculator Builder</strong
+                      ><span>Build a basic arithmetic calculator.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Marks Summary Tool</strong
+                      ><span>Compute total, average, and grade note.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Unit Converter</strong
+                      ><span>Convert temperature, length, or weight.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week01/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week01/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week01/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week02">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak38">Week 2: Python Foundations II</h3>
+                    <p id="speak39">
+                      Go deeper into logic with conditions, loops, functions,
+                      and collections so code becomes structured and reusable.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 02</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-beginner">Beginner</span>
+                  <span class="meta-chip">Duration: 7–9 hours</span>
+                  <span class="meta-chip">Focus: Logic + Flow</span>
+                  <span class="meta-chip">Outcome: solve repeatable tasks</span>
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak40">What students learn</h4>
+                  <ul>
+                    <li>If, else, nested decision making.</li>
+                    <li>For loops and while loops.</li>
+                    <li>Functions as reusable blocks.</li>
+                    <li>
+                      Lists, tuples, dictionaries, and structured storage.
+                    </li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak41">Why this matters</h4>
+                  <p>
+                    Later data work depends on filtering, repetition, logic, and
+                    structure. This week is where students stop merely typing
+                    code and begin controlling behavior.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak42">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Decision making</span>
+                    <span class="tag">Looping</span>
+                    <span class="tag">Functions</span>
+                    <span class="tag">Collections</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak43">Real-world use</h4>
+                  <p>
+                    Validation systems, repetitive data tasks, menu-driven
+                    utilities, and mini automation scripts.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak44">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Grade Classifier</strong
+                      ><span>Turn marks into grade bands and feedback.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Pattern Generator</strong
+                      ><span>Generate structured patterns with loops.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Contact Book Prototype</strong
+                      ><span>Store names and phone values with functions.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week02/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week02/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week02/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week03">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak45">Week 3: NumPy Essentials</h3>
+                    <p id="speak46">
+                      Enter numerical computing with arrays, shapes, slicing,
+                      and vectorized thinking that prepares students for model
+                      work.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 03</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-intermediate"
+                    >Early Intermediate</span
+                  >
+                  <span class="meta-chip">Duration: 7–9 hours</span>
+                  <span class="meta-chip">Focus: Arrays</span>
+                  <span class="meta-chip"
+                    >Outcome: structured numerical thinking</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak47">What students learn</h4>
+                  <ul>
+                    <li>Arrays compared to Python lists.</li>
+                    <li>Indexing, slicing, dimensions, reshaping.</li>
+                    <li>Vectorized operations.</li>
+                    <li>Why matrix-like structures matter for ML.</li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak48">Why this matters</h4>
+                  <p>
+                    This is the bridge between beginner programming and actual
+                    numerical computing. It begins the shift from plain coding
+                    into data science thinking.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak49">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Array handling</span>
+                    <span class="tag">Slicing</span>
+                    <span class="tag">Reshaping</span>
+                    <span class="tag">Fast computation</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak50">Real-world use</h4>
+                  <p>
+                    Data tables, image grids, model inputs, and mathematical
+                    preprocessing all rely on array-style structures.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak51">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Matrix Playground</strong
+                      ><span>Create and reshape arrays.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Marks Array Analyzer</strong
+                      ><span>Compute totals and averages quickly.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Image Grid Basics</strong
+                      ><span>Represent simple images as 2D values.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week03/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week03/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week03/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week04">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak52">Week 4: Pandas and Matplotlib</h3>
+                    <p id="speak53">
+                      Turn raw data into readable information with DataFrames,
+                      filtering, cleaning, and charts.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 04</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-intermediate">Intermediate</span>
+                  <span class="meta-chip">Duration: 8–10 hours</span>
+                  <span class="meta-chip">Focus: DataFrames + Charts</span>
+                  <span class="meta-chip"
+                    >Outcome: read and visualize real data</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak54">What students learn</h4>
+                  <ul>
+                    <li>CSV, Excel, and table imports.</li>
+                    <li>Filtering, sorting, grouping, and summaries.</li>
+                    <li>Missing values and basic cleaning.</li>
+                    <li>Line, bar, histogram, and scatter charts.</li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak55">Why this matters</h4>
+                  <p>
+                    This is where the course starts feeling powerful. Students
+                    stop staring at raw rows and begin extracting patterns,
+                    trends, and insights from real-world-style data.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak56">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Data cleaning</span>
+                    <span class="tag">DataFrames</span>
+                    <span class="tag">Filtering</span>
+                    <span class="tag">Charts</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak57">Real-world use</h4>
+                  <p>
+                    Reporting, analytics dashboards, data audits, and the first
+                    stage of nearly every applied AI workflow.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak58">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>CSV Report Generator</strong
+                      ><span>Summarize and export cleaned data.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Attendance Dashboard</strong
+                      ><span>Create simple visual reports.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Sales Chart Studio</strong
+                      ><span>Show trends and category comparisons.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week04/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week04/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week04/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week05">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak59">Week 5: Statistics for AI</h3>
+                    <p id="speak60">
+                      Understand what data is saying through mean, median, mode,
+                      quartiles, variance, and deviation.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 05</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-intermediate">Intermediate</span>
+                  <span class="meta-chip">Duration: 7–9 hours</span>
+                  <span class="meta-chip">Focus: Statistical Thinking</span>
+                  <span class="meta-chip"
+                    >Outcome: interpret data more responsibly</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak61">What students learn</h4>
+                  <ul>
+                    <li>Mean, median, mode, quartiles, and percentiles.</li>
+                    <li>Variance, standard deviation, and spread.</li>
+                    <li>Why averages can mislead.</li>
+                    <li>How statistics and charts support each other.</li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak62">Why this matters</h4>
+                  <p>
+                    Machine learning without statistics becomes mechanical and
+                    shallow. This week helps students interpret patterns rather
+                    than blindly applying formulas.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak63">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Descriptive statistics</span>
+                    <span class="tag">Spread analysis</span>
+                    <span class="tag">Interpretation</span>
+                    <span class="tag">Data comparison</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak64">Real-world use</h4>
+                  <p>
+                    Performance analysis, trend understanding, anomaly
+                    awareness, and building better feature intuition.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak65">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Statistics Report Card</strong
+                      ><span>Generate summary stats for a dataset.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Class Performance Analyzer</strong
+                      ><span>Study clustering and spread.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Weather Spread Study</strong
+                      ><span>Compare stability across periods.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week05/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week05/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week05/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week06">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak66">Week 6: Regression and Correlation</h3>
+                    <p id="speak67">
+                      See how variables move together and learn how prediction
+                      begins with relationship modeling.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 06</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-intermediate">Intermediate</span>
+                  <span class="meta-chip">Duration: 8–10 hours</span>
+                  <span class="meta-chip">Focus: Regression</span>
+                  <span class="meta-chip"
+                    >Outcome: build simple prediction logic</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak68">What students learn</h4>
+                  <ul>
+                    <li>Correlation and relationship strength.</li>
+                    <li>Linear regression intuition.</li>
+                    <li>Curve fitting basics.</li>
+                    <li>Simple numeric prediction.</li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak69">Why this matters</h4>
+                  <p>
+                    This is a turning point. Students move from reading data to
+                    using data for limited prediction. It makes machine learning
+                    feel real for the first time.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak70">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Relationship analysis</span>
+                    <span class="tag">Trend fitting</span>
+                    <span class="tag">Prediction basics</span>
+                    <span class="tag">Model caution</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak71">Real-world use</h4>
+                  <p>
+                    Forecast-style analysis, sales trend estimation, basic
+                    demand prediction, and exploratory modeling.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak72">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Sales Predictor</strong
+                      ><span>Estimate future values using trends.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Study Hours vs Marks</strong
+                      ><span>Explore relationships in learning data.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Temperature Trend Estimator</strong
+                      ><span>Fit and discuss a simple line.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week06/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week06/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week06/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week07">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak73">Week 7: Classification Fundamentals</h3>
+                    <p id="speak74">
+                      Shift from predicting numbers to predicting labels,
+                      categories, and decisions.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 07</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-intermediate">Intermediate</span>
+                  <span class="meta-chip">Duration: 8–10 hours</span>
+                  <span class="meta-chip">Focus: Classification</span>
+                  <span class="meta-chip"
+                    >Outcome: understand labels and model logic</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak75">What students learn</h4>
+                  <ul>
+                    <li>Difference between regression and classification.</li>
+                    <li>Features, labels, training data, testing data.</li>
+                    <li>Basic classifier logic and evaluation intuition.</li>
+                    <li>Rule-based versus learned decisions.</li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak76">Why this matters</h4>
+                  <p>
+                    A large share of practical AI is classification. This week
+                    makes learners think in terms of categories, outcomes, and
+                    decision boundaries rather than only continuous values.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak77">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Labels and features</span>
+                    <span class="tag">Supervised learning</span>
+                    <span class="tag">Train-test logic</span>
+                    <span class="tag">Basic evaluation</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak78">Real-world use</h4>
+                  <p>
+                    Pass-fail prediction, spam filtering, medical flagging,
+                    category assignment, and risk detection.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak79">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Pass or Fail Predictor</strong
+                      ><span>Classify student outcomes.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Email Category Demo</strong
+                      ><span>Label simple text examples.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Risk Flag Prototype</strong
+                      ><span>Group guided data into categories.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week07/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week07/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week07/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week08">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak80">Week 8: Probability and Bayes Thinking</h3>
+                    <p id="speak81">
+                      Learn how AI systems think under uncertainty using
+                      probability, conditioning, and Bayes-style reasoning.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 08</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-intermediate">Intermediate</span>
+                  <span class="meta-chip">Duration: 7–9 hours</span>
+                  <span class="meta-chip">Focus: Probability</span>
+                  <span class="meta-chip"
+                    >Outcome: reason under uncertainty</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak82">What students learn</h4>
+                  <ul>
+                    <li>Basic probability and event spaces.</li>
+                    <li>Conditional probability.</li>
+                    <li>Bayes theorem intuition.</li>
+                    <li>Why uncertain evidence needs interpretation.</li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak83">Why this matters</h4>
+                  <p>
+                    This week improves reasoning. It helps students stop
+                    treating model outputs as absolute truth and start
+                    understanding uncertainty, evidence, and context.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak84">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Probability reasoning</span>
+                    <span class="tag">Conditional logic</span>
+                    <span class="tag">Bayes intuition</span>
+                    <span class="tag">Uncertainty handling</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak85">Real-world use</h4>
+                  <p>
+                    Spam detection, test result interpretation, risk scoring,
+                    and evidence-based decision systems.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak86">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Coin and Dice Simulator</strong
+                      ><span>Simulate and compare observed outcomes.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Medical Test Demo</strong
+                      ><span>Explain why positives need context.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Spam Likelihood Explorer</strong
+                      ><span>Connect simple word evidence to probability.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week08/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week08/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week08/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week09">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak87">Week 9: Working with Datasets</h3>
+                    <p id="speak88">
+                      Learn the workflow of sourcing, importing, validating,
+                      converting, documenting, and moving data across systems.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 09</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-intermediate">Intermediate</span>
+                  <span class="meta-chip">Duration: 8–10 hours</span>
+                  <span class="meta-chip">Focus: Data Workflow</span>
+                  <span class="meta-chip"
+                    >Outcome: reliable data pipelines</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak89">What students learn</h4>
+                  <ul>
+                    <li>Respectable data sourcing habits.</li>
+                    <li>CSV, Excel, pandas, database, and API flow.</li>
+                    <li>
+                      Validation, consistency, and cleaning responsibility.
+                    </li>
+                    <li>Documentation and traceability.</li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak90">Why this matters</h4>
+                  <p>
+                    Weak data flow breaks good projects. This week helps
+                    learners treat data as a system, not only as content to be
+                    loaded at the last minute.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak91">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Import/export</span>
+                    <span class="tag">Validation</span>
+                    <span class="tag">Conversion</span>
+                    <span class="tag">Reliability</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak92">Real-world use</h4>
+                  <p>
+                    Data preparation, ETL-style thinking, cleaning pipelines,
+                    and multi-source analytics projects.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak93">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Dataset Import Hub</strong
+                      ><span>Standardize multiple source types.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Validation Checker</strong
+                      ><span>Detect missing and suspicious values.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Format Converter</strong
+                      ><span>Move between CSV, Excel, and JSON.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week09/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week09/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week09/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week10">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak94">
+                      Week 10: Real Project I — Weather and IPL
+                    </h3>
+                    <p id="speak95">
+                      Bring together data cleaning, statistics, charting, and
+                      applied interpretation through weather and sports
+                      datasets.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 10</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-advanced"
+                    >Applied Intermediate</span
+                  >
+                  <span class="meta-chip">Duration: 9–11 hours</span>
+                  <span class="meta-chip">Focus: Guided Project Work</span>
+                  <span class="meta-chip"
+                    >Outcome: end-to-end analysis workflow</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak96">What students learn</h4>
+                  <ul>
+                    <li>How to ask meaningful questions from real datasets.</li>
+                    <li>
+                      How to connect summaries, charts, and interpretation.
+                    </li>
+                    <li>How to explain findings clearly.</li>
+                    <li>How multiple earlier weeks combine in one workflow.</li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak97">Why this matters</h4>
+                  <p>
+                    This is where the course begins to feel portfolio-worthy.
+                    Students move away from isolated exercises into more
+                    authentic data analysis and story-building.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak98">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Applied analysis</span>
+                    <span class="tag">Narrative explanation</span>
+                    <span class="tag">Dataset interpretation</span>
+                    <span class="tag">Project confidence</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak99">Real-world use</h4>
+                  <p>
+                    Sports analytics, local weather dashboards, trend reporting,
+                    and public-facing data storytelling.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak100">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Varanasi Weather Dashboard</strong
+                      ><span>Show averages, changes, and trends.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>IPL Performance Explorer</strong
+                      ><span>Analyze players and match metrics.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Match Insight Generator</strong
+                      ><span>Turn raw stats into readable summaries.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week10/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week10/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week10/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week11">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak101">
+                      Week 11: Real Project II — Finance and Medical Data
+                    </h3>
+                    <p id="speak102">
+                      Work in higher-caution domains and learn not only how to
+                      model, but how to communicate limits responsibly.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 11</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-advanced"
+                    >Applied Intermediate</span
+                  >
+                  <span class="meta-chip">Duration: 9–11 hours</span>
+                  <span class="meta-chip">Focus: Sensitive Domains</span>
+                  <span class="meta-chip"
+                    >Outcome: more mature ML thinking</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak103">What students learn</h4>
+                  <ul>
+                    <li>Why some domains demand extra caution.</li>
+                    <li>Noise, volatility, uncertainty, and ethics.</li>
+                    <li>How to explain limits without overselling a model.</li>
+                    <li>How to document assumptions honestly.</li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak104">Why this matters</h4>
+                  <p>
+                    A strong AI course should not only teach building. It should
+                    teach judgment. This week gives the course maturity and
+                    credibility.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak105">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Responsible interpretation</span>
+                    <span class="tag">Risk awareness</span>
+                    <span class="tag">Limitation writing</span>
+                    <span class="tag">Domain caution</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak106">Real-world use</h4>
+                  <p>
+                    Finance analysis pages, guided healthcare examples, risk
+                    reporting, and decision-support prototypes.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak107">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Finance Trend Viewer</strong
+                      ><span>Explore movement and volatility.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Medical Risk Demo</strong
+                      ><span>Show classification with caution notes.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Limitation Reporter</strong
+                      ><span>Attach responsible notes to model output.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week11/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week11/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week11/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+
+          <details class="week-card" id="week12">
+            <summary class="week-summary">
+              <div class="week-left">
+                <div class="week-head">
+                  <div class="week-title-block">
+                    <h3 id="speak108">Week 12: Capstone and Deployment</h3>
+                    <p id="speak109">
+                      Package everything into a final project with data,
+                      workflow, charts, explanation, and deployable
+                      presentation.
+                    </p>
+                  </div>
+                  <div class="week-no">Week 12</div>
+                </div>
+
+                <div class="meta-row">
+                  <span class="meta-chip level-capstone">Capstone</span>
+                  <span class="meta-chip">Duration: 10–14 hours</span>
+                  <span class="meta-chip">Focus: Final Integration</span>
+                  <span class="meta-chip"
+                    >Outcome: portfolio-ready project</span
+                  >
+                </div>
+              </div>
+              <div class="expand-indicator">⌄</div>
+            </summary>
+
+            <div class="week-body">
+              <div class="cols">
+                <div class="subcard">
+                  <h4 id="speak110">What students learn</h4>
+                  <ul>
+                    <li>
+                      How to combine coding, data, charts, and explanation.
+                    </li>
+                    <li>How to present technical work clearly.</li>
+                    <li>How to package and host a final project.</li>
+                    <li>How to make work feel polished and public-facing.</li>
+                  </ul>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak111">Why this matters</h4>
+                  <p>
+                    This week converts learning into evidence. It is where the
+                    learner leaves the course with something real enough to
+                    show, discuss, and improve.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="subcard">
+                  <h4 id="speak112">Skills you gain</h4>
+                  <div class="tag-list">
+                    <span class="tag">Project packaging</span>
+                    <span class="tag">Presentation</span>
+                    <span class="tag">Static deployment</span>
+                    <span class="tag">Portfolio building</span>
+                  </div>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak113">Real-world use</h4>
+                  <p>
+                    Portfolio sites, GitHub Pages projects, demo dashboards, and
+                    capstone showcases for students and institutions.
+                  </p>
+                </div>
+                <div class="subcard">
+                  <h4 id="speak114">Projects in this week</h4>
+                  <div class="project-list">
+                    <div class="project-item">
+                      <strong>Weather Intelligence App</strong
+                      ><span
+                        >Charts, trends, and light prediction
+                        presentation.</span
+                      >
+                    </div>
+                    <div class="project-item">
+                      <strong>Student Performance System</strong
+                      ><span>Combine analytics and classification ideas.</span>
+                    </div>
+                    <div class="project-item">
+                      <strong>Business Insights Dashboard</strong
+                      ><span>Deliver readable trends and recommendations.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <a
+                  class="btn brand locked"
+                  href="week12/lesson.html"
+                  data-locked-link="true"
+                  >Open Lesson</a
+                >
+                <a
+                  class="btn locked"
+                  href="week12/assignment.html"
+                  data-locked-link="true"
+                  >Open Assignment</a
+                >
+                <a
+                  class="btn locked"
+                  href="week12/mcq.json"
+                  data-locked-link="true"
+                  >Open MCQ JSON</a
+                >
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="instructor-card">
+          <div class="instructor-grid">
+            <div class="avatar">CR</div>
             <div>
-              <h2 id="speak6">Student journey</h2>
-              <p id="speak7">
-                The course is designed as a visible transformation. The learner starts with syntax and logic,
-                then grows into a data thinker, and finally into a project builder with deployment awareness.
+              <h3 id="speak115">Mentored by Champak Roy,</h3>
+              <p id="speak116">
+                This course becomes stronger when its guided by a real
+                person(Champak Roy). Talk to Champak, , speaking support,
+                examples, and direct explanations. That is what turns a good
+                course map into a memorable learning Programmer's Picnic.
               </p>
             </div>
           </div>
-
-          <div class="timeline">
-            <div class="timeline-item">
-              <strong id="speak8">Days 1–10</strong>
-              <div id="speak9">Learn Python logic, write small programs, and build confidence with variables, conditions, loops, and functions.</div>
-            </div>
-            <div class="timeline-item">
-              <strong id="speak10">Days 11–25</strong>
-              <div id="speak11">Move into NumPy, pandas, charts, and data cleaning. Start handling real data rather than toy code alone.</div>
-            </div>
-            <div class="timeline-item">
-              <strong id="speak12">Days 26–40</strong>
-              <div id="speak13">Understand statistics, relationships, regression, classification, and the logic behind prediction and model evaluation.</div>
-            </div>
-            <div class="timeline-item">
-              <strong id="speak14">Days 41–60</strong>
-              <div id="speak15">Work with real datasets, guided project tracks, domain caution, and a final capstone that can be shown publicly.</div>
-            </div>
-          </div>
         </div>
+      </section>
 
-        <div class="progress-card">
-          <h2 id="speak16">Course release progress</h2>
-          <p id="speak17">
-            The course map is live and the sections are structured. Content can be rolled out stage by stage.
-            Locked sections help maintain a clean experience while the rest of the platform is polished.
+      <section class="section">
+        <div class="cta-card">
+          <h2 id="speak117">This is a flagship product</h2>
+          <p id="speak118">
+            You can send screenshots and messages on Whatsapp and discuss
+            anytime. Sessions will be on zoom and recorded.
           </p>
 
-          <div class="progress-bar" aria-label="Course release progress">
-            <div class="progress-fill"></div>
-          </div>
-
-          <p id="speak18"><strong>Current visible release:</strong> early premium roadmap state</p>
-
-          <div class="pill-row">
-            <span class="pill">Course map ready</span>
-            <span class="pill">Projects planned</span>
-            <span class="pill">Lessons staged</span>
-            <span class="pill">Locked rollout enabled</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <h2 id="speak19">Core design pillars</h2>
-          <p id="speak20">
-            A strong course page should not only tell students what exists. It should show them what they gain,
-            why it matters, and what they can build with it.
-          </p>
-        </div>
-      </div>
-
-      <div class="info-grid">
-        <div class="info-card">
-          <h3 id="speak21">Structured progression</h3>
-          <p id="speak22">The roadmap moves from foundations to analytics to machine learning to real deployment in a way that feels intentional.</p>
-        </div>
-        <div class="info-card">
-          <h3 id="speak23">Real-world orientation</h3>
-          <p id="speak24">Weather, sports, finance, healthcare, and practical datasets make the course feel alive and relevant.</p>
-        </div>
-        <div class="info-card">
-          <h3 id="speak25">Project visibility</h3>
-          <p id="speak26">Every week should point toward something buildable so learners always see where the knowledge is heading.</p>
-        </div>
-        <div class="info-card">
-          <h3 id="speak27">Confidence building</h3>
-          <p id="speak28">Students should repeatedly feel, “I can do this now,” through mini outcomes, small projects, and visible skill growth.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <h2 id="speak29">12-week premium roadmap</h2>
-          <p id="speak30">
-            Each week below includes difficulty level, expected outcome, practical skills, project ideas,
-            real-world uses, and locked access links for staged launch.
-          </p>
-        </div>
-      </div>
-
-      <div class="weeks-grid">
-
-        <details class="week-card" id="week01">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak31">Week 1: Python Foundations I</h3>
-                  <p id="speak32">Start with the grammar of programming: variables, data types, expressions, input, output, and the basic structure of problem solving.</p>
-                </div>
-                <div class="week-no">Week 01</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-beginner">Beginner</span>
-                <span class="meta-chip">Duration: 6–8 hours</span>
-                <span class="meta-chip">Focus: Python Basics</span>
-                <span class="meta-chip">Outcome: write small useful programs</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak33">What students learn</h4>
-                <ul>
-                  <li>Variables, strings, numbers, and arithmetic expressions.</li>
-                  <li>Input and output flow.</li>
-                  <li>Expression evaluation and operator meaning.</li>
-                  <li>How to think in small executable steps.</li>
-                </ul>
-              </div>
-
-              <div class="subcard">
-                <h4 id="speak34">Why this matters</h4>
-                <p>
-                  This week removes the fear of code. It gives students a base language for everything that follows.
-                  A learner who is comfortable here is far more likely to succeed later in data analysis and ML.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak35">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Basic coding</span>
-                  <span class="tag">Input handling</span>
-                  <span class="tag">Arithmetic logic</span>
-                  <span class="tag">Program flow</span>
-                </div>
-              </div>
-
-              <div class="subcard">
-                <h4 id="speak36">Real-world use</h4>
-                <p>Foundational scripting, automation tasks, calculators, and data entry helpers all begin here.</p>
-              </div>
-
-              <div class="subcard">
-                <h4 id="speak37">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Calculator Builder</strong><span>Build a basic arithmetic calculator.</span></div>
-                  <div class="project-item"><strong>Marks Summary Tool</strong><span>Compute total, average, and grade note.</span></div>
-                  <div class="project-item"><strong>Unit Converter</strong><span>Convert temperature, length, or weight.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week01/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week01/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week01/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week02">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak38">Week 2: Python Foundations II</h3>
-                  <p id="speak39">Go deeper into logic with conditions, loops, functions, and collections so code becomes structured and reusable.</p>
-                </div>
-                <div class="week-no">Week 02</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-beginner">Beginner</span>
-                <span class="meta-chip">Duration: 7–9 hours</span>
-                <span class="meta-chip">Focus: Logic + Flow</span>
-                <span class="meta-chip">Outcome: solve repeatable tasks</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak40">What students learn</h4>
-                <ul>
-                  <li>If, else, nested decision making.</li>
-                  <li>For loops and while loops.</li>
-                  <li>Functions as reusable blocks.</li>
-                  <li>Lists, tuples, dictionaries, and structured storage.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak41">Why this matters</h4>
-                <p>
-                  Later data work depends on filtering, repetition, logic, and structure. This week is where
-                  students stop merely typing code and begin controlling behavior.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak42">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Decision making</span>
-                  <span class="tag">Looping</span>
-                  <span class="tag">Functions</span>
-                  <span class="tag">Collections</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak43">Real-world use</h4>
-                <p>Validation systems, repetitive data tasks, menu-driven utilities, and mini automation scripts.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak44">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Grade Classifier</strong><span>Turn marks into grade bands and feedback.</span></div>
-                  <div class="project-item"><strong>Pattern Generator</strong><span>Generate structured patterns with loops.</span></div>
-                  <div class="project-item"><strong>Contact Book Prototype</strong><span>Store names and phone values with functions.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week02/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week02/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week02/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week03">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak45">Week 3: NumPy Essentials</h3>
-                  <p id="speak46">Enter numerical computing with arrays, shapes, slicing, and vectorized thinking that prepares students for model work.</p>
-                </div>
-                <div class="week-no">Week 03</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-intermediate">Early Intermediate</span>
-                <span class="meta-chip">Duration: 7–9 hours</span>
-                <span class="meta-chip">Focus: Arrays</span>
-                <span class="meta-chip">Outcome: structured numerical thinking</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak47">What students learn</h4>
-                <ul>
-                  <li>Arrays compared to Python lists.</li>
-                  <li>Indexing, slicing, dimensions, reshaping.</li>
-                  <li>Vectorized operations.</li>
-                  <li>Why matrix-like structures matter for ML.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak48">Why this matters</h4>
-                <p>
-                  This is the bridge between beginner programming and actual numerical computing.
-                  It begins the shift from plain coding into data science thinking.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak49">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Array handling</span>
-                  <span class="tag">Slicing</span>
-                  <span class="tag">Reshaping</span>
-                  <span class="tag">Fast computation</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak50">Real-world use</h4>
-                <p>Data tables, image grids, model inputs, and mathematical preprocessing all rely on array-style structures.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak51">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Matrix Playground</strong><span>Create and reshape arrays.</span></div>
-                  <div class="project-item"><strong>Marks Array Analyzer</strong><span>Compute totals and averages quickly.</span></div>
-                  <div class="project-item"><strong>Image Grid Basics</strong><span>Represent simple images as 2D values.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week03/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week03/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week03/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week04">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak52">Week 4: Pandas and Matplotlib</h3>
-                  <p id="speak53">Turn raw data into readable information with DataFrames, filtering, cleaning, and charts.</p>
-                </div>
-                <div class="week-no">Week 04</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-intermediate">Intermediate</span>
-                <span class="meta-chip">Duration: 8–10 hours</span>
-                <span class="meta-chip">Focus: DataFrames + Charts</span>
-                <span class="meta-chip">Outcome: read and visualize real data</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak54">What students learn</h4>
-                <ul>
-                  <li>CSV, Excel, and table imports.</li>
-                  <li>Filtering, sorting, grouping, and summaries.</li>
-                  <li>Missing values and basic cleaning.</li>
-                  <li>Line, bar, histogram, and scatter charts.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak55">Why this matters</h4>
-                <p>
-                  This is where the course starts feeling powerful. Students stop staring at raw rows and begin
-                  extracting patterns, trends, and insights from real-world-style data.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak56">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Data cleaning</span>
-                  <span class="tag">DataFrames</span>
-                  <span class="tag">Filtering</span>
-                  <span class="tag">Charts</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak57">Real-world use</h4>
-                <p>Reporting, analytics dashboards, data audits, and the first stage of nearly every applied AI workflow.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak58">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>CSV Report Generator</strong><span>Summarize and export cleaned data.</span></div>
-                  <div class="project-item"><strong>Attendance Dashboard</strong><span>Create simple visual reports.</span></div>
-                  <div class="project-item"><strong>Sales Chart Studio</strong><span>Show trends and category comparisons.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week04/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week04/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week04/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week05">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak59">Week 5: Statistics for AI</h3>
-                  <p id="speak60">Understand what data is saying through mean, median, mode, quartiles, variance, and deviation.</p>
-                </div>
-                <div class="week-no">Week 05</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-intermediate">Intermediate</span>
-                <span class="meta-chip">Duration: 7–9 hours</span>
-                <span class="meta-chip">Focus: Statistical Thinking</span>
-                <span class="meta-chip">Outcome: interpret data more responsibly</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak61">What students learn</h4>
-                <ul>
-                  <li>Mean, median, mode, quartiles, and percentiles.</li>
-                  <li>Variance, standard deviation, and spread.</li>
-                  <li>Why averages can mislead.</li>
-                  <li>How statistics and charts support each other.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak62">Why this matters</h4>
-                <p>
-                  Machine learning without statistics becomes mechanical and shallow. This week helps students
-                  interpret patterns rather than blindly applying formulas.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak63">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Descriptive statistics</span>
-                  <span class="tag">Spread analysis</span>
-                  <span class="tag">Interpretation</span>
-                  <span class="tag">Data comparison</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak64">Real-world use</h4>
-                <p>Performance analysis, trend understanding, anomaly awareness, and building better feature intuition.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak65">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Statistics Report Card</strong><span>Generate summary stats for a dataset.</span></div>
-                  <div class="project-item"><strong>Class Performance Analyzer</strong><span>Study clustering and spread.</span></div>
-                  <div class="project-item"><strong>Weather Spread Study</strong><span>Compare stability across periods.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week05/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week05/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week05/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week06">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak66">Week 6: Regression and Correlation</h3>
-                  <p id="speak67">See how variables move together and learn how prediction begins with relationship modeling.</p>
-                </div>
-                <div class="week-no">Week 06</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-intermediate">Intermediate</span>
-                <span class="meta-chip">Duration: 8–10 hours</span>
-                <span class="meta-chip">Focus: Regression</span>
-                <span class="meta-chip">Outcome: build simple prediction logic</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak68">What students learn</h4>
-                <ul>
-                  <li>Correlation and relationship strength.</li>
-                  <li>Linear regression intuition.</li>
-                  <li>Curve fitting basics.</li>
-                  <li>Simple numeric prediction.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak69">Why this matters</h4>
-                <p>
-                  This is a turning point. Students move from reading data to using data for limited prediction.
-                  It makes machine learning feel real for the first time.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak70">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Relationship analysis</span>
-                  <span class="tag">Trend fitting</span>
-                  <span class="tag">Prediction basics</span>
-                  <span class="tag">Model caution</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak71">Real-world use</h4>
-                <p>Forecast-style analysis, sales trend estimation, basic demand prediction, and exploratory modeling.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak72">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Sales Predictor</strong><span>Estimate future values using trends.</span></div>
-                  <div class="project-item"><strong>Study Hours vs Marks</strong><span>Explore relationships in learning data.</span></div>
-                  <div class="project-item"><strong>Temperature Trend Estimator</strong><span>Fit and discuss a simple line.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week06/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week06/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week06/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week07">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak73">Week 7: Classification Fundamentals</h3>
-                  <p id="speak74">Shift from predicting numbers to predicting labels, categories, and decisions.</p>
-                </div>
-                <div class="week-no">Week 07</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-intermediate">Intermediate</span>
-                <span class="meta-chip">Duration: 8–10 hours</span>
-                <span class="meta-chip">Focus: Classification</span>
-                <span class="meta-chip">Outcome: understand labels and model logic</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak75">What students learn</h4>
-                <ul>
-                  <li>Difference between regression and classification.</li>
-                  <li>Features, labels, training data, testing data.</li>
-                  <li>Basic classifier logic and evaluation intuition.</li>
-                  <li>Rule-based versus learned decisions.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak76">Why this matters</h4>
-                <p>
-                  A large share of practical AI is classification. This week makes learners think in terms of categories,
-                  outcomes, and decision boundaries rather than only continuous values.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak77">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Labels and features</span>
-                  <span class="tag">Supervised learning</span>
-                  <span class="tag">Train-test logic</span>
-                  <span class="tag">Basic evaluation</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak78">Real-world use</h4>
-                <p>Pass-fail prediction, spam filtering, medical flagging, category assignment, and risk detection.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak79">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Pass or Fail Predictor</strong><span>Classify student outcomes.</span></div>
-                  <div class="project-item"><strong>Email Category Demo</strong><span>Label simple text examples.</span></div>
-                  <div class="project-item"><strong>Risk Flag Prototype</strong><span>Group guided data into categories.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week07/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week07/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week07/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week08">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak80">Week 8: Probability and Bayes Thinking</h3>
-                  <p id="speak81">Learn how AI systems think under uncertainty using probability, conditioning, and Bayes-style reasoning.</p>
-                </div>
-                <div class="week-no">Week 08</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-intermediate">Intermediate</span>
-                <span class="meta-chip">Duration: 7–9 hours</span>
-                <span class="meta-chip">Focus: Probability</span>
-                <span class="meta-chip">Outcome: reason under uncertainty</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak82">What students learn</h4>
-                <ul>
-                  <li>Basic probability and event spaces.</li>
-                  <li>Conditional probability.</li>
-                  <li>Bayes theorem intuition.</li>
-                  <li>Why uncertain evidence needs interpretation.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak83">Why this matters</h4>
-                <p>
-                  This week improves reasoning. It helps students stop treating model outputs as absolute truth
-                  and start understanding uncertainty, evidence, and context.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak84">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Probability reasoning</span>
-                  <span class="tag">Conditional logic</span>
-                  <span class="tag">Bayes intuition</span>
-                  <span class="tag">Uncertainty handling</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak85">Real-world use</h4>
-                <p>Spam detection, test result interpretation, risk scoring, and evidence-based decision systems.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak86">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Coin and Dice Simulator</strong><span>Simulate and compare observed outcomes.</span></div>
-                  <div class="project-item"><strong>Medical Test Demo</strong><span>Explain why positives need context.</span></div>
-                  <div class="project-item"><strong>Spam Likelihood Explorer</strong><span>Connect simple word evidence to probability.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week08/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week08/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week08/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week09">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak87">Week 9: Working with Datasets</h3>
-                  <p id="speak88">Learn the workflow of sourcing, importing, validating, converting, documenting, and moving data across systems.</p>
-                </div>
-                <div class="week-no">Week 09</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-intermediate">Intermediate</span>
-                <span class="meta-chip">Duration: 8–10 hours</span>
-                <span class="meta-chip">Focus: Data Workflow</span>
-                <span class="meta-chip">Outcome: reliable data pipelines</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak89">What students learn</h4>
-                <ul>
-                  <li>Respectable data sourcing habits.</li>
-                  <li>CSV, Excel, pandas, database, and API flow.</li>
-                  <li>Validation, consistency, and cleaning responsibility.</li>
-                  <li>Documentation and traceability.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak90">Why this matters</h4>
-                <p>
-                  Weak data flow breaks good projects. This week helps learners treat data as a system,
-                  not only as content to be loaded at the last minute.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak91">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Import/export</span>
-                  <span class="tag">Validation</span>
-                  <span class="tag">Conversion</span>
-                  <span class="tag">Reliability</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak92">Real-world use</h4>
-                <p>Data preparation, ETL-style thinking, cleaning pipelines, and multi-source analytics projects.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak93">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Dataset Import Hub</strong><span>Standardize multiple source types.</span></div>
-                  <div class="project-item"><strong>Validation Checker</strong><span>Detect missing and suspicious values.</span></div>
-                  <div class="project-item"><strong>Format Converter</strong><span>Move between CSV, Excel, and JSON.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week09/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week09/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week09/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week10">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak94">Week 10: Real Project I — Weather and IPL</h3>
-                  <p id="speak95">Bring together data cleaning, statistics, charting, and applied interpretation through weather and sports datasets.</p>
-                </div>
-                <div class="week-no">Week 10</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-advanced">Applied Intermediate</span>
-                <span class="meta-chip">Duration: 9–11 hours</span>
-                <span class="meta-chip">Focus: Guided Project Work</span>
-                <span class="meta-chip">Outcome: end-to-end analysis workflow</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak96">What students learn</h4>
-                <ul>
-                  <li>How to ask meaningful questions from real datasets.</li>
-                  <li>How to connect summaries, charts, and interpretation.</li>
-                  <li>How to explain findings clearly.</li>
-                  <li>How multiple earlier weeks combine in one workflow.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak97">Why this matters</h4>
-                <p>
-                  This is where the course begins to feel portfolio-worthy. Students move away from isolated
-                  exercises into more authentic data analysis and story-building.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak98">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Applied analysis</span>
-                  <span class="tag">Narrative explanation</span>
-                  <span class="tag">Dataset interpretation</span>
-                  <span class="tag">Project confidence</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak99">Real-world use</h4>
-                <p>Sports analytics, local weather dashboards, trend reporting, and public-facing data storytelling.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak100">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Varanasi Weather Dashboard</strong><span>Show averages, changes, and trends.</span></div>
-                  <div class="project-item"><strong>IPL Performance Explorer</strong><span>Analyze players and match metrics.</span></div>
-                  <div class="project-item"><strong>Match Insight Generator</strong><span>Turn raw stats into readable summaries.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week10/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week10/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week10/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week11">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak101">Week 11: Real Project II — Finance and Medical Data</h3>
-                  <p id="speak102">Work in higher-caution domains and learn not only how to model, but how to communicate limits responsibly.</p>
-                </div>
-                <div class="week-no">Week 11</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-advanced">Applied Intermediate</span>
-                <span class="meta-chip">Duration: 9–11 hours</span>
-                <span class="meta-chip">Focus: Sensitive Domains</span>
-                <span class="meta-chip">Outcome: more mature ML thinking</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak103">What students learn</h4>
-                <ul>
-                  <li>Why some domains demand extra caution.</li>
-                  <li>Noise, volatility, uncertainty, and ethics.</li>
-                  <li>How to explain limits without overselling a model.</li>
-                  <li>How to document assumptions honestly.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak104">Why this matters</h4>
-                <p>
-                  A strong AI course should not only teach building. It should teach judgment.
-                  This week gives the course maturity and credibility.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak105">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Responsible interpretation</span>
-                  <span class="tag">Risk awareness</span>
-                  <span class="tag">Limitation writing</span>
-                  <span class="tag">Domain caution</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak106">Real-world use</h4>
-                <p>Finance analysis pages, guided healthcare examples, risk reporting, and decision-support prototypes.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak107">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Finance Trend Viewer</strong><span>Explore movement and volatility.</span></div>
-                  <div class="project-item"><strong>Medical Risk Demo</strong><span>Show classification with caution notes.</span></div>
-                  <div class="project-item"><strong>Limitation Reporter</strong><span>Attach responsible notes to model output.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week11/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week11/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week11/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="week-card" id="week12">
-          <summary class="week-summary">
-            <div class="week-left">
-              <div class="week-head">
-                <div class="week-title-block">
-                  <h3 id="speak108">Week 12: Capstone and Deployment</h3>
-                  <p id="speak109">Package everything into a final project with data, workflow, charts, explanation, and deployable presentation.</p>
-                </div>
-                <div class="week-no">Week 12</div>
-              </div>
-
-              <div class="meta-row">
-                <span class="meta-chip level-capstone">Capstone</span>
-                <span class="meta-chip">Duration: 10–14 hours</span>
-                <span class="meta-chip">Focus: Final Integration</span>
-                <span class="meta-chip">Outcome: portfolio-ready project</span>
-              </div>
-            </div>
-            <div class="expand-indicator">⌄</div>
-          </summary>
-
-          <div class="week-body">
-            <div class="cols">
-              <div class="subcard">
-                <h4 id="speak110">What students learn</h4>
-                <ul>
-                  <li>How to combine coding, data, charts, and explanation.</li>
-                  <li>How to present technical work clearly.</li>
-                  <li>How to package and host a final project.</li>
-                  <li>How to make work feel polished and public-facing.</li>
-                </ul>
-              </div>
-              <div class="subcard">
-                <h4 id="speak111">Why this matters</h4>
-                <p>
-                  This week converts learning into evidence. It is where the learner leaves the course
-                  with something real enough to show, discuss, and improve.
-                </p>
-              </div>
-            </div>
-
-            <div class="mini-grid">
-              <div class="subcard">
-                <h4 id="speak112">Skills you gain</h4>
-                <div class="tag-list">
-                  <span class="tag">Project packaging</span>
-                  <span class="tag">Presentation</span>
-                  <span class="tag">Static deployment</span>
-                  <span class="tag">Portfolio building</span>
-                </div>
-              </div>
-              <div class="subcard">
-                <h4 id="speak113">Real-world use</h4>
-                <p>Portfolio sites, GitHub Pages projects, demo dashboards, and capstone showcases for students and institutions.</p>
-              </div>
-              <div class="subcard">
-                <h4 id="speak114">Projects in this week</h4>
-                <div class="project-list">
-                  <div class="project-item"><strong>Weather Intelligence App</strong><span>Charts, trends, and light prediction presentation.</span></div>
-                  <div class="project-item"><strong>Student Performance System</strong><span>Combine analytics and classification ideas.</span></div>
-                  <div class="project-item"><strong>Business Insights Dashboard</strong><span>Deliver readable trends and recommendations.</span></div>
-                </div>
-              </div>
-            </div>
-
-            <div class="action-row">
-              <a class="btn brand locked" href="week12/lesson.html" data-locked-link="true">Open Lesson</a>
-              <a class="btn locked" href="week12/assignment.html" data-locked-link="true">Open Assignment</a>
-              <a class="btn locked" href="week12/mcq.json" data-locked-link="true">Open MCQ JSON</a>
-            </div>
-          </div>
-        </details>
-
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="instructor-card">
-        <div class="instructor-grid">
-          <div class="avatar">CR</div>
-          <div>
-            <h3 id="speak115">Instructor presence matters</h3>
-            <p id="speak116">
-              This course becomes stronger when it feels guided by a real person. Add your voice,
-              your speaking support, your examples, and your direct explanations. That is what turns
-              a good course map into a memorable learning experience.
-            </p>
+          <div class="hero-actions" style="margin-top: 16px">
+            <a
+              class="btn brand locked"
+              href="week01/lesson.html"
+              data-locked-link="true"
+              >Launch First Lesson</a
+            >
+            <a
+              class="btn soft locked"
+              href="projects/index.html"
+              data-locked-link="true"
+              >Open Project Hub</a
+            >
+            <a class="btn soft locked" href="README.md" data-locked-link="true"
+              >View Course Notes</a
+            >
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section">
-      <div class="cta-card">
-        <h2 id="speak117">This can become a flagship product</h2>
-        <p id="speak118">
-          The structure is already strong. With polished lesson pages, visible projects, interactive demos,
-          and your speaking layer, this can become a signature AI-ML platform rather than just a course page.
+      <section class="footer-note">
+        <p id="speak119">
+          This course map is designed to be student-facing. It does more than list topics: it explains the value
+          of each stage, shows what learners will gain, and keeps projects
+          visible throughout the journey.
         </p>
+        <p id="speak120">
+          The page uses Champak Speaks as the speak engine and keeps links
+          locked with a highlighted centered toast so the platform feels
+          controlled during rollout.
+        </p>
+      </section>
+    </main>
 
-        <div class="hero-actions" style="margin-top:16px">
-          <a class="btn brand locked" href="week01/lesson.html" data-locked-link="true">Launch First Lesson</a>
-          <a class="btn soft locked" href="projects/index.html" data-locked-link="true">Open Project Hub</a>
-          <a class="btn soft locked" href="README.md" data-locked-link="true">View Course Notes</a>
-        </div>
-      </div>
-    </section>
+    <div
+      class="toast-wrap"
+      id="toastWrap"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
 
-    <section class="footer-note">
-      <p id="speak119">
-        This V2 Ultra course map is designed to be both teacher-facing and student-facing. It does more than list topics:
-        it explains the value of each stage, shows what learners will gain, and keeps projects visible throughout the journey.
-      </p>
-      <p id="speak120">
-        The page uses `find-on-page.js` as the speak engine and keeps links locked with a highlighted centered toast so the platform
-        feels controlled during rollout.
-      </p>
-    </section>
-  </main>
+    <script>
+      (function () {
+        "use strict";
 
-  <div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+        const TOAST_MESSAGE = "Coming Soon";
+        const TOAST_SUBTEXT =
+          "This section is locked right now. Please check back later.";
+        const LOCK_SELECTOR = "a[data-locked-link='true']";
+        const toastWrap = document.getElementById("toastWrap");
+        let toastTimer = null;
 
-  <script>
-    (function () {
-      "use strict";
+        function showToast(message, subtext) {
+          if (!toastWrap) return;
 
-      const TOAST_MESSAGE = "Coming Soon";
-      const TOAST_SUBTEXT = "This section is locked right now. Please check back later.";
-      const LOCK_SELECTOR = "a[data-locked-link='true']";
-      const toastWrap = document.getElementById("toastWrap");
-      let toastTimer = null;
-
-      function showToast(message, subtext) {
-        if (!toastWrap) return;
-
-        toastWrap.innerHTML = "";
-        const toast = document.createElement("div");
-        toast.className = "toast";
-        toast.innerHTML = `
+          toastWrap.innerHTML = "";
+          const toast = document.createElement("div");
+          toast.className = "toast";
+          toast.innerHTML = `
           <div class="toast-icon">🔒</div>
           <div class="toast-title">${message}</div>
           <small>${subtext}</small>
         `;
-        toastWrap.appendChild(toast);
+          toastWrap.appendChild(toast);
 
-        requestAnimationFrame(() => {
-          toast.classList.add("show");
+          requestAnimationFrame(() => {
+            toast.classList.add("show");
+          });
+
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => {
+            toast.classList.remove("show");
+            setTimeout(() => {
+              if (toast.parentNode) toast.remove();
+            }, 300);
+          }, 2000);
+        }
+
+        document.querySelectorAll(LOCK_SELECTOR).forEach((link) => {
+          link.setAttribute("aria-disabled", "true");
+          link.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            showToast(TOAST_MESSAGE, TOAST_SUBTEXT);
+          });
         });
+      })();
+    </script>
 
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => {
-          toast.classList.remove("show");
-          setTimeout(() => {
-            if (toast.parentNode) toast.remove();
-          }, 300);
-        }, 2000);
-      }
-
-      document.querySelectorAll(LOCK_SELECTOR).forEach((link) => {
-        link.setAttribute("aria-disabled", "true");
-        link.addEventListener("click", function (event) {
-          event.preventDefault();
-          event.stopPropagation();
-          showToast(TOAST_MESSAGE, TOAST_SUBTEXT);
-        });
-      });
-    })();
-  </script>
-
-  <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
-  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
-  <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
-</body>
+    <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+    <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+  </body>
 </html>
