@@ -1,0 +1,16 @@
+{
+  "week": 1,
+  "title": "Python Foundations I",
+  "teaching_focus": [
+    "What AI, ML, data science, model, feature, and label mean",
+    "Python installation and running code",
+    "Variables, data types, strings, numbers, booleans"
+  ],
+  "common_mistakes": [
+    "Students may memorize syntax without understanding why it works.",
+    "Students may confuse input types and fail to convert strings to numbers.",
+    "Students may jump to code before describing the problem in plain English."
+  ],
+  "assessment_tip": "Evaluate explanation, correctness, and ability to modify the solution.",
+  "mini_project": "Marks Analyzer Lite"
+}

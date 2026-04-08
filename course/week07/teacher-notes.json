@@ -1,0 +1,16 @@
+{
+  "week": 7,
+  "title": "Classification Fundamentals",
+  "teaching_focus": [
+    "Classification vs regression",
+    "Binary and multiclass classification",
+    "Features and labels"
+  ],
+  "common_mistakes": [
+    "Students may memorize syntax without understanding why it works.",
+    "Students may confuse input types and fail to convert strings to numbers.",
+    "Students may jump to code before describing the problem in plain English."
+  ],
+  "assessment_tip": "Evaluate explanation, correctness, and ability to modify the solution.",
+  "mini_project": "Student Pass Predictor"
+}

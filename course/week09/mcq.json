@@ -1,0 +1,39 @@
+{
+  "week": 9,
+  "title": "Working with Datasets",
+  "questions": [
+    {
+      "q": "Which is a strong public dataset platform?",
+      "options": [
+        "Kaggle",
+        "Random rumors",
+        "Unverified screenshots",
+        "Broken links"
+      ],
+      "answer": 0,
+      "explanation": "Kaggle is a well-known dataset platform."
+    },
+    {
+      "q": "Metadata helps explain?",
+      "options": [
+        "Only colors",
+        "Structure and meaning of data",
+        "Only passwords",
+        "Nothing"
+      ],
+      "answer": 1,
+      "explanation": "Metadata describes the data."
+    },
+    {
+      "q": "Sensitive personal data should be used?",
+      "options": [
+        "Without care",
+        "With ethics and privacy safeguards",
+        "Only in games",
+        "Never even discussed"
+      ],
+      "answer": 1,
+      "explanation": "It must be handled carefully and ethically."
+    }
+  ]
+}

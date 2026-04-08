@@ -1,0 +1,39 @@
+{
+  "week": 10,
+  "title": "Real Project I \u2014 Weather and IPL",
+  "questions": [
+    {
+      "q": "A rolling average is useful for?",
+      "options": [
+        "Smoothing noisy trends",
+        "Making passwords",
+        "Deleting rows",
+        "Encrypting files"
+      ],
+      "answer": 0,
+      "explanation": "Rolling averages help smooth trends."
+    },
+    {
+      "q": "Grouped statistics in pandas often use?",
+      "options": [
+        "groupby",
+        "turnby",
+        "joinby",
+        "filterby"
+      ],
+      "answer": 0,
+      "explanation": "groupby is the standard method."
+    },
+    {
+      "q": "Project storytelling means?",
+      "options": [
+        "Only code",
+        "Explaining problem, method, and findings clearly",
+        "Ignoring charts",
+        "Removing conclusions"
+      ],
+      "answer": 1,
+      "explanation": "Clear communication is part of data work."
+    }
+  ]
+}

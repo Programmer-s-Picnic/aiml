@@ -1,0 +1,39 @@
+{
+  "week": 2,
+  "title": "Python Foundations II",
+  "questions": [
+    {
+      "q": "Which keyword defines a function?",
+      "options": [
+        "func",
+        "define",
+        "def",
+        "function"
+      ],
+      "answer": 2,
+      "explanation": "Python uses def."
+    },
+    {
+      "q": "Which collection stores key-value pairs?",
+      "options": [
+        "list",
+        "tuple",
+        "dict",
+        "set"
+      ],
+      "answer": 2,
+      "explanation": "dict stores key-value pairs."
+    },
+    {
+      "q": "Which loop is best when the number of repetitions is known?",
+      "options": [
+        "for",
+        "while",
+        "switch",
+        "repeat"
+      ],
+      "answer": 0,
+      "explanation": "for is used when iteration count is known."
+    }
+  ]
+}

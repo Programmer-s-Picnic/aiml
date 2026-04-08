@@ -1,0 +1,39 @@
+{
+  "week": 11,
+  "title": "Real Project II \u2014 Finance and Medical Data",
+  "questions": [
+    {
+      "q": "Why is stock prediction hard?",
+      "options": [
+        "Markets are noisy and affected by many variables",
+        "Because Python cannot read numbers",
+        "Because charts are illegal",
+        "Because CSV files are too small"
+      ],
+      "answer": 0,
+      "explanation": "Financial markets are noisy and complex."
+    },
+    {
+      "q": "In screening, recall is important when?",
+      "options": [
+        "Missing a true case is costly",
+        "Fonts are missing",
+        "Data is sorted",
+        "Graphs are colorful"
+      ],
+      "answer": 0,
+      "explanation": "Recall matters when false negatives are costly."
+    },
+    {
+      "q": "Medical model results should be presented?",
+      "options": [
+        "As guaranteed truth",
+        "With limitations and caution",
+        "Without explanation",
+        "Only with emojis"
+      ],
+      "answer": 1,
+      "explanation": "Medical outputs need caution and context."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "week": 7,
+  "title": "Classification Fundamentals",
+  "questions": [
+    {
+      "q": "Classification predicts?",
+      "options": [
+        "A category",
+        "A paragraph",
+        "Only a graph",
+        "Nothing"
+      ],
+      "answer": 0,
+      "explanation": "Classification predicts classes or labels."
+    },
+    {
+      "q": "Which split is commonly used to evaluate a model?",
+      "options": [
+        "Train-test split",
+        "Upper-lower split",
+        "String split",
+        "Sort split"
+      ],
+      "answer": 0,
+      "explanation": "Train-test split is standard."
+    },
+    {
+      "q": "Precision is most important when?",
+      "options": [
+        "False positives are costly",
+        "There are no labels",
+        "All data is missing",
+        "You only draw charts"
+      ],
+      "answer": 0,
+      "explanation": "Precision matters when false positives are costly."
+    }
+  ]
+}

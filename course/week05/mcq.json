@@ -1,0 +1,39 @@
+{
+  "week": 5,
+  "title": "Statistics for AI",
+  "questions": [
+    {
+      "q": "Median is the?",
+      "options": [
+        "Most frequent value",
+        "Middle value",
+        "Largest value",
+        "Average of labels"
+      ],
+      "answer": 1,
+      "explanation": "Median is the middle value after sorting."
+    },
+    {
+      "q": "Mode is the?",
+      "options": [
+        "Least frequent value",
+        "Middle value",
+        "Most frequent value",
+        "Standard score"
+      ],
+      "answer": 2,
+      "explanation": "Mode is the most frequent value."
+    },
+    {
+      "q": "High standard deviation means data is?",
+      "options": [
+        "Very close together",
+        "More spread out",
+        "Always wrong",
+        "Categorical"
+      ],
+      "answer": 1,
+      "explanation": "Higher standard deviation implies more spread."
+    }
+  ]
+}

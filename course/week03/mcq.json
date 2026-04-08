@@ -1,0 +1,39 @@
+{
+  "week": 3,
+  "title": "NumPy Essentials",
+  "questions": [
+    {
+      "q": "NumPy is mainly used for?",
+      "options": [
+        "Web design",
+        "Numerical computing",
+        "Sending email",
+        "Database backups"
+      ],
+      "answer": 1,
+      "explanation": "NumPy is a numerical computing library."
+    },
+    {
+      "q": "Which attribute gives array dimensions?",
+      "options": [
+        "shape",
+        "size",
+        "type",
+        "length"
+      ],
+      "answer": 0,
+      "explanation": "shape returns dimensions."
+    },
+    {
+      "q": "Vectorized operations are usually?",
+      "options": [
+        "Slower",
+        "Faster",
+        "Invalid",
+        "Only graphical"
+      ],
+      "answer": 1,
+      "explanation": "Vectorization is usually faster."
+    }
+  ]
+}

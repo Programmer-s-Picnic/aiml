@@ -1,0 +1,39 @@
+{
+  "week": 4,
+  "title": "Pandas and Matplotlib",
+  "questions": [
+    {
+      "q": "What is the main table structure in pandas?",
+      "options": [
+        "Workbook",
+        "DataFrame",
+        "Matrix",
+        "Canvas"
+      ],
+      "answer": 1,
+      "explanation": "DataFrame is the core tabular structure."
+    },
+    {
+      "q": "Which function removes null rows?",
+      "options": [
+        "dropna",
+        "clip",
+        "rename",
+        "astype"
+      ],
+      "answer": 0,
+      "explanation": "dropna removes nulls."
+    },
+    {
+      "q": "A histogram is best for showing?",
+      "options": [
+        "Text paragraphs",
+        "Distribution of values",
+        "Maps",
+        "Passwords"
+      ],
+      "answer": 1,
+      "explanation": "Histograms show distribution."
+    }
+  ]
+}

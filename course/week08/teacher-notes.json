@@ -1,0 +1,16 @@
+{
+  "week": 8,
+  "title": "Probability and Bayes Thinking",
+  "teaching_focus": [
+    "Basic probability",
+    "Independent and dependent events",
+    "Conditional probability"
+  ],
+  "common_mistakes": [
+    "Students may memorize syntax without understanding why it works.",
+    "Students may confuse input types and fail to convert strings to numbers.",
+    "Students may jump to code before describing the problem in plain English."
+  ],
+  "assessment_tip": "Evaluate explanation, correctness, and ability to modify the solution.",
+  "mini_project": "Spam Detection Concept Simulator"
+}

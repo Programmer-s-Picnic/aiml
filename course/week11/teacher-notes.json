@@ -1,0 +1,16 @@
+{
+  "week": 11,
+  "title": "Real Project II \u2014 Finance and Medical Data",
+  "teaching_focus": [
+    "Finance data as noisy time series",
+    "Why stock prediction is hard",
+    "Medical classification basics"
+  ],
+  "common_mistakes": [
+    "Students may memorize syntax without understanding why it works.",
+    "Students may confuse input types and fail to convert strings to numbers.",
+    "Students may jump to code before describing the problem in plain English."
+  ],
+  "assessment_tip": "Evaluate explanation, correctness, and ability to modify the solution.",
+  "mini_project": "Risk and Trend Lab"
+}

@@ -1,0 +1,39 @@
+{
+  "week": 8,
+  "title": "Probability and Bayes Thinking",
+  "questions": [
+    {
+      "q": "P(A|B) means?",
+      "options": [
+        "A and B",
+        "A given B",
+        "A or B",
+        "Not A"
+      ],
+      "answer": 1,
+      "explanation": "P(A|B) is conditional probability."
+    },
+    {
+      "q": "The probability of a fair coin landing heads is?",
+      "options": [
+        "0.25",
+        "0.5",
+        "1",
+        "2"
+      ],
+      "answer": 1,
+      "explanation": "Fair coin heads probability is 0.5."
+    },
+    {
+      "q": "Bayes theorem is useful for?",
+      "options": [
+        "Updating belief with evidence",
+        "Changing screen color",
+        "Building HTML only",
+        "Compressing files"
+      ],
+      "answer": 0,
+      "explanation": "Bayes updates belief after observing evidence."
+    }
+  ]
+}

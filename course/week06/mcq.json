@@ -1,0 +1,39 @@
+{
+  "week": 6,
+  "title": "Regression and Correlation",
+  "questions": [
+    {
+      "q": "Regression usually predicts?",
+      "options": [
+        "Categories",
+        "Continuous values",
+        "Passwords",
+        "Images only"
+      ],
+      "answer": 1,
+      "explanation": "Regression predicts continuous values."
+    },
+    {
+      "q": "Correlation close to 1 means?",
+      "options": [
+        "Strong positive relation",
+        "Strong negative relation",
+        "No relation",
+        "A bug"
+      ],
+      "answer": 0,
+      "explanation": "A value near 1 suggests strong positive correlation."
+    },
+    {
+      "q": "A scatter plot helps visualize?",
+      "options": [
+        "Audio",
+        "Relationships between two variables",
+        "Only text",
+        "Program speed"
+      ],
+      "answer": 1,
+      "explanation": "Scatter plots show relationships."
+    }
+  ]
+}

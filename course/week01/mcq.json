@@ -1,0 +1,39 @@
+{
+  "week": 1,
+  "title": "Python Foundations I",
+  "questions": [
+    {
+      "q": "Which operator gives the remainder in Python?",
+      "options": [
+        "/",
+        "%",
+        "//",
+        "**"
+      ],
+      "answer": 1,
+      "explanation": "The % operator returns the remainder."
+    },
+    {
+      "q": "Which data type stores True or False?",
+      "options": [
+        "str",
+        "int",
+        "bool",
+        "float"
+      ],
+      "answer": 2,
+      "explanation": "bool stores Boolean values."
+    },
+    {
+      "q": "What does input() return by default?",
+      "options": [
+        "int",
+        "float",
+        "str",
+        "bool"
+      ],
+      "answer": 2,
+      "explanation": "input() returns text unless converted."
+    }
+  ]
+}

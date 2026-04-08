@@ -1,0 +1,39 @@
+{
+  "week": 12,
+  "title": "Capstone and Deployment",
+  "questions": [
+    {
+      "q": "A capstone should include?",
+      "options": [
+        "Only code",
+        "Problem, data, method, output, explanation",
+        "Only a chart",
+        "Only a title"
+      ],
+      "answer": 1,
+      "explanation": "A capstone needs the full workflow."
+    },
+    {
+      "q": "A README file is used for?",
+      "options": [
+        "Describing the project and how to run it",
+        "Training the model directly",
+        "Changing Python syntax",
+        "Compressing images"
+      ],
+      "answer": 0,
+      "explanation": "README explains the project."
+    },
+    {
+      "q": "Static deployment is suitable for?",
+      "options": [
+        "Publishing dashboards, charts, notes, and results pages",
+        "Running heavy private servers",
+        "Changing the operating system",
+        "Editing BIOS"
+      ],
+      "answer": 0,
+      "explanation": "Static hosting is great for front-end outputs."
+    }
+  ]
+}
