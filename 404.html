@@ -1,1 +1,188 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>404 - Page Not Found | Learn With Champak</title>
+
+  <meta name="description" content="Oops! The page you are looking for does not exist. Continue learning with Programmer's Picnic and Learn With Champak." />
+
+  <!-- Adsense -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
+    crossorigin="anonymous"></script>
+
+  <!-- Speak Engine -->
+  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+
+  <style>
+    :root{
+      --bg:#fffaf0;
+      --card:#ffffff;
+      --accent:#f59e0b;
+      --accent-dark:#d97706;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --border:#fde68a;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:system-ui,Segoe UI,Roboto,Arial;
+      background:linear-gradient(135deg,#fff7ed,#fffaf0);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      padding:20px;
+    }
+
+    .card{
+      max-width:700px;
+      width:100%;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:30px;
+      text-align:center;
+      box-shadow:0 10px 40px rgba(0,0,0,0.08);
+      animation:fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(20px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+
+    .code{
+      font-size:72px;
+      font-weight:800;
+      color:var(--accent-dark);
+    }
+
+    h1{
+      font-size:28px;
+      margin:10px 0;
+    }
+
+    p{
+      color:var(--muted);
+      margin-bottom:20px;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+      margin-top:20px;
+    }
+
+    .btn{
+      padding:12px 18px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:600;
+      text-decoration:none;
+      transition:0.2s;
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:white;
+    }
+
+    .btn-primary:hover{
+      background:var(--accent-dark);
+    }
+
+    .btn-outline{
+      background:white;
+      border:1px solid var(--border);
+      color:var(--text);
+    }
+
+    .btn-outline:hover{
+      background:#fff7ed;
+    }
+
+    .search-box{
+      margin-top:20px;
+      display:flex;
+      gap:10px;
+    }
+
+    input{
+      flex:1;
+      padding:12px;
+      border-radius:10px;
+      border:1px solid var(--border);
+    }
+
+    footer{
+      margin-top:25px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    @media(max-width:500px){
+      .code{font-size:56px}
+      h1{font-size:22px}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div id="speak0" class="code">404</div>
+
+  <h1 id="speak1">Page Not Found</h1>
+
+  <p id="speak2">
+    The page you are looking for does not exist or has been moved.
+    But your learning journey does not stop here.
+  </p>
+
+  <p id="speak3">
+    Think of this like a bug in code — we debug and move forward.
+  </p>
+
+  <!-- Search -->
+  <div class="search-box">
+    <input id="searchInput" placeholder="Search lessons..." />
+    <button class="btn btn-primary" onclick="searchSite()">Search</button>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <a href="/" class="btn btn-primary" id="speak4">Go Home</a>
+    <a href="/course/course-map.html" class="btn btn-outline" id="speak5">Course Map</a>
+    <a href="https://www.learnwithchampak.live" class="btn btn-outline" id="speak6">All Lessons</a>
+  </div>
+
+  <footer id="speak7">
+    © Learn With Champak | Programmer's Picnic
+  </footer>
+
+</div>
+
+<script>
+function searchSite(){
+  var q = document.getElementById("searchInput").value.trim();
+  if(!q){
+    alert("Enter something to search");
+    return;
+  }
+  window.location.href = "/search?q=" + encodeURIComponent(q);
+}
+</script>
+
+</body>
+</html>
