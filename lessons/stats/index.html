@@ -3,9 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Statistics for AI-ML with NumPy — V2 | Programmer's Picnic</title>
-  <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
-  <meta name="description" content="A comprehensive HTML lesson on statistics for AI and Machine Learning, including concepts, formulas, NumPy calculations, examples, practice questions, and speak paragraphs." />
+  <title>Statistics for AI-ML with Direct Method, Python, and NumPy — V3 Premium | Programmer's Picnic</title>
+  <script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+  <meta
+    name="description"
+    content="V3 Premium lesson on statistics for AI and Machine Learning with intuition, formulas, hand calculations, plain Python, NumPy, AI-ML connection, mini quizzes, assignments, and speak paragraphs."
+  />
   <meta name="theme-color" content="#f59e0b" />
   <style>
     :root{
@@ -18,9 +21,16 @@
       --brand:#d97706;
       --brand2:#f59e0b;
       --brand3:#fbbf24;
+      --good:#0f766e;
+      --goodbg:#ecfdf5;
+      --info:#1d4ed8;
+      --infobg:#eff6ff;
+      --warn:#92400e;
+      --warnbg:#fff7ed;
       --shadow:0 14px 40px rgba(128,81,0,.12);
       --radius:24px;
-      --max:1180px;
+      --max:1240px;
+      --dark:#2b2112;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -34,27 +44,28 @@
         linear-gradient(180deg, #fff9ef 0%, #fffdf7 100%);
     }
     a{color:inherit;text-decoration:none}
-    code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    code, pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
     .wrap{max-width:var(--max);margin:auto;padding:0 18px}
     .hero,.section,.footer{padding:24px 0}
     .card{
       background:var(--card);
-      border:1px solid rgba(239,223,178,.85);
+      border:1px solid rgba(239,223,178,.9);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
     }
     .pad{padding:24px}
-    h1,h2,h3{line-height:1.15;margin:0 0 14px}
-    h1{font-size:clamp(2.1rem,4vw,3.7rem);letter-spacing:-.03em}
-    h2{font-size:clamp(1.35rem,2.2vw,2.15rem);margin-top:4px}
-    h3{font-size:1.08rem}
+    h1,h2,h3,h4{line-height:1.12;margin:0 0 14px}
+    h1{font-size:clamp(2.2rem,4vw,4rem);letter-spacing:-.03em}
+    h2{font-size:clamp(1.45rem,2.2vw,2.2rem)}
+    h3{font-size:1.15rem}
+    h4{font-size:1rem}
     p{margin:0 0 14px}
     .muted{color:var(--muted)}
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 12px;border-radius:999px;
       border:1px solid #f3ddb1;background:#fffaf0;color:#8a5f09;
-      font-size:13px;font-weight:700;
+      font-size:13px;font-weight:800;
     }
     .chip{
       display:inline-flex;align-items:center;
@@ -62,102 +73,179 @@
       background:#fff4d9;border:1px solid #f3ddb1;color:#7c5712;
       font-size:13px;font-weight:700;margin:6px 6px 0 0;
     }
+    .hero-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:18px}
     .grid-2,.grid-3,.grid-4{display:grid;gap:18px}
     .grid-2{grid-template-columns:repeat(2,1fr)}
     .grid-3{grid-template-columns:repeat(3,1fr)}
     .grid-4{grid-template-columns:repeat(4,1fr)}
-    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
-    .code{
-      background:#2b2112;
-      color:#fff7e6;
-      border-radius:18px;
-      padding:16px;
-      overflow:auto;
-      font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-      white-space:pre-wrap;
-    }
-    .note,.example,.formula{
-      border:1px solid var(--line);
-      background:#fffdf8;
-      border-radius:18px;
-      padding:16px;
-    }
-    .formula strong{display:block;margin-bottom:8px}
-    ul,ol{margin:0;padding-left:20px}
-    li{margin:6px 0}
-    table{
-      width:100%;
-      border-collapse:collapse;
-      background:#fff;
-      border-radius:16px;
-      overflow:hidden;
-    }
-    th,td{
-      padding:12px 14px;
-      border-bottom:1px solid var(--line);
-      text-align:left;
-      vertical-align:top;
-    }
-    th{background:#fff7e6}
-    .stats{
-      display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
-    }
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
     .stat{
-      padding:18px;
-      border-radius:20px;
-      border:1px solid var(--line);
-      background:#fffdf8;
+      padding:18px;border-radius:20px;border:1px solid var(--line);background:#fffdf8;
     }
     .stat b{display:block;font-size:1.7rem}
     .toc a{
-      display:block;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid transparent;
-      color:var(--muted);
+      display:block;padding:10px 12px;border-radius:14px;border:1px solid transparent;color:var(--muted);
     }
     .toc a:hover{background:#fff7e6;border-color:var(--line);color:var(--text)}
-    .speak-bank{display:none}
-    @media (max-width:960px){
-      .hero-grid,.grid-4,.grid-3,.grid-2,.stats{grid-template-columns:1fr}
+    .code{
+      background:#2b2112;color:#fff7e6;border-radius:18px;padding:16px;overflow:auto;
+      font:14px/1.62 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;
     }
- 
- .btn{
-  color: teal;
- }</style>
+    .note,.example,.formula,.manual,.quiz,.success,.warning,.ai-box,.idea{
+      border:1px solid var(--line);
+      background:#fffdf8;border-radius:18px;padding:16px;
+    }
+    .success{background:var(--goodbg);border-color:#b7f0d6}
+    .warning{background:var(--warnbg);border-color:#fed7aa}
+    .ai-box{background:#fffaf3}
+    .idea{background:#fffefb}
+    .formula strong,.manual strong,.note strong,.quiz strong,.success strong,.warning strong,.ai-box strong,.idea strong{display:block;margin-bottom:8px}
+    table{
+      width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden;
+    }
+    th,td{
+      padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;
+    }
+    th{background:#fff7e6}
+    ul,ol{margin:0;padding-left:22px}
+    li{margin:6px 0}
+    .lesson-header{
+      display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap;
+    }
+    .lesson-badges{display:flex;flex-wrap:wrap;gap:8px}
+    .topic{
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+      background:linear-gradient(180deg,#fffdf8 0%,#fffaf3 100%);
+    }
+    .topic-head{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+      margin-bottom:8px;
+    }
+    .label{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 12px;border-radius:999px;background:#fff3cd;border:1px solid #f3ddb1;
+      font-size:12px;font-weight:800;color:#8a5f09;
+    }
+    .compare-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0 16px;
+    }
+    .triple-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:12px 0 16px;
+    }
+    .mini-quiz{
+      border-top:1px dashed #e7d2a3;
+      margin-top:14px;padding-top:14px;
+    }
+    .qa{
+      margin:10px 0 0;
+      padding:10px 12px;
+      border-radius:14px;
+      background:#fff;
+      border:1px solid #f2e4bf;
+    }
+    .result{
+      display:none;
+      margin-top:8px;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:700;
+    }
+    .result.ok{display:block;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+    .result.bad{display:block;background:#fef2f2;color:#991b1b;border:1px solid #fecaca}
+    .btn, button{
+      appearance:none;border:none;cursor:pointer;
+      padding:10px 14px;border-radius:12px;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      color:#fff;font-weight:800;box-shadow:0 8px 20px rgba(217,119,6,.18);
+    }
+    .btn.secondary, button.secondary{
+      background:#fff;color:#8a5f09;border:1px solid #f1d59e;box-shadow:none;
+    }
+    .toolbar{
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;
+    }
+    .exercise{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:18px;
+      padding:16px;
+    }
+    .exercise textarea,
+    .exercise input{
+      width:100%;
+      margin-top:8px;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid #e8d7ad;
+      background:#fffdf8;
+      color:var(--text);
+      font:inherit;
+    }
+    .exercise textarea{min-height:90px;resize:vertical}
+    .tiny{font-size:13px}
+    .speak-bank{display:none}
+    .subtle{
+      background:#fff7e6;border:1px solid #f4ddb0;border-radius:14px;padding:12px;
+    }
+    .kpi{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:10px;
+    }
+    .kpi .box{
+      padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);
+    }
+    .kpi .box b{display:block;font-size:1.15rem}
+    .sticky-note{
+      background:linear-gradient(180deg,#fffdf8,#fff8eb);
+      border:1px dashed #efcf90;
+      border-radius:18px;
+      padding:16px;
+    }
+    .footer strong{font-size:1.05rem}
+    @media (max-width:1080px){
+      .hero-grid,.grid-4,.grid-3,.grid-2,.stats,.compare-grid,.triple-grid,.kpi{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
   <main class="wrap">
     <section class="hero">
       <div class="hero-grid">
         <div class="card pad">
-          <div class="pill">📊 V2 Comprehensive Lesson</div>
-          <h1>Statistics for AI-ML and How to Calculate It Using NumPy</h1>
+          <div class="pill">📊 V3 Premium Lesson</div>
+          <h1>Statistics for AI-ML with Direct Method, Plain Python, and NumPy</h1>
           <p class="muted">
-            This version is more comprehensive, more informative, and more useful for teaching and learning.
-            It explains meaning, importance, formulas, intuition, AI-ML connection, and NumPy calculations for the most important statistical ideas.
+            This premium version teaches not only what each statistical idea means, but also how to calculate it
+            by hand, how to code it in plain Python, and how to use NumPy for fast real-world work.
           </p>
-          <div>
-            <span class="chip">Mean</span>
-            <span class="chip">Median</span>
-            <span class="chip">Variance</span>
-            <span class="chip">Standard Deviation</span>
-            <span class="chip">Percentiles</span>
-            <span class="chip">Correlation</span>
-            <span class="chip">Normalization</span>
+          <div class="lesson-badges">
+            <span class="chip">Intuition</span>
+            <span class="chip">Formula</span>
+            <span class="chip">Hand Calculation</span>
+            <span class="chip">Plain Python</span>
             <span class="chip">NumPy</span>
+            <span class="chip">AI-ML Use</span>
+            <span class="chip">Mini Quiz</span>
+            <span class="chip">Assignments</span>
+          </div>
+          <div class="toolbar">
+            <a class="btn" target="champak" href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1">Open Python Editor</a>
+            <a class="btn secondary" href="#premium-topics">Jump to Premium Topics</a>
           </div>
         </div>
         <div class="card pad">
           <h2>Quick Navigation</h2>
           <div class="toc">
             <a href="#what-is-statistics">What is Statistics?</a>
-            <a href="#why-ai-ml">Why Statistics Matters in AI-ML</a>
-            <a href="#key-ideas">Key Statistical Ideas</a>
-            <a href="#numpy-basics">NumPy Basics</a>
-            <a href="#calculations">Calculations with NumPy</a>
-            <a href="#ai-ml-connection">Connection to AI-ML</a>
-            <a href="#mini-project">Mini Practice Project</a>
+            <a href="#why-ai-ml">Why It Matters in AI-ML</a>
+            <a href="#foundation-dataset">Foundation Dataset</a>
+            <a href="#premium-topics">Premium Topic Blocks</a>
+            <a href="#full-programs">Full Programs</a>
+            <a href="#normalization">Normalization and Standardization</a>
+            <a href="#ai-ml-connection">AI-ML Connection</a>
+            <a href="#mini-project">Mini Project</a>
+            <a href="#assignments">Assignments</a>
             <a href="#questions">Practice Questions</a>
           </div>
         </div>
@@ -166,10 +254,10 @@
 
     <section class="section">
       <div class="stats">
-        <div class="stat"><span class="muted">Main job</span><b>Understand data</b><span class="muted">before building models</span></div>
-        <div class="stat"><span class="muted">Main tool</span><b>NumPy</b><span class="muted">for fast calculations</span></div>
-        <div class="stat"><span class="muted">Main outcome</span><b>Better models</b><span class="muted">through better data understanding</span></div>
-        <div class="stat"><span class="muted">Main lesson</span><b>Data first</b><span class="muted">then model</span></div>
+        <div class="stat"><span class="muted">Main job</span><b>Understand data</b><span class="muted">before training</span></div>
+        <div class="stat"><span class="muted">Best habit</span><b>Inspect first</b><span class="muted">model later</span></div>
+        <div class="stat"><span class="muted">Coding levels</span><b>3 methods</b><span class="muted">hand, Python, NumPy</span></div>
+        <div class="stat"><span class="muted">Main outcome</span><b>Better models</b><span class="muted">through better data sense</span></div>
       </div>
     </section>
 
@@ -177,16 +265,18 @@
       <div class="card pad">
         <h2>1. What is Statistics?</h2>
         <p>
-          Statistics is the study of data. It helps us collect data, organize it, summarize it, understand patterns in it,
-          compare groups, and make decisions from it.
+          Statistics is the study of data. It helps us collect data, organize it, summarize it, understand patterns,
+          compare groups, measure uncertainty, and make decisions.
         </p>
         <p>
-          In AI and Machine Learning, statistics is one of the foundations. Machine learning models learn from data,
-          and statistics helps us understand what that data is saying.
+          In AI and Machine Learning, data is the raw material. Statistics is the set of tools that helps us inspect that raw material
+          before we trust it.
         </p>
         <div class="note">
-          <strong>Simple idea:</strong>
-          <p>If data is the raw material of AI-ML, statistics is the toolset that helps us inspect, measure, and understand that raw material.</p>
+          <strong>Simple picture</strong>
+          <p>
+            Data tells a story, but usually in a scattered and noisy form. Statistics helps us read that story clearly.
+          </p>
         </div>
       </div>
     </section>
@@ -195,177 +285,712 @@
       <div class="card pad">
         <h2>2. Why Statistics Matters in AI-ML</h2>
         <div class="grid-3">
-          <div class="example"><h3>Understanding the dataset</h3><p>We need to know the average, spread, minimum, maximum, and structure of the data.</p></div>
-          <div class="example"><h3>Detecting problems</h3><p>Statistics helps us spot outliers, imbalance, unusual values, and unstable patterns.</p></div>
-          <div class="example"><h3>Choosing features</h3><p>It helps us decide which inputs may actually be useful for prediction.</p></div>
-          <div class="example"><h3>Evaluating performance</h3><p>Error, accuracy, spread of predictions, and residual patterns all need statistical thinking.</p></div>
-          <div class="example"><h3>Scaling and normalization</h3><p>Mean and standard deviation are often used to standardize data before training.</p></div>
-          <div class="example"><h3>Working with uncertainty</h3><p>Real-world data is noisy. Statistics helps us reason carefully instead of guessing blindly.</p></div>
+          <div class="example"><h3>Understand the center</h3><p>We need to know what is typical in the dataset.</p></div>
+          <div class="example"><h3>Understand the spread</h3><p>We need to know whether values are tightly packed or scattered.</p></div>
+          <div class="example"><h3>Detect bad values</h3><p>Outliers and strange values can damage a model.</p></div>
+          <div class="example"><h3>Compare features</h3><p>Some features may be more useful than others.</p></div>
+          <div class="example"><h3>Scale data correctly</h3><p>Normalization and standardization depend on statistics.</p></div>
+          <div class="example"><h3>Reason with uncertainty</h3><p>Real data is messy. Statistics gives discipline to our thinking.</p></div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="key-ideas">
-      <div class="card pad">
-        <h2>3. Key Statistical Ideas You Must Know</h2>
-        <table>
-          <thead>
-            <tr><th>Concept</th><th>Meaning</th><th>AI-ML Use</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Mean</td><td>The average of the values.</td><td>Quick understanding of the center of the data.</td></tr>
-            <tr><td>Median</td><td>The middle value after sorting.</td><td>Useful when outliers distort the average.</td></tr>
-            <tr><td>Variance</td><td>How spread out values are from the mean.</td><td>Helps us know if the data is tightly packed or scattered.</td></tr>
-            <tr><td>Standard Deviation</td><td>Square root of variance.</td><td>Very common in scaling, normalization, and interpretation.</td></tr>
-            <tr><td>Minimum / Maximum</td><td>Smallest and largest values.</td><td>Helps with data range and outlier detection.</td></tr>
-            <tr><td>Percentiles</td><td>Value below which a percentage of data lies.</td><td>Useful for thresholds and understanding position in data.</td></tr>
-            <tr><td>Correlation</td><td>How strongly two variables move together.</td><td>Useful for feature analysis and relationship checking.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="section">
+    <section class="section" id="foundation-dataset">
       <div class="grid-2">
         <div class="card pad">
-          <h2>4. Example Dataset</h2>
-          <p>Suppose a dataset contains study hours:</p>
+          <h2>3. Foundation Dataset</h2>
+          <p>We will use this dataset again and again in the lesson:</p>
           <div class="code">[2, 4, 4, 4, 5, 5, 7, 9]</div>
-          <p>We can now use statistics to summarize this dataset before building a model.</p>
+          <p>
+            Imagine these are study hours, marks, daily practice counts, or any numerical feature in an ML dataset.
+          </p>
+          <div class="success">
+            <strong>Why use one repeated dataset?</strong>
+            <p>
+              Because once you understand one dataset deeply, the formulas and methods become easier to remember.
+            </p>
+          </div>
         </div>
         <div class="card pad">
-          <h2>5. Formula Intuition</h2>
-          <div class="formula"><strong>Mean</strong><p>Mean = Sum of all values / Number of values</p></div>
-          <div class="formula"><strong>Variance</strong><p>Variance = average of squared distance from the mean</p></div>
-          <div class="formula"><strong>Standard Deviation</strong><p>Standard Deviation = square root of variance</p></div>
+          <h2>4. Core Formula Intuition</h2>
+          <div class="formula"><strong>Mean</strong><p>Average = total of values divided by number of values.</p></div>
+          <div class="formula"><strong>Median</strong><p>Middle value after sorting.</p></div>
+          <div class="formula"><strong>Variance</strong><p>Average squared distance from the mean.</p></div>
+          <div class="formula"><strong>Standard Deviation</strong><p>Square root of variance.</p></div>
+          <div class="formula"><strong>Correlation</strong><p>Measures how strongly two variables move together.</p></div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="numpy-basics">
+    <section class="section" id="premium-topics">
       <div class="card pad">
-        <h2>6. NumPy Basics</h2>
-        <p>
-          NumPy is a Python library used for numerical computation. It is one of the most important tools in the AI-ML ecosystem
-          because it makes working with arrays fast and convenient.
-        </p>
-        <div class="code">import numpy as np
-
-data = np.array([2, 4, 4, 4, 5, 5, 7, 9])</div>
-        <div class="grid-3">
-          <div class="example"><h3>Fast</h3><p>NumPy is optimized for numerical operations.</p></div>
-          <div class="example"><h3>Clean</h3><p>It gives very readable code for common statistical calculations.</p></div>
-          <div class="example"><h3>Compatible</h3><p>It works with Pandas, Matplotlib, and scikit-learn.</p></div>
+        <div class="lesson-header">
+          <div>
+            <h2>5. Premium Topic Blocks</h2>
+            <p class="muted">Each block below contains intuition, formula, hand work, plain Python, NumPy, AI-ML meaning, and a mini quiz.</p>
+          </div>
+          <div class="pill">Premium Structure</div>
         </div>
-      </div>
-    </section>
 
-    <section class="section" id="calculations">
-      <div class="card pad">
-        <h2>7. Statistical Calculations with NumPy</h2>
+        <div class="topic">
+          <div class="topic-head">
+            <h3>5.1 Mean</h3>
+            <span class="label">Center of the data</span>
+          </div>
+          <div class="triple-grid">
+            <div class="idea">
+              <strong>Intuition</strong>
+              <p>
+                Mean tells us the average or central value. It answers the question:
+                <em>if the total were shared equally, how much would each value get?</em>
+              </p>
+            </div>
+            <div class="formula">
+              <strong>Formula</strong>
+              <p>Mean = (sum of all values) / (number of values)</p>
+            </div>
+            <div class="ai-box">
+              <strong>AI-ML Use</strong>
+              <p>
+                Mean is used to summarize features, center data, and standardize values before training.
+              </p>
+            </div>
+          </div>
 
-        <h3>7.1 Mean</h3>
-        <div class="code">import numpy as np
+          <div class="compare-grid">
+            <div class="manual">
+              <strong>Hand Calculation</strong>
+              <p>Dataset: 2, 4, 4, 4, 5, 5, 7, 9</p>
+              <p>Sum = 2 + 4 + 4 + 4 + 5 + 5 + 7 + 9 = 40</p>
+              <p>Count = 8</p>
+              <p><strong>Mean = 40 / 8 = 5</strong></p>
+            </div>
+            <div class="subtle">
+              <strong>Important Thought</strong>
+              <p>
+                Mean is sensitive to outliers. A very large or very small value can pull it away from the true center.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div>
+              <div class="compare-title"></div>
+              <div class="code">data = [2, 4, 4, 4, 5, 5, 7, 9]
+
+total = 0
+for x in data:
+    total += x
+
+mean = total / len(data)
+print("Mean:", mean)</div>
+            </div>
+            <div>
+              <div class="code">import numpy as np
 
 data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
-mean_value = np.mean(data)
-print("Mean:", mean_value)</div>
-        <p>The mean tells us the average value.</p>
+print("Mean:", np.mean(data))</div>
+            </div>
+          </div>
 
-        <h3>7.2 Median</h3>
-        <div class="code">median_value = np.median(data)
-print("Median:", median_value)</div>
-        <p>The median is often more reliable than the mean when the dataset has extreme outliers.</p>
+          <div class="mini-quiz quiz">
+            <strong>Mini Quiz</strong>
+            <p>What is the mean of 10, 20, and 30?</p>
+            <div class="qa">
+              <label><input type="radio" name="q1" value="a"> 15</label><br>
+              <label><input type="radio" name="q1" value="b"> 20</label><br>
+              <label><input type="radio" name="q1" value="c"> 25</label><br>
+              <div class="toolbar">
+                <button onclick="checkRadio('q1','b','r1')">Check</button>
+              </div>
+              <div id="r1" class="result"></div>
+            </div>
+          </div>
+        </div>
 
-        <h3>7.3 Variance</h3>
-        <div class="code">variance_value = np.var(data)
-print("Variance:", variance_value)</div>
-        <p>Variance tells us how far values are spread from the mean.</p>
+        <div class="topic" style="margin-top:18px">
+          <div class="topic-head">
+            <h3>5.2 Median</h3>
+            <span class="label">Middle of the sorted data</span>
+          </div>
 
-        <h3>7.4 Standard Deviation</h3>
-        <div class="code">std_value = np.std(data)
-print("Standard Deviation:", std_value)</div>
-        <p>Standard deviation gives the spread in the same unit as the original data.</p>
+          <div class="triple-grid">
+            <div class="idea">
+              <strong>Intuition</strong>
+              <p>
+                Median is the middle value after sorting. It is often better than mean when extreme values are present.
+              </p>
+            </div>
+            <div class="formula">
+              <strong>Formula Idea</strong>
+              <p>
+                Sort first. If the number of values is odd, take the middle one. If it is even, average the two middle values.
+              </p>
+            </div>
+            <div class="ai-box">
+              <strong>AI-ML Use</strong>
+              <p>
+                Median is useful in robust summaries and in filling missing values when outliers exist.
+              </p>
+            </div>
+          </div>
 
-        <h3>7.5 Minimum and Maximum</h3>
-        <div class="code">min_value = np.min(data)
-max_value = np.max(data)
+          <div class="compare-grid">
+            <div class="manual">
+              <strong>Hand Calculation</strong>
+              <p>Sorted data: 2, 4, 4, 4, 5, 5, 7, 9</p>
+              <p>There are 8 values, so we take the 4th and 5th values.</p>
+              <p>4th = 4</p>
+              <p>5th = 5</p>
+              <p><strong>Median = (4 + 5) / 2 = 4.5</strong></p>
+            </div>
+            <div class="warning">
+              <strong>Why median matters</strong>
+              <p>
+                If one value were 900 instead of 9, the mean would jump a lot, but the median would stay much more stable.
+              </p>
+            </div>
+          </div>
 
-print("Minimum:", min_value)
-print("Maximum:", max_value)</div>
-        <p>These help us understand the data range.</p>
+          <div class="compare-grid">
+            <div class="code">data = [2, 4, 4, 4, 5, 5, 7, 9]
+sorted_data = sorted(data)
+n = len(sorted_data)
 
-        <h3>7.6 Sum</h3>
-        <div class="code">sum_value = np.sum(data)
-print("Sum:", sum_value)</div>
-        <p>Useful for totals and later average calculations.</p>
+if n % 2 == 0:
+    median = (sorted_data[n//2 - 1] + sorted_data[n//2]) / 2
+else:
+    median = sorted_data[n//2]
 
-        <h3>7.7 Percentiles</h3>
-        <div class="code">p25 = np.percentile(data, 25)
-p50 = np.percentile(data, 50)
-p75 = np.percentile(data, 75)
+print("Median:", median)</div>
+            <div class="code">import numpy as np
 
-print("25th percentile:", p25)
-print("50th percentile:", p50)
-print("75th percentile:", p75)</div>
-        <p>Percentiles are useful for ranking, thresholds, and understanding the distribution.</p>
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+print("Median:", np.median(data))</div>
+          </div>
 
-        <h3>7.8 Correlation</h3>
-        <div class="code">hours = np.array([1, 2, 3, 4, 5])
+          <div class="mini-quiz quiz">
+            <strong>Mini Quiz</strong>
+            <p>What is the median of 1, 2, 100?</p>
+            <div class="qa">
+              <label><input type="radio" name="q2" value="a"> 1</label><br>
+              <label><input type="radio" name="q2" value="b"> 2</label><br>
+              <label><input type="radio" name="q2" value="c"> 34.33</label><br>
+              <div class="toolbar">
+                <button onclick="checkRadio('q2','b','r2')">Check</button>
+              </div>
+              <div id="r2" class="result"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic" style="margin-top:18px">
+          <div class="topic-head">
+            <h3>5.3 Variance</h3>
+            <span class="label">Spread from the mean</span>
+          </div>
+
+          <div class="triple-grid">
+            <div class="idea">
+              <strong>Intuition</strong>
+              <p>
+                Variance measures how far the values are from the mean, on average, after squaring the distances.
+              </p>
+            </div>
+            <div class="formula">
+              <strong>Formula</strong>
+              <p>Variance = average of (value - mean)<sup>2</sup></p>
+            </div>
+            <div class="ai-box">
+              <strong>AI-ML Use</strong>
+              <p>
+                Variance helps us understand stability, spread, feature scale, and noise in a dataset.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="manual">
+              <strong>Hand Calculation</strong>
+              <p>Mean = 5</p>
+              <p>Differences: -3, -1, -1, -1, 0, 0, 2, 4</p>
+              <p>Squared differences: 9, 1, 1, 1, 0, 0, 4, 16</p>
+              <p>Sum of squared differences = 32</p>
+              <p><strong>Variance = 32 / 8 = 4</strong></p>
+            </div>
+            <div class="subtle">
+              <strong>Why square the distances?</strong>
+              <p>
+                Because negative and positive distances would otherwise cancel each other. Squaring also gives more weight to large deviations.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="code">data = [2, 4, 4, 4, 5, 5, 7, 9]
+
+mean = sum(data) / len(data)
+
+sq_sum = 0
+for x in data:
+    sq_sum += (x - mean) ** 2
+
+variance = sq_sum / len(data)
+print("Variance:", variance)</div>
+            <div class="code">import numpy as np
+
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+print("Variance:", np.var(data))</div>
+          </div>
+
+          <div class="mini-quiz quiz">
+            <strong>Mini Quiz</strong>
+            <p>If all values in a dataset are exactly the same, what is the variance?</p>
+            <div class="qa">
+              <label><input type="radio" name="q3" value="a"> 0</label><br>
+              <label><input type="radio" name="q3" value="b"> 1</label><br>
+              <label><input type="radio" name="q3" value="c"> It cannot be calculated</label><br>
+              <div class="toolbar">
+                <button onclick="checkRadio('q3','a','r3')">Check</button>
+              </div>
+              <div id="r3" class="result"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic" style="margin-top:18px">
+          <div class="topic-head">
+            <h3>5.4 Standard Deviation</h3>
+            <span class="label">Spread in original units</span>
+          </div>
+
+          <div class="triple-grid">
+            <div class="idea">
+              <strong>Intuition</strong>
+              <p>
+                Standard deviation is a more interpretable version of variance because it comes back to the original unit.
+              </p>
+            </div>
+            <div class="formula">
+              <strong>Formula</strong>
+              <p>Standard Deviation = √Variance</p>
+            </div>
+            <div class="ai-box">
+              <strong>AI-ML Use</strong>
+              <p>
+                Standard deviation is heavily used in standardization, anomaly detection, and distribution understanding.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="manual">
+              <strong>Hand Calculation</strong>
+              <p>Variance = 4</p>
+              <p><strong>Standard Deviation = √4 = 2</strong></p>
+            </div>
+            <div class="success">
+              <strong>Interpretation</strong>
+              <p>
+                A larger standard deviation means the values are more spread out. A smaller one means the data is tightly packed.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="code">data = [2, 4, 4, 4, 5, 5, 7, 9]
+
+mean = sum(data) / len(data)
+
+sq_sum = 0
+for x in data:
+    sq_sum += (x - mean) ** 2
+
+variance = sq_sum / len(data)
+std = variance ** 0.5
+
+print("Standard Deviation:", std)</div>
+            <div class="code">import numpy as np
+
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+print("Standard Deviation:", np.std(data))</div>
+          </div>
+
+          <div class="mini-quiz quiz">
+            <strong>Mini Quiz</strong>
+            <p>If variance is 9, what is the standard deviation?</p>
+            <div class="qa">
+              <label><input type="radio" name="q4" value="a"> 81</label><br>
+              <label><input type="radio" name="q4" value="b"> 9</label><br>
+              <label><input type="radio" name="q4" value="c"> 3</label><br>
+              <div class="toolbar">
+                <button onclick="checkRadio('q4','c','r4')">Check</button>
+              </div>
+              <div id="r4" class="result"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic" style="margin-top:18px">
+          <div class="topic-head">
+            <h3>5.5 Minimum, Maximum, and Range</h3>
+            <span class="label">Boundary values</span>
+          </div>
+
+          <div class="triple-grid">
+            <div class="idea">
+              <strong>Intuition</strong>
+              <p>
+                Minimum and maximum tell us the smallest and largest values. Range tells us the full spread from lowest to highest.
+              </p>
+            </div>
+            <div class="formula">
+              <strong>Formula</strong>
+              <p>Range = Maximum - Minimum</p>
+            </div>
+            <div class="ai-box">
+              <strong>AI-ML Use</strong>
+              <p>
+                Helps with scaling, spotting suspicious values, and understanding data limits.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="manual">
+              <strong>Hand Calculation</strong>
+              <p>Dataset: 2, 4, 4, 4, 5, 5, 7, 9</p>
+              <p>Minimum = 2</p>
+              <p>Maximum = 9</p>
+              <p><strong>Range = 9 - 2 = 7</strong></p>
+            </div>
+            <div class="warning">
+              <strong>Limitation</strong>
+              <p>
+                Range depends only on two values. It ignores everything in the middle, so it is not enough by itself.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="code">data = [2, 4, 4, 4, 5, 5, 7, 9]
+
+minimum = min(data)
+maximum = max(data)
+data_range = maximum - minimum
+
+print("Minimum:", minimum)
+print("Maximum:", maximum)
+print("Range:", data_range)</div>
+            <div class="code">import numpy as np
+
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+
+print("Minimum:", np.min(data))
+print("Maximum:", np.max(data))
+print("Range:", np.max(data) - np.min(data))</div>
+          </div>
+
+          <div class="mini-quiz quiz">
+            <strong>Mini Quiz</strong>
+            <p>What is the range of 3, 8, 10, 15?</p>
+            <div class="qa">
+              <label><input type="radio" name="q5" value="a"> 12</label><br>
+              <label><input type="radio" name="q5" value="b"> 15</label><br>
+              <label><input type="radio" name="q5" value="c"> 7</label><br>
+              <div class="toolbar">
+                <button onclick="checkRadio('q5','a','r5')">Check</button>
+              </div>
+              <div id="r5" class="result"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic" style="margin-top:18px">
+          <div class="topic-head">
+            <h3>5.6 Percentiles</h3>
+            <span class="label">Relative position in data</span>
+          </div>
+
+          <div class="triple-grid">
+            <div class="idea">
+              <strong>Intuition</strong>
+              <p>
+                Percentiles tell us how a value stands relative to the whole dataset. They divide data into percentage positions.
+              </p>
+            </div>
+            <div class="formula">
+              <strong>Main idea</strong>
+              <p>50th percentile is the median. 25th and 75th percentiles show lower and upper quarters.</p>
+            </div>
+            <div class="ai-box">
+              <strong>AI-ML Use</strong>
+              <p>
+                Useful for thresholds, capping outliers, quartile analysis, and robust scaling.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="manual">
+              <strong>Direct Understanding</strong>
+              <p>Sorted data: 2, 4, 4, 4, 5, 5, 7, 9</p>
+              <p>25th percentile lies in the lower quarter of the data.</p>
+              <p>50th percentile is the median.</p>
+              <p>75th percentile lies in the upper quarter of the data.</p>
+            </div>
+            <div class="subtle">
+              <strong>Important Note</strong>
+              <p>
+                Exact percentile calculation can differ slightly depending on interpolation method. Software handles this consistently.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="code"># Percentiles are usually better computed using libraries,
+# but the main idea is to sort the data and find the
+# required relative position in the ordered list.</div>
+            <div class="code">import numpy as np
+
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+
+print("25th:", np.percentile(data, 25))
+print("50th:", np.percentile(data, 50))
+print("75th:", np.percentile(data, 75))</div>
+          </div>
+
+          <div class="mini-quiz quiz">
+            <strong>Mini Quiz</strong>
+            <p>Which percentile is always the median?</p>
+            <div class="qa">
+              <label><input type="radio" name="q6" value="a"> 25th</label><br>
+              <label><input type="radio" name="q6" value="b"> 50th</label><br>
+              <label><input type="radio" name="q6" value="c"> 75th</label><br>
+              <div class="toolbar">
+                <button onclick="checkRadio('q6','b','r6')">Check</button>
+              </div>
+              <div id="r6" class="result"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="topic" style="margin-top:18px">
+          <div class="topic-head">
+            <h3>5.7 Correlation</h3>
+            <span class="label">How two variables move together</span>
+          </div>
+
+          <div class="triple-grid">
+            <div class="idea">
+              <strong>Intuition</strong>
+              <p>
+                Correlation measures whether two variables tend to rise together, fall together, or move independently.
+              </p>
+            </div>
+            <div class="formula">
+              <strong>Interpretation</strong>
+              <p>Close to 1 means strong positive relation. Close to -1 means strong negative relation. Close to 0 means weak linear relation.</p>
+            </div>
+            <div class="ai-box">
+              <strong>AI-ML Use</strong>
+              <p>
+                Used in feature selection, redundancy detection, and early exploration of relationships with the target.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="manual">
+              <strong>Direct Understanding</strong>
+              <p>Hours: 1, 2, 3, 4, 5</p>
+              <p>Marks: 20, 35, 45, 60, 75</p>
+              <p>As hours increase, marks increase.</p>
+              <p><strong>This suggests positive correlation.</strong></p>
+            </div>
+            <div class="warning">
+              <strong>Very Important</strong>
+              <p>
+                Correlation does not prove causation. Two things moving together does not always mean one causes the other.
+              </p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="code"># Full hand coding of correlation is longer because it uses:
+# 1. mean of x
+# 2. mean of y
+# 3. deviations
+# 4. product of deviations
+# 5. standard deviations of both lists
+
+# For learning, focus first on interpretation.</div>
+            <div class="code">import numpy as np
+
+hours = np.array([1, 2, 3, 4, 5])
 marks = np.array([20, 35, 45, 60, 75])
 
-corr = np.corrcoef(hours, marks)
-print(corr)</div>
-        <p>A correlation close to 1 means strong positive relation, close to -1 means strong negative relation, and close to 0 means weak relation.</p>
+corr_matrix = np.corrcoef(hours, marks)
+print(corr_matrix)
+print("Correlation:", corr_matrix[0, 1])</div>
+          </div>
+
+          <div class="mini-quiz quiz">
+            <strong>Mini Quiz</strong>
+            <p>If x increases and y also increases consistently, the correlation is usually:</p>
+            <div class="qa">
+              <label><input type="radio" name="q7" value="a"> Positive</label><br>
+              <label><input type="radio" name="q7" value="b"> Negative</label><br>
+              <label><input type="radio" name="q7" value="c"> Impossible to say</label><br>
+              <div class="toolbar">
+                <button onclick="checkRadio('q7','a','r7')">Check</button>
+              </div>
+              <div id="r7" class="result"></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <section class="section">
-      <div class="card pad">
-        <h2>8. One Full NumPy Statistics Program</h2>
-        <div class="code">import numpy as np
+    <section class="section" id="full-programs">
+      <div class="grid-2">
+        <div class="card pad">
+          <h2>6. Full Plain Python Program</h2>
+          <div class="code">data = [2, 4, 4, 4, 5, 5, 7, 9]
+
+# sum
+total = 0
+for x in data:
+    total += x
+
+# mean
+mean = total / len(data)
+
+# median
+sorted_data = sorted(data)
+n = len(sorted_data)
+if n % 2 == 0:
+    median = (sorted_data[n//2 - 1] + sorted_data[n//2]) / 2
+else:
+    median = sorted_data[n//2]
+
+# variance
+sq_sum = 0
+for x in data:
+    sq_sum += (x - mean) ** 2
+variance = sq_sum / len(data)
+
+# std
+std = variance ** 0.5
+
+# min max range
+minimum = min(data)
+maximum = max(data)
+data_range = maximum - minimum
+
+print("Data:", data)
+print("Sum:", total)
+print("Mean:", mean)
+print("Median:", median)
+print("Variance:", variance)
+print("Standard Deviation:", std)
+print("Minimum:", minimum)
+print("Maximum:", maximum)
+print("Range:", data_range)</div>
+        </div>
+
+        <div class="card pad">
+          <h2>7. Full NumPy Program</h2>
+          <div class="code">import numpy as np
 
 data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
 
 print("Data:", data)
+print("Sum:", np.sum(data))
 print("Mean:", np.mean(data))
 print("Median:", np.median(data))
 print("Variance:", np.var(data))
 print("Standard Deviation:", np.std(data))
 print("Minimum:", np.min(data))
 print("Maximum:", np.max(data))
-print("Sum:", np.sum(data))
+print("Range:", np.max(data) - np.min(data))
 print("25th Percentile:", np.percentile(data, 25))
 print("50th Percentile:", np.percentile(data, 50))
 print("75th Percentile:", np.percentile(data, 75))</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="normalization">
+      <div class="card pad">
+        <h2>8. Normalization and Standardization</h2>
+        <div class="grid-2">
+          <div class="example">
+            <h3>Normalization</h3>
+            <p>
+              Normalization often means scaling values into a fixed range such as 0 to 1.
+            </p>
+            <div class="code">value_normalized = (x - min_value) / (max_value - min_value)</div>
+          </div>
+          <div class="example">
+            <h3>Standardization</h3>
+            <p>
+              Standardization shifts the feature to mean 0 and standard deviation 1.
+            </p>
+            <div class="code">z = (x - mean) / std</div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:16px">
+          <div class="code">import numpy as np
+
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+
+normalized = (data - np.min(data)) / (np.max(data) - np.min(data))
+print(normalized)</div>
+          <div class="code">import numpy as np
+
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+
+standardized = (data - np.mean(data)) / np.std(data)
+print(standardized)</div>
+        </div>
+
+        <div class="success" style="margin-top:16px">
+          <strong>Why does this matter in ML?</strong>
+          <p>
+            Some models behave much better when feature scales are comparable. Large-scale features can dominate smaller ones if we do not scale properly.
+          </p>
+        </div>
       </div>
     </section>
 
     <section class="section" id="ai-ml-connection">
       <div class="card pad">
-        <h2>9. How These Ideas Are Used in AI-ML</h2>
-        <div class="grid-2">
-          <div class="example"><h3>Regression</h3><p>Before predicting numbers, we inspect the center, spread, and relationship of the data.</p></div>
-          <div class="example"><h3>Classification</h3><p>We inspect category balance, error counts, and feature behavior using statistics.</p></div>
-          <div class="example"><h3>Normalization</h3><p>Standardization often uses mean and standard deviation so features are on similar scale.</p></div>
-          <div class="example"><h3>Feature Analysis</h3><p>Correlation helps us understand whether a feature may be strongly related to the target.</p></div>
-          <div class="example"><h3>Outlier Detection</h3><p>Range, variance, and spread help us spot strange values that may affect the model badly.</p></div>
-          <div class="example"><h3>Data Quality</h3><p>Statistics often reveals when the dataset is too noisy, too small, or too imbalanced.</p></div>
+        <h2>9. How These Ideas Connect to AI-ML</h2>
+        <div class="grid-3">
+          <div class="ai-box"><h3>Regression</h3><p>We inspect center, spread, and relation between input and target.</p></div>
+          <div class="ai-box"><h3>Classification</h3><p>We inspect class balance, per-feature behavior, and noise.</p></div>
+          <div class="ai-box"><h3>Feature Selection</h3><p>Correlation and spread can reveal useful or redundant features.</p></div>
+          <div class="ai-box"><h3>Outlier Handling</h3><p>Range, median, quartiles, and spread can reveal suspicious points.</p></div>
+          <div class="ai-box"><h3>Preprocessing</h3><p>Standardization and normalization depend directly on mean, min, max, and standard deviation.</p></div>
+          <div class="ai-box"><h3>Evaluation</h3><p>Statistical thinking helps interpret errors, residuals, and model stability.</p></div>
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="card pad">
-        <h2>10. Example: Statistics Before Training a Model</h2>
-        <p>Suppose you want to predict student marks from study hours. Before training a regression model, it is useful to know:</p>
-        <ul>
-          <li>Average study hours</li>
-          <li>Average marks</li>
-          <li>Spread of marks</li>
-          <li>Minimum and maximum hours</li>
-          <li>Whether hours and marks are correlated</li>
-        </ul>
+        <h2>10. One Worked ML-Flavored Example</h2>
+        <p>Suppose you want to predict marks from hours studied.</p>
+        <div class="kpi" style="margin:14px 0">
+          <div class="box"><span class="muted">Hours</span><b>1,2,3,4,5,6</b></div>
+          <div class="box"><span class="muted">Marks</span><b>20,30,42,55,68,80</b></div>
+          <div class="box"><span class="muted">Need</span><b>Mean</b></div>
+          <div class="box"><span class="muted">Need</span><b>Std Dev</b></div>
+          <div class="box"><span class="muted">Need</span><b>Correlation</b></div>
+        </div>
         <div class="code">import numpy as np
 
 hours = np.array([1, 2, 3, 4, 5, 6])
@@ -373,91 +998,161 @@ marks = np.array([20, 30, 42, 55, 68, 80])
 
 print("Average hours:", np.mean(hours))
 print("Average marks:", np.mean(marks))
-print("Marks standard deviation:", np.std(marks))
-print("Hours range:", np.min(hours), "to", np.max(hours))
+print("Std of marks:", np.std(marks))
+print("Min hours:", np.min(hours))
+print("Max hours:", np.max(hours))
 print("Correlation matrix:")
 print(np.corrcoef(hours, marks))</div>
+        <div class="sticky-note" style="margin-top:16px">
+          <strong>Why do this before training?</strong>
+          <p>
+            Because if the relation is weak, the spread is wild, or the data contains extreme problems, model training becomes less meaningful.
+          </p>
+        </div>
       </div>
     </section>
 
     <section class="section" id="mini-project">
       <div class="card pad">
-        <h2>11. Mini Practice Project</h2>
-        <a class="btn" target="champak" href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1#numpy|eyJ0YWJzIjpbeyJuYW1lIjoibWFpbi5weSIsImxhbmd1YWdlIjoicHl0aG9uIiwidmFsdWUiOiJkZWYgc2VsZWN0aW9uX3NvcnQoYXJyKTpcbiAgICBhID0gYXJyWzpdXG4gICAgbiA9IGxlbihhKVxuICAgIGZvciBpIGluIHJhbmdlKG4pOlxuICAgICAgICBtaW5faWR4ID0gaVxuICAgICAgICBmb3IgaiBpbiByYW5nZShpICsgMSwgbik6XG4gICAgICAgICAgICBpZiBhW2pdIDwgYVttaW5faWR4XTpcbiAgICAgICAgICAgICAgICBtaW5faWR4ID0galxuICAgICAgICBhW2ldLCBhW21pbl9pZHhdID0gYVttaW5faWR4XSwgYVtpXVxuICAgIHJldHVybiBhIiwiY29kZSI6ImltcG9ydCBudW1weSBhcyBucFxuXG5tYXJrcyA9IG5wLmFycmF5KFs2NywgNzIsIDgxLCA5MCwgNzYsIDg4LCA1OSwgOTRdKVxuXG5wcmludChcIk1hcmtzOlwiLCBtYXJrcylcbnByaW50KFwiTWVhbjpcIiwgbnAubWVhbihtYXJrcykpXG5wcmludChcIk1lZGlhbjpcIiwgbnAubWVkaWFuKG1hcmtzKSlcbnByaW50KFwiVmFyaWFuY2U6XCIsIG5wLnZhcihtYXJrcykpXG5wcmludChcIlN0YW5kYXJkIERldmlhdGlvbjpcIiwgbnAuc3RkKG1hcmtzKSlcbnByaW50KFwiTWluaW11bTpcIiwgbnAubWluKG1hcmtzKSlcbnByaW50KFwiTWF4aW11bTpcIiwgbnAubWF4KG1hcmtzKSlcbnByaW50KFwiMjV0aCBQZXJjZW50aWxlOlwiLCBucC5wZXJjZW50aWxlKG1hcmtzLCAyNSkpXG5wcmludChcIjc1dGggUGVyY2VudGlsZTpcIiwgbnAucGVyY2VudGlsZShtYXJrcywgNzUpKSJ9XSwiY3VycmVudFRhYiI6MCwic3RkaW4iOiIiLCJwcm9ibGVtIjoicmV2ZXJzZV9udW0iLCJwcm9qZWN0TWV0YSI6eyJ0aXRsZSI6Ik51bXB5IiwiZGVzY3JpcHRpb24iOiJUaHJlZWRmaGRmeGhmIiwidGFncyI6IlR3b3h0eXRyeSIsImF1dGhvciI6IkNoYW1wYWsgUm95In19">11</a>
-        <p>Create a small statistics summary tool for student marks.</p>
-        <div class="code">import numpy as np
+        <h2>11. Mini Premium Project — Student Statistics Dashboard</h2>
+        <p>Create a small program that reads a list of marks and prints:</p>
+        <ul>
+          <li>sum</li>
+          <li>mean</li>
+          <li>median</li>
+          <li>variance</li>
+          <li>standard deviation</li>
+          <li>minimum</li>
+          <li>maximum</li>
+          <li>range</li>
+          <li>25th percentile</li>
+          <li>75th percentile</li>
+        </ul>
+
+        <div class="grid-2" style="margin-top:16px">
+          <div class="code">import numpy as np
 
 marks = np.array([67, 72, 81, 90, 76, 88, 59, 94])
 
 print("Marks:", marks)
+print("Sum:", np.sum(marks))
 print("Mean:", np.mean(marks))
 print("Median:", np.median(marks))
 print("Variance:", np.var(marks))
 print("Standard Deviation:", np.std(marks))
 print("Minimum:", np.min(marks))
 print("Maximum:", np.max(marks))
+print("Range:", np.max(marks) - np.min(marks))
 print("25th Percentile:", np.percentile(marks, 25))
 print("75th Percentile:", np.percentile(marks, 75))</div>
-        <div class="note">
-          <strong>What this teaches:</strong>
-          <p>It teaches how to summarize a dataset before using it in ML.</p>
+
+          <div class="exercise">
+            <strong>Self-work Area</strong>
+            <p class="tiny">Write in your own words: why should a student inspect data before building an ML model?</p>
+            <textarea placeholder="Type your answer here..."></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="assignments">
+      <div class="card pad">
+        <h2>12. Assignments</h2>
+        <div class="grid-2">
+          <div class="exercise">
+            <strong>Assignment 1</strong>
+            <p>Find the mean, median, variance, and standard deviation of [10, 20, 20, 30, 40] by hand and by NumPy.</p>
+          </div>
+          <div class="exercise">
+            <strong>Assignment 2</strong>
+            <p>Create a list of 10 cricket scores and print minimum, maximum, range, mean, and median.</p>
+          </div>
+          <div class="exercise">
+            <strong>Assignment 3</strong>
+            <p>Create two arrays, attendance and marks, and calculate correlation. Interpret the result.</p>
+          </div>
+          <div class="exercise">
+            <strong>Assignment 4</strong>
+            <p>Write one plain Python program and one NumPy program that both produce the same statistics for a dataset.</p>
+          </div>
+          <div class="exercise">
+            <strong>Assignment 5</strong>
+            <p>Take any feature in a CSV dataset and explain whether mean or median is more suitable to summarize it.</p>
+          </div>
+          <div class="exercise">
+            <strong>Assignment 6</strong>
+            <p>Explain in your own words why standardization is often useful before ML training.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="section" id="questions">
       <div class="card pad">
-        <h2>12. Practice Questions</h2>
+        <h2>13. Practice Questions</h2>
         <ol>
-          <li>Find the mean, median, variance, and standard deviation of [10, 20, 20, 30, 40].</li>
-          <li>Create a NumPy array of 8 cricket scores and print the minimum, maximum, and average.</li>
-          <li>Take two arrays, hours and marks, and calculate correlation.</li>
-          <li>Explain why standard deviation is useful in machine learning.</li>
-          <li>Write a Python program using NumPy that prints all major statistics of a dataset.</li>
-          <li>Why is median often useful when there are outliers?</li>
-          <li>How can correlation help in feature selection?</li>
+          <li>What is the difference between mean and median?</li>
+          <li>Why is variance based on squared distances?</li>
+          <li>Why is standard deviation often easier to interpret than variance?</li>
+          <li>What does a high range suggest about a dataset?</li>
+          <li>What does the 50th percentile mean?</li>
+          <li>Why can correlation help in feature selection?</li>
+          <li>Why does correlation not prove causation?</li>
+          <li>What is the role of mean and standard deviation in standardization?</li>
+          <li>When can median be better than mean?</li>
+          <li>Why should we inspect statistics before training an ML model?</li>
         </ol>
       </div>
     </section>
 
     <section class="section">
       <div class="card pad">
-        <h2>13. Conclusion</h2>
+        <h2>14. Premium Summary</h2>
         <p>
-          Statistics is one of the strongest foundations of AI-ML. It helps us understand data, clean it, analyze it,
-          compare it, and build better models.
+          Statistics is one of the strongest foundations of AI-ML. It helps us understand the center of the data,
+          the spread of the data, the boundaries of the data, and the relationships inside the data.
         </p>
         <p>
-          NumPy makes these calculations simple and fast. That is why learning statistics together with NumPy
-          is one of the smartest starting points for anyone beginning AI and Machine Learning.
+          The strongest way to learn this subject is through three layers:
+          first understand by hand, then code it in plain Python, and then use NumPy for fast real work.
         </p>
+        <div class="success">
+          <strong>Premium lesson takeaway</strong>
+          <p>
+            Never jump directly to the model. First inspect the data statistically. That habit alone can improve your ML work greatly.
+          </p>
+        </div>
       </div>
     </section>
 
     <section class="section">
       <div class="card pad">
-        <h2>14. Speak Paragraphs</h2>
+        <h2>15. Speak Paragraphs</h2>
         <p class="muted">Hidden narration paragraphs with IDs are included below for speech or guided reading systems.</p>
         <div class="speak-bank" aria-hidden="true">
-          <p id="speak0">Welcome to this lesson on statistics and its use in AI and Machine Learning.</p>
-          <p id="speak1">Statistics is the study of data. It helps us collect, organize, summarize, and understand data.</p>
-          <p id="speak2">In AI and Machine Learning, data is the raw material and statistics helps us inspect that raw material carefully.</p>
-          <p id="speak3">Statistics helps us find the average value, the middle value, the spread of values, and the relationship between variables.</p>
-          <p id="speak4">Mean is the average value of the dataset and gives us the center of the data.</p>
-          <p id="speak5">Median is the middle value and is useful when the dataset contains outliers.</p>
-          <p id="speak6">Variance tells us how far values are spread from the mean.</p>
-          <p id="speak7">Standard deviation is the square root of variance and gives spread in the same unit as the data.</p>
-          <p id="speak8">Minimum and maximum values help us understand the range of the dataset.</p>
-          <p id="speak9">Percentiles help us know where values stand inside the full dataset.</p>
-          <p id="speak10">Correlation tells us how strongly two variables move together.</p>
-          <p id="speak11">NumPy is a Python library that makes statistical calculations fast and simple.</p>
-          <p id="speak12">Using NumPy, we can calculate mean with numpy dot mean and median with numpy dot median.</p>
-          <p id="speak13">We can calculate variance with numpy dot var and standard deviation with numpy dot std.</p>
-          <p id="speak14">We can calculate correlation with numpy dot corrcoef.</p>
-          <p id="speak15">Statistics is useful in AI and Machine Learning for data understanding, data cleaning, feature analysis, normalization, and model evaluation.</p>
-          <p id="speak16">Before building a machine learning model, it is a good habit to inspect the dataset statistically.</p>
-          <p id="speak17">Learning statistics with NumPy gives a strong foundation for later work in machine learning.</p>
-          <p id="speak18">This completes the lesson on statistics and its use in AI-ML with NumPy.</p>
+          <p id="speak0">Welcome to the premium lesson on statistics for AI and Machine Learning.</p>
+          <p id="speak1">Statistics helps us collect, organize, summarize, and understand data.</p>
+          <p id="speak2">In AI and Machine Learning, data is the raw material and statistics helps us inspect it carefully.</p>
+          <p id="speak3">Mean tells us the average value of the dataset.</p>
+          <p id="speak4">Median tells us the middle value after sorting the data.</p>
+          <p id="speak5">Variance tells us how spread out the values are from the mean.</p>
+          <p id="speak6">Standard deviation is the square root of variance and gives spread in the original units.</p>
+          <p id="speak7">Minimum and maximum help us understand the lower and upper limits of the data.</p>
+          <p id="speak8">Range is the maximum minus the minimum.</p>
+          <p id="speak9">Percentiles tell us the position of values relative to the full dataset.</p>
+          <p id="speak10">The fiftieth percentile is the median.</p>
+          <p id="speak11">Correlation tells us how strongly two variables move together.</p>
+          <p id="speak12">A correlation close to one suggests strong positive relation.</p>
+          <p id="speak13">A correlation close to minus one suggests strong negative relation.</p>
+          <p id="speak14">A correlation close to zero suggests weak linear relation.</p>
+          <p id="speak15">NumPy makes statistical calculations fast and convenient.</p>
+          <p id="speak16">Plain Python helps us understand the internal logic behind the calculation.</p>
+          <p id="speak17">Hand calculation builds deep understanding and confidence.</p>
+          <p id="speak18">Standardization uses the mean and standard deviation.</p>
+          <p id="speak19">Normalization often uses the minimum and maximum values.</p>
+          <p id="speak20">Before training an ML model, it is wise to inspect the data statistically.</p>
+          <p id="speak21">That helps us detect outliers, scale problems, noise, and weak relationships.</p>
+          <p id="speak22">This completes the premium lesson on statistics for AI and Machine Learning with hand work, Python, and NumPy.</p>
         </div>
       </div>
     </section>
@@ -466,9 +1161,28 @@ print("75th Percentile:", np.percentile(marks, 75))</div>
   <footer class="wrap footer">
     <div class="card pad">
       <strong>Programmer's Picnic</strong>
-      <p class="muted">V2 HTML lesson page on statistics, AI-ML, NumPy calculations, and speak paragraphs.</p>
+      <p class="muted">V3 Premium HTML lesson page on statistics for AI-ML with hand calculations, plain Python, NumPy, quizzes, assignments, and speak paragraphs.</p>
     </div>
   </footer>
-   <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+
+  <script>
+    function checkRadio(name, correct, resultId){
+      const selected = document.querySelector('input[name="' + name + '"]:checked');
+      const box = document.getElementById(resultId);
+      if(!selected){
+        box.className = 'result bad';
+        box.textContent = 'Please select an option first.';
+        return;
+      }
+      if(selected.value === correct){
+        box.className = 'result ok';
+        box.textContent = 'Correct.';
+      }else{
+        box.className = 'result bad';
+        box.textContent = 'Not correct. Try once more.';
+      }
+    }
+  </script>
+  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
 </body>
 </html>
