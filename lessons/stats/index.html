@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Statistics for AI-ML — V4 Ultra | Programmer's Picnic</title>
+    <title>Statistics for AI-ML — V5 Ultra | Programmer's Picnic</title>
     <script
       async
       crossorigin="anonymous"
@@ -11,7 +11,7 @@
     ></script>
     <meta
       name="description"
-      content="Statistics lesson for AI-ML with direct calculation, plain Python, NumPy, embedded Python editor, collapsible cards, copy buttons, scored MCQs, and a final project."
+      content="Statistics lesson for AI-ML with direct calculation, plain Python, NumPy, Matplotlib charts, embedded Python editor, collapsible cards, copy buttons, scored MCQs, and a final project."
     />
     <meta name="theme-color" content="#f59e0b" />
     <style>
@@ -376,7 +376,12 @@
         font-size: 13px;
       }
       .speak-bank {
-        display: none;
+        position: absolute;
+        left: -9999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
       }
       .pp-editor-frame {
         width: 100%;
@@ -409,27 +414,28 @@
       <section class="hero">
         <div class="hero-grid">
           <div class="card pad">
-            <div class="pill">⚡ V4 Ultra</div>
-            <h1>Statistics for AI-ML with Direct Method, Python, and NumPy</h1>
+            <div class="pill">⚡ V5 Ultra</div>
+            <h1>Statistics for AI-ML with Direct Method, Python, NumPy, and Matplotlib</h1>
             <p class="muted">
               This ultra version gives you collapsible topic cards, copy
               buttons, a live embedded Python editor, scored MCQs, direct
-              calculation, plain Python, NumPy, and a final mini project.
+              calculation, plain Python, NumPy, Mode, and Matplotlib charts for
+              all major calculations.
             </p>
             <div>
               <span class="chip">Mean</span>
               <span class="chip">Median</span>
+              <span class="chip">Mode</span>
               <span class="chip">Variance</span>
               <span class="chip">Standard Deviation</span>
               <span class="chip">Percentiles</span>
               <span class="chip">Correlation</span>
               <span class="chip">Normalization</span>
+              <span class="chip">Matplotlib</span>
               <span class="chip">MCQ Score</span>
             </div>
             <div class="toolbar">
-              <a class="btn secondary" href="#live-editor"
-                >Open Embedded Editor</a
-              >
+              <a class="btn secondary" href="#live-editor">Open Embedded Editor</a>
               <a class="btn secondary" href="#ultra-topics">Jump to Topics</a>
             </div>
           </div>
@@ -457,7 +463,7 @@
           </div>
           <div class="stat">
             <span class="muted">Best coding path</span
-            ><b>Hand → Python → NumPy</b
+            ><b>Hand → Python → NumPy → Charts</b
             ><span class="muted">deep understanding</span>
           </div>
           <div class="stat">
@@ -495,7 +501,7 @@
           <div class="grid-3">
             <div class="example">
               <h3>Understand the center</h3>
-              <p>Mean and median help us know what is typical.</p>
+              <p>Mean, median, and mode help us know what is typical.</p>
             </div>
             <div class="example">
               <h3>Understand the spread</h3>
@@ -546,10 +552,7 @@
           <h2>4. Foundation Dataset</h2>
           <p>We will use this dataset in many examples:</p>
           <div class="codeWrap">
-            <button
-              class="copyBtn btn secondary"
-              data-copy-target="dataset-code"
-            >
+            <button class="copyBtn btn secondary" data-copy-target="dataset-code">
               Copy
             </button>
             <pre class="code" id="dataset-code">[2, 4, 4, 4, 5, 5, 7, 9]</pre>
@@ -563,7 +566,7 @@
           <p class="muted">Tap any card to open it.</p>
 
           <div class="accordion open">
-            <button class="accHead" type="button">
+            <button class="accHead" type="button" aria-expanded="true">
               <span>5.1 Mean</span>
               <span>+</span>
             </button>
@@ -597,12 +600,9 @@
                   </p>
                 </div>
               </div>
-              <div class="compare-grid" style="margin-top: 16px">
+              <div class="grid-3" style="margin-top: 16px">
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="mean-python"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="mean-python">
                     Copy
                   </button>
                   <pre class="code" id="mean-python">
@@ -613,29 +613,44 @@ for x in data:
     total += x
 
 mean = total / len(data)
-print("Mean:", mean)</pre
-                  >
+print("Mean:", mean)</pre>
                 </div>
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="mean-numpy"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="mean-numpy">
                     Copy
                   </button>
                   <pre class="code" id="mean-numpy">
 import numpy as np
 
 data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
-print("Mean:", np.mean(data))</pre
-                  >
+print("Mean:", np.mean(data))</pre>
+                </div>
+                <div class="codeWrap">
+                  <button class="copyBtn btn secondary" data-copy-target="mean-chart">
+                    Copy
+                  </button>
+                  <pre class="code" id="mean-chart">
+import matplotlib.pyplot as plt
+
+data = [2, 4, 4, 4, 5, 5, 7, 9]
+mean = sum(data) / len(data)
+
+plt.figure(figsize=(8, 4))
+plt.plot(range(len(data)), data, marker="o", label="Data")
+plt.axhline(mean, linestyle="--", label=f"Mean = {mean}")
+plt.title("Mean of Dataset")
+plt.xlabel("Index")
+plt.ylabel("Value")
+plt.legend()
+plt.grid(True)
+plt.show()</pre>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="accordion">
-            <button class="accHead" type="button">
+            <button class="accHead" type="button" aria-expanded="false">
               <span>5.2 Median</span>
               <span>+</span>
             </button>
@@ -672,12 +687,9 @@ print("Mean:", np.mean(data))</pre
                   </p>
                 </div>
               </div>
-              <div class="compare-grid" style="margin-top: 16px">
+              <div class="grid-3" style="margin-top: 16px">
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="median-python"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="median-python">
                     Copy
                   </button>
                   <pre class="code" id="median-python">
@@ -690,30 +702,146 @@ if n % 2 == 0:
 else:
     median = sorted_data[n//2]
 
-print("Median:", median)</pre
-                  >
+print("Median:", median)</pre>
                 </div>
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="median-numpy"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="median-numpy">
                     Copy
                   </button>
                   <pre class="code" id="median-numpy">
 import numpy as np
 
 data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
-print("Median:", np.median(data))</pre
-                  >
+print("Median:", np.median(data))</pre>
+                </div>
+                <div class="codeWrap">
+                  <button class="copyBtn btn secondary" data-copy-target="median-chart">
+                    Copy
+                  </button>
+                  <pre class="code" id="median-chart">
+import matplotlib.pyplot as plt
+
+data = [2, 4, 4, 4, 5, 5, 7, 9]
+sorted_data = sorted(data)
+n = len(sorted_data)
+
+if n % 2 == 0:
+    median = (sorted_data[n//2 - 1] + sorted_data[n//2]) / 2
+else:
+    median = sorted_data[n//2]
+
+plt.figure(figsize=(8, 4))
+plt.plot(range(len(sorted_data)), sorted_data, marker="o", label="Sorted Data")
+plt.axhline(median, linestyle="--", label=f"Median = {median}")
+plt.title("Median of Dataset")
+plt.xlabel("Sorted Index")
+plt.ylabel("Value")
+plt.legend()
+plt.grid(True)
+plt.show()</pre>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="accordion">
-            <button class="accHead" type="button">
-              <span>5.3 Variance</span>
+            <button class="accHead" type="button" aria-expanded="false">
+              <span>5.3 Mode</span>
+              <span>+</span>
+            </button>
+            <div class="accBody">
+              <div class="grid-3" style="margin-top: 14px">
+                <div class="box">
+                  <strong>Meaning</strong>
+                  <p>The value that appears most often in the dataset.</p>
+                </div>
+                <div class="box">
+                  <strong>Formula Idea</strong>
+                  <p>Count the frequency of each value. Highest frequency gives the mode.</p>
+                </div>
+                <div class="box">
+                  <strong>AI-ML Use</strong>
+                  <p>Useful for repeated values and categorical data analysis.</p>
+                </div>
+              </div>
+              <div class="compare-grid" style="margin-top: 16px">
+                <div class="manual">
+                  <strong>Direct Calculation</strong>
+                  <p>Data: 2, 4, 4, 4, 5, 5, 7, 9</p>
+                  <p>Counts: 2→1, 4→3, 5→2, 7→1, 9→1</p>
+                  <p><strong>Mode = 4</strong></p>
+                </div>
+                <div class="note">
+                  <strong>Important</strong>
+                  <p>
+                    A dataset may have one mode, many modes, or no mode if
+                    frequencies are equal.
+                  </p>
+                </div>
+              </div>
+              <div class="grid-3" style="margin-top: 16px">
+                <div class="codeWrap">
+                  <button class="copyBtn btn secondary" data-copy-target="mode-python">
+                    Copy
+                  </button>
+                  <pre class="code" id="mode-python">
+data = [2, 4, 4, 4, 5, 5, 7, 9]
+
+counts = {}
+for x in data:
+    counts[x] = counts.get(x, 0) + 1
+
+mode = max(counts, key=counts.get)
+
+print("Counts:", counts)
+print("Mode:", mode)</pre>
+                </div>
+                <div class="codeWrap">
+                  <button class="copyBtn btn secondary" data-copy-target="mode-numpy">
+                    Copy
+                  </button>
+                  <pre class="code" id="mode-numpy">
+import numpy as np
+from collections import Counter
+
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+
+counts = Counter(data)
+mode = counts.most_common(1)[0][0]
+
+print("Counts:", counts)
+print("Mode:", mode)</pre>
+                </div>
+                <div class="codeWrap">
+                  <button class="copyBtn btn secondary" data-copy-target="mode-chart">
+                    Copy
+                  </button>
+                  <pre class="code" id="mode-chart">
+import matplotlib.pyplot as plt
+from collections import Counter
+
+data = [2, 4, 4, 4, 5, 5, 7, 9]
+counts = Counter(data)
+
+x = list(counts.keys())
+y = list(counts.values())
+mode = max(counts, key=counts.get)
+
+plt.figure(figsize=(8, 4))
+plt.bar(x, y)
+plt.title(f"Mode Frequency Chart (Mode = {mode})")
+plt.xlabel("Value")
+plt.ylabel("Frequency")
+plt.grid(True, axis="y")
+plt.show()</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion">
+            <button class="accHead" type="button" aria-expanded="false">
+              <span>5.4 Variance</span>
               <span>+</span>
             </button>
             <div class="accBody">
@@ -748,12 +876,9 @@ print("Median:", np.median(data))</pre
                   </p>
                 </div>
               </div>
-              <div class="compare-grid" style="margin-top: 16px">
+              <div class="grid-3" style="margin-top: 16px">
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="var-python"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="var-python">
                     Copy
                   </button>
                   <pre class="code" id="var-python">
@@ -765,30 +890,44 @@ for x in data:
     sq_sum += (x - mean) ** 2
 
 variance = sq_sum / len(data)
-print("Variance:", variance)</pre
-                  >
+print("Variance:", variance)</pre>
                 </div>
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="var-numpy"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="var-numpy">
                     Copy
                   </button>
                   <pre class="code" id="var-numpy">
 import numpy as np
 
 data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
-print("Variance:", np.var(data))</pre
-                  >
+print("Variance:", np.var(data))</pre>
+                </div>
+                <div class="codeWrap">
+                  <button class="copyBtn btn secondary" data-copy-target="var-chart">
+                    Copy
+                  </button>
+                  <pre class="code" id="var-chart">
+import matplotlib.pyplot as plt
+
+data = [2, 4, 4, 4, 5, 5, 7, 9]
+mean = sum(data) / len(data)
+sq_dev = [(x - mean) ** 2 for x in data]
+
+plt.figure(figsize=(8, 4))
+plt.bar(range(len(sq_dev)), sq_dev)
+plt.title("Squared Deviations Used in Variance")
+plt.xlabel("Index")
+plt.ylabel("Squared Deviation")
+plt.grid(True, axis="y")
+plt.show()</pre>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="accordion">
-            <button class="accHead" type="button">
-              <span>5.4 Standard Deviation</span>
+            <button class="accHead" type="button" aria-expanded="false">
+              <span>5.5 Standard Deviation</span>
               <span>+</span>
             </button>
             <div class="accBody">
@@ -820,12 +959,9 @@ print("Variance:", np.var(data))</pre
                   </p>
                 </div>
               </div>
-              <div class="compare-grid" style="margin-top: 16px">
+              <div class="grid-3" style="margin-top: 16px">
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="std-python"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="std-python">
                     Copy
                   </button>
                   <pre class="code" id="std-python">
@@ -839,30 +975,49 @@ for x in data:
 variance = sq_sum / len(data)
 std = variance ** 0.5
 
-print("Standard Deviation:", std)</pre
-                  >
+print("Standard Deviation:", std)</pre>
                 </div>
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="std-numpy"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="std-numpy">
                     Copy
                   </button>
                   <pre class="code" id="std-numpy">
 import numpy as np
 
 data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
-print("Standard Deviation:", np.std(data))</pre
-                  >
+print("Standard Deviation:", np.std(data))</pre>
+                </div>
+                <div class="codeWrap">
+                  <button class="copyBtn btn secondary" data-copy-target="std-chart">
+                    Copy
+                  </button>
+                  <pre class="code" id="std-chart">
+import matplotlib.pyplot as plt
+
+data = [2, 4, 4, 4, 5, 5, 7, 9]
+mean = sum(data) / len(data)
+variance = sum((x - mean) ** 2 for x in data) / len(data)
+std = variance ** 0.5
+
+plt.figure(figsize=(8, 4))
+plt.plot(range(len(data)), data, marker="o", label="Data")
+plt.axhline(mean, linestyle="--", label=f"Mean = {mean}")
+plt.axhline(mean + std, linestyle=":", label=f"Mean + Std = {mean + std}")
+plt.axhline(mean - std, linestyle=":", label=f"Mean - Std = {mean - std}")
+plt.title("Standard Deviation Around Mean")
+plt.xlabel("Index")
+plt.ylabel("Value")
+plt.legend()
+plt.grid(True)
+plt.show()</pre>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="accordion">
-            <button class="accHead" type="button">
-              <span>5.5 Min, Max, and Range</span>
+            <button class="accHead" type="button" aria-expanded="false">
+              <span>5.6 Min, Max, and Range</span>
               <span>+</span>
             </button>
             <div class="accBody">
@@ -895,12 +1050,9 @@ print("Standard Deviation:", np.std(data))</pre
                   </p>
                 </div>
               </div>
-              <div class="compare-grid" style="margin-top: 16px">
+              <div class="grid-3" style="margin-top: 16px">
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="range-python"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="range-python">
                     Copy
                   </button>
                   <pre class="code" id="range-python">
@@ -912,14 +1064,10 @@ data_range = maximum - minimum
 
 print("Minimum:", minimum)
 print("Maximum:", maximum)
-print("Range:", data_range)</pre
-                  >
+print("Range:", data_range)</pre>
                 </div>
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="range-numpy"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="range-numpy">
                     Copy
                   </button>
                   <pre class="code" id="range-numpy">
@@ -929,16 +1077,37 @@ data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
 
 print("Minimum:", np.min(data))
 print("Maximum:", np.max(data))
-print("Range:", np.max(data) - np.min(data))</pre
-                  >
+print("Range:", np.max(data) - np.min(data))</pre>
+                </div>
+                <div class="codeWrap">
+                  <button class="copyBtn btn secondary" data-copy-target="range-chart">
+                    Copy
+                  </button>
+                  <pre class="code" id="range-chart">
+import matplotlib.pyplot as plt
+
+data = [2, 4, 4, 4, 5, 5, 7, 9]
+minimum = min(data)
+maximum = max(data)
+
+plt.figure(figsize=(8, 4))
+plt.plot(range(len(data)), data, marker="o", label="Data")
+plt.axhline(minimum, linestyle="--", label=f"Min = {minimum}")
+plt.axhline(maximum, linestyle="--", label=f"Max = {maximum}")
+plt.title(f"Range of Dataset = {maximum - minimum}")
+plt.xlabel("Index")
+plt.ylabel("Value")
+plt.legend()
+plt.grid(True)
+plt.show()</pre>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="accordion">
-            <button class="accHead" type="button">
-              <span>5.6 Percentiles</span>
+            <button class="accHead" type="button" aria-expanded="false">
+              <span>5.7 Percentiles</span>
               <span>+</span>
             </button>
             <div class="accBody">
@@ -972,24 +1141,17 @@ print("Range:", np.max(data) - np.min(data))</pre
                   </p>
                 </div>
               </div>
-              <div class="compare-grid" style="margin-top: 16px">
+              <div class="grid-3" style="margin-top: 16px">
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="pct-python"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="pct-python">
                     Copy
                   </button>
                   <pre class="code" id="pct-python">
 # Percentiles are usually computed using a library
-# after sorting and locating the relative position.</pre
-                  >
+# after sorting and locating the relative position.</pre>
                 </div>
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="pct-numpy"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="pct-numpy">
                     Copy
                   </button>
                   <pre class="code" id="pct-numpy">
@@ -999,16 +1161,40 @@ data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
 
 print("25th:", np.percentile(data, 25))
 print("50th:", np.percentile(data, 50))
-print("75th:", np.percentile(data, 75))</pre
-                  >
+print("75th:", np.percentile(data, 75))</pre>
+                </div>
+                <div class="codeWrap">
+                  <button class="copyBtn btn secondary" data-copy-target="pct-chart">
+                    Copy
+                  </button>
+                  <pre class="code" id="pct-chart">
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+p25 = np.percentile(data, 25)
+p50 = np.percentile(data, 50)
+p75 = np.percentile(data, 75)
+
+plt.figure(figsize=(8, 4))
+plt.plot(sorted(data), marker="o", label="Sorted Data")
+plt.axhline(p25, linestyle="--", label=f"25th = {p25}")
+plt.axhline(p50, linestyle="--", label=f"50th = {p50}")
+plt.axhline(p75, linestyle="--", label=f"75th = {p75}")
+plt.title("Percentiles of Dataset")
+plt.xlabel("Sorted Index")
+plt.ylabel("Value")
+plt.legend()
+plt.grid(True)
+plt.show()</pre>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="accordion">
-            <button class="accHead" type="button">
-              <span>5.7 Correlation</span>
+            <button class="accHead" type="button" aria-expanded="false">
+              <span>5.8 Correlation</span>
               <span>+</span>
             </button>
             <div class="accBody">
@@ -1042,24 +1228,17 @@ print("75th:", np.percentile(data, 75))</pre
                   <p>Correlation does not prove causation.</p>
                 </div>
               </div>
-              <div class="compare-grid" style="margin-top: 16px">
+              <div class="grid-3" style="margin-top: 16px">
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="corr-python"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="corr-python">
                     Copy
                   </button>
                   <pre class="code" id="corr-python">
 # Full manual coding of correlation is longer.
-# First learn the interpretation well.</pre
-                  >
+# First learn the interpretation well.</pre>
                 </div>
                 <div class="codeWrap">
-                  <button
-                    class="copyBtn btn secondary"
-                    data-copy-target="corr-numpy"
-                  >
+                  <button class="copyBtn btn secondary" data-copy-target="corr-numpy">
                     Copy
                   </button>
                   <pre class="code" id="corr-numpy">
@@ -1070,8 +1249,27 @@ marks = np.array([20, 35, 45, 60, 75])
 
 corr = np.corrcoef(hours, marks)
 print(corr)
-print("Correlation:", corr[0, 1])</pre
-                  >
+print("Correlation:", corr[0, 1])</pre>
+                </div>
+                <div class="codeWrap">
+                  <button class="copyBtn btn secondary" data-copy-target="corr-chart">
+                    Copy
+                  </button>
+                  <pre class="code" id="corr-chart">
+import matplotlib.pyplot as plt
+import numpy as np
+
+hours = np.array([1, 2, 3, 4, 5])
+marks = np.array([20, 35, 45, 60, 75])
+
+plt.figure(figsize=(8, 4))
+plt.scatter(hours, marks, s=80)
+plt.plot(hours, marks)
+plt.title("Correlation Between Study Hours and Marks")
+plt.xlabel("Hours")
+plt.ylabel("Marks")
+plt.grid(True)
+plt.show()</pre>
                 </div>
               </div>
             </div>
@@ -1084,10 +1282,7 @@ print("Correlation:", corr[0, 1])</pre
           <div class="card pad">
             <h2>6. Full Plain Python Program</h2>
             <div class="codeWrap">
-              <button
-                class="copyBtn btn secondary"
-                data-copy-target="full-python"
-              >
+              <button class="copyBtn btn secondary" data-copy-target="full-python">
                 Copy
               </button>
               <pre class="code" id="full-python">
@@ -1106,6 +1301,12 @@ if n % 2 == 0:
 else:
     median = sorted_data[n//2]
 
+counts = {}
+for x in data:
+    counts[x] = counts.get(x, 0) + 1
+
+mode = max(counts, key=counts.get)
+
 sq_sum = 0
 for x in data:
     sq_sum += (x - mean) ** 2
@@ -1121,33 +1322,35 @@ print("Data:", data)
 print("Sum:", total)
 print("Mean:", mean)
 print("Median:", median)
+print("Mode:", mode)
 print("Variance:", variance)
 print("Standard Deviation:", std)
 print("Minimum:", minimum)
 print("Maximum:", maximum)
-print("Range:", data_range)</pre
-              >
+print("Range:", data_range)</pre>
             </div>
           </div>
 
           <div class="card pad">
             <h2>7. Full NumPy Program</h2>
             <div class="codeWrap">
-              <button
-                class="copyBtn btn secondary"
-                data-copy-target="full-numpy"
-              >
+              <button class="copyBtn btn secondary" data-copy-target="full-numpy">
                 Copy
               </button>
               <pre class="code" id="full-numpy">
 import numpy as np
+from collections import Counter
 
 data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+
+counts = Counter(data)
+mode = counts.most_common(1)[0][0]
 
 print("Data:", data)
 print("Sum:", np.sum(data))
 print("Mean:", np.mean(data))
 print("Median:", np.median(data))
+print("Mode:", mode)
 print("Variance:", np.var(data))
 print("Standard Deviation:", np.std(data))
 print("Minimum:", np.min(data))
@@ -1155,40 +1358,102 @@ print("Maximum:", np.max(data))
 print("Range:", np.max(data) - np.min(data))
 print("25th Percentile:", np.percentile(data, 25))
 print("50th Percentile:", np.percentile(data, 50))
-print("75th Percentile:", np.percentile(data, 75))</pre
-              >
+print("75th Percentile:", np.percentile(data, 75))</pre>
             </div>
+          </div>
+        </div>
+
+        <div class="card pad" style="margin-top: 18px">
+          <h2>8. Full Matplotlib Program</h2>
+          <div class="codeWrap">
+            <button class="copyBtn btn secondary" data-copy-target="full-matplotlib">
+              Copy
+            </button>
+            <pre class="code" id="full-matplotlib">
+import numpy as np
+import matplotlib.pyplot as plt
+from collections import Counter
+
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+
+mean = np.mean(data)
+median = np.median(data)
+variance = np.var(data)
+std = np.std(data)
+minimum = np.min(data)
+maximum = np.max(data)
+data_range = maximum - minimum
+p25 = np.percentile(data, 25)
+p75 = np.percentile(data, 75)
+
+counts = Counter(data)
+mode = counts.most_common(1)[0][0]
+
+print("Mean:", mean)
+print("Median:", median)
+print("Mode:", mode)
+print("Variance:", variance)
+print("Standard Deviation:", std)
+print("Range:", data_range)
+print("25th Percentile:", p25)
+print("75th Percentile:", p75)
+
+plt.figure(figsize=(10, 5))
+plt.plot(range(len(data)), data, marker="o", label="Data")
+plt.axhline(mean, linestyle="--", label=f"Mean = {mean}")
+plt.axhline(median, linestyle=":", label=f"Median = {median}")
+plt.axhline(mode, linestyle="-.", label=f"Mode = {mode}")
+plt.axhline(minimum, linestyle="--", label=f"Min = {minimum}")
+plt.axhline(maximum, linestyle="--", label=f"Max = {maximum}")
+plt.axhline(p25, linestyle=":", label=f"25th = {p25}")
+plt.axhline(p75, linestyle=":", label=f"75th = {p75}")
+
+plt.title("Statistics Overview of Dataset")
+plt.xlabel("Index")
+plt.ylabel("Value")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+plt.figure(figsize=(8, 4))
+plt.bar(list(counts.keys()), list(counts.values()))
+plt.title("Frequency Chart for Mode")
+plt.xlabel("Value")
+plt.ylabel("Frequency")
+plt.grid(True, axis="y")
+plt.show()
+
+plt.figure(figsize=(8, 4))
+plt.bar(range(len(data)), (data - mean) ** 2)
+plt.title("Squared Deviations for Variance")
+plt.xlabel("Index")
+plt.ylabel("Squared Deviation")
+plt.grid(True, axis="y")
+plt.show()</pre>
           </div>
         </div>
       </section>
 
       <section class="section" id="normalization">
         <div class="card pad">
-          <h2>8. Normalization and Standardization</h2>
+          <h2>9. Normalization and Standardization</h2>
           <div class="grid-2">
             <div class="box">
               <strong>Normalization</strong>
               <p>Often scales values between 0 and 1.</p>
               <div class="codeWrap" style="margin-top: 10px">
-                <button
-                  class="copyBtn btn secondary"
-                  data-copy-target="norm-formula"
-                >
+                <button class="copyBtn btn secondary" data-copy-target="norm-formula">
                   Copy
                 </button>
                 <pre class="code" id="norm-formula">
-normalized = (x - min_value) / (max_value - min_value)</pre
-                >
+normalized = (x - min_value) / (max_value - min_value)</pre>
               </div>
             </div>
             <div class="box">
               <strong>Standardization</strong>
               <p>Centers at mean 0 and standard deviation 1.</p>
               <div class="codeWrap" style="margin-top: 10px">
-                <button
-                  class="copyBtn btn secondary"
-                  data-copy-target="std-formula"
-                >
+                <button class="copyBtn btn secondary" data-copy-target="std-formula">
                   Copy
                 </button>
                 <pre class="code" id="std-formula">z = (x - mean) / std</pre>
@@ -1196,12 +1461,9 @@ normalized = (x - min_value) / (max_value - min_value)</pre
             </div>
           </div>
 
-          <div class="compare-grid" style="margin-top: 16px">
+          <div class="grid-3" style="margin-top: 16px">
             <div class="codeWrap">
-              <button
-                class="copyBtn btn secondary"
-                data-copy-target="norm-code"
-              >
+              <button class="copyBtn btn secondary" data-copy-target="norm-code">
                 Copy
               </button>
               <pre class="code" id="norm-code">
@@ -1209,14 +1471,10 @@ import numpy as np
 
 data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
 normalized = (data - np.min(data)) / (np.max(data) - np.min(data))
-print(normalized)</pre
-              >
+print(normalized)</pre>
             </div>
             <div class="codeWrap">
-              <button
-                class="copyBtn btn secondary"
-                data-copy-target="std-code-2"
-              >
+              <button class="copyBtn btn secondary" data-copy-target="std-code-2">
                 Copy
               </button>
               <pre class="code" id="std-code-2">
@@ -1224,8 +1482,30 @@ import numpy as np
 
 data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
 standardized = (data - np.mean(data)) / np.std(data)
-print(standardized)</pre
-              >
+print(standardized)</pre>
+            </div>
+            <div class="codeWrap">
+              <button class="copyBtn btn secondary" data-copy-target="norm-chart">
+                Copy
+              </button>
+              <pre class="code" id="norm-chart">
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = np.array([2, 4, 4, 4, 5, 5, 7, 9])
+normalized = (data - np.min(data)) / (np.max(data) - np.min(data))
+standardized = (data - np.mean(data)) / np.std(data)
+
+plt.figure(figsize=(8, 4))
+plt.plot(data, marker="o", label="Original")
+plt.plot(normalized, marker="o", label="Normalized")
+plt.plot(standardized, marker="o", label="Standardized")
+plt.title("Original vs Normalized vs Standardized")
+plt.xlabel("Index")
+plt.ylabel("Value")
+plt.legend()
+plt.grid(True)
+plt.show()</pre>
             </div>
           </div>
         </div>
@@ -1233,7 +1513,7 @@ print(standardized)</pre
 
       <section class="section" id="project">
         <div class="card pad">
-          <h2>9. Final Project — Student Statistics Analyzer</h2>
+          <h2>10. Final Project — Student Statistics Analyzer</h2>
           <p>
             Build a tool that accepts student marks and prints the main
             statistics before any ML work.
@@ -1241,29 +1521,42 @@ print(standardized)</pre
 
           <div class="grid-2" style="margin-top: 16px">
             <div class="codeWrap">
-              <button
-                class="copyBtn btn secondary"
-                data-copy-target="project-code"
-              >
+              <button class="copyBtn btn secondary" data-copy-target="project-code">
                 Copy
               </button>
               <pre class="code" id="project-code">
 import numpy as np
+import matplotlib.pyplot as plt
+from collections import Counter
 
 marks = np.array([67, 72, 81, 90, 76, 88, 59, 94])
+
+counts = Counter(marks)
+mode = counts.most_common(1)[0][0]
 
 print("Marks:", marks)
 print("Sum:", np.sum(marks))
 print("Mean:", np.mean(marks))
 print("Median:", np.median(marks))
+print("Mode:", mode)
 print("Variance:", np.var(marks))
 print("Standard Deviation:", np.std(marks))
 print("Minimum:", np.min(marks))
 print("Maximum:", np.max(marks))
 print("Range:", np.max(marks) - np.min(marks))
 print("25th Percentile:", np.percentile(marks, 25))
-print("75th Percentile:", np.percentile(marks, 75))</pre
-              >
+print("75th Percentile:", np.percentile(marks, 75))
+
+plt.figure(figsize=(9, 4))
+plt.plot(marks, marker="o", label="Marks")
+plt.axhline(np.mean(marks), linestyle="--", label=f"Mean = {np.mean(marks):.2f}")
+plt.axhline(np.median(marks), linestyle=":", label=f"Median = {np.median(marks)}")
+plt.title("Student Marks Overview")
+plt.xlabel("Student Index")
+plt.ylabel("Marks")
+plt.legend()
+plt.grid(True)
+plt.show()</pre>
             </div>
 
             <div class="projectBox">
@@ -1275,7 +1568,7 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
               <textarea placeholder="Type your answer here..."></textarea>
               <div class="good" style="margin-top: 14px">
                 Strong answers usually mention outliers, scaling, data spread,
-                or relationships between features and target.
+                repeated values, or relationships between features and target.
               </div>
             </div>
           </div>
@@ -1299,7 +1592,7 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
             <div>
               <div class="muted tiny">MCQ Score</div>
               <div class="scoreBig">
-                <span id="scoreNow">0</span> / <span id="scoreTotal">7</span>
+                <span id="scoreNow">0</span> / <span id="scoreTotal">8</span>
               </div>
             </div>
             <div class="toolbar">
@@ -1310,7 +1603,7 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
         </div>
 
         <div class="card pad" style="margin-top: 16px">
-          <h2>10. MCQ Zone</h2>
+          <h2>11. MCQ Zone</h2>
 
           <div class="mcq" data-answer="b">
             <h3>Q1. What is the mean of 10, 20, and 30?</h3>
@@ -1328,51 +1621,56 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
             <div class="result"></div>
           </div>
 
+          <div class="mcq" data-answer="b">
+            <h3>Q3. What is the mode of 3, 4, 4, 5, 6?</h3>
+            <label><input type="radio" name="q3" value="a" /> 3</label>
+            <label><input type="radio" name="q3" value="b" /> 4</label>
+            <label><input type="radio" name="q3" value="c" /> 5</label>
+            <div class="result"></div>
+          </div>
+
           <div class="mcq" data-answer="a">
             <h3>
-              Q3. If all values in a dataset are the same, what is the variance?
+              Q4. If all values in a dataset are the same, what is the variance?
             </h3>
-            <label><input type="radio" name="q3" value="a" /> 0</label>
-            <label><input type="radio" name="q3" value="b" /> 1</label>
-            <label
-              ><input type="radio" name="q3" value="c" /> It cannot be
-              found</label
-            >
+            <label><input type="radio" name="q4" value="a" /> 0</label>
+            <label><input type="radio" name="q4" value="b" /> 1</label>
+            <label><input type="radio" name="q4" value="c" /> It cannot be found</label>
             <div class="result"></div>
           </div>
 
           <div class="mcq" data-answer="c">
-            <h3>Q4. If variance is 9, what is the standard deviation?</h3>
-            <label><input type="radio" name="q4" value="a" /> 81</label>
-            <label><input type="radio" name="q4" value="b" /> 9</label>
-            <label><input type="radio" name="q4" value="c" /> 3</label>
+            <h3>Q5. If variance is 9, what is the standard deviation?</h3>
+            <label><input type="radio" name="q5" value="a" /> 81</label>
+            <label><input type="radio" name="q5" value="b" /> 9</label>
+            <label><input type="radio" name="q5" value="c" /> 3</label>
             <div class="result"></div>
           </div>
 
           <div class="mcq" data-answer="a">
-            <h3>Q5. What is the range of 3, 8, 10, 15?</h3>
-            <label><input type="radio" name="q5" value="a" /> 12</label>
-            <label><input type="radio" name="q5" value="b" /> 15</label>
-            <label><input type="radio" name="q5" value="c" /> 7</label>
+            <h3>Q6. What is the range of 3, 8, 10, 15?</h3>
+            <label><input type="radio" name="q6" value="a" /> 12</label>
+            <label><input type="radio" name="q6" value="b" /> 15</label>
+            <label><input type="radio" name="q6" value="c" /> 7</label>
             <div class="result"></div>
           </div>
 
           <div class="mcq" data-answer="b">
-            <h3>Q6. Which percentile is the median?</h3>
-            <label><input type="radio" name="q6" value="a" /> 25th</label>
-            <label><input type="radio" name="q6" value="b" /> 50th</label>
-            <label><input type="radio" name="q6" value="c" /> 75th</label>
+            <h3>Q7. Which percentile is the median?</h3>
+            <label><input type="radio" name="q7" value="a" /> 25th</label>
+            <label><input type="radio" name="q7" value="b" /> 50th</label>
+            <label><input type="radio" name="q7" value="c" /> 75th</label>
             <div class="result"></div>
           </div>
 
           <div class="mcq" data-answer="a">
             <h3>
-              Q7. If x increases and y also increases consistently, the
+              Q8. If x increases and y also increases consistently, the
               correlation is usually:
             </h3>
-            <label><input type="radio" name="q7" value="a" /> Positive</label>
-            <label><input type="radio" name="q7" value="b" /> Negative</label>
-            <label><input type="radio" name="q7" value="c" /> Zero</label>
+            <label><input type="radio" name="q8" value="a" /> Positive</label>
+            <label><input type="radio" name="q8" value="b" /> Negative</label>
+            <label><input type="radio" name="q8" value="c" /> Zero</label>
             <div class="result"></div>
           </div>
         </div>
@@ -1380,7 +1678,7 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
 
       <section class="section">
         <div class="card pad">
-          <h2>11. Conclusion</h2>
+          <h2>12. Conclusion</h2>
           <p>
             Statistics is not optional in AI-ML. It helps you inspect the data,
             understand its center and spread, detect strange values, compare
@@ -1388,20 +1686,21 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
           </p>
           <p>
             The strongest learning path is direct logic first, then plain
-            Python, then NumPy.
+            Python, then NumPy, and then Matplotlib charts for visual
+            understanding.
           </p>
         </div>
       </section>
 
       <section class="section">
         <div class="card pad">
-          <h2>12. Speak Paragraphs</h2>
+          <h2>13. Speak Paragraphs</h2>
           <p class="muted">
             Hidden narration paragraphs for guided reading systems.
           </p>
           <div class="speak-bank" aria-hidden="true">
             <p id="speak0">
-              Welcome to the V4 Ultra lesson on statistics for AI and Machine
+              Welcome to the V5 Ultra lesson on statistics for AI and Machine
               Learning.
             </p>
             <p id="speak1">
@@ -1417,43 +1716,51 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
               Median is the middle value after sorting the data.
             </p>
             <p id="speak5">
-              Variance tells us how far values spread from the mean.
+              Mode is the value that appears most often in the dataset.
             </p>
             <p id="speak6">
-              Standard deviation is the square root of variance.
+              In our main dataset, the mode is four because it appears three times.
             </p>
             <p id="speak7">
-              Minimum and maximum give the lower and upper bounds of the data.
+              Variance tells us how far values spread from the mean.
             </p>
             <p id="speak8">
-              Range is the difference between maximum and minimum.
+              Standard deviation is the square root of variance.
             </p>
             <p id="speak9">
+              Minimum and maximum give the lower and upper bounds of the data.
+            </p>
+            <p id="speak10">
+              Range is the difference between maximum and minimum.
+            </p>
+            <p id="speak11">
               Percentiles tell us where values stand in the full dataset.
             </p>
-            <p id="speak10">The fiftieth percentile is the median.</p>
-            <p id="speak11">
+            <p id="speak12">The fiftieth percentile is the median.</p>
+            <p id="speak13">
               Correlation tells us how two variables move together.
             </p>
-            <p id="speak12">
+            <p id="speak14">
               A correlation close to one suggests strong positive relation.
             </p>
-            <p id="speak13">
-              A correlation close to minus one suggests strong negative
-              relation.
-            </p>
-            <p id="speak14">
-              Normalization often uses minimum and maximum values.
-            </p>
             <p id="speak15">
-              Standardization uses mean and standard deviation.
+              A correlation close to minus one suggests strong negative relation.
             </p>
             <p id="speak16">
+              Normalization often uses minimum and maximum values.
+            </p>
+            <p id="speak17">
+              Standardization uses mean and standard deviation.
+            </p>
+            <p id="speak18">
+              Matplotlib helps us visualize each calculation clearly.
+            </p>
+            <p id="speak19">
               Before training a machine learning model, inspect the data
               statistically.
             </p>
-            <p id="speak17">
-              This completes the V4 Ultra lesson on statistics for AI and
+            <p id="speak20">
+              This completes the V5 Ultra lesson on statistics for AI and
               Machine Learning.
             </p>
           </div>
@@ -1465,8 +1772,9 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
       <div class="card pad">
         <strong>Programmer's Picnic</strong>
         <p class="muted">
-          V4 Ultra lesson with embedded editor, collapsible cards, copy buttons,
-          scored MCQs, direct calculation, Python, NumPy, and final project.
+          V5 Ultra lesson with embedded editor, collapsible cards, copy buttons,
+          scored MCQs, direct calculation, Python, NumPy, Mode, Matplotlib
+          charts, and final project.
         </p>
       </div>
     </footer>
@@ -1474,7 +1782,9 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
     <script>
       document.querySelectorAll(".accordion .accHead").forEach((btn) => {
         btn.addEventListener("click", () => {
-          btn.parentElement.classList.toggle("open");
+          const acc = btn.parentElement;
+          const isOpen = acc.classList.toggle("open");
+          btn.setAttribute("aria-expanded", isOpen ? "true" : "false");
         });
       });
 
@@ -1500,6 +1810,41 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
         const blocks = document.querySelectorAll(".mcq");
         let score = 0;
 
+        const explanations = {
+          q1: {
+            ok: "Correct. (10 + 20 + 30) / 3 = 20.",
+            bad: "Not correct. Add the values and divide by 3. The mean is 20.",
+          },
+          q2: {
+            ok: "Correct. In sorted data 1, 2, 100, the middle value is 2.",
+            bad: "Not correct. The median is the middle value after sorting, so it is 2.",
+          },
+          q3: {
+            ok: "Correct. The value 4 appears most often, so it is the mode.",
+            bad: "Not correct. The mode is the most frequent value, which is 4.",
+          },
+          q4: {
+            ok: "Correct. If every value is identical, every deviation from the mean is 0, so variance is 0.",
+            bad: "Not correct. Variance becomes 0 when all values are the same.",
+          },
+          q5: {
+            ok: "Correct. Standard deviation is the square root of variance, so √9 = 3.",
+            bad: "Not correct. Standard deviation is the square root of variance, so it is 3.",
+          },
+          q6: {
+            ok: "Correct. Range = max - min = 15 - 3 = 12.",
+            bad: "Not correct. Range is maximum minus minimum, so 15 - 3 = 12.",
+          },
+          q7: {
+            ok: "Correct. The median is the 50th percentile.",
+            bad: "Not correct. The median corresponds to the 50th percentile.",
+          },
+          q8: {
+            ok: "Correct. When both variables rise together, correlation is usually positive.",
+            bad: "Not correct. If x and y increase together, the relationship is usually positive.",
+          },
+        };
+
         blocks.forEach((block, index) => {
           const qName = "q" + (index + 1);
           const selected = document.querySelector(
@@ -1517,10 +1862,10 @@ print("75th Percentile:", np.percentile(marks, 75))</pre
           if (selected.value === correct) {
             score++;
             result.className = "result ok";
-            result.textContent = "Correct.";
+            result.textContent = explanations[qName].ok;
           } else {
             result.className = "result bad";
-            result.textContent = "Not correct.";
+            result.textContent = explanations[qName].bad;
           }
         });
 
