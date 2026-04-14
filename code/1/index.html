@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mean, Median, Mode, Max, Min and Range Directly and via NumPy | Programmer's Picnic</title>
+  
+
+  <script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+
+  <meta name="description" content="A beginner-friendly HTML lesson explaining mean, median, mode, max, min, and range directly in Python and via NumPy." />
+  <meta name="theme-color" content="#f59e0b" />
+
+  <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+  <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+
+  <style>
+    :root{
+      --bg:#fffaf0;
+      --bg2:#fff4d6;
+      --card:#ffffff;
+      --text:#2b2112;
+      --muted:#6b5a3d;
+      --line:#efdfb2;
+      --brand:#d97706;
+      --brand2:#f59e0b;
+      --accent:#c2410c;
+      --good:#166534;
+      --shadow:0 10px 30px rgba(217,119,6,.10);
+      --radius:22px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,DM Sans,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(245,158,11,.15), transparent 25%),
+        linear-gradient(180deg,var(--bg),var(--bg2));
+      line-height:1.65;
+    }
+    a{color:var(--accent);text-decoration:none}
+    img{max-width:100%}
+    code,pre{
+      
+      color: teal;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .container{width:min(var(--max),calc(100% - 28px));margin:auto}
+    .topbar{
+      position:sticky;top:0;z-index:30;
+      backdrop-filter:blur(12px);
+      background:rgba(255,250,240,.82);
+      border-bottom:1px solid rgba(239,223,178,.9);
+    }
+    .topbar-inner{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:12px 0;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;font-weight:800;
+      letter-spacing:.2px;color:var(--text)
+    }
+    .brand-badge{
+      width:42px;height:42px;border-radius:14px;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      color:#fff;display:grid;place-items:center;
+      box-shadow:var(--shadow);font-size:20px
+    }
+    .nav{
+      display:flex;gap:10px;flex-wrap:wrap
+    }
+    .nav a{
+      padding:10px 14px;border-radius:999px;background:#fff;
+      border:1px solid var(--line);color:var(--muted);font-weight:700
+    }
+    .hero{padding:34px 0 18px}
+    .hero-grid{
+      display:grid;grid-template-columns:1.2fr .8fr;gap:22px
+    }
+    .panel{
+      background:rgba(255,255,255,.88);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .hero-card{padding:28px}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;
+      padding:8px 12px;border-radius:999px;font-weight:800;font-size:.92rem
+    }
+    h1,h2,h3{line-height:1.2;margin:0 0 12px}
+    h1{font-size:clamp(2rem,4vw,3.35rem)}
+    h2{font-size:clamp(1.35rem,2.4vw,2rem)}
+    h3{font-size:1.1rem}
+    .lead{font-size:1.05rem;color:var(--muted);max-width:68ch}
+    .hero-points{
+      margin:18px 0 0;padding:0;list-style:none;display:grid;gap:10px
+    }
+    .hero-points li{
+      background:#fff;border:1px solid var(--line);border-radius:16px;
+      padding:12px 14px;color:var(--text)
+    }
+    .side-card{padding:22px}
+    .mini-list{display:grid;gap:10px;margin-top:10px}
+    .mini-item{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px
+    }
+
+    .section{padding:16px 0 8px}
+    .section-card{padding:24px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .info{
+      background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px
+    }
+    .formula{
+      background:#2b2112;color:#fff7ed;border-radius:18px;padding:16px 18px;
+      overflow:auto
+    }
+    .code-wrap{
+      background:#1e1b16;border-radius:22px;border:1px solid #3f3321;overflow:hidden
+    }
+    .code-head{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 16px;background:#2a241d;color:#fff7ed;border-bottom:1px solid #433625
+    }
+    .code-head strong{font-size:.95rem}
+    pre{
+      margin:0;padding:18px;overflow:auto;color:#fff7ed;font-size:.95rem
+    }
+    .steps{display:grid;gap:14px;margin-top:14px}
+    .step{
+      display:grid;grid-template-columns:54px 1fr;gap:14px;align-items:start;
+      background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px
+    }
+    .step-num{
+      width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      color:white;font-weight:900;font-size:1.15rem;box-shadow:var(--shadow)
+    }
+    .compare{
+      width:100%;border-collapse:separate;border-spacing:0 10px
+    }
+    .compare th,.compare td{
+      text-align:left;padding:14px 14px;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)
+    }
+    .compare th:first-child,.compare td:first-child{
+      border-left:1px solid var(--line);border-top-left-radius:14px;border-bottom-left-radius:14px
+    }
+    .compare th:last-child,.compare td:last-child{
+      border-right:1px solid var(--line);border-top-right-radius:14px;border-bottom-right-radius:14px
+    }
+    .callout{
+      border-left:5px solid var(--brand);
+      background:#fff7ed;padding:16px 18px;border-radius:16px;color:#7c2d12
+    }
+    .editor-card{
+      padding:22px;
+      background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,247,237,.9));
+    }
+    .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:12px 16px;border-radius:14px;font-weight:800;border:1px solid transparent
+    }
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+    .btn-ghost{background:#fff;color:var(--text);border-color:var(--line)}
+    .mcq{display:grid;gap:16px}
+    .q{
+      background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px
+    }
+    .q h3{margin-bottom:10px}
+    .options{display:grid;gap:10px}
+    .options label{
+      display:flex;gap:10px;align-items:flex-start;background:#fffaf5;border:1px solid var(--line);
+      border-radius:14px;padding:12px 14px;cursor:pointer
+    }
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .result{
+      margin-top:16px;padding:14px 16px;border-radius:16px;background:#fffbeb;border:1px solid #fde68a;font-weight:800
+    }
+    .footer{
+      padding:28px 0 60px;color:var(--muted)
+    }
+    .pill{
+      display:inline-block;padding:8px 12px;border-radius:999px;
+      background:#fff;border:1px solid var(--line);font-weight:700
+    }
+
+    @media (max-width:980px){
+      .hero-grid,.grid-2,.grid-3{grid-template-columns:1fr}
+      .nav{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand" data-pp-speak-title="true">
+        <div class="brand-badge">π</div>
+        <div>
+          <div>Programmer's Picnic</div>
+          <div style="font-size:.84rem;color:var(--muted);font-weight:700">Stats for AI-ML from ground level</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#concepts">Concepts</a>
+        <a href="#code">Code</a>
+        <a href="#compare">Compare</a>
+        <a href="#editor">Editor</a>
+        <a href="#mcqs">MCQs</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <section class="panel hero-card">
+        <div class="eyebrow" id="speak0">Statistics • Python • NumPy • AI-ML Foundation</div>
+        <h1 id="speak1">Mean, Median, Mode, Max, Min and Range Directly and via NumPy</h1>
+        <p class="lead" id="speak2">
+          In this lesson we learn some of the most important beginner statistics ideas in Python.
+          We will understand what mean, median, mode, max, min and range are, and then see how to calculate them
+          directly in Python and also with NumPy.
+        </p>
+        <ul class="hero-points">
+          <li id="speak3"><strong>Why this matters:</strong> these ideas are part of the foundation of AI, ML, analytics, data science and basic programming logic.</li>
+          <li id="speak4"><strong>What you will learn:</strong> concept, formula, direct Python logic, and NumPy-based code.</li>
+          <li id="speak5"><strong>Input data we will use:</strong> <code>[2, 4, 4, 4, 5, 5, 7, 9]</code></li>
+        </ul>
+      </section>
+
+      <aside class="panel side-card">
+        <h2 id="speak6">Quick lesson map</h2>
+        <div class="mini-list">
+          <div class="mini-item" id="speak7"><strong>Part 1:</strong> Understand the six statistical terms.</div>
+          <div class="mini-item" id="speak8"><strong>Part 2:</strong> See the exact Python code directly.</div>
+          <div class="mini-item" id="speak9"><strong>Part 3:</strong> See the NumPy version.</div>
+          <div class="mini-item" id="speak10"><strong>Part 4:</strong> Compare both approaches.</div>
+          <div class="mini-item" id="speak11"><strong>Part 5:</strong> Practice with MCQs.</div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section" id="overview">
+      <div class="panel section-card">
+        <h2 id="speak12">Overview</h2>
+        <p id="speak13">
+          Statistics helps us understand data. When we have a list of numbers, we usually want to know the center,
+          the most frequent value, the smallest value, the largest value, and how spread out the values are.
+        </p>
+        <div class="callout" id="speak14">
+          For this lesson, our data is: <strong>[2, 4, 4, 4, 5, 5, 7, 9]</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="concepts">
+      <div class="panel section-card">
+        <h2 id="speak15">The six concepts</h2>
+        <div class="grid-3">
+          <div class="info">
+            <h3 id="speak16">1. Mean</h3>
+            <p id="speak17">Mean is the average. Add all values and divide by the number of values.</p>
+            <div class="formula">Mean = Sum of values / Number of values</div>
+          </div>
+          <div class="info">
+            <h3 id="speak18">2. Median</h3>
+            <p id="speak19">Median is the middle value after sorting the data. If there are two middle values, take their average.</p>
+            <div class="formula">Median = Middle value of sorted data</div>
+          </div>
+          <div class="info">
+            <h3 id="speak20">3. Mode</h3>
+            <p id="speak21">Mode is the value that appears most often.</p>
+            <div class="formula">Mode = Most frequent value</div>
+          </div>
+          <div class="info">
+            <h3 id="speak22">4. Max</h3>
+            <p id="speak23">Max is the largest value in the data.</p>
+            <div class="formula">Max = Largest value</div>
+          </div>
+          <div class="info">
+            <h3 id="speak24">5. Min</h3>
+            <p id="speak25">Min is the smallest value in the data.</p>
+            <div class="formula">Min = Smallest value</div>
+          </div>
+          <div class="info">
+            <h3 id="speak26">6. Range</h3>
+            <p id="speak27">Range tells us how far the data spreads from minimum to maximum.</p>
+            <div class="formula">Range = Max - Min</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="panel section-card">
+        <h2 id="speak28">Work it out on our data</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <h3 id="speak29">Mean</h3>
+              <p id="speak30">Add the values: 2 + 4 + 4 + 4 + 5 + 5 + 7 + 9 = 40. There are 8 values. So mean = 40 / 8 = 5.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <h3 id="speak31">Median</h3>
+              <p id="speak32">The sorted data is already 2, 4, 4, 4, 5, 5, 7, 9. There are 8 values, so the middle two are 4 and 5. Median = (4 + 5) / 2 = 4.5.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <h3 id="speak33">Mode</h3>
+              <p id="speak34">The value 4 appears 3 times. The value 5 appears 2 times. So mode = 4.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div>
+              <h3 id="speak35">Max, Min and Range</h3>
+              <p id="speak36">Max = 9. Min = 2. Range = 9 - 2 = 7.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="code">
+      <div class="grid-2">
+        <div class="panel section-card">
+          <h2 id="speak37">Direct Python code</h2>
+          <p id="speak38">
+            This version shows the logic step by step. It is good for learning because we can see how each result is found.
+          </p>
+
+          <div class="code-wrap">
+            <div class="code-head">
+              <strong>main.py</strong>
+              <span>Direct method</span>
+            </div>
+            <pre><code>def findModes(data):
+	frequencies={}
+	modes=[]
+	highestfrequency=0
+	for item in data:
+		frequency=frequencies.get(item,0)
+		frequency+=1
+		frequencies[item]=frequency
+		if frequency&gt;highestfrequency:
+			highestfrequency=frequency
+
+	for key,value in frequencies.items():
+		if value==highestfrequency:
+			modes.append(key)
+
+	return modes,highestfrequency
+			
+			
+def findMaxMinandRange(data):
+	max,min=data[0],data[0]
+	for item in data:
+		if item&gt;max:
+			max=item
+		elif item&lt;min:
+			min=item
+			
+	return max,min,max-min
+		
+
+def findMedian(data):
+	n=len(data)
+	if n%2!=0:
+		
+		
+		"""
+		data=[1,2,3], median = 2
+		data=[1,2,3,4,5], median =3
+		"""
+		medianpos=(n+1)//2-1
+		median=data[medianpos]
+		return median
+	else:
+		"""
+		data=[1,2,3,4], median = (2 +3)/2=2.5
+		data=[1,2,3,4,5,6], median =(3+4)/2=3.5
+		"""
+		medianpos1=n//2-1
+		medianpos2=medianpos1+1
+		median1,median2=data[medianpos1], data[medianpos2]
+		median=(median1 + median2)/2
+		return median
+	
+
+
+def findMean(a):
+	total,length=0,0
+	for item in a:
+		total+=item
+		length+=1
+	if length==0:
+		return None
+	return total/length
+data=[2, 4, 4, 4, 5, 5, 7, 9]
+print(f"Input={data}",end=",")
+mean=findMean(data)
+print(f"Mean={mean}",end=",")
+
+median=findMedian(data)
+print(f"Median={median}")
+max,min,range=findMaxMinandRange(data)
+print(f"Max={max}, Min={min}, Range={range}",end=",")
+
+modes,highestfrequency=findModes(data)
+print(f"Modes={modes}, Highest Frequency={highestfrequency}",end=",")</code></pre>
+          </div>
+        </div>
+
+        <div class="panel section-card">
+          <h2 id="speak39">NumPy code</h2>
+          <p id="speak40">
+            This version is shorter. NumPy gives us ready-made tools for working with numerical data.
+          </p>
+
+          <div class="code-wrap">
+            <div class="code-head">
+              <strong>main.py</strong>
+              <span>NumPy method</span>
+            </div>
+            <pre><code>import numpy as np
+from collections import Counter
+data=[2, 4, 4, 4, 5, 5, 7, 9]
+data = np.array(data)
+mean=np.mean(data)
+
+
+print(f"Input={data}",end=",")
+ 
+print(f"Mean={mean}",end=",")
+median=np.median(data)
+print(f"Median={median}")
+
+counts = Counter(data)
+mode = counts.most_common(1)[0][0]
+highestfrequency=counts.most_common(1)[0][1]
+
+print(f"Counts:{counts}",end=",")
+print(f"Mode={mode}, Highest Frequency={highestfrequency}",end=",")
+min= np.min(data)
+max= np.max(data)
+range=max-min
+print(f"Max={max}, Min={min}, Range={range}",end=",")</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="panel section-card">
+        <h2 id="speak41">What each function or line is doing</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">A</div>
+            <div>
+              <h3 id="speak42">findMean</h3>
+              <p id="speak43">This function loops through the list, adds every item to total, counts how many items are present, and returns total divided by length.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">B</div>
+            <div>
+              <h3 id="speak44">findMedian</h3>
+              <p id="speak45">This function checks whether the number of items is odd or even. If odd, it returns the middle item. If even, it returns the average of the two middle items.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">C</div>
+            <div>
+              <h3 id="speak46">findModes</h3>
+              <p id="speak47">This function creates a frequency dictionary. Then it finds the highest frequency and stores all values that match that highest frequency.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">D</div>
+            <div>
+              <h3 id="speak48">findMaxMinandRange</h3>
+              <p id="speak49">This function starts with the first item as both max and min, then updates them while checking every other item. Finally it returns max, min and max minus min.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">E</div>
+            <div>
+              <h3 id="speak50">NumPy functions</h3>
+              <p id="speak51">NumPy gives us <code>np.mean</code>, <code>np.median</code>, <code>np.min</code> and <code>np.max</code>. These are convenient and widely used in scientific Python.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="compare">
+      <div class="panel section-card">
+        <h2 id="speak52">Direct Python vs NumPy</h2>
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>Point</th>
+              <th>Direct Python</th>
+              <th>NumPy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="speak53">Learning value</td>
+              <td id="speak54">Excellent for understanding the logic step by step.</td>
+              <td id="speak55">Excellent for working faster with numerical data.</td>
+            </tr>
+            <tr>
+              <td id="speak56">Code size</td>
+              <td id="speak57">Longer</td>
+              <td id="speak58">Shorter</td>
+            </tr>
+            <tr>
+              <td id="speak59">Control</td>
+              <td id="speak60">Very high, because we write the full logic ourselves.</td>
+              <td id="speak61">High, but many operations are built in.</td>
+            </tr>
+            <tr>
+              <td id="speak62">Use in AI-ML</td>
+              <td id="speak63">Good for learning and interviews.</td>
+              <td id="speak64">Very common in data science and ML workflows.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="panel section-card">
+        <h2 id="speak65">Expected output idea</h2>
+        <div class="code-wrap">
+          <div class="code-head">
+            <strong>Sample output</strong>
+            <span>Based on the given list</span>
+          </div>
+          <pre><code>Input=[2, 4, 4, 4, 5, 5, 7, 9]
+Mean=5.0
+Median=4.5
+Max=9, Min=2, Range=7
+Modes=[4], Highest Frequency=3</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="editor">
+      <div class="panel editor-card">
+        <h2 id="speak66">Open in your Python editor</h2>
+        <p id="speak67">
+          Use your editor link to run, change and test the code.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn-primary" target="_blank" rel="noopener" href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1#mean-median-mode-max-min-and-range-via-numpy|eyJ0YWJzIjpbeyJuYW1lIjoibWFpbi5weSIsImNvZGUiOiJpbXBvcnQgbnVtcHkgYXMgbnBcbmZyb20gY29sbGVjdGlvbnMgaW1wb3J0IENvdW50ZXJcbmRhdGE9WzIsIDQsIDQsIDQsIDUsIDUsIDcsIDldXG5kYXRhID0gbnAuYXJyYXkoZGF0YSlcbm1lYW49bnAubWVhbihkYXRhKVxuXG5cbnByaW50KGZcIklucHV0PXtkYXRhfVwiLGVuZD1cIixcIilcbiBcbnByaW50KGZcIk1lYW49e21lYW59XCIsZW5kPVwiLFwiKVxubWVkaWFuPW5wLm1lZGlhbihkYXRhKVxucHJpbnQoZlwiTWVkaWFuPXttZWRpYW59XCIpXG5cblxuY291bnRzID0gQ291bnRlcihkYXRhKVxubW9kZSA9IGNvdW50cy5tb3N0X2NvbW1vbigxKVswXVswXVxuaGlnaGVzdGZyZXF1ZW5jeT1jb3VudHMubW9zdF9jb21tb24oMSlbMF1bMV1cblxucHJpbnQoZlwiQ291bnRzOntjb3VudHN9XCIsZW5kPVwiLFwiKVxucHJpbnQoZlwiTW9kZT17bW9kZX0sIEhpZ2hlc3QgRnJlcXVlbmN5PXtoaWdoZXN0ZnJlcXVlbmN5fVwiLGVuZD1cIixcIilcbm1pbj0gbnAubWluKGRhdGEpXG5tYXg9IG5wLm1heChkYXRhKVxucmFuZ2U9bWF4LW1pblxucHJpbnQoZlwiTWF4PXttYXh9LCBNaW49e21pbn0sIFJhbmdlPXtyYW5nZX1cIixlbmQ9XCIsXCIpIn1dLCJjdXJyZW50VGFiIjowLCJzdGRpbiI6IiIsInByb2JsZW0iOiJzdW1fbiIsInByb2plY3RNZXRhIjp7InRpdGxlIjoiTWVhbiwgTWVkaWFuLCBNb2RlLCBNYXgsIE1pbiBhbmQgUmFuZ2UgICB2aWEgTnVtcHkiLCJkZXNjcmlwdGlvbiI6IkJlZ2lubmluZyBTdGF0cyB0aGUgYmFzaXMgb2YgQUkuIiwidGFncyI6IkFJLCBNTCwgQUlNTCwgU3RhdHMsIFN0YXRpc3RpY3MsIE1lYW4sIE1lZGlhbiwgTW9kZSwgTWF4LCBNaW4gLCBSYW5nZSAsIE51bXB5IiwiYXV0aG9yIjoiQ2hhbXBhayBSb3kifX0">Open NumPy version</a>
+          <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1#mean-median-mode-max-min-and-range-directly-and-via-numpy|eyJ0YWJzIjpbeyJuYW1lIjoibWFpbi5weSIsImNvZGUiOiIjIE1lYW4sIE1lZGlhbiwgTW9kZSwgTWF4LCBNaW4gYW5kIFJhbmdlIGRpcmVjdGx5IGFuZCB2aWEgTnVtcHlcbmRlZiBmaW5kTW9kZXMoZGF0YSk6XG5cdGZyZXF1ZW5jaWVzPXt9XG5cdG1vZGVzPVtdXG5cdGhpZ2hlc3RmcmVxdWVuY3k9MFxuXHRmb3IgaXRlbSBpbiBkYXRhOlxuXHRcdGZyZXF1ZW5jeT1mcmVxdWVuY2llcy5nZXQoaXRlbSwwKVxuXHRcdGZyZXF1ZW5jeSs9MVxuXHRcdGZyZXF1ZW5jaWVzW2l0ZW1dPWZyZXF1ZW5jeVxuXHRcdGlmIGZyZXF1ZW5jeT5oaWdoZXN0ZnJlcXVlbmN5OlxuXHRcdFx0aGlnaGVzdGZyZXF1ZW5jeT1mcmVxdWVuY3lcblx0Zm9yIGtleSx2YWx1ZSBpbiBmcmVxdWVuY2llcy5pdGVtcygpOlxuXHRcdGlmIHZhbHVlPT1oaWdoZXN0ZnJlcXVlbmN5OlxuXHRcdFx0bW9kZXMuYXBwZW5kKGtleSlcblx0cmV0dXJuIG1vZGVzLGhpZ2hlc3RmcmVxdWVuY3lcblx0XHRcdFxuXHRcdFxuZGVmIGZpbmRNYXhNaW5hbmRSYW5nZShkYXRhKTpcblx0bWF4LG1pbj1kYXRhWzBdLGRhdGFbMF1cblx0Zm9yIGl0ZW0gaW4gZGF0YTpcblx0XHRpZiBpdGVtPm1heDpcblx0XHRcdG1heD1pdGVtXG5cdFx0ZWxpZiBpdGVtPG1pbjpcblx0XHRcdG1pbj1pdGVtXG5cdFx0XHRcblx0cmV0dXJuIG1heCxtaW4sbWF4LW1pblxuXHRcdFxuZGVmIGZpbmRNZWRpYW4oZGF0YSk6XG5cdG49bGVuKGRhdGEpXG5cdGlmIG4lMiE9MDpcblx0XHRcblx0XHRcIlwiXCJcblx0XHRkYXRhPVsxLDIsM10sIG1lZGlhbiA9IDJcblx0XHRkYXRhPVsxLDIsMyw0LDVdLCBtZWRpYW4gPTNcblx0XHRcIlwiXCJcblx0XHRtZWRpYW5wb3M9KG4rMSkvLzItMVxuXHRcdG1lZGlhbj1kYXRhW21lZGlhbnBvc11cblx0XHRyZXR1cm4gbWVkaWFuXG5cdGVsc2U6XG5cdFx0XCJcIlwiXG5cdFx0ZGF0YT1bMSwyLDMsNF0sIG1lZGlhbiA9ICgyICszKS8yPTIuNVxuXHRcdGRhdGE9WzEsMiwzLDQsNSw2XSwgbWVkaWFuID0oMys0KS8yPTMuNVxuXHRcdFwiXCJcIlxuXHRcdG1lZGlhbnBvczE9bi8vMi0xXG5cdFx0bWVkaWFucG9zMj1tZWRpYW5wb3MxKzFcblx0XHRtZWRpYW4xLG1lZGlhbjI9ZGF0YVttZWRpYW5wb3MxXSwgZGF0YVttZWRpYW5wb3MyXVxuXHRcdG1lZGlhbj0obWVkaWFuMSArIG1lZGlhbjIpLzJcblx0XHRyZXR1cm4gbWVkaWFuXG5cdFx0XG5cdFxuXG5cdFxuXHRcbmRlZiBmaW5kTWVhbihhKTpcblx0dG90YWwsbGVuZ3RoPTAsMFxuXHRmb3IgaXRlbSBpbiBhOlxuXHRcdHRvdGFsKz1pdGVtXG5cdFx0bGVuZ3RoKz0xXG5cdGlmIGxlbmd0aD09MDpcblx0XHRyZXR1cm4gTm9uZVxuXHRyZXR1cm4gdG90YWwvbGVuZ3RoXG5kYXRhPVsyLCA0LCA0LCA0LCA1LCA1LCA3LCA5XVxucHJpbnQoZlwiSW5wdXQ9e2RhdGF9XCIsZW5kPVwiLFwiKVxubWVhbj1maW5kTWVhbihkYXRhKVxucHJpbnQoZlwiTWVhbj17bWVhbn1cIixlbmQ9XCIsXCIpXG5cbm1lZGlhbj1maW5kTWVkaWFuKGRhdGEpXG5wcmludChmXCJNZWRpYW49e21lZGlhbn1cIilcbm1heCxtaW4scmFuZ2U9ZmluZE1heE1pbmFuZFJhbmdlKGRhdGEpXG5wcmludChmXCJNYXg9e21heH0sIE1pbj17bWlufSwgUmFuZ2U9e3JhbmdlfVwiLGVuZD1cIixcIilcblxubW9kZXMsaGlnaGVzdGZyZXF1ZW5jeT1maW5kTW9kZXMoZGF0YSlcbnByaW50KGZcIk1vZGVzPXttb2Rlc30sIEhpZ2hlc3QgRnJlcXVlbmN5PXtoaWdoZXN0ZnJlcXVlbmN5fVwiLGVuZD1cIixcIilcbiJ9XSwiY3VycmVudFRhYiI6MCwic3RkaW4iOiIiLCJwcm9ibGVtIjoic3VtX24iLCJwcm9qZWN0TWV0YSI6eyJ0aXRsZSI6Ik1lYW4sIE1lZGlhbiwgTW9kZSwgTWF4LCBNaW4gYW5kIFJhbmdlIGRpcmVjdGx5IGFuZCB2aWEgTnVtcHkiLCJkZXNjcmlwdGlvbiI6IkJlZ2lubmluZyBTdGF0cyB0aGUgYmFzaXMgb2YgQUkuIiwidGFncyI6IkFJLCBNTCwgQUlNTCwgU3RhdHMsIFN0YXRpc3RpY3MsIE1lYW4sIE1lZGlhbiwgTW9kZSwgTWF4LCBNaW4gLCBSYW5nZSAsIE51bXB5IiwiYXV0aG9yIjoiQ2hhbXBhayBSb3kifX0">Open direct + NumPy version</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mcqs">
+      <div class="panel section-card">
+        <h2 id="speak68">Practice MCQs</h2>
+        <p id="speak69">Try these questions to test your understanding.</p>
+
+        <form id="quizForm" class="mcq">
+          <div class="q">
+            <h3 id="speak70">1. What does mean represent?</h3>
+            <div class="options">
+              <label><input type="radio" name="q1" value="a" /> The average value</label>
+              <label><input type="radio" name="q1" value="b" /> The smallest value</label>
+              <label><input type="radio" name="q1" value="c" /> The middle position only</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <h3 id="speak71">2. What is the mode?</h3>
+            <div class="options">
+              <label><input type="radio" name="q2" value="a" /> The largest value</label>
+              <label><input type="radio" name="q2" value="b" /> The value that appears most often</label>
+              <label><input type="radio" name="q2" value="c" /> The average of max and min</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <h3 id="speak72">3. Range is found by:</h3>
+            <div class="options">
+              <label><input type="radio" name="q3" value="a" /> Mean minus median</label>
+              <label><input type="radio" name="q3" value="b" /> Max minus min</label>
+              <label><input type="radio" name="q3" value="c" /> Mode minus min</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <h3 id="speak73">4. Which library is used here for numerical work?</h3>
+            <div class="options">
+              <label><input type="radio" name="q4" value="a" /> Flask</label>
+              <label><input type="radio" name="q4" value="b" /> NumPy</label>
+              <label><input type="radio" name="q4" value="c" /> Django</label>
+            </div>
+          </div>
+
+          <div class="q">
+            <h3 id="speak74">5. Why is direct Python useful?</h3>
+            <div class="options">
+              <label><input type="radio" name="q5" value="a" /> It hides all logic</label>
+              <label><input type="radio" name="q5" value="b" /> It helps us understand the logic clearly</label>
+              <label><input type="radio" name="q5" value="c" /> It removes the need for variables</label>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" type="button" onclick="checkQuiz()">Check Answers</button>
+            <button class="btn btn-ghost" type="reset" onclick="resetQuiz()">Reset</button>
+          </div>
+          <div id="quizResult" class="result" style="display:none"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="panel section-card">
+        <h2 id="speak75">Final takeaway</h2>
+        <p id="speak76">
+          If you want to become strong in AI, ML, statistics and data programming, do not only use ready-made functions.
+          Also understand the direct logic. That way, you will know both how the result is produced and how to work faster with tools like NumPy.
+        </p>
+        <p id="speak77">
+          First understand it directly. Then use NumPy with confidence.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <span class="pill">Programmer's Picnic • Champak Roy • Beginner-friendly stats lesson</span>
+    </div>
+  </footer>
+
+  <script>
+    function checkQuiz(){
+      const answers = {
+        q1: "a",
+        q2: "b",
+        q3: "b",
+        q4: "b",
+        q5: "b"
+      };
+
+      let score = 0;
+      let total = Object.keys(answers).length;
+
+      for (const key in answers) {
+        const chosen = document.querySelector('input[name="' + key + '"]:checked');
+        if (chosen && chosen.value === answers[key]) {
+          score++;
+        }
+      }
+
+      const result = document.getElementById("quizResult");
+      result.style.display = "block";
+      result.textContent = "You scored " + score + " out of " + total + ".";
+    }
+
+    function resetQuiz(){
+      const result = document.getElementById("quizResult");
+      result.style.display = "none";
+      result.textContent = "";
+    }
+  </script>
+</body>
+</html>
