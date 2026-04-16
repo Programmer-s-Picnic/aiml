@@ -1,10 +1,11 @@
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MCQ Quiz App | Programmer's Picnic</title>
-  <meta name="description" content="A beautiful MCQ quiz app that loads its questions from a JSON file using the qfile URL parameter." />
+  <meta name="description" content="AI-ML MCQ quiz" />
   <meta name="theme-color" content="#f59e0b" />
   <style>
     :root{
@@ -135,6 +136,8 @@
       grid-template-columns:1.2fr .8fr;
       gap:18px;
       margin-bottom:18px;
+      width: 0px;
+      visibility: hidden;
     }
 
     .card{
@@ -559,11 +562,11 @@
         <div class="brand-badge">🧠</div>
         <div>
           <h1>MCQ Quiz App</h1>
-          <p>Loads quiz JSON using <strong>?qfile=filename.json</strong></p>
+          <p></p>
         </div>
       </div>
       <div class="top-actions">
-        <button class="btn btn-soft" id="copyLinkBtn" type="button">Copy Current Link</button>
+        <button class="btn btn-soft" id="copyLinkBtn" type="button"> </button>
         <button class="btn btn-primary" id="restartTopBtn" type="button" disabled>Restart Quiz</button>
       </div>
     </div>
@@ -572,50 +575,48 @@
   <main class="wrap">
     <section class="hero">
       <div class="hero-main card">
-        <div class="eyebrow">✨ Dynamic quiz loader</div>
-        <h2>Give a JSON file in the URL and this page builds the quiz automatically.</h2>
+        <div class="eyebrow">✨ Quiz</div>
+        <h2></h2>
         <p>
-          Use a URL like
-          <strong>your-page.html?qfile=week3_questions.json</strong>.
-          The page fetches the JSON, reads the title, week, difficulty, and questions, then creates a complete interactive MCQ experience.
+          
+          <strong></strong>.
+          
         </p>
       </div>
-      <div class="hero-side card">
+      <div style="visibility: hidden;" class="hero-side card">
         <div class="mini">
-          <span class="mini-label">Current qfile</span>
-          <strong id="currentQfile">Not found in URL</strong>
+          <span class="mini-label"> </span>
+          <strong style="visibility: hidden;" id="currentQfile"></strong>
         </div>
         <div class="mini">
-          <span class="mini-label">Example</span>
-          <code>?qfile=week3_questions.json</code>
+          <span class="mini-label"> </span>
+          <code></code>
         </div>
         <div class="mini">
-          <span class="mini-label">Expected JSON</span>
-          <strong>week, title, difficulty_range, question_count, questions[]</strong>
+          <span class="mini-label"></span>
+          <strong></strong>
         </div>
       </div>
     </section>
 
-    <section class="grid">
-      <aside class="sidebar card">
-        <div class="field">
-          <label for="qfileInput">Load another JSON file</label>
-          <input class="input" id="qfileInput" type="text" placeholder="Example: week3_questions.json" />
+    <section   class="grid">
+      <aside visibility: hidden; class="sidebar card">
+        <div style="visibility: hidden;" class="field">
+          <label for="qfileInput"></label>
+          <input style="visibility: hidden;" class="input" id="qfileInput" type="text" placeholder="Example: week3_questions.json" />
         </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <div style="visibility: hidden; display:flex;gap:10px;flex-wrap:wrap;">
           <button class="btn btn-primary" id="loadBtn" type="button">Load Quiz</button>
           <button class="btn btn-soft" id="sampleBtn" type="button">Load Sample Quiz</button>
         </div>
 
-        <div class="status" id="statusBox">
-          Waiting for a quiz file. Add <strong>?qfile=yourfile.json</strong> to the URL or type a file name above.
+        <div style="visibility: hidden;" class="status" id="statusBox">
+          
         </div>
 
         <div style="margin-top:16px" class="helper">
-          <strong>How it works:</strong><br />
-          1. Put your JSON file in the same folder or use a valid relative path.<br />
-          2. Open this page with <strong>?qfile=filename.json</strong>.<br />
-          3. Answer questions, move next, and see the final score with explanations.
+         
+          
         </div>
       </aside>
 
@@ -627,7 +628,7 @@
 
         <div id="quizArea" style="display:none;">
           <div class="quiz-top">
-            <div>
+            <div style="visibility: hidden;">
               <h3 class="quiz-title" id="quizTitle">Quiz Title</h3>
               <p class="quiz-sub" id="quizSub">Week · Difficulty · Count</p>
             </div>
@@ -710,8 +711,8 @@
   </main>
 
   <div class="footer">
-    Built for JSON-driven quizzes. This page expects a structure like:
-    <strong>{ week, title, difficulty_range, question_count, questions: [...] }</strong>.
+    <!-- Built for JSON-driven quizzes. This page expects a structure like:
+    <strong>{ week, title, difficulty_range, question_count, questions: [...] }</strong>. -->
   </div>
 
   <script>
@@ -768,7 +769,7 @@
 
     const sampleQuiz = {
       week: 3,
-      title: "NumPy Special V4 Ultra",
+      title: "NumPy Speciala",
       difficulty_range: "Ground 0 to Expert Point 100",
       question_count: 3,
       questions: [
@@ -812,7 +813,7 @@
         throw new Error("Quiz JSON is missing or not a valid object.");
       }
       if (!Array.isArray(data.questions) || data.questions.length === 0) {
-        throw new Error("Quiz JSON must contain a non-empty questions array.");
+        throw new Error("");
       }
 
       data.questions.forEach((item, index) => {
@@ -940,7 +941,7 @@
 
     async function loadQuizFromFile(path) {
       if (!path) {
-        setStatus("Please provide a JSON file path in <strong>?qfile=...</strong> or in the input box.");
+        setStatus("");
         return;
       }
 
@@ -1024,7 +1025,7 @@
     els.loadBtn.addEventListener("click", async () => {
       const path = els.qfileInput.value.trim();
       if (!path) {
-        setStatus("Please type a JSON file name or path first.");
+        setStatus("");
         return;
       }
       try {
