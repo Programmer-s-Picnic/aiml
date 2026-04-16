@@ -1,16 +1,60 @@
 {
   "week": 3,
-  "title": "NumPy Essentials",
-  "teaching_focus": [
-    "Why NumPy matters",
-    "Creating arrays",
-    "Indexing and slicing"
+  "title": "NumPy Special V4 Ultra",
+  "teaching_goal": "Move students from plain Python coding into array-based numerical thinking that supports later AI-ML work.",
+  "progression_map": {
+    "0_10": "Why NumPy exists; compare lists and arrays in plain language.",
+    "10_25": "Create arrays, inspect shape, size, ndim, and dtype.",
+    "25_45": "Teach indexing, slicing, rows, columns, and submatrices.",
+    "45_60": "Show reshape, transpose, and structural awareness.",
+    "60_75": "Teach vectorization and aggregation as the professional way to work.",
+    "75_90": "Introduce broadcasting and axis-based summaries.",
+    "90_100": "Connect arrays to marks, tables, images, and ML-style feature matrices."
+  },
+  "suggested_classroom_flow": [
+    "Start with the pain point: list addition concatenates, array addition computes element-wise.",
+    "Have students predict outputs before running code.",
+    "Move from 1D to 2D arrays slowly and visually.",
+    "Use board sketches for rows, columns, and shape.",
+    "Keep asking students to explain slices in words.",
+    "Make vectorization a habit, not just a topic.",
+    "End with a small real-data style problem such as marks analysis."
+  ],
+  "critical_ideas_to_repeat": [
+    "NumPy is not just syntax; it is a thinking model.",
+    "Shape awareness prevents many later errors.",
+    "Rows and columns must be interpreted correctly.",
+    "Vectorization is usually cleaner and faster than loops.",
+    "Broadcasting is powerful but only works when shapes are compatible.",
+    "Aggregation is not enough; students must interpret what the numbers mean."
   ],
   "common_mistakes": [
-    "Students may memorize syntax without understanding why it works.",
-    "Students may confuse input types and fail to convert strings to numbers.",
-    "Students may jump to code before describing the problem in plain English."
+    "Confusing Python list behavior with NumPy array behavior.",
+    "Trying to reshape into an impossible shape.",
+    "Forgetting that slicing excludes the stop index.",
+    "Not knowing whether a result is row-wise or column-wise.",
+    "Using loops for simple array arithmetic that should be vectorized.",
+    "Avoiding 2D arrays because they look difficult."
   ],
-  "assessment_tip": "Evaluate explanation, correctness, and ability to modify the solution.",
-  "mini_project": "Array Lab Visual Notes"
+  "assessment_tip": "Evaluate correctness, explanation quality, and the student's ability to modify the solution when asked to change dimensions, slices, or summary operations.",
+  "debugging_questions": [
+    "What is the shape right now?",
+    "How many total elements are present?",
+    "What exactly does this slice return?",
+    "Could this operation be done without a loop?",
+    "Is axis=0 or axis=1 the right direction for the summary?"
+  ],
+  "board_demos": [
+    "Draw a 1D array and label indexes.",
+    "Draw a 2D matrix and point to row and column extraction.",
+    "Show reshape by rearranging the same 12 values into 3x4 and 2x6.",
+    "Show broadcasting by adding one row vector to an entire matrix."
+  ],
+  "mini_project": "Student Dataset Analyzer",
+  "expected_outcome": "By the end of the week, students should think naturally in arrays, use shape and slicing confidently, prefer vectorized solutions in many cases, and see how NumPy prepares data for machine learning.",
+  "enrichment_ideas": [
+    "Add a timing comparison between loop-based and vectorized code.",
+    "Use a small image matrix to show pixel normalization.",
+    "Connect rows to observations and columns to features in a future ML dataset."
+  ]
 }

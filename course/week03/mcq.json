@@ -1,6 +1,8 @@
 {
   "week": 3,
-  "title": "NumPy Essentials",
+  "title": "NumPy Special V4 Ultra",
+  "difficulty_range": "Ground 0 to Expert Point 100",
+  "question_count": 30,
   "questions": [
     {
       "q": "NumPy is mainly used for?",
@@ -11,29 +13,326 @@
         "Database backups"
       ],
       "answer": 1,
-      "explanation": "NumPy is a numerical computing library."
+      "explanation": "NumPy is a core numerical computing library."
     },
     {
-      "q": "Which attribute gives array dimensions?",
+      "q": "Which function is commonly used to create a NumPy array?",
       "options": [
-        "shape",
-        "size",
-        "type",
-        "length"
-      ],
-      "answer": 0,
-      "explanation": "shape returns dimensions."
-    },
-    {
-      "q": "Vectorized operations are usually?",
-      "options": [
-        "Slower",
-        "Faster",
-        "Invalid",
-        "Only graphical"
+        "np.make()",
+        "np.array()",
+        "np.list()",
+        "np.build()"
       ],
       "answer": 1,
-      "explanation": "Vectorization is usually faster."
+      "explanation": "np.array() converts sequence-like data into a NumPy array."
+    },
+    {
+      "q": "What does arr.shape return?",
+      "options": [
+        "The data type",
+        "The dimensions",
+        "The total values as a list",
+        "The memory address"
+      ],
+      "answer": 1,
+      "explanation": "shape tells the dimensions of the array."
+    },
+    {
+      "q": "What does arr.ndim return?",
+      "options": [
+        "The number of dimensions",
+        "The number of rows only",
+        "The number of columns only",
+        "The largest value"
+      ],
+      "answer": 0,
+      "explanation": "ndim returns how many dimensions the array has."
+    },
+    {
+      "q": "What does arr.size return?",
+      "options": [
+        "The size in bytes",
+        "The total number of elements",
+        "The first element",
+        "The number of dimensions"
+      ],
+      "answer": 1,
+      "explanation": "size returns the total count of elements."
+    },
+    {
+      "q": "What is the output of np.arange(5)?",
+      "options": [
+        "[1 2 3 4 5]",
+        "[0 1 2 3 4]",
+        "[0 1 2 3 4 5]",
+        "Error"
+      ],
+      "answer": 1,
+      "explanation": "arange(5) starts at 0 and stops before 5."
+    },
+    {
+      "q": "Which expression selects the last element of a 1D array arr?",
+      "options": [
+        "arr[last]",
+        "arr[-1]",
+        "arr[1-]",
+        "arr[end]"
+      ],
+      "answer": 1,
+      "explanation": "Negative indexing selects from the end."
+    },
+    {
+      "q": "What does arr[1:4] return?",
+      "options": [
+        "Elements at index 1, 2, and 3",
+        "Elements at index 1, 2, 3, and 4",
+        "Only the value at index 4",
+        "An error"
+      ],
+      "answer": 0,
+      "explanation": "Slicing excludes the stop index."
+    },
+    {
+      "q": "What is a vectorized operation?",
+      "options": [
+        "An operation done one element at a time with print()",
+        "An operation on whole arrays without explicit Python loops",
+        "A graphics operation",
+        "An operation that works only on strings"
+      ],
+      "answer": 1,
+      "explanation": "Vectorization applies operations across arrays efficiently."
+    },
+    {
+      "q": "Which is usually faster for large numeric data?",
+      "options": [
+        "Manual loops in pure Python",
+        "Vectorized NumPy operations",
+        "Typing values by hand",
+        "Nested print statements"
+      ],
+      "answer": 1,
+      "explanation": "NumPy operations are usually faster on large numeric data."
+    },
+    {
+      "q": "What does np.zeros((2, 3)) create?",
+      "options": [
+        "A 2x3 array filled with zeros",
+        "Three zeros only",
+        "A list of zeros",
+        "A 3x2 array filled with ones"
+      ],
+      "answer": 0,
+      "explanation": "The tuple gives rows and columns."
+    },
+    {
+      "q": "What does np.ones((3, 2)) create?",
+      "options": [
+        "A 2x3 array of ones",
+        "A 3x2 array of ones",
+        "A 1D array with three ones",
+        "A 3x3 identity matrix"
+      ],
+      "answer": 1,
+      "explanation": "ones creates an array of ones with the given shape."
+    },
+    {
+      "q": "If arr has 12 elements, which reshape is invalid?",
+      "options": [
+        "(3, 4)",
+        "(2, 6)",
+        "(4, 3)",
+        "(5, 3)"
+      ],
+      "answer": 3,
+      "explanation": "5 x 3 needs 15 elements, not 12."
+    },
+    {
+      "q": "What does .T do on a 2D array?",
+      "options": [
+        "Deletes the array",
+        "Sorts the array",
+        "Transposes rows and columns",
+        "Converts numbers to text"
+      ],
+      "answer": 2,
+      "explanation": "T is the transpose view for 2D arrays."
+    },
+    {
+      "q": "What is broadcasting?",
+      "options": [
+        "Copying arrays to a new file",
+        "Automatically expanding compatible shapes during operations",
+        "Printing arrays line by line",
+        "A plotting method"
+      ],
+      "answer": 1,
+      "explanation": "Broadcasting lets NumPy align compatible shapes."
+    },
+    {
+      "q": "If arr = np.array([1,2,3]), what is arr + 5?",
+      "options": [
+        "[6 7 8]",
+        "[1 2 3 5]",
+        "Error",
+        "[5 5 5]"
+      ],
+      "answer": 0,
+      "explanation": "The scalar 5 is broadcast across the array."
+    },
+    {
+      "q": "Which expression returns the first column of a 2D matrix mat?",
+      "options": [
+        "mat[0,:]",
+        "mat[:,0]",
+        "mat[0,0:]",
+        "mat[1,:]"
+      ],
+      "answer": 1,
+      "explanation": "Colon for rows and 0 for first column."
+    },
+    {
+      "q": "Which expression returns the second row of mat?",
+      "options": [
+        "mat[:,1]",
+        "mat[1,:]",
+        "mat[0,:]",
+        "mat[1,1]"
+      ],
+      "answer": 1,
+      "explanation": "Index 1 selects the second row."
+    },
+    {
+      "q": "What does np.sum(data, axis=0) do for a 2D array?",
+      "options": [
+        "Row sums",
+        "Column sums",
+        "Diagonal sums",
+        "Total number of rows"
+      ],
+      "answer": 1,
+      "explanation": "axis=0 summarizes down the rows, producing column-wise results."
+    },
+    {
+      "q": "What does np.sum(data, axis=1) do for a 2D array?",
+      "options": [
+        "Column sums",
+        "Row sums",
+        "Sorts each row",
+        "Finds the largest row"
+      ],
+      "answer": 1,
+      "explanation": "axis=1 summarizes across columns, producing row-wise results."
+    },
+    {
+      "q": "Which function is best for average?",
+      "options": [
+        "np.max()",
+        "np.mean()",
+        "np.shape()",
+        "np.arange()"
+      ],
+      "answer": 1,
+      "explanation": "mean returns the arithmetic average."
+    },
+    {
+      "q": "Which function gives the middle value when data is sorted?",
+      "options": [
+        "np.sum()",
+        "np.std()",
+        "np.median()",
+        "np.dot()"
+      ],
+      "answer": 2,
+      "explanation": "median gives the central value in sorted order."
+    },
+    {
+      "q": "Which function gives spread information?",
+      "options": [
+        "np.std()",
+        "np.zeros()",
+        "np.reshape()",
+        "np.transpose()"
+      ],
+      "answer": 0,
+      "explanation": "Standard deviation gives a measure of spread."
+    },
+    {
+      "q": "What does np.sort(arr) do?",
+      "options": [
+        "Adds values",
+        "Returns a sorted copy",
+        "Deletes duplicates only",
+        "Changes shape"
+      ],
+      "answer": 1,
+      "explanation": "np.sort returns the sorted array."
+    },
+    {
+      "q": "What does np.dot(a, b) often represent in this week?",
+      "options": [
+        "Plotting",
+        "Matrix-style multiplication or dot product",
+        "File saving",
+        "String formatting"
+      ],
+      "answer": 1,
+      "explanation": "dot is used for dot products and matrix multiplication."
+    },
+    {
+      "q": "In AI-ML style data, rows often represent?",
+      "options": [
+        "Only variable names",
+        "Records or examples",
+        "Always labels",
+        "Only errors"
+      ],
+      "answer": 1,
+      "explanation": "Rows commonly represent observations or examples."
+    },
+    {
+      "q": "In AI-ML style data, columns often represent?",
+      "options": [
+        "Features or variables",
+        "Only row totals",
+        "Only indexes",
+        "Only images"
+      ],
+      "answer": 0,
+      "explanation": "Columns often represent features."
+    },
+    {
+      "q": "Why is list addition different from array addition?",
+      "options": [
+        "Lists are broken",
+        "Lists concatenate while arrays add element-wise",
+        "Arrays cannot add",
+        "Lists always multiply"
+      ],
+      "answer": 1,
+      "explanation": "Lists concatenate, but arrays do element-wise addition."
+    },
+    {
+      "q": "Which is a common beginner mistake?",
+      "options": [
+        "Checking shape before reshape",
+        "Confusing Python lists with NumPy arrays",
+        "Using comments",
+        "Printing results"
+      ],
+      "answer": 1,
+      "explanation": "This is one of the most common early confusions."
+    },
+    {
+      "q": "Why is NumPy important before machine learning?",
+      "options": [
+        "Because it designs logos",
+        "Because it prepares students for structured numerical data",
+        "Because it sends emails faster",
+        "Because it replaces Python completely"
+      ],
+      "answer": 1,
+      "explanation": "ML depends heavily on structured numerical data."
     }
   ]
 }
