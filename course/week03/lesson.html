@@ -1,228 +1,629 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Week 3 — NumPy Special | Programmer's Picnic</title>
-  <meta name="description" content="A ground-zero-to-expert Week 3 NumPy Special lesson with arrays, slicing, vectorization, broadcasting, reshaping, aggregation, matrix thinking, real data tasks, mini projects, and classroom-ready explanations." />
-  <meta name="theme-color" content="#f59e0b" />
-  <style>
-    :root{
-      --bg:#fffaf0;
-      --bg2:#fff4d6;
-      --card:#ffffff;
-      --card2:#fff8ea;
-      --text:#2b2112;
-      --muted:#6b5a3d;
-      --line:#efdfb2;
-      --brand:#d97706;
-      --brand2:#f59e0b;
-      --brand3:#fbbf24;
-      --ok:#166534;
-      --okbg:#ecfdf5;
-      --blue:#1d4ed8;
-      --bluebg:#eff6ff;
-      --warn:#9a3412;
-      --warnbg:#fff7ed;
-      --shadow:0 20px 50px rgba(140,88,0,.12);
-      --radius:24px;
-      --max:1200px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(251,191,36,.22), transparent 20%),
-        radial-gradient(circle at left 20%, rgba(245,158,11,.10), transparent 24%),
-        linear-gradient(180deg,#fffaf2 0%, #fff6e8 100%);
-    }
-    a{text-decoration:none;color:inherit}
-    code,pre{font-family:Consolas,Monaco,'Courier New',monospace}
-    .top{
-      position:sticky;top:0;z-index:50;
-      backdrop-filter:blur(10px);
-      background:rgba(255,250,242,.88);
-      border-bottom:1px solid rgba(217,119,6,.12);
-    }
-    .navwrap,.wrap{width:min(var(--max),calc(100% - 24px));margin:0 auto}
-    .navwrap{
-      display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 0;
-      flex-wrap:wrap;
-    }
-    .brandline{display:flex;flex-direction:column;gap:4px}
-    .brandline strong{color:#8a4b00;font-size:1.05rem}
-    .brandline span{color:var(--muted);font-size:.94rem}
-    .navactions{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      padding:11px 15px;border-radius:14px;border:1px solid rgba(217,119,6,.18);
-      background:#fff;color:#7c4600;font-weight:800;cursor:pointer;transition:.2s ease;
-      box-shadow:0 8px 20px rgba(140,88,0,.06)
-    }
-    .btn:hover{transform:translateY(-1px)}
-    .btn.brand{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-color:transparent}
-    .btn.soft{background:#fff8ea}
-    .wrap{padding:22px 0 44px}
-    .hero{
-      position:relative;overflow:hidden;border-radius:34px;border:1px solid var(--line);
-      background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(255,244,220,.98));
-      box-shadow:var(--shadow);padding:28px;
-    }
-    .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
-    .hero::before{right:-90px;top:-90px;width:280px;height:280px;background:radial-gradient(circle,rgba(245,158,11,.18),rgba(245,158,11,0))}
-    .hero::after{left:-80px;bottom:-80px;width:220px;height:220px;background:radial-gradient(circle,rgba(251,191,36,.16),rgba(251,191,36,0))}
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
-      border:1px solid rgba(217,119,6,.18);background:#fff2cc;color:#8a4b00;font-weight:800;font-size:.92rem
-    }
-    .hero-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:22px;position:relative;z-index:1;margin-top:16px}
-    h1{margin:14px 0 10px;font-size:clamp(2rem,4vw,3.25rem);line-height:1.08}
-    .hero p,.muted{color:var(--muted);line-height:1.72}
-    .hero-card,.card,.codecard,.callout,.table-wrap,.checklist,.capstone,.footer-note{
-      background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:0 12px 30px rgba(140,88,0,.08)
-    }
-    .hero-card{padding:18px}
-    .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
-    .stat{background:#fff;border:1px solid rgba(217,119,6,.14);border-radius:18px;padding:14px}
-    .stat strong{display:block;font-size:1.35rem;color:#8a4b00;margin-bottom:4px}
-    .stat span{font-size:.95rem;color:var(--muted);line-height:1.5}
-    .section{margin-top:28px}
-    .section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:14px;flex-wrap:wrap}
-    .section-head h2{margin:0;font-size:1.8rem}
-    .section-head p{margin:0;max-width:860px;color:var(--muted);line-height:1.7}
-    .ladder{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-    .step{padding:16px;border-radius:20px;background:#fff;border:1px solid rgba(217,119,6,.14);box-shadow:0 10px 22px rgba(140,88,0,.06)}
-    .step strong{display:block;color:#8a4b00;margin-bottom:8px}
-    .step span{display:block;color:var(--muted);line-height:1.6;font-size:.95rem}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-    .card{padding:20px}
-    .card h3,.codecard h3,.callout h3,.checklist h3,.capstone h3{margin:0 0 10px;color:#8a4b00}
-    .card p{margin:0;color:var(--muted);line-height:1.7}
-    .codecard{padding:18px;background:linear-gradient(180deg,#fff,#fff9ef)}
-    pre{
-      margin:12px 0 0;padding:14px;border-radius:18px;overflow:auto;
-      background:#2b2112;color:#fffaf0;border:1px solid rgba(255,255,255,.08);line-height:1.6;font-size:.94rem
-    }
-    .points, .checklist ul, .card ul{margin:0;padding-left:18px}
-    .points li, .card li, .checklist li{margin:0 0 8px;line-height:1.6}
-    .pill-row,.tag-list{display:flex;gap:8px;flex-wrap:wrap}
-    .pill,.tag{padding:8px 12px;border-radius:999px;background:#fff8eb;border:1px solid rgba(217,119,6,.14);color:#8a4b00;font-size:.9rem;font-weight:700}
-    .callout{padding:18px}
-    .ok{background:var(--okbg);border-color:#b7ebc6}
-    .ok h3{color:var(--ok)}
-    .blue{background:var(--bluebg);border-color:#bfd5ff}
-    .blue h3{color:var(--blue)}
-    .warn{background:var(--warnbg);border-color:#fed7aa}
-    .warn h3{color:var(--warn)}
-    .table-wrap{overflow:auto}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-    th{background:#fff7e8;color:#8a4b00}
-    .example-flow{display:grid;gap:14px}
-    .mini{font-size:.94rem;color:var(--muted)}
-    .checklist,.capstone,.footer-note{padding:20px}
-    .footer-note p{margin:0 0 10px;color:var(--muted);line-height:1.7}
-    .footer-note p:last-child{margin-bottom:0}
-    .toc{display:grid;gap:10px}
-    .toc a{
-      display:block;padding:12px 14px;border-radius:16px;background:#fff;border:1px solid rgba(217,119,6,.14);font-weight:700;color:#7c4600
-    }
-    .toc a:hover{background:#fff9ef}
-    .highlight{background:linear-gradient(180deg,transparent 58%, rgba(251,191,36,.38) 58%)}
-    @media (max-width:1050px){
-      .hero-grid,.grid2,.grid3,.ladder{grid-template-columns:1fr}
-    }
-    @media (max-width:700px){
-      .wrap,.navwrap{width:min(var(--max),calc(100% - 16px))}
-      .hero,.hero-card,.card,.codecard,.callout,.checklist,.capstone,.footer-note{padding:18px}
-      .stats{grid-template-columns:1fr}
-    }
-  </style>
-</head>
-<body>
-  <nav class="top">
-    <div class="navwrap">
-      <div class="brandline">
-        <strong>AI-ML Course — Week 3</strong>
-        <span data-pp-speak-title="true">NumPy Special   | ground zero to expert point 100</span>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Week 3 — NumPy Special | Programmer's Picnic</title>
+    <meta
+      name="description"
+      content="A ground-zero-to-expert Week 3 NumPy Special lesson with arrays, slicing, vectorization, broadcasting, reshaping, aggregation, matrix thinking, real data tasks, mini projects, and classroom-ready explanations."
+    />
+    <meta name="theme-color" content="#f59e0b" />
+    <style>
+      :root {
+        --bg: #fffaf0;
+        --bg2: #fff4d6;
+        --card: #ffffff;
+        --card2: #fff8ea;
+        --text: #2b2112;
+        --muted: #6b5a3d;
+        --line: #efdfb2;
+        --brand: #d97706;
+        --brand2: #f59e0b;
+        --brand3: #fbbf24;
+        --ok: #166534;
+        --okbg: #ecfdf5;
+        --blue: #1d4ed8;
+        --bluebg: #eff6ff;
+        --warn: #9a3412;
+        --warnbg: #fff7ed;
+        --shadow: 0 20px 50px rgba(140, 88, 0, 0.12);
+        --radius: 24px;
+        --max: 1200px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at top right,
+            rgba(251, 191, 36, 0.22),
+            transparent 20%
+          ),
+          radial-gradient(
+            circle at left 20%,
+            rgba(245, 158, 11, 0.1),
+            transparent 24%
+          ),
+          linear-gradient(180deg, #fffaf2 0%, #fff6e8 100%);
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      code,
+      pre {
+        font-family: Consolas, Monaco, "Courier New", monospace;
+      }
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(10px);
+        background: rgba(255, 250, 242, 0.88);
+        border-bottom: 1px solid rgba(217, 119, 6, 0.12);
+      }
+      .navwrap,
+      .wrap {
+        width: min(var(--max), calc(100% - 24px));
+        margin: 0 auto;
+      }
+      .navwrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 0;
+        flex-wrap: wrap;
+      }
+      .brandline {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .brandline strong {
+        color: #8a4b00;
+        font-size: 1.05rem;
+      }
+      .brandline span {
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+      .navactions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 15px;
+        border-radius: 14px;
+        border: 1px solid rgba(217, 119, 6, 0.18);
+        background: #fff;
+        color: #7c4600;
+        font-weight: 800;
+        cursor: pointer;
+        transition: 0.2s ease;
+        box-shadow: 0 8px 20px rgba(140, 88, 0, 0.06);
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+      .btn.brand {
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+        color: #fff;
+        border-color: transparent;
+      }
+      .btn.soft {
+        background: #fff8ea;
+      }
+      .wrap {
+        padding: 22px 0 44px;
+      }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 34px;
+        border: 1px solid var(--line);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.96),
+          rgba(255, 244, 220, 0.98)
+        );
+        box-shadow: var(--shadow);
+        padding: 28px;
+      }
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .hero::before {
+        right: -90px;
+        top: -90px;
+        width: 280px;
+        height: 280px;
+        background: radial-gradient(
+          circle,
+          rgba(245, 158, 11, 0.18),
+          rgba(245, 158, 11, 0)
+        );
+      }
+      .hero::after {
+        left: -80px;
+        bottom: -80px;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(
+          circle,
+          rgba(251, 191, 36, 0.16),
+          rgba(251, 191, 36, 0)
+        );
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(217, 119, 6, 0.18);
+        background: #fff2cc;
+        color: #8a4b00;
+        font-weight: 800;
+        font-size: 0.92rem;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.18fr 0.82fr;
+        gap: 22px;
+        position: relative;
+        z-index: 1;
+        margin-top: 16px;
+      }
+      h1 {
+        margin: 14px 0 10px;
+        font-size: clamp(2rem, 4vw, 3.25rem);
+        line-height: 1.08;
+      }
+      .hero p,
+      .muted {
+        color: var(--muted);
+        line-height: 1.72;
+      }
+      .hero-card,
+      .card,
+      .codecard,
+      .callout,
+      .table-wrap,
+      .checklist,
+      .capstone,
+      .footer-note {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: 0 12px 30px rgba(140, 88, 0, 0.08);
+      }
+      .hero-card {
+        padding: 18px;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 12px;
+      }
+      .stat {
+        background: #fff;
+        border: 1px solid rgba(217, 119, 6, 0.14);
+        border-radius: 18px;
+        padding: 14px;
+      }
+      .stat strong {
+        display: block;
+        font-size: 1.35rem;
+        color: #8a4b00;
+        margin-bottom: 4px;
+      }
+      .stat span {
+        font-size: 0.95rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .section {
+        margin-top: 28px;
+      }
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 18px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .section-head h2 {
+        margin: 0;
+        font-size: 1.8rem;
+      }
+      .section-head p {
+        margin: 0;
+        max-width: 860px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .ladder {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .step {
+        padding: 16px;
+        border-radius: 20px;
+        background: #fff;
+        border: 1px solid rgba(217, 119, 6, 0.14);
+        box-shadow: 0 10px 22px rgba(140, 88, 0, 0.06);
+      }
+      .step strong {
+        display: block;
+        color: #8a4b00;
+        margin-bottom: 8px;
+      }
+      .step span {
+        display: block;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .card {
+        padding: 20px;
+      }
+      .card h3,
+      .codecard h3,
+      .callout h3,
+      .checklist h3,
+      .capstone h3 {
+        margin: 0 0 10px;
+        color: #8a4b00;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .codecard {
+        padding: 18px;
+        background: linear-gradient(180deg, #fff, #fff9ef);
+      }
+      pre {
+        margin: 12px 0 0;
+        padding: 14px;
+        border-radius: 18px;
+        overflow: auto;
+        background: #2b2112;
+        color: #fffaf0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        line-height: 1.6;
+        font-size: 0.94rem;
+      }
+      .points,
+      .checklist ul,
+      .card ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+      .points li,
+      .card li,
+      .checklist li {
+        margin: 0 0 8px;
+        line-height: 1.6;
+      }
+      .pill-row,
+      .tag-list {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .pill,
+      .tag {
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: #fff8eb;
+        border: 1px solid rgba(217, 119, 6, 0.14);
+        color: #8a4b00;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+      .callout {
+        padding: 18px;
+      }
+      .ok {
+        background: var(--okbg);
+        border-color: #b7ebc6;
+      }
+      .ok h3 {
+        color: var(--ok);
+      }
+      .blue {
+        background: var(--bluebg);
+        border-color: #bfd5ff;
+      }
+      .blue h3 {
+        color: var(--blue);
+      }
+      .warn {
+        background: var(--warnbg);
+        border-color: #fed7aa;
+      }
+      .warn h3 {
+        color: var(--warn);
+      }
+      .table-wrap {
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #fff7e8;
+        color: #8a4b00;
+      }
+      .example-flow {
+        display: grid;
+        gap: 14px;
+      }
+      .mini {
+        font-size: 0.94rem;
+        color: var(--muted);
+      }
+      .checklist,
+      .capstone,
+      .footer-note {
+        padding: 20px;
+      }
+      .footer-note p {
+        margin: 0 0 10px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .footer-note p:last-child {
+        margin-bottom: 0;
+      }
+      .toc {
+        display: grid;
+        gap: 10px;
+      }
+      .toc a {
+        display: block;
+        padding: 12px 14px;
+        border-radius: 16px;
+        background: #fff;
+        border: 1px solid rgba(217, 119, 6, 0.14);
+        font-weight: 700;
+        color: #7c4600;
+      }
+      .toc a:hover {
+        background: #fff9ef;
+      }
+      .highlight {
+        background: linear-gradient(
+          180deg,
+          transparent 58%,
+          rgba(251, 191, 36, 0.38) 58%
+        );
+      }
+      @media (max-width: 1050px) {
+        .hero-grid,
+        .grid2,
+        .grid3,
+        .ladder {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 700px) {
+        .wrap,
+        .navwrap {
+          width: min(var(--max), calc(100% - 16px));
+        }
+        .hero,
+        .hero-card,
+        .card,
+        .codecard,
+        .callout,
+        .checklist,
+        .capstone,
+        .footer-note {
+          padding: 18px;
+        }
+        .stats {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="top">
+      <div class="navwrap">
+        <div class="brandline">
+          <strong>AI-ML Course — Week 3</strong>
+          <span data-pp-speak-title="true"
+            >NumPy Special | ground zero to expert point 100</span
+          >
+        </div>
+        <div class="navactions">
+          <a class="btn soft" href="../course-map.html">Course Map</a>
+          <a class="btn" href="assignment.html">Assignment</a>
+          <a
+            class="btn brand"
+            href="https://aiml.learnwithchampak.live/quiz.html?qfile=https://aiml.learnwithchampak.live/course/week03/mcq.json"
+            >MCQ Quiz</a
+          >
+        </div>
       </div>
-      <div class="navactions">
-        <a class="btn soft" href="../course-map.html">Course Map</a>
-        <a class="btn" href="assignment.html">Assignment</a>
-        <a class="btn brand" href="https://aiml.learnwithchampak.live/quiz.html?qfile=https://aiml.learnwithchampak.live/course/week03/mcq.json">MCQ JSON</a>
-      </div>
-    </div>
-  </nav>
+    </nav>
 
-  <main class="wrap">
-    <section class="hero">
-      <span class="badge">Week 3 • NumPy Special </span>
-      <div class="hero-grid">
-        <div>
-          <h1 id="speak0">NumPy from ground 0 to expert point 100</h1>
-          <p id="speak1">This week is not only about learning a library. It is about changing the way students think about data. By the end of this lesson, they should stop seeing values as isolated numbers and start seeing them as structured arrays that can be sliced, reshaped, transformed, summarized, and prepared for machine learning.</p>
-          <p id="speak2">The journey begins with the simple question, <span class="highlight">why not just use Python lists?</span> It ends with matrix-style thinking, vectorization, broadcasting, aggregation, data preparation, and mini project work that feels close to real AI-ML practice.</p>
-          <div class="pill-row">
-            <span class="pill">Level 0 → 100</span>
-            <span class="pill">Array thinking</span>
-            <span class="pill">Vectorization</span>
-            <span class="pill">Broadcasting</span>
-            <span class="pill">Matrix intuition</span>
-            <span class="pill">ML preparation</span>
+    <main class="wrap">
+      <section class="hero">
+        <span class="badge">Week 3 • NumPy Special </span>
+        <div class="hero-grid">
+          <div>
+            <h1 id="speak0">NumPy from ground 0 to expert point 100</h1>
+            <p id="speak1">
+              This week is not only about learning a library. It is about
+              changing the way students think about data. By the end of this
+              lesson, they should stop seeing values as isolated numbers and
+              start seeing them as structured arrays that can be sliced,
+              reshaped, transformed, summarized, and prepared for machine
+              learning.
+            </p>
+            <p id="speak2">
+              The journey begins with the simple question,
+              <span class="highlight">why not just use Python lists?</span> It
+              ends with matrix-style thinking, vectorization, broadcasting,
+              aggregation, data preparation, and mini project work that feels
+              close to real AI-ML practice.
+            </p>
+            <div class="pill-row">
+              <span class="pill">Level 0 → 100</span>
+              <span class="pill">Array thinking</span>
+              <span class="pill">Vectorization</span>
+              <span class="pill">Broadcasting</span>
+              <span class="pill">Matrix intuition</span>
+              <span class="pill">ML preparation</span>
+            </div>
+          </div>
+          <div class="hero-card">
+            <h3 id="speak3">
+              By the end of Week 3, learners should be able to
+            </h3>
+            <div class="stats">
+              <div class="stat">
+                <strong>1D</strong
+                ><span>Understand vectors as ordered numeric data</span>
+              </div>
+              <div class="stat">
+                <strong>2D</strong
+                ><span>Read matrices and table-like structures</span>
+              </div>
+              <div class="stat">
+                <strong>No loops</strong
+                ><span>Prefer vectorized operations where possible</span>
+              </div>
+              <div class="stat">
+                <strong>Ready</strong
+                ><span>Prepare numeric data for later ML weeks</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="hero-card">
-          <h3 id="speak3">By the end of Week 3, learners should be able to</h3>
-          <div class="stats">
-            <div class="stat"><strong>1D</strong><span>Understand vectors as ordered numeric data</span></div>
-            <div class="stat"><strong>2D</strong><span>Read matrices and table-like structures</span></div>
-            <div class="stat"><strong>No loops</strong><span>Prefer vectorized operations where possible</span></div>
-            <div class="stat"><strong>Ready</strong><span>Prepare numeric data for later ML weeks</span></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2 id="speak4">Learning ladder: 0 to 100</h2>
+            <p id="speak5">
+              Every stage builds on the previous one. Students should feel the
+              jump from beginner coding into data-science style thinking.
+            </p>
           </div>
         </div>
-      </div>
-    </section>
+        <div class="ladder">
+          <div class="step">
+            <strong id="speak6">0–10</strong
+            ><span>Why NumPy exists and why Python lists are not enough.</span>
+          </div>
+          <div class="step">
+            <strong id="speak7">10–25</strong
+            ><span
+              >Create arrays, inspect types, compare lists and arrays.</span
+            >
+          </div>
+          <div class="step">
+            <strong id="speak8">25–45</strong
+            ><span
+              >Master indexing, slicing, shape, reshape, and dimensions.</span
+            >
+          </div>
+          <div class="step">
+            <strong id="speak9">45–75</strong
+            ><span
+              >Use vectorization, aggregation, and broadcasting with
+              confidence.</span
+            >
+          </div>
+          <div class="step">
+            <strong id="speak10">75–100</strong
+            ><span
+              >Think in matrices, prepare data, and solve real numeric
+              tasks.</span
+            >
+          </div>
+        </div>
+      </section>
 
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <h2 id="speak4">Learning ladder: 0 to 100</h2>
-          <p id="speak5">Every stage builds on the previous one. Students should feel the jump from beginner coding into data-science style thinking.</p>
+      <section class="section" id="ground-zero">
+        <div class="section-head">
+          <div>
+            <h2 id="speak11">Part 1 — Ground zero: why NumPy matters</h2>
+            <p id="speak12">
+              A student should first feel the problem before being shown the
+              solution. Python lists are flexible, but NumPy arrays are built
+              for numerical computing.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="ladder">
-        <div class="step"><strong id="speak6">0–10</strong><span>Why NumPy exists and why Python lists are not enough.</span></div>
-        <div class="step"><strong id="speak7">10–25</strong><span>Create arrays, inspect types, compare lists and arrays.</span></div>
-        <div class="step"><strong id="speak8">25–45</strong><span>Master indexing, slicing, shape, reshape, and dimensions.</span></div>
-        <div class="step"><strong id="speak9">45–75</strong><span>Use vectorization, aggregation, and broadcasting with confidence.</span></div>
-        <div class="step"><strong id="speak10">75–100</strong><span>Think in matrices, prepare data, and solve real numeric tasks.</span></div>
-      </div>
-    </section>
-
-    <section class="section" id="ground-zero">
-      <div class="section-head">
-        <div>
-          <h2 id="speak11">Part 1 — Ground zero: why NumPy matters</h2>
-          <p id="speak12">A student should first feel the problem before being shown the solution. Python lists are flexible, but NumPy arrays are built for numerical computing.</p>
-        </div>
-      </div>
-      <div class="grid2">
-        <div class="card">
-          <h3 id="speak13">Plain-English idea</h3>
-          <ul>
-            <li>Python lists can store mixed values and are very flexible.</li>
-            <li>NumPy arrays are designed for numbers and large numeric work.</li>
-            <li>Operations on arrays are cleaner, faster, and more natural for data science.</li>
-            <li>Machine learning libraries expect structured numeric arrays.</li>
-          </ul>
-        </div>
-        <div class="codecard">
-          <h3 id="speak14">Lists versus arrays</h3>
-          <pre id="speak15">import numpy as np
+        <div class="grid2">
+          <div class="card">
+            <h3 id="speak13">Plain-English idea</h3>
+            <ul>
+              <li>
+                Python lists can store mixed values and are very flexible.
+              </li>
+              <li>
+                NumPy arrays are designed for numbers and large numeric work.
+              </li>
+              <li>
+                Operations on arrays are cleaner, faster, and more natural for
+                data science.
+              </li>
+              <li>
+                Machine learning libraries expect structured numeric arrays.
+              </li>
+            </ul>
+          </div>
+          <div class="codecard">
+            <h3 id="speak14">Lists versus arrays</h3>
+            <pre id="speak15">
+import numpy as np
 
 a = [1, 2, 3]
 b = [4, 5, 6]
@@ -234,40 +635,63 @@ y = np.array(b)
 
 print(x + y)          # element-wise addition
 print(x * 2)          # vectorized multiplication
-print(x ** 2)         # square each element</pre>
+print(x ** 2)         # square each element</pre
+            >
+          </div>
         </div>
-      </div>
-      <div class="callout ok" style="margin-top:16px">
-        <h3 id="speak16">Key message</h3>
-        <p class="muted" id="speak17">NumPy is not just another syntax chapter. It is the first serious step into numerical thinking. This is the week where students begin to think in data structures rather than only in statements and loops.</p>
-      </div>
-    </section>
+        <div class="callout ok" style="margin-top: 16px">
+          <h3 id="speak16">Key message</h3>
+          <p class="muted" id="speak17">
+            NumPy is not just another syntax chapter. It is the first serious
+            step into numerical thinking. This is the week where students begin
+            to think in data structures rather than only in statements and
+            loops.
+          </p>
+        </div>
+      </section>
 
-    <section class="section" id="arrays">
-      <div class="section-head">
-        <div>
-          <h2 id="speak18">Part 2 — Creating arrays and reading them correctly</h2>
-          <p id="speak19">Students should learn that arrays can be one-dimensional, two-dimensional, or more. This helps them later with tables, images, and model inputs.</p>
+      <section class="section" id="arrays">
+        <div class="section-head">
+          <div>
+            <h2 id="speak18">
+              Part 2 — Creating arrays and reading them correctly
+            </h2>
+            <p id="speak19">
+              Students should learn that arrays can be one-dimensional,
+              two-dimensional, or more. This helps them later with tables,
+              images, and model inputs.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="grid3">
-        <div class="card">
-          <h3 id="speak20">1D array</h3>
-          <p id="speak21">A 1D array is like a row of values. It can represent marks, temperatures, monthly sales, or sensor readings.</p>
+        <div class="grid3">
+          <div class="card">
+            <h3 id="speak20">1D array</h3>
+            <p id="speak21">
+              A 1D array is like a row of values. It can represent marks,
+              temperatures, monthly sales, or sensor readings.
+            </p>
+          </div>
+          <div class="card">
+            <h3 id="speak22">2D array</h3>
+            <p id="speak23">
+              A 2D array is like a matrix or table. It can represent a mark
+              sheet, image pixels, or rows and columns of structured values.
+            </p>
+          </div>
+          <div class="card">
+            <h3 id="speak24">3D and beyond</h3>
+            <p id="speak25">
+              Higher dimensions appear in image batches, video, and advanced ML
+              workflows. Students do not need mastery now, but they should know
+              the idea.
+            </p>
+          </div>
         </div>
-        <div class="card">
-          <h3 id="speak22">2D array</h3>
-          <p id="speak23">A 2D array is like a matrix or table. It can represent a mark sheet, image pixels, or rows and columns of structured values.</p>
-        </div>
-        <div class="card">
-          <h3 id="speak24">3D and beyond</h3>
-          <p id="speak25">Higher dimensions appear in image batches, video, and advanced ML workflows. Students do not need mastery now, but they should know the idea.</p>
-        </div>
-      </div>
-      <div class="grid2" style="margin-top:16px">
-        <div class="codecard">
-          <h3 id="speak26">Common creation methods</h3>
-          <pre id="speak27">import numpy as np
+        <div class="grid2" style="margin-top: 16px">
+          <div class="codecard">
+            <h3 id="speak26">Common creation methods</h3>
+            <pre id="speak27">
+import numpy as np
 
 a = np.array([10, 20, 30, 40])
 b = np.array([[1, 2, 3], [4, 5, 6]])
@@ -282,32 +706,43 @@ print(b)
 print(zeros)
 print(ones)
 print(range_arr)
-print(line)</pre>
+print(line)</pre
+            >
+          </div>
+          <div class="card">
+            <h3 id="speak28">Important words</h3>
+            <ul>
+              <li>
+                <strong>dtype</strong>: the type of values stored in the array
+              </li>
+              <li><strong>shape</strong>: the dimensions of the array</li>
+              <li><strong>ndim</strong>: the number of dimensions</li>
+              <li><strong>size</strong>: the total number of elements</li>
+            </ul>
+            <p class="mini" id="speak29">
+              A strong beginner should not memorize blindly. They should be able
+              to say what these words mean in simple language.
+            </p>
+          </div>
         </div>
-        <div class="card">
-          <h3 id="speak28">Important words</h3>
-          <ul>
-            <li><strong>dtype</strong>: the type of values stored in the array</li>
-            <li><strong>shape</strong>: the dimensions of the array</li>
-            <li><strong>ndim</strong>: the number of dimensions</li>
-            <li><strong>size</strong>: the total number of elements</li>
-          </ul>
-          <p class="mini" id="speak29">A strong beginner should not memorize blindly. They should be able to say what these words mean in simple language.</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" id="indexing">
-      <div class="section-head">
-        <div>
-          <h2 id="speak30">Part 3 — Indexing and slicing mastery</h2>
-          <p id="speak31">This is where students begin to control data. If they cannot select the right rows, columns, and ranges, they cannot become effective in later weeks.</p>
+      <section class="section" id="indexing">
+        <div class="section-head">
+          <div>
+            <h2 id="speak30">Part 3 — Indexing and slicing mastery</h2>
+            <p id="speak31">
+              This is where students begin to control data. If they cannot
+              select the right rows, columns, and ranges, they cannot become
+              effective in later weeks.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="grid2">
-        <div class="codecard">
-          <h3 id="speak32">1D indexing and slicing</h3>
-          <pre id="speak33">import numpy as np
+        <div class="grid2">
+          <div class="codecard">
+            <h3 id="speak32">1D indexing and slicing</h3>
+            <pre id="speak33">
+import numpy as np
 
 arr = np.array([10, 20, 30, 40, 50, 60])
 
@@ -315,11 +750,13 @@ print(arr[0])      # first item
 print(arr[-1])     # last item
 print(arr[1:4])    # 20, 30, 40
 print(arr[:3])     # first three values
-print(arr[::2])    # every second value</pre>
-        </div>
-        <div class="codecard">
-          <h3 id="speak34">2D indexing and slicing</h3>
-          <pre id="speak35">import numpy as np
+print(arr[::2])    # every second value</pre
+            >
+          </div>
+          <div class="codecard">
+            <h3 id="speak34">2D indexing and slicing</h3>
+            <pre id="speak35">
+import numpy as np
 
 mat = np.array([
     [11, 12, 13],
@@ -331,26 +768,37 @@ print(mat[0, 1])      # 12
 print(mat[2, 2])      # 33
 print(mat[0:2, 1:3])  # submatrix
 print(mat[:, 0])      # first column
-print(mat[1, :])      # second row</pre>
+print(mat[1, :])      # second row</pre
+            >
+          </div>
         </div>
-      </div>
-      <div class="callout blue" style="margin-top:16px">
-        <h3 id="speak36">Teacher emphasis</h3>
-        <p class="muted" id="speak37">Students often know the syntax but cannot describe what a slice returns. Make them say it in words before running the code.</p>
-      </div>
-    </section>
+        <div class="callout blue" style="margin-top: 16px">
+          <h3 id="speak36">Teacher emphasis</h3>
+          <p class="muted" id="speak37">
+            Students often know the syntax but cannot describe what a slice
+            returns. Make them say it in words before running the code.
+          </p>
+        </div>
+      </section>
 
-    <section class="section" id="shape">
-      <div class="section-head">
-        <div>
-          <h2 id="speak38">Part 4 — Shape, reshape, transpose, and dimension awareness</h2>
-          <p id="speak39">Now the learner must stop seeing arrays as flat content and start seeing structure. This is a major turning point for AI-ML readiness.</p>
+      <section class="section" id="shape">
+        <div class="section-head">
+          <div>
+            <h2 id="speak38">
+              Part 4 — Shape, reshape, transpose, and dimension awareness
+            </h2>
+            <p id="speak39">
+              Now the learner must stop seeing arrays as flat content and start
+              seeing structure. This is a major turning point for AI-ML
+              readiness.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="grid2">
-        <div class="codecard">
-          <h3 id="speak40">Shape and reshape</h3>
-          <pre id="speak41">import numpy as np
+        <div class="grid2">
+          <div class="codecard">
+            <h3 id="speak40">Shape and reshape</h3>
+            <pre id="speak41">
+import numpy as np
 
 arr = np.arange(1, 13)
 print(arr.shape)            # (12,)
@@ -360,11 +808,13 @@ print(mat)
 print(mat.shape)            # (3, 4)
 
 again = mat.reshape(2, 6)
-print(again)</pre>
-        </div>
-        <div class="codecard">
-          <h3 id="speak42">Transpose</h3>
-          <pre id="speak43">import numpy as np
+print(again)</pre
+            >
+          </div>
+          <div class="codecard">
+            <h3 id="speak42">Transpose</h3>
+            <pre id="speak43">
+import numpy as np
 
 mat = np.array([
     [1, 2, 3],
@@ -373,88 +823,131 @@ mat = np.array([
 
 print(mat.shape)   # (2, 3)
 print(mat.T)
-print(mat.T.shape) # (3, 2)</pre>
+print(mat.T.shape) # (3, 2)</pre
+            >
+          </div>
         </div>
-      </div>
-      <div class="table-wrap" style="margin-top:16px">
-        <table>
-          <tr><th>Concept</th><th>Plain meaning</th><th>Why it matters</th></tr>
-          <tr><td>shape</td><td>rows and columns or dimensions</td><td>Needed for matrix work and ML input design</td></tr>
-          <tr><td>reshape</td><td>rearrange the same values into a new structure</td><td>Common in data preparation</td></tr>
-          <tr><td>transpose</td><td>turn rows into columns and columns into rows</td><td>Important in matrix logic and feature arrangement</td></tr>
-          <tr><td>size</td><td>total number of elements</td><td>Helps validate whether reshape is possible</td></tr>
-        </table>
-      </div>
-    </section>
+        <div class="table-wrap" style="margin-top: 16px">
+          <table>
+            <tr>
+              <th>Concept</th>
+              <th>Plain meaning</th>
+              <th>Why it matters</th>
+            </tr>
+            <tr>
+              <td>shape</td>
+              <td>rows and columns or dimensions</td>
+              <td>Needed for matrix work and ML input design</td>
+            </tr>
+            <tr>
+              <td>reshape</td>
+              <td>rearrange the same values into a new structure</td>
+              <td>Common in data preparation</td>
+            </tr>
+            <tr>
+              <td>transpose</td>
+              <td>turn rows into columns and columns into rows</td>
+              <td>Important in matrix logic and feature arrangement</td>
+            </tr>
+            <tr>
+              <td>size</td>
+              <td>total number of elements</td>
+              <td>Helps validate whether reshape is possible</td>
+            </tr>
+          </table>
+        </div>
+      </section>
 
-    <section class="section" id="vectorization">
-      <div class="section-head">
-        <div>
-          <h2 id="speak44">Part 5 — Vectorization: the great leap forward</h2>
-          <p id="speak45">This is one of the most important ideas of the week. Instead of processing items one by one with explicit loops, NumPy can operate on whole arrays at once.</p>
+      <section class="section" id="vectorization">
+        <div class="section-head">
+          <div>
+            <h2 id="speak44">Part 5 — Vectorization: the great leap forward</h2>
+            <p id="speak45">
+              This is one of the most important ideas of the week. Instead of
+              processing items one by one with explicit loops, NumPy can operate
+              on whole arrays at once.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="grid2">
-        <div class="codecard">
-          <h3 id="speak46">Loop style</h3>
-          <pre id="speak47">numbers = [1, 2, 3, 4, 5]
+        <div class="grid2">
+          <div class="codecard">
+            <h3 id="speak46">Loop style</h3>
+            <pre id="speak47">
+numbers = [1, 2, 3, 4, 5]
 doubled = []
 
 for n in numbers:
     doubled.append(n * 2)
 
-print(doubled)</pre>
-        </div>
-        <div class="codecard">
-          <h3 id="speak48">Vectorized style</h3>
-          <pre id="speak49">import numpy as np
+print(doubled)</pre
+            >
+          </div>
+          <div class="codecard">
+            <h3 id="speak48">Vectorized style</h3>
+            <pre id="speak49">
+import numpy as np
 
 numbers = np.array([1, 2, 3, 4, 5])
 doubled = numbers * 2
 
-print(doubled)</pre>
+print(doubled)</pre
+            >
+          </div>
         </div>
-      </div>
-      <div class="grid3" style="margin-top:16px">
-        <div class="card">
-          <h3 id="speak50">Cleaner</h3>
-          <p id="speak51">The code is shorter and easier to read.</p>
+        <div class="grid3" style="margin-top: 16px">
+          <div class="card">
+            <h3 id="speak50">Cleaner</h3>
+            <p id="speak51">The code is shorter and easier to read.</p>
+          </div>
+          <div class="card">
+            <h3 id="speak52">Faster</h3>
+            <p id="speak53">
+              Under the hood, NumPy performs operations efficiently.
+            </p>
+          </div>
+          <div class="card">
+            <h3 id="speak54">Scalable</h3>
+            <p id="speak55">
+              The advantage becomes clearer with large datasets.
+            </p>
+          </div>
         </div>
-        <div class="card">
-          <h3 id="speak52">Faster</h3>
-          <p id="speak53">Under the hood, NumPy performs operations efficiently.</p>
+        <div class="callout warn" style="margin-top: 16px">
+          <h3 id="speak56">Expert habit</h3>
+          <p class="muted" id="speak57">
+            Whenever students write a loop over pure numbers, ask:
+            <strong>Can this be done with array operations instead?</strong>
+          </p>
         </div>
-        <div class="card">
-          <h3 id="speak54">Scalable</h3>
-          <p id="speak55">The advantage becomes clearer with large datasets.</p>
-        </div>
-      </div>
-      <div class="callout warn" style="margin-top:16px">
-        <h3 id="speak56">Expert habit</h3>
-        <p class="muted" id="speak57">Whenever students write a loop over pure numbers, ask: <strong>Can this be done with array operations instead?</strong></p>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" id="broadcasting">
-      <div class="section-head">
-        <div>
-          <h2 id="speak58">Part 6 — Broadcasting</h2>
-          <p id="speak59">Broadcasting feels magical at first. It lets NumPy stretch smaller values or arrays across larger structures when shapes are compatible.</p>
+      <section class="section" id="broadcasting">
+        <div class="section-head">
+          <div>
+            <h2 id="speak58">Part 6 — Broadcasting</h2>
+            <p id="speak59">
+              Broadcasting feels magical at first. It lets NumPy stretch smaller
+              values or arrays across larger structures when shapes are
+              compatible.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="grid2">
-        <div class="codecard">
-          <h3 id="speak60">Scalar broadcasting</h3>
-          <pre id="speak61">import numpy as np
+        <div class="grid2">
+          <div class="codecard">
+            <h3 id="speak60">Scalar broadcasting</h3>
+            <pre id="speak61">
+import numpy as np
 
 arr = np.array([5, 10, 15, 20])
 
 print(arr + 3)
-print(arr * 10)</pre>
-        </div>
-        <div class="codecard">
-          <h3 id="speak62">Row-wise broadcasting</h3>
-          <pre id="speak63">import numpy as np
+print(arr * 10)</pre
+            >
+          </div>
+          <div class="codecard">
+            <h3 id="speak62">Row-wise broadcasting</h3>
+            <pre id="speak63">
+import numpy as np
 
 mat = np.array([
     [1, 2, 3],
@@ -463,31 +956,36 @@ mat = np.array([
 
 row_add = np.array([10, 20, 30])
 
-print(mat + row_add)</pre>
+print(mat + row_add)</pre
+            >
+          </div>
         </div>
-      </div>
-      <div class="card" style="margin-top:16px">
-        <h3 id="speak64">Why broadcasting matters</h3>
-        <ul>
-          <li>Normalize values by subtracting means.</li>
-          <li>Add constants to entire datasets.</li>
-          <li>Adjust rows or columns in one step.</li>
-          <li>Write concise and professional numeric code.</li>
-        </ul>
-      </div>
-    </section>
+        <div class="card" style="margin-top: 16px">
+          <h3 id="speak64">Why broadcasting matters</h3>
+          <ul>
+            <li>Normalize values by subtracting means.</li>
+            <li>Add constants to entire datasets.</li>
+            <li>Adjust rows or columns in one step.</li>
+            <li>Write concise and professional numeric code.</li>
+          </ul>
+        </div>
+      </section>
 
-    <section class="section" id="aggregation">
-      <div class="section-head">
-        <div>
-          <h2 id="speak65">Part 7 — Aggregation and summary thinking</h2>
-          <p id="speak66">A data student must not only store values. They must summarize them, compare them, and understand their spread.</p>
+      <section class="section" id="aggregation">
+        <div class="section-head">
+          <div>
+            <h2 id="speak65">Part 7 — Aggregation and summary thinking</h2>
+            <p id="speak66">
+              A data student must not only store values. They must summarize
+              them, compare them, and understand their spread.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="grid2">
-        <div class="codecard">
-          <h3 id="speak67">Core summary functions</h3>
-          <pre id="speak68">import numpy as np
+        <div class="grid2">
+          <div class="codecard">
+            <h3 id="speak67">Core summary functions</h3>
+            <pre id="speak68">
+import numpy as np
 
 marks = np.array([56, 78, 89, 91, 67, 74, 83])
 
@@ -496,22 +994,26 @@ print(np.mean(marks))
 print(np.min(marks))
 print(np.max(marks))
 print(np.std(marks))
-print(np.median(marks))</pre>
+print(np.median(marks))</pre
+            >
+          </div>
+          <div class="card">
+            <h3 id="speak69">Interpretation habit</h3>
+            <ul>
+              <li><strong>sum</strong> tells total quantity.</li>
+              <li><strong>mean</strong> gives central tendency.</li>
+              <li><strong>min and max</strong> show range edges.</li>
+              <li>
+                <strong>median</strong> helps when outliers distort the mean.
+              </li>
+              <li><strong>std</strong> gives spread intuition.</li>
+            </ul>
+          </div>
         </div>
-        <div class="card">
-          <h3 id="speak69">Interpretation habit</h3>
-          <ul>
-            <li><strong>sum</strong> tells total quantity.</li>
-            <li><strong>mean</strong> gives central tendency.</li>
-            <li><strong>min and max</strong> show range edges.</li>
-            <li><strong>median</strong> helps when outliers distort the mean.</li>
-            <li><strong>std</strong> gives spread intuition.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="codecard" style="margin-top:16px">
-        <h3 id="speak70">Axis-based summaries</h3>
-        <pre id="speak71">import numpy as np
+        <div class="codecard" style="margin-top: 16px">
+          <h3 id="speak70">Axis-based summaries</h3>
+          <pre id="speak71">
+import numpy as np
 
 data = np.array([
     [80, 70, 90],
@@ -522,21 +1024,27 @@ data = np.array([
 print(np.sum(data, axis=0))   # column sums
 print(np.sum(data, axis=1))   # row sums
 print(np.mean(data, axis=0))  # column means
-print(np.max(data, axis=1))   # row max values</pre>
-      </div>
-    </section>
-
-    <section class="section" id="matrix-thinking">
-      <div class="section-head">
-        <div>
-          <h2 id="speak72">Part 8 — Matrix thinking for AI-ML</h2>
-          <p id="speak73">At the expert end of this week, students should begin to see matrices as the language of machine learning. Features, records, and model inputs often appear in array form.</p>
+print(np.max(data, axis=1))   # row max values</pre
+          >
         </div>
-      </div>
-      <div class="grid2">
-        <div class="codecard">
-          <h3 id="speak74">Matrix multiplication intuition</h3>
-          <pre id="speak75">import numpy as np
+      </section>
+
+      <section class="section" id="matrix-thinking">
+        <div class="section-head">
+          <div>
+            <h2 id="speak72">Part 8 — Matrix thinking for AI-ML</h2>
+            <p id="speak73">
+              At the expert end of this week, students should begin to see
+              matrices as the language of machine learning. Features, records,
+              and model inputs often appear in array form.
+            </p>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="codecard">
+            <h3 id="speak74">Matrix multiplication intuition</h3>
+            <pre id="speak75">
+import numpy as np
 
 a = np.array([
     [1, 2],
@@ -549,44 +1057,53 @@ b = np.array([
 ])
 
 print(np.dot(a, b))
-print(a @ b)</pre>
+print(a @ b)</pre
+            >
+          </div>
+          <div class="card">
+            <h3 id="speak76">What students should understand</h3>
+            <ul>
+              <li>A row can represent one record.</li>
+              <li>A column can represent one feature.</li>
+              <li>Image pixels can be stored in 2D arrays.</li>
+              <li>Many ML models expect a matrix-shaped input.</li>
+            </ul>
+            <p class="mini" id="speak77">
+              This is not yet a full linear algebra week, but students should
+              feel that arrays are the gateway to later ML mathematics.
+            </p>
+          </div>
         </div>
-        <div class="card">
-          <h3 id="speak76">What students should understand</h3>
-          <ul>
-            <li>A row can represent one record.</li>
-            <li>A column can represent one feature.</li>
-            <li>Image pixels can be stored in 2D arrays.</li>
-            <li>Many ML models expect a matrix-shaped input.</li>
-          </ul>
-          <p class="mini" id="speak77">This is not yet a full linear algebra week, but students should feel that arrays are the gateway to later ML mathematics.</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" id="real-work">
-      <div class="section-head">
-        <div>
-          <h2 id="speak78">Part 9 — Real-work style examples</h2>
-          <p id="speak79">Now we combine skills in realistic numeric mini-scenarios.</p>
+      <section class="section" id="real-work">
+        <div class="section-head">
+          <div>
+            <h2 id="speak78">Part 9 — Real-work style examples</h2>
+            <p id="speak79">
+              Now we combine skills in realistic numeric mini-scenarios.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="example-flow">
-        <div class="grid2">
-          <div class="codecard">
-            <h3 id="speak80">Example A — Student marks analysis</h3>
-            <pre id="speak81">import numpy as np
+        <div class="example-flow">
+          <div class="grid2">
+            <div class="codecard">
+              <h3 id="speak80">Example A — Student marks analysis</h3>
+              <pre id="speak81">
+import numpy as np
 
 marks = np.array([45, 67, 72, 89, 91, 54, 76, 88, 60, 79])
 
 print("Average:", np.mean(marks))
 print("Top score:", np.max(marks))
 print("Below average count:", np.sum(marks < np.mean(marks)))
-print("Sorted:", np.sort(marks))</pre>
-          </div>
-          <div class="codecard">
-            <h3 id="speak82">Example B — Small image grid</h3>
-            <pre id="speak83">import numpy as np
+print("Sorted:", np.sort(marks))</pre
+              >
+            </div>
+            <div class="codecard">
+              <h3 id="speak82">Example B — Small image grid</h3>
+              <pre id="speak83">
+import numpy as np
 
 img = np.array([
     [0, 50, 100],
@@ -594,107 +1111,183 @@ img = np.array([
 ])
 
 normalized = img / 255
-print(normalized)</pre>
+print(normalized)</pre
+              >
+            </div>
+          </div>
+          <div class="grid2">
+            <div class="card">
+              <h3 id="speak84">Example C — Sales reshaping</h3>
+              <p id="speak85">
+                A flat list of 12 monthly sales values can be reshaped into a 3
+                × 4 structure to represent three products across four months or
+                four quarters across three regions.
+              </p>
+            </div>
+            <div class="card">
+              <h3 id="speak86">Example D — Data cleaning step</h3>
+              <p id="speak87">
+                Broadcasting can help subtract a baseline, scaling can normalize
+                values, and boolean masking can isolate suspicious entries for
+                review.
+              </p>
+            </div>
           </div>
         </div>
-        <div class="grid2">
+      </section>
+
+      <section class="section" id="mistakes">
+        <div class="section-head">
+          <div>
+            <h2 id="speak88">Part 10 — Common mistakes and how to beat them</h2>
+            <p id="speak89">
+              Many NumPy mistakes are not advanced mathematical failures. They
+              are usually shape confusion, indexing confusion, or
+              list-versus-array confusion.
+            </p>
+          </div>
+        </div>
+        <div class="grid3">
           <div class="card">
-            <h3 id="speak84">Example C — Sales reshaping</h3>
-            <p id="speak85">A flat list of 12 monthly sales values can be reshaped into a 3 × 4 structure to represent three products across four months or four quarters across three regions.</p>
+            <h3 id="speak90">Mistake 1</h3>
+            <p id="speak91">
+              Using Python lists and expecting NumPy-style arithmetic.
+            </p>
           </div>
           <div class="card">
-            <h3 id="speak86">Example D — Data cleaning step</h3>
-            <p id="speak87">Broadcasting can help subtract a baseline, scaling can normalize values, and boolean masking can isolate suspicious entries for review.</p>
+            <h3 id="speak92">Mistake 2</h3>
+            <p id="speak93">Trying to reshape into incompatible dimensions.</p>
+          </div>
+          <div class="card">
+            <h3 id="speak94">Mistake 3</h3>
+            <p id="speak95">
+              Not knowing whether axis 0 means rows or columns in context.
+            </p>
+          </div>
+          <div class="card">
+            <h3 id="speak96">Mistake 4</h3>
+            <p id="speak97">
+              Forgetting that slicing gives a range and not just one value.
+            </p>
+          </div>
+          <div class="card">
+            <h3 id="speak98">Mistake 5</h3>
+            <p id="speak99">
+              Avoiding 2D arrays because they look “too mathematical.”
+            </p>
+          </div>
+          <div class="card">
+            <h3 id="speak100">Mistake 6</h3>
+            <p id="speak101">
+              Writing loops for everything without checking for vectorization.
+            </p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" id="mistakes">
-      <div class="section-head">
-        <div>
-          <h2 id="speak88">Part 10 — Common mistakes and how to beat them</h2>
-          <p id="speak89">Many NumPy mistakes are not advanced mathematical failures. They are usually shape confusion, indexing confusion, or list-versus-array confusion.</p>
+      <section class="section" id="practice">
+        <div class="section-head">
+          <div>
+            <h2 id="speak102">
+              Part 11 — Practice path from beginner to expert
+            </h2>
+            <p id="speak103">
+              These are good checkpoints for lab discussion and oral
+              questioning.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="grid3">
-        <div class="card">
-          <h3 id="speak90">Mistake 1</h3>
-          <p id="speak91">Using Python lists and expecting NumPy-style arithmetic.</p>
+        <div class="table-wrap">
+          <table>
+            <tr>
+              <th>Level</th>
+              <th>Student should be able to do</th>
+              <th>Confidence sign</th>
+            </tr>
+            <tr>
+              <td>Beginner</td>
+              <td>Create arrays, inspect shape, use simple slicing</td>
+              <td>Can explain difference between list and array</td>
+            </tr>
+            <tr>
+              <td>Developing</td>
+              <td>
+                Reshape arrays, use sum/mean/min/max, perform vectorized
+                arithmetic
+              </td>
+              <td>Can solve classroom tasks without much help</td>
+            </tr>
+            <tr>
+              <td>Strong</td>
+              <td>
+                Use broadcasting, axis summaries, and 2D indexing confidently
+              </td>
+              <td>Can debug shape problems</td>
+            </tr>
+            <tr>
+              <td>Expert-ready</td>
+              <td>
+                Apply arrays to marks, sales, image grids, and data preparation
+              </td>
+              <td>Can connect NumPy to later ML workflow</td>
+            </tr>
+          </table>
         </div>
-        <div class="card">
-          <h3 id="speak92">Mistake 2</h3>
-          <p id="speak93">Trying to reshape into incompatible dimensions.</p>
-        </div>
-        <div class="card">
-          <h3 id="speak94">Mistake 3</h3>
-          <p id="speak95">Not knowing whether axis 0 means rows or columns in context.</p>
-        </div>
-        <div class="card">
-          <h3 id="speak96">Mistake 4</h3>
-          <p id="speak97">Forgetting that slicing gives a range and not just one value.</p>
-        </div>
-        <div class="card">
-          <h3 id="speak98">Mistake 5</h3>
-          <p id="speak99">Avoiding 2D arrays because they look “too mathematical.”</p>
-        </div>
-        <div class="card">
-          <h3 id="speak100">Mistake 6</h3>
-          <p id="speak101">Writing loops for everything without checking for vectorization.</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" id="practice">
-      <div class="section-head">
-        <div>
-          <h2 id="speak102">Part 11 — Practice path from beginner to expert</h2>
-          <p id="speak103">These are good checkpoints for lab discussion and oral questioning.</p>
+      <section class="section">
+        <div class="checklist">
+          <h3 id="speak104">Week 3 completion checklist</h3>
+          <ul>
+            <li id="speak105">
+              I can explain why NumPy is used instead of plain lists for
+              numerical work.
+            </li>
+            <li id="speak106">I can create 1D and 2D arrays correctly.</li>
+            <li id="speak107">
+              I can use indexing and slicing without guessing.
+            </li>
+            <li id="speak108">I can reshape arrays and understand shape.</li>
+            <li id="speak109">
+              I can use vectorized operations instead of loops in many cases.
+            </li>
+            <li id="speak110">I can use broadcasting in simple examples.</li>
+            <li id="speak111">
+              I can summarize data with mean, sum, min, max, and median.
+            </li>
+            <li id="speak112">I can explain how NumPy prepares me for ML.</li>
+          </ul>
         </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <tr><th>Level</th><th>Student should be able to do</th><th>Confidence sign</th></tr>
-          <tr><td>Beginner</td><td>Create arrays, inspect shape, use simple slicing</td><td>Can explain difference between list and array</td></tr>
-          <tr><td>Developing</td><td>Reshape arrays, use sum/mean/min/max, perform vectorized arithmetic</td><td>Can solve classroom tasks without much help</td></tr>
-          <tr><td>Strong</td><td>Use broadcasting, axis summaries, and 2D indexing confidently</td><td>Can debug shape problems</td></tr>
-          <tr><td>Expert-ready</td><td>Apply arrays to marks, sales, image grids, and data preparation</td><td>Can connect NumPy to later ML workflow</td></tr>
-        </table>
-      </div>
-    </section>
+      </section>
 
-    <section class="section">
-      <div class="checklist">
-        <h3 id="speak104">Week 3 completion checklist</h3>
-        <ul>
-          <li id="speak105">I can explain why NumPy is used instead of plain lists for numerical work.</li>
-          <li id="speak106">I can create 1D and 2D arrays correctly.</li>
-          <li id="speak107">I can use indexing and slicing without guessing.</li>
-          <li id="speak108">I can reshape arrays and understand shape.</li>
-          <li id="speak109">I can use vectorized operations instead of loops in many cases.</li>
-          <li id="speak110">I can use broadcasting in simple examples.</li>
-          <li id="speak111">I can summarize data with mean, sum, min, max, and median.</li>
-          <li id="speak112">I can explain how NumPy prepares me for ML.</li>
-        </ul>
-      </div>
-    </section>
+      <section class="section">
+        <div class="capstone">
+          <h3 id="speak113">Mini capstone for this week</h3>
+          <p id="speak114" class="muted">
+            Create a “Student Dataset Analyzer” using NumPy. Store marks for 20
+            students, compute class average, highest score, lowest score,
+            above-average count, and a reshaped 4 × 5 display. Then write a
+            short paragraph explaining what the results suggest.
+          </p>
+        </div>
+      </section>
 
-    <section class="section">
-      <div class="capstone">
-        <h3 id="speak113">Mini capstone for this week</h3>
-        <p id="speak114" class="muted">Create a “Student Dataset Analyzer” using NumPy. Store marks for 20 students, compute class average, highest score, lowest score, above-average count, and a reshaped 4 × 5 display. Then write a short paragraph explaining what the results suggest.</p>
-      </div>
-    </section>
+      <section class="section">
+        <div class="footer-note">
+          <p id="speak115">
+            NumPy week should feel like a real elevation point in the course.
+            Before this week, students write code. After this week, they begin
+            to organize, transform, and reason about data.
+          </p>
+          <p id="speak116">
+            That is why Week 3 matters so much: it is the first strong bridge
+            between general programming and applied AI-ML work.
+          </p>
+        </div>
+      </section>
+    </main>
 
-    <section class="section">
-      <div class="footer-note">
-        <p id="speak115">NumPy week should feel like a real elevation point in the course. Before this week, students write code. After this week, they begin to organize, transform, and reason about data.</p>
-        <p id="speak116">That is why Week 3 matters so much: it is the first strong bridge between general programming and applied AI-ML work.</p>
-      </div>
-    </section>
-  </main>
-
-  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
-  <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
-</body>
+    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+    <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+  </body>
 </html>
