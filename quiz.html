@@ -1,11 +1,10 @@
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MCQ Quiz App | Programmer's Picnic</title>
-  <meta name="description" content="AI-ML MCQ quiz" />
+  <meta name="description" content="JSON-driven AI-ML MCQ quiz app by Programmer's Picnic." />
   <meta name="theme-color" content="#f59e0b" />
   <style>
     :root{
@@ -27,6 +26,7 @@
 
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
+
     body{
       margin:0;
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
@@ -109,16 +109,19 @@
 
     .btn:hover{transform:translateY(-1px)}
     .btn:active{transform:translateY(0)}
+
     .btn-primary{
       background:linear-gradient(135deg,var(--brand),var(--brand2));
       color:#fff;
       box-shadow:0 12px 26px rgba(217,119,6,.22);
     }
+
     .btn-soft{
       background:#fff;
       color:var(--text);
       border:1px solid var(--line);
     }
+
     .btn[disabled]{
       opacity:.55;
       cursor:not-allowed;
@@ -133,11 +136,9 @@
 
     .hero{
       display:grid;
-      grid-template-columns:1.2fr .8fr;
+      grid-template-columns:1fr;
       gap:18px;
       margin-bottom:18px;
-      width: 0px;
-      visibility: hidden;
     }
 
     .card{
@@ -178,40 +179,6 @@
       font-size:1rem;
     }
 
-    .hero-side{
-      padding:22px;
-      display:grid;
-      gap:14px;
-      align-content:start;
-    }
-
-    .mini{
-      padding:16px;
-      border-radius:18px;
-      background:linear-gradient(180deg,#fffaf0,#fff);
-      border:1px solid var(--line);
-    }
-
-    .mini-label{
-      display:block;
-      color:var(--muted);
-      font-size:.86rem;
-      margin-bottom:6px;
-    }
-
-    .mini strong{
-      font-size:1.15rem;
-    }
-
-    .mini code{
-      word-break:break-all;
-      color:#92400e;
-      background:#fff7e6;
-      border:1px solid #f7d99a;
-      padding:3px 7px;
-      border-radius:10px;
-    }
-
     .grid{
       display:grid;
       grid-template-columns:320px 1fr;
@@ -245,6 +212,7 @@
       color:var(--text);
       outline:none;
     }
+
     .input:focus{
       border-color:#efb44c;
       box-shadow:0 0 0 4px rgba(245,158,11,.12);
@@ -420,6 +388,7 @@
       border:1px solid #b7e3c1;
       color:#166534;
     }
+
     .feedback.bad{
       background:#fff5f5;
       border:1px solid #f3b4b4;
@@ -517,6 +486,7 @@
       border:1px solid #b7e3c1;
       color:#166534;
     }
+
     .pill.bad{
       background:#fff1f1;
       border:1px solid #efb1b1;
@@ -539,19 +509,20 @@
     }
 
     @media (max-width:980px){
-      .hero,.grid{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
       .sidebar{position:static}
       .meta-strip{grid-template-columns:repeat(2,1fr)}
     }
 
     @media (max-width:640px){
       .topbar-inner{padding:12px 14px}
-      .hero-main,.hero-side,.sidebar,.quiz-shell{padding:16px}
+      .hero-main,.sidebar,.quiz-shell{padding:16px}
       .question-card{padding:16px}
       .meta-strip{grid-template-columns:1fr}
       .q-text{font-size:1.14rem}
       .top-actions{width:100%; justify-content:stretch}
       .top-actions .btn{flex:1}
+      .quiz-actions{flex-direction:column}
     }
   </style>
 </head>
@@ -562,11 +533,11 @@
         <div class="brand-badge">🧠</div>
         <div>
           <h1>MCQ Quiz App</h1>
-          <p></p>
+          <p>Programmer's Picnic</p>
         </div>
       </div>
       <div class="top-actions">
-        <button class="btn btn-soft" id="copyLinkBtn" type="button"> </button>
+        <button class="btn btn-soft" id="copyLinkBtn" type="button">Copy Quiz Link</button>
         <button class="btn btn-primary" id="restartTopBtn" type="button" disabled>Restart Quiz</button>
       </div>
     </div>
@@ -576,47 +547,32 @@
     <section class="hero">
       <div class="hero-main card">
         <div class="eyebrow">✨ Quiz</div>
-        <h2></h2>
+        <h2>MCQ Quiz App</h2>
         <p>
-          
-          <strong></strong>.
-          
+          Load a quiz JSON file using the <strong>?qfile=filename.json</strong> parameter,
+          answer one question at a time, and review your final score at the end.
         </p>
-      </div>
-      <div style="visibility: hidden;" class="hero-side card">
-        <div class="mini">
-          <span class="mini-label"> </span>
-          <strong style="visibility: hidden;" id="currentQfile"></strong>
-        </div>
-        <div class="mini">
-          <span class="mini-label"> </span>
-          <code></code>
-        </div>
-        <div class="mini">
-          <span class="mini-label"></span>
-          <strong></strong>
-        </div>
       </div>
     </section>
 
-    <section   class="grid">
-      <aside visibility: hidden; class="sidebar card">
-        <div style="visibility: hidden;" class="field">
-          <label for="qfileInput"></label>
-          <input style="visibility: hidden;" class="input" id="qfileInput" type="text" placeholder="Example: week3_questions.json" />
+    <section class="grid">
+      <aside class="sidebar card">
+        <div class="field">
+          <label for="qfileInput">Quiz JSON file</label>
+          <input class="input" id="qfileInput" type="text" placeholder="Example: week3_questions.json" />
         </div>
-        <div style="visibility: hidden; display:flex;gap:10px;flex-wrap:wrap;">
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
           <button class="btn btn-primary" id="loadBtn" type="button">Load Quiz</button>
           <button class="btn btn-soft" id="sampleBtn" type="button">Load Sample Quiz</button>
         </div>
 
-        <div style="visibility: hidden;" class="status" id="statusBox">
-          
+        <div class="status" id="statusBox">
+          Add a quiz JSON file path and load it, or use the sample quiz.
         </div>
 
         <div style="margin-top:16px" class="helper">
-         
-          
+          This page supports URL loading using <strong>?qfile=filename.json</strong>.
         </div>
       </aside>
 
@@ -628,10 +584,11 @@
 
         <div id="quizArea" style="display:none;">
           <div class="quiz-top">
-            <div style="visibility: hidden;">
+            <div>
               <h3 class="quiz-title" id="quizTitle">Quiz Title</h3>
               <p class="quiz-sub" id="quizSub">Week · Difficulty · Count</p>
             </div>
+
             <div class="progress-box">
               <div class="progress-row">
                 <span id="progressText">Question 1 of 1</span>
@@ -711,13 +668,11 @@
   </main>
 
   <div class="footer">
-    <!-- Built for JSON-driven quizzes. This page expects a structure like:
-    <strong>{ week, title, difficulty_range, question_count, questions: [...] }</strong>. -->
+    Built for JSON-driven quizzes with URL-based loading and answer review.
   </div>
 
   <script>
     const els = {
-      currentQfile: document.getElementById("currentQfile"),
       qfileInput: document.getElementById("qfileInput"),
       loadBtn: document.getElementById("loadBtn"),
       sampleBtn: document.getElementById("sampleBtn"),
@@ -769,7 +724,7 @@
 
     const sampleQuiz = {
       week: 3,
-      title: "NumPy Speciala",
+      title: "NumPy Special",
       difficulty_range: "Ground 0 to Expert Point 100",
       question_count: 3,
       questions: [
@@ -796,33 +751,35 @@
 
     function getQfileFromUrl() {
       const params = new URLSearchParams(location.search);
-      return params.get("qfile") || "";
+      return (params.get("qfile") || "").trim();
     }
 
     function setStatus(html) {
       els.statusBox.innerHTML = html;
     }
 
-    function updateQfileUI(value) {
-      els.currentQfile.textContent = value || "Not found in URL";
-      els.qfileInput.value = value || "";
-    }
-
     function validateQuizData(data) {
-      if (!data || typeof data !== "object") {
+      if (!data || typeof data !== "object" || Array.isArray(data)) {
         throw new Error("Quiz JSON is missing or not a valid object.");
       }
+
       if (!Array.isArray(data.questions) || data.questions.length === 0) {
-        throw new Error("");
+        throw new Error("The quiz must contain a non-empty questions array.");
       }
 
       data.questions.forEach((item, index) => {
-        if (!item || typeof item.q !== "string" || !item.q.trim()) {
+        if (!item || typeof item !== "object") {
+          throw new Error("Question " + (index + 1) + " is not a valid object.");
+        }
+
+        if (typeof item.q !== "string" || !item.q.trim()) {
           throw new Error("Question " + (index + 1) + " is missing valid q text.");
         }
+
         if (!Array.isArray(item.options) || item.options.length < 2) {
           throw new Error("Question " + (index + 1) + " must have at least 2 options.");
         }
+
         if (typeof item.answer !== "number" || item.answer < 0 || item.answer >= item.options.length) {
           throw new Error("Question " + (index + 1) + " has an invalid answer index.");
         }
@@ -846,6 +803,7 @@
     }
 
     function getScore() {
+      if (!quizData) return 0;
       return selectedAnswers.reduce((sum, ans, i) => {
         return sum + (ans === quizData.questions[i].answer ? 1 : 0);
       }, 0);
@@ -853,6 +811,7 @@
 
     function renderMeta() {
       const total = quizData.questions.length;
+
       els.quizTitle.textContent = quizData.title || "Untitled Quiz";
       els.quizSub.textContent =
         "Week " + (quizData.week ?? "-") +
@@ -861,7 +820,7 @@
 
       els.metaWeek.textContent = quizData.week ?? "-";
       els.metaDifficulty.textContent = quizData.difficulty_range || "-";
-      els.metaCount.textContent = total;
+      els.metaCount.textContent = quizData.question_count || total;
       els.metaAnswered.textContent = getAnsweredCount();
 
       els.scoreText.textContent = "Score: " + getScore();
@@ -870,6 +829,8 @@
     }
 
     function renderQuestion() {
+      if (!quizData) return;
+
       renderMeta();
 
       const item = quizData.questions[currentIndex];
@@ -897,14 +858,14 @@
         btn.addEventListener("click", () => {
           if (quizSubmitted) return;
           selectedAnswers[currentIndex] = idx;
+          checkedQuestions[currentIndex] = false;
           renderQuestion();
         });
 
         els.optionsBox.appendChild(btn);
       });
 
-      const canCheck = selected !== null && !quizSubmitted;
-      els.checkBtn.disabled = !canCheck;
+      els.checkBtn.disabled = selected === null || quizSubmitted;
       els.prevBtn.disabled = currentIndex === 0;
       els.nextBtn.disabled = currentIndex === quizData.questions.length - 1;
       els.submitBtn.disabled = quizSubmitted;
@@ -914,8 +875,8 @@
         els.feedbackBox.className = "feedback show " + (ok ? "ok" : "bad");
         els.feedbackBox.innerHTML =
           "<strong>" + (ok ? "Correct." : "Not correct.") + "</strong> " +
-          "Correct answer: <strong>" + item.options[item.answer] + "</strong><br>" +
-          (item.explanation ? item.explanation : "");
+          "Correct answer: <strong>" + escapeHtml(item.options[item.answer]) + "</strong><br>" +
+          escapeHtml(item.explanation || "");
       } else {
         els.feedbackBox.className = "feedback";
         els.feedbackBox.innerHTML = "";
@@ -933,15 +894,16 @@
       quizData = data;
       resetQuizState();
       showQuiz();
+
       setStatus(
-        "Loaded successfully from <strong>" + sourceLabel + "</strong>.<br>" +
-        "Quiz title: <strong>" + (quizData.title || "Untitled Quiz") + "</strong>"
+        "Loaded successfully from <strong>" + escapeHtml(sourceLabel) + "</strong>.<br>" +
+        "Quiz title: <strong>" + escapeHtml(quizData.title || "Untitled Quiz") + "</strong>"
       );
     }
 
     async function loadQuizFromFile(path) {
       if (!path) {
-        setStatus("");
+        setStatus("Please enter a JSON file path.");
         return;
       }
 
@@ -957,6 +919,8 @@
     }
 
     function showResults() {
+      if (!quizData) return;
+
       quizSubmitted = true;
       const total = quizData.questions.length;
       const correct = getScore();
@@ -989,6 +953,7 @@
             <strong>Explanation:</strong> ${escapeHtml(item.explanation || "No explanation provided.")}
           </div>
         `;
+
         els.reviewBox.appendChild(div);
       });
 
@@ -1017,17 +982,21 @@
 
     function updateUrlQfile(path) {
       const url = new URL(location.href);
-      url.searchParams.set("qfile", path);
+      if (path) {
+        url.searchParams.set("qfile", path);
+      } else {
+        url.searchParams.delete("qfile");
+      }
       history.replaceState({}, "", url.toString());
-      updateQfileUI(path);
     }
 
     els.loadBtn.addEventListener("click", async () => {
       const path = els.qfileInput.value.trim();
       if (!path) {
-        setStatus("");
+        setStatus("Please enter a quiz JSON path first.");
         return;
       }
+
       try {
         updateUrlQfile(path);
         await loadQuizFromFile(path);
@@ -1049,7 +1018,9 @@
         await navigator.clipboard.writeText(location.href);
         const old = els.copyLinkBtn.textContent;
         els.copyLinkBtn.textContent = "Link Copied";
-        setTimeout(() => { els.copyLinkBtn.textContent = old; }, 1200);
+        setTimeout(() => {
+          els.copyLinkBtn.textContent = old;
+        }, 1200);
       } catch (err) {
         setStatus("Could not copy the link automatically. You can still copy it from the address bar.");
       }
@@ -1064,6 +1035,7 @@
     });
 
     els.prevBtn.addEventListener("click", () => {
+      if (!quizData) return;
       if (currentIndex > 0) {
         currentIndex--;
         renderQuestion();
@@ -1071,6 +1043,7 @@
     });
 
     els.nextBtn.addEventListener("click", () => {
+      if (!quizData) return;
       if (currentIndex < quizData.questions.length - 1) {
         currentIndex++;
         renderQuestion();
@@ -1078,6 +1051,7 @@
     });
 
     els.checkBtn.addEventListener("click", () => {
+      if (!quizData) return;
       if (selectedAnswers[currentIndex] === null) {
         setStatus("Please select an option first.");
         return;
@@ -1093,9 +1067,9 @@
 
     window.addEventListener("DOMContentLoaded", async () => {
       const qfile = getQfileFromUrl();
-      updateQfileUI(qfile);
 
       if (qfile) {
+        els.qfileInput.value = qfile;
         try {
           await loadQuizFromFile(qfile);
         } catch (err) {
