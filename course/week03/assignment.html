@@ -1,193 +1,440 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Week 3 Assignment — NumPy Special  </title>
-  <meta name="description" content="Comprehensive Week 3 NumPy Special assignment pack from ground zero to expert point 100." />
-  <meta name="theme-color" content="#f59e0b" />
-  <style>
-    :root{
-      --bg:#fffaf0;--bg2:#fff4d6;--card:#ffffff;--text:#2b2112;--muted:#6b5a3d;
-      --line:#efdfb2;--brand:#d97706;--brand2:#f59e0b;--brand3:#fbbf24;
-      --green:#166534;--greenbg:#ecfdf5;--blue:#1d4ed8;--bluebg:#eff6ff;
-      --red:#991b1b;--redbg:#fef2f2;--shadow:0 20px 50px rgba(140,88,0,.12);--max:1100px;
-    }
-    *{box-sizing:border-box} body{
-      margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);
-      background:linear-gradient(180deg,#fffaf2 0%,#fff6e8 100%);
-    }
-    .top{position:sticky;top:0;background:rgba(255,250,242,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(217,119,6,.12)}
-    .navwrap,.wrap{width:min(var(--max),calc(100% - 24px));margin:0 auto}
-    .navwrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 15px;border-radius:14px;border:1px solid rgba(217,119,6,.18);background:#fff;color:#7c4600;font-weight:800;text-decoration:none}
-    .btn.brand{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-color:transparent}
-    .wrap{padding:22px 0 40px}
-    .hero,.card,.level,.rubric,.footer-note{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
-    .hero{padding:28px;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(255,244,220,.98))}
-    .badge{display:inline-flex;padding:8px 14px;border-radius:999px;background:#fff2cc;border:1px solid rgba(217,119,6,.18);color:#8a4b00;font-weight:800}
-    h1{font-size:clamp(2rem,4vw,3rem);line-height:1.08;margin:14px 0 10px}
-    h2{margin:0 0 10px;color:#8a4b00}
-    p,li{line-height:1.72}
-    .muted{color:var(--muted)}
-    .section{margin-top:24px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .levels{display:grid;gap:16px}
-    .level{padding:20px}
-    .level h3{margin:0 0 10px}
-    .green{background:var(--greenbg);border-color:#b7ebc6}
-    .blue{background:var(--bluebg);border-color:#bfd5ff}
-    .red{background:var(--redbg);border-color:#f7c3c3}
-    .rubric,.card,.footer-note{padding:20px}
-    code,pre{font-family:Consolas,Monaco,'Courier New',monospace}
-    pre{margin:12px 0 0;padding:14px;border-radius:18px;background:#2b2112;color:#fffaf0;overflow:auto}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-    th{background:#fff7e8;color:#8a4b00}
-    ul{margin:0;padding-left:18px}
-    @media (max-width:800px){.grid{grid-template-columns:1fr}.navwrap,.wrap{width:min(var(--max),calc(100% - 16px))}.hero,.card,.level,.rubric,.footer-note{padding:18px}}
-  </style>
-</head>
-<body>
-  <nav class="top">
-    <div class="navwrap">
-      <strong>Week 3 Assignment — NumPy Special </strong>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <a class="btn" href="lesson.html">Lesson</a>
-        <a class="btn brand" href="mcq.json">MCQ JSON</a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Week 3 Assignment — NumPy Special</title>
+    <meta
+      name="description"
+      content="Comprehensive Week 3 NumPy Special assignment pack from ground zero to expert point 100."
+    />
+    <meta name="theme-color" content="#f59e0b" />
+    <style>
+      :root {
+        --bg: #fffaf0;
+        --bg2: #fff4d6;
+        --card: #ffffff;
+        --text: #2b2112;
+        --muted: #6b5a3d;
+        --line: #efdfb2;
+        --brand: #d97706;
+        --brand2: #f59e0b;
+        --brand3: #fbbf24;
+        --green: #166534;
+        --greenbg: #ecfdf5;
+        --blue: #1d4ed8;
+        --bluebg: #eff6ff;
+        --red: #991b1b;
+        --redbg: #fef2f2;
+        --shadow: 0 20px 50px rgba(140, 88, 0, 0.12);
+        --max: 1100px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text);
+        background: linear-gradient(180deg, #fffaf2 0%, #fff6e8 100%);
+      }
+      .top {
+        position: sticky;
+        top: 0;
+        background: rgba(255, 250, 242, 0.92);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(217, 119, 6, 0.12);
+      }
+      .navwrap,
+      .wrap {
+        width: min(var(--max), calc(100% - 24px));
+        margin: 0 auto;
+      }
+      .navwrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 14px 0;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 11px 15px;
+        border-radius: 14px;
+        border: 1px solid rgba(217, 119, 6, 0.18);
+        background: #fff;
+        color: #7c4600;
+        font-weight: 800;
+        text-decoration: none;
+      }
+      .btn.brand {
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+        color: #fff;
+        border-color: transparent;
+      }
+      .wrap {
+        padding: 22px 0 40px;
+      }
+      .hero,
+      .card,
+      .level,
+      .rubric,
+      .footer-note {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+      }
+      .hero {
+        padding: 28px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.98),
+          rgba(255, 244, 220, 0.98)
+        );
+      }
+      .badge {
+        display: inline-flex;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: #fff2cc;
+        border: 1px solid rgba(217, 119, 6, 0.18);
+        color: #8a4b00;
+        font-weight: 800;
+      }
+      h1 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.08;
+        margin: 14px 0 10px;
+      }
+      h2 {
+        margin: 0 0 10px;
+        color: #8a4b00;
+      }
+      p,
+      li {
+        line-height: 1.72;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .section {
+        margin-top: 24px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .levels {
+        display: grid;
+        gap: 16px;
+      }
+      .level {
+        padding: 20px;
+      }
+      .level h3 {
+        margin: 0 0 10px;
+      }
+      .green {
+        background: var(--greenbg);
+        border-color: #b7ebc6;
+      }
+      .blue {
+        background: var(--bluebg);
+        border-color: #bfd5ff;
+      }
+      .red {
+        background: var(--redbg);
+        border-color: #f7c3c3;
+      }
+      .rubric,
+      .card,
+      .footer-note {
+        padding: 20px;
+      }
+      code,
+      pre {
+        font-family: Consolas, Monaco, "Courier New", monospace;
+      }
+      pre {
+        margin: 12px 0 0;
+        padding: 14px;
+        border-radius: 18px;
+        background: #2b2112;
+        color: #fffaf0;
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #fff7e8;
+        color: #8a4b00;
+      }
+      ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+      @media (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .navwrap,
+        .wrap {
+          width: min(var(--max), calc(100% - 16px));
+        }
+        .hero,
+        .card,
+        .level,
+        .rubric,
+        .footer-note {
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="top">
+      <div class="navwrap">
+        <strong>Week 3 Assignment — NumPy Special </strong>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap">
+          <a class="btn" href="lesson.html">Lesson</a>
+          <a
+            class="btn brand"
+            href="https://aiml.learnwithchampak.live/quiz.html?qfile=https://aiml.learnwithchampak.live/course/week03/mcq.json"
+            >MCQ JSON</a
+          >
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <main class="wrap">
-    <section class="hero">
-      <span class="badge">Ground 0 → Expert Point 100</span>
-      <h1 id="speak0">Comprehensive assignment pack for NumPy Special</h1>
-      <p id="speak1" class="muted">This assignment pack is layered. It starts with simple array creation and ends with expert-style numeric thinking, including broadcasting, aggregation, matrix work, timing comparison, and a mini project that feels close to real AI-ML preparation.</p>
-    </section>
+    <main class="wrap">
+      <section class="hero">
+        <span class="badge">Ground 0 → Expert Point 100</span>
+        <h1 id="speak0">Comprehensive assignment pack for NumPy Special</h1>
+        <p id="speak1" class="muted">
+          This assignment pack is layered. It starts with simple array creation
+          and ends with expert-style numeric thinking, including broadcasting,
+          aggregation, matrix work, timing comparison, and a mini project that
+          feels close to real AI-ML preparation.
+        </p>
+      </section>
 
-    <section class="section grid">
-      <div class="card">
-        <h2 id="speak2">How to use this pack</h2>
-        <ul>
-          <li>Students should attempt levels in order.</li>
-          <li>Each level increases conceptual depth, not only code length.</li>
-          <li>Encourage written explanation with every solution.</li>
-          <li>Students should show outputs, not only paste code.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2 id="speak3">Submission rule</h2>
-        <ul>
-          <li>One file or notebook per student.</li>
-          <li>Every answer should include code, output, and a short explanation.</li>
-          <li>At Levels 4 and 5, students must write what pattern they observed.</li>
-          <li>Bonus marks for elegant vectorized solutions.</li>
-        </ul>
-      </div>
-    </section>
+      <section class="section grid">
+        <div class="card">
+          <h2 id="speak2">How to use this pack</h2>
+          <ul>
+            <li>Students should attempt levels in order.</li>
+            <li>
+              Each level increases conceptual depth, not only code length.
+            </li>
+            <li>Encourage written explanation with every solution.</li>
+            <li>Students should show outputs, not only paste code.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2 id="speak3">Submission rule</h2>
+          <ul>
+            <li>One file or notebook per student.</li>
+            <li>
+              Every answer should include code, output, and a short explanation.
+            </li>
+            <li>
+              At Levels 4 and 5, students must write what pattern they observed.
+            </li>
+            <li>Bonus marks for elegant vectorized solutions.</li>
+          </ul>
+        </div>
+      </section>
 
-    <section class="section levels">
-      <div class="level green">
-        <h3 id="speak4">Level 1 — Ground zero</h3>
-        <ul>
-          <li>Create a NumPy array containing numbers from 1 to 20.</li>
-          <li>Print only even numbers.</li>
-          <li>Print the first 5 elements, last 5 elements, and every second element.</li>
-          <li>Write one sentence: how is this different from using a Python list?</li>
-        </ul>
-      </div>
+      <section class="section levels">
+        <div class="level green">
+          <h3 id="speak4">Level 1 — Ground zero</h3>
+          <ul>
+            <li>Create a NumPy array containing numbers from 1 to 20.</li>
+            <li>Print only even numbers.</li>
+            <li>
+              Print the first 5 elements, last 5 elements, and every second
+              element.
+            </li>
+            <li>
+              Write one sentence: how is this different from using a Python
+              list?
+            </li>
+          </ul>
+        </div>
 
-      <div class="level green">
-        <h3 id="speak5">Level 2 — Basic control of arrays</h3>
-        <ul>
-          <li>Create a 3 × 4 matrix with values from 1 to 12.</li>
-          <li>Print the shape, size, and number of dimensions.</li>
-          <li>Print the second row and third column.</li>
-          <li>Reshape the same values into a 2 × 6 matrix.</li>
-          <li>Explain why reshape works here.</li>
-        </ul>
-      </div>
+        <div class="level green">
+          <h3 id="speak5">Level 2 — Basic control of arrays</h3>
+          <ul>
+            <li>Create a 3 × 4 matrix with values from 1 to 12.</li>
+            <li>Print the shape, size, and number of dimensions.</li>
+            <li>Print the second row and third column.</li>
+            <li>Reshape the same values into a 2 × 6 matrix.</li>
+            <li>Explain why reshape works here.</li>
+          </ul>
+        </div>
 
-      <div class="level blue">
-        <h3 id="speak6">Level 3 — Vectorization and aggregation</h3>
-        <ul>
-          <li>Create an array of marks for 10 students.</li>
-          <li>Add 5 grace marks to all students using vectorized code.</li>
-          <li>Find total, average, highest, lowest, median, and standard deviation.</li>
-          <li>Count how many students scored above the class average.</li>
-          <li>Sort the marks in ascending order.</li>
-        </ul>
-      </div>
+        <div class="level blue">
+          <h3 id="speak6">Level 3 — Vectorization and aggregation</h3>
+          <ul>
+            <li>Create an array of marks for 10 students.</li>
+            <li>Add 5 grace marks to all students using vectorized code.</li>
+            <li>
+              Find total, average, highest, lowest, median, and standard
+              deviation.
+            </li>
+            <li>Count how many students scored above the class average.</li>
+            <li>Sort the marks in ascending order.</li>
+          </ul>
+        </div>
 
-      <div class="level blue">
-        <h3 id="speak7">Level 4 — Broadcasting and axis work</h3>
-        <ul>
-          <li>Create a 4 × 3 matrix representing 4 students and 3 subjects.</li>
-          <li>Find row sums and column sums.</li>
-          <li>Add subject-wise bonus marks using broadcasting, for example <code>[2, 5, 3]</code>.</li>
-          <li>Find each student’s maximum score.</li>
-          <li>Find the average score in each subject.</li>
-          <li>Explain what <code>axis=0</code> and <code>axis=1</code> mean in your own words.</li>
-        </ul>
-      </div>
+        <div class="level blue">
+          <h3 id="speak7">Level 4 — Broadcasting and axis work</h3>
+          <ul>
+            <li>
+              Create a 4 × 3 matrix representing 4 students and 3 subjects.
+            </li>
+            <li>Find row sums and column sums.</li>
+            <li>
+              Add subject-wise bonus marks using broadcasting, for example
+              <code>[2, 5, 3]</code>.
+            </li>
+            <li>Find each student’s maximum score.</li>
+            <li>Find the average score in each subject.</li>
+            <li>
+              Explain what <code>axis=0</code> and <code>axis=1</code> mean in
+              your own words.
+            </li>
+          </ul>
+        </div>
 
-      <div class="level red">
-        <h3 id="speak8">Level 5 — Expert point 100</h3>
-        <ul>
-          <li>Create a random dataset of 50 student marks using <code>np.random.randint(30, 100, 50)</code>.</li>
-          <li>Reshape it into a 10 × 5 matrix.</li>
-          <li>Interpret rows as students and columns as tests.</li>
-          <li>Find each student’s total and average.</li>
-          <li>Find the topper based on total marks.</li>
-          <li>Find how many test scores are below 40.</li>
-          <li>Create a 10 × 10 random integer matrix and normalize it by dividing by 100.</li>
-          <li>Write 5–8 lines explaining how these kinds of operations prepare data for AI-ML.</li>
-        </ul>
-      </div>
-    </section>
+        <div class="level red">
+          <h3 id="speak8">Level 5 — Expert point 100</h3>
+          <ul>
+            <li>
+              Create a random dataset of 50 student marks using
+              <code>np.random.randint(30, 100, 50)</code>.
+            </li>
+            <li>Reshape it into a 10 × 5 matrix.</li>
+            <li>Interpret rows as students and columns as tests.</li>
+            <li>Find each student’s total and average.</li>
+            <li>Find the topper based on total marks.</li>
+            <li>Find how many test scores are below 40.</li>
+            <li>
+              Create a 10 × 10 random integer matrix and normalize it by
+              dividing by 100.
+            </li>
+            <li>
+              Write 5–8 lines explaining how these kinds of operations prepare
+              data for AI-ML.
+            </li>
+          </ul>
+        </div>
+      </section>
 
-    <section class="section grid">
-      <div class="card">
-        <h2 id="speak9">Challenge tasks</h2>
-        <ul>
-          <li>Compare list addition and array addition with your own example.</li>
-          <li>Create a timing comparison using Python <code>time</code> or <code>timeit</code> for loop style versus vectorized style.</li>
-          <li>Transpose a matrix and describe what changed.</li>
-          <li>Show one reshape attempt that fails and explain why it fails.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2 id="speak10">Mini project</h2>
-        <p class="muted">Build a <strong>Student Dataset Analyzer</strong>. The program should create or accept marks, summarize them, reshape them into a readable matrix, identify topper and below-average students, and print a final interpretation paragraph.</p>
-        <pre id="speak11">import numpy as np
+      <section class="section grid">
+        <div class="card">
+          <h2 id="speak9">Challenge tasks</h2>
+          <ul>
+            <li>
+              Compare list addition and array addition with your own example.
+            </li>
+            <li>
+              Create a timing comparison using Python <code>time</code> or
+              <code>timeit</code> for loop style versus vectorized style.
+            </li>
+            <li>Transpose a matrix and describe what changed.</li>
+            <li>
+              Show one reshape attempt that fails and explain why it fails.
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2 id="speak10">Mini project</h2>
+          <p class="muted">
+            Build a <strong>Student Dataset Analyzer</strong>. The program
+            should create or accept marks, summarize them, reshape them into a
+            readable matrix, identify topper and below-average students, and
+            print a final interpretation paragraph.
+          </p>
+          <pre id="speak11">
+import numpy as np
 
 marks = np.random.randint(35, 100, 20)
 print("Marks:", marks)
 print("Average:", np.mean(marks))
 print("Top score:", np.max(marks))
-print("Below average:", np.sum(marks < np.mean(marks)))</pre>
-      </div>
-    </section>
+print("Below average:", np.sum(marks < np.mean(marks)))</pre
+          >
+        </div>
+      </section>
 
-    <section class="section rubric">
-      <h2 id="speak12">Evaluation rubric</h2>
-      <table>
-        <tr><th>Criterion</th><th>Marks focus</th><th>What strong work looks like</th></tr>
-        <tr><td>Correctness</td><td>25</td><td>Code runs and gives correct outputs</td></tr>
-        <tr><td>Concept understanding</td><td>25</td><td>Student can explain shape, slicing, vectorization, and broadcasting clearly</td></tr>
-        <tr><td>Clean coding</td><td>15</td><td>Readable code, sensible variable names, useful comments</td></tr>
-        <tr><td>Interpretation</td><td>20</td><td>Student explains what the results mean, not only what they are</td></tr>
-        <tr><td>Depth / challenge attempt</td><td>15</td><td>Student goes beyond minimum and attempts higher-level tasks</td></tr>
-      </table>
-    </section>
+      <section class="section rubric">
+        <h2 id="speak12">Evaluation rubric</h2>
+        <table>
+          <tr>
+            <th>Criterion</th>
+            <th>Marks focus</th>
+            <th>What strong work looks like</th>
+          </tr>
+          <tr>
+            <td>Correctness</td>
+            <td>25</td>
+            <td>Code runs and gives correct outputs</td>
+          </tr>
+          <tr>
+            <td>Concept understanding</td>
+            <td>25</td>
+            <td>
+              Student can explain shape, slicing, vectorization, and
+              broadcasting clearly
+            </td>
+          </tr>
+          <tr>
+            <td>Clean coding</td>
+            <td>15</td>
+            <td>Readable code, sensible variable names, useful comments</td>
+          </tr>
+          <tr>
+            <td>Interpretation</td>
+            <td>20</td>
+            <td>
+              Student explains what the results mean, not only what they are
+            </td>
+          </tr>
+          <tr>
+            <td>Depth / challenge attempt</td>
+            <td>15</td>
+            <td>Student goes beyond minimum and attempts higher-level tasks</td>
+          </tr>
+        </table>
+      </section>
 
-    <section style="visibility: hidden;" class="section footer-note">
-      <h2 id="speak13">Teacher note for homework use</h2>
-      <p id="speak14" class="muted">Do not rush all students to Level 5 immediately. The value of this pack is that it supports a visible climb. Beginners can taste success early. Stronger students can push into expert territory. What matters most is that students begin to think in arrays and data structures with confidence.</p>
-    </section>
-  </main>
+      <section style="visibility: hidden" class="section footer-note">
+        <h2 id="speak13">Teacher note for homework use</h2>
+        <p id="speak14" class="muted">
+          Do not rush all students to Level 5 immediately. The value of this
+          pack is that it supports a visible climb. Beginners can taste success
+          early. Stronger students can push into expert territory. What matters
+          most is that students begin to think in arrays and data structures
+          with confidence.
+        </p>
+      </section>
+    </main>
 
-  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
-</body>
+    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+  </body>
 </html>
