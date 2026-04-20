@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NumPy polyfit — V3 Premium Lesson | Programmer's Picnic</title>
+  <title>NumPy polyfit + Coefficient of Correlation — V3 Premium Lesson | Programmer's Picnic</title>
 
   <meta
     name="description"
-    content="A full ground-zero to premium lesson on NumPy polyfit with theory, intuition, worked examples, quiz, practice tasks, and a mini project in Programmer's Picnic style."
+    content="A complete V3 Premium lesson on coefficient of correlation, NumPy polyfit, and poly1d with theory, intuition, worked examples, return values, quiz, and mini project."
   />
   <meta
     name="keywords"
-    content="NumPy polyfit, Python polyfit, polynomial fitting, linear regression, NumPy lesson, Programmer's Picnic"
+    content="NumPy polyfit, poly1d, coefficient of correlation, Pearson correlation, regression, Python, NumPy lesson, Programmer's Picnic"
   />
   <meta name="author" content="Champak Roy" />
   <meta name="theme-color" content="#f59e0b" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
 
-  <meta property="og:title" content="NumPy polyfit — V3 Premium Lesson" />
+  <meta property="og:title" content="NumPy polyfit + Coefficient of Correlation — V3 Premium Lesson" />
   <meta
     property="og:description"
-    content="Learn NumPy polyfit from ground zero to premium level with intuition, examples, quiz, and project."
+    content="Learn coefficient of correlation, polyfit, and poly1d from ground zero to premium level with intuition, examples, quiz, and project."
   />
   <meta property="og:type" content="website" />
 
@@ -46,11 +46,10 @@
       --shadow:0 18px 48px rgba(146, 91, 17, .12);
       --shadow-soft:0 10px 28px rgba(146, 91, 17, .08);
       --radius:22px;
-      --max:1200px;
+      --max:1220px;
     }
 
     *{box-sizing:border-box}
-
     html{scroll-behavior:smooth}
 
     body{
@@ -69,8 +68,6 @@
       text-decoration:none;
     }
 
-    img{max-width:100%}
-
     .container{
       width:min(var(--max), calc(100% - 32px));
       margin:auto;
@@ -79,9 +76,9 @@
     .topbar{
       position:sticky;
       top:0;
-      z-index:50;
+      z-index:60;
       backdrop-filter:blur(12px);
-      background:rgba(255,250,240,.82);
+      background:rgba(255,250,240,.84);
       border-bottom:1px solid rgba(236,217,170,.8);
     }
 
@@ -103,8 +100,8 @@
     }
 
     .logo{
-      width:44px;
-      height:44px;
+      width:46px;
+      height:46px;
       border-radius:14px;
       display:grid;
       place-items:center;
@@ -113,10 +110,6 @@
       background:linear-gradient(135deg, var(--brand), var(--brand2));
       box-shadow:var(--shadow-soft);
       flex:0 0 auto;
-    }
-
-    .brand-text{
-      min-width:0;
     }
 
     .brand-text strong{
@@ -210,14 +203,14 @@
       letter-spacing:.02em;
     }
 
-    h1,h2,h3{
+    h1,h2,h3,h4{
       font-family:"DM Sans", Inter, sans-serif;
       line-height:1.18;
       margin:0 0 12px;
     }
 
     h1{
-      font-size:clamp(2rem, 4vw, 3.4rem);
+      font-size:clamp(2rem, 4vw, 3.3rem);
       margin-top:14px;
     }
 
@@ -226,13 +219,17 @@
     }
 
     h3{
-      font-size:1.1rem;
+      font-size:1.12rem;
+    }
+
+    h4{
+      font-size:1rem;
     }
 
     .lead{
       font-size:1.05rem;
       color:#4b3b23;
-      max-width:68ch;
+      max-width:72ch;
     }
 
     .hero-actions{
@@ -331,7 +328,7 @@
     .section-head p{
       margin:0;
       color:var(--muted);
-      max-width:60ch;
+      max-width:62ch;
     }
 
     .grid-2{
@@ -348,11 +345,6 @@
 
     .card{
       padding:22px;
-    }
-
-    .card p:last-child,
-    .card ul:last-child{
-      margin-bottom:0;
     }
 
     .kicker{
@@ -462,7 +454,7 @@
     table{
       width:100%;
       border-collapse:collapse;
-      min-width:720px;
+      min-width:760px;
     }
 
     th,td{
@@ -535,7 +527,7 @@
     }
 
     .formula-big{
-      font-size:clamp(1.2rem, 2vw, 1.7rem);
+      font-size:clamp(1.08rem, 2vw, 1.55rem);
       text-align:center;
       font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       background:#2b2112;
@@ -565,12 +557,6 @@
       background:#fffcf7;
       border-radius:18px;
       margin-bottom:14px;
-    }
-
-    .question h4{
-      margin:0 0 12px;
-      font-size:1rem;
-      font-family:"DM Sans", Inter, sans-serif;
     }
 
     .options{
@@ -681,10 +667,6 @@
       color:var(--muted);
     }
 
-    .muted{
-      color:var(--muted);
-    }
-
     .tag-row{
       display:flex;
       flex-wrap:wrap;
@@ -700,10 +682,6 @@
       color:#7a4a08;
       font-weight:800;
       font-size:.84rem;
-    }
-
-    .center{
-      text-align:center;
     }
 
     @media (max-width:980px){
@@ -762,15 +740,15 @@
         <div class="logo">PP</div>
         <div class="brand-text">
           <strong>Programmer's Picnic</strong>
-          <span>NumPy polyfit • V3 Premium Lesson</span>
+          <span>Coefficient of Correlation + NumPy polyfit + poly1d</span>
         </div>
       </div>
 
       <nav class="nav">
         <a href="#overview">Overview</a>
-        <a href="#theory">Theory</a>
-        <a href="#examples">Examples</a>
-        <a href="#mistakes">Mistakes</a>
+        <a href="#correlation">Correlation</a>
+        <a href="#polyfit">polyfit</a>
+        <a href="#poly1d">poly1d</a>
         <a href="#quiz">Quiz</a>
         <a href="#project">Project</a>
       </nav>
@@ -781,12 +759,13 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-card">
-          <div class="eyebrow">NumPy • Data Fitting • Regression Base</div>
-          <h1>NumPy <code>polyfit()</code> from Ground Zero to V3 Premium</h1>
+          <div class="eyebrow">Statistics • Regression • NumPy • Python</div>
+          <h1>Coefficient of Correlation + <code>polyfit()</code> + <code>poly1d()</code></h1>
           <p class="lead">
-            In this lesson, you will understand what <code>np.polyfit()</code> does, why it is useful,
-            how it finds a best-fit line or curve, how to interpret its coefficients, how to use
-            <code>np.poly1d()</code>, and how this connects to real machine learning intuition.
+            This is a complete premium lesson that connects three important ideas:
+            <strong>how strongly two variables are related</strong>,
+            <strong>how to fit a best-fit line or curve</strong>, and
+            <strong>how to turn coefficients into a usable polynomial object</strong>.
           </p>
 
           <div class="hero-actions">
@@ -795,32 +774,36 @@
           </div>
 
           <div class="hero-points">
-            <div class="pill">Straight line fitting</div>
-            <div class="pill">Polynomial curve fitting</div>
-            <div class="pill">Regression intuition</div>
+            <div class="pill">Coefficient of correlation</div>
+            <div class="pill">Best-fit polynomial</div>
+            <div class="pill">Prediction with poly1d</div>
           </div>
         </div>
 
         <aside class="side-card">
           <div class="side-box">
             <strong>What you will learn</strong>
-            <div>✔ Meaning of best fit</div>
-            <div>✔ Syntax of <code>polyfit</code></div>
-            <div>✔ Degree 1, 2, 3 intuition</div>
-            <div>✔ <code>poly1d</code> usage</div>
-            <div>✔ Common mistakes</div>
+            <div>✔ What correlation coefficient means</div>
+            <div>✔ Manual and NumPy ways to find it</div>
+            <div>✔ Exact return values of <code>polyfit()</code></div>
+            <div>✔ Exact return value of <code>poly1d()</code></div>
+            <div>✔ How all three ideas connect</div>
           </div>
 
           <div class="side-box">
-            <strong>Core idea in one line</strong>
-            <div class="formula">np.polyfit(x, y, degree)</div>
-          </div>
-
-          <div class="side-box">
-            <strong>Quick memory line</strong>
+            <strong>Core memory line</strong>
             <div>
-              <code>polyfit</code> takes data points and gives the coefficients of the best-fit polynomial.
+              Correlation tells <strong>strength of relationship</strong>. <br />
+              <code>polyfit</code> gives <strong>coefficients</strong>. <br />
+              <code>poly1d</code> gives a <strong>polynomial object</strong>.
             </div>
+          </div>
+
+          <div class="side-box">
+            <strong>Three quick questions</strong>
+            <div>1. Are x and y related?</div>
+            <div>2. What is the best-fit equation?</div>
+            <div>3. How do I use that equation for prediction?</div>
           </div>
         </aside>
       </div>
@@ -830,337 +813,642 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <h2 id="start-learning">1. Overview</h2>
-            <p>Let us start from the most basic level and build up to a practical and premium understanding.</p>
+            <h2 id="start-learning">1. Big Picture</h2>
+            <p>Let us first understand how these topics connect to each other in one clean flow.</p>
           </div>
         </div>
 
         <div class="grid-3">
           <article class="card">
-            <span class="kicker">Why it exists</span>
-            <h3>Real data is messy</h3>
+            <span class="kicker">Step 1</span>
+            <h3>Measure relationship</h3>
             <p>
-              In real life, data points are usually not perfectly aligned. We often have observations like
-              study hours vs marks, ad spend vs sales, or temperature vs electricity usage.
-            </p>
-            <p>
-              We want a curve that captures the general trend. That is where <code>polyfit()</code> becomes useful.
+              Before fitting a line, it is useful to understand whether x and y move together.
+              That is where the coefficient of correlation comes in.
             </p>
           </article>
 
           <article class="card">
-            <span class="kicker">What it returns</span>
-            <h3>It returns coefficients</h3>
+            <span class="kicker">Step 2</span>
+            <h3>Fit an equation</h3>
             <p>
-              <code>np.polyfit()</code> does not directly return predicted values. It returns the coefficients
-              of the polynomial that best fits the data.
-            </p>
-            <p>
-              Example: for degree 1, it returns slope and intercept.
+              Once we see a relationship, we can use <code>np.polyfit()</code> to find the best-fit line
+              or curve for the given data.
             </p>
           </article>
 
           <article class="card">
-            <span class="kicker">Main use</span>
-            <h3>Trend fitting</h3>
+            <span class="kicker">Step 3</span>
+            <h3>Use the equation</h3>
             <p>
-              It is widely used for line fitting, curve fitting, approximation, and as a stepping stone toward
-              regression ideas used in machine learning.
+              We can then convert the coefficients into a polynomial object using
+              <code>np.poly1d()</code> and use it for prediction.
             </p>
           </article>
+        </div>
+
+        <div class="note" style="margin-top:18px;">
+          <strong>Important:</strong> correlation and regression are related, but they are not the same thing.
+          Correlation measures the strength and direction of linear relation. Regression gives an equation for prediction.
         </div>
       </div>
     </section>
 
-    <section id="theory" class="section">
+    <section id="correlation" class="section">
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>2. Theory and Intuition</h2>
-            <p>This section explains what is happening behind the scenes in a simple and practical way.</p>
+            <h2>2. Coefficient of Correlation</h2>
+            <p>This is usually Pearson’s correlation coefficient, written as <code>r</code>.</p>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="formula-card">
-            <span class="kicker">Best-fit line</span>
-            <h3>For degree 1</h3>
-            <div class="formula-big">y = mx + b</div>
+            <span class="kicker">Meaning of r</span>
+            <h3>Range of values</h3>
+            <div class="formula-big">-1 ≤ r ≤ +1</div>
             <p>
-              Here, <code>m</code> is the slope and <code>b</code> is the intercept.
-              When you use <code>np.polyfit(x, y, 1)</code>, NumPy finds the best values of
-              <code>m</code> and <code>b</code>.
+              <strong>r = +1</strong> means perfect positive linear correlation.<br />
+              <strong>r = -1</strong> means perfect negative linear correlation.<br />
+              <strong>r = 0</strong> means no linear correlation.
             </p>
           </div>
 
           <div class="formula-card">
-            <span class="kicker">Best-fit curve</span>
-            <h3>For degree 2</h3>
-            <div class="formula-big">y = ax² + bx + c</div>
+            <span class="kicker">Quick interpretation</span>
+            <h3>How to read the sign</h3>
+            <div class="formula-big">positive r → y tends to rise with x<br />negative r → y tends to fall with x</div>
             <p>
-              When the data bends like a curve, a quadratic fit may be better. Then
-              <code>np.polyfit(x, y, 2)</code> returns <code>a</code>, <code>b</code>, and <code>c</code>.
+              The closer the value is to <strong>+1</strong> or <strong>-1</strong>, the stronger the linear relationship.
             </p>
           </div>
         </div>
 
-        <div class="note" style="margin-top:18px;">
-          <strong>Important intuition:</strong> <code>polyfit()</code> is trying to reduce the total error between
-          actual values and predicted values. In simple words, it tries to place the line or curve so that
-          it matches the overall trend as well as possible.
+        <div class="card" style="margin-top:18px;">
+          <span class="kicker">Formula</span>
+          <h3>Pearson correlation coefficient formula</h3>
+          <div class="formula">
+r = [ nΣxy - (Σx)(Σy) ] / √( [ nΣx² - (Σx)² ] [ nΣy² - (Σy)² ] )
+          </div>
+          <p>
+            Here:
+          </p>
+          <ul>
+            <li><code>n</code> = number of observations</li>
+            <li><code>Σxy</code> = sum of products of x and y</li>
+            <li><code>Σx</code> = sum of x values</li>
+            <li><code>Σy</code> = sum of y values</li>
+            <li><code>Σx²</code> = sum of squares of x</li>
+            <li><code>Σy²</code> = sum of squares of y</li>
+          </ul>
         </div>
 
         <div class="card" style="margin-top:18px;">
-          <span class="kicker">Least squares idea</span>
-          <h3>What does “best fit” really mean?</h3>
-          <p>
-            Suppose the actual data values are <code>y</code> and the fitted values are <code>ŷ</code>.
-            Then the model wants the total squared error to be as small as possible.
-          </p>
-          <div class="formula">Minimize: Σ (y - ŷ)²</div>
-          <p class="highlight">
-            Squaring the errors makes negative and positive errors both count, and large mistakes are punished more strongly.
-          </p>
-        </div>
-      </div>
-    </section>
+          <span class="kicker">Manual example</span>
+          <h3>Worked table</h3>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>3. Syntax</h2>
-            <p>The syntax is short, but the idea behind it is very powerful.</p>
-          </div>
-        </div>
+          <p>Take:</p>
+          <p><code>x = [1, 2, 3, 4, 5]</code><br /><code>y = [2, 4, 5, 4, 5]</code></p>
 
-        <div class="card">
-          <div class="code-wrap">
-            <button class="copy-btn" data-copy-target="code-syntax">Copy</button>
-            <pre><code id="code-syntax">np.polyfit(x, y, degree)</code></pre>
-          </div>
-
-          <div class="table-wrap" style="margin-top:16px;">
+          <div class="table-wrap" style="margin-top:12px;">
             <table>
               <thead>
                 <tr>
-                  <th>Part</th>
-                  <th>Meaning</th>
-                  <th>Example</th>
+                  <th>x</th>
+                  <th>y</th>
+                  <th>x²</th>
+                  <th>y²</th>
+                  <th>xy</th>
                 </tr>
               </thead>
               <tbody>
+                <tr><td>1</td><td>2</td><td>1</td><td>4</td><td>2</td></tr>
+                <tr><td>2</td><td>4</td><td>4</td><td>16</td><td>8</td></tr>
+                <tr><td>3</td><td>5</td><td>9</td><td>25</td><td>15</td></tr>
+                <tr><td>4</td><td>4</td><td>16</td><td>16</td><td>16</td></tr>
+                <tr><td>5</td><td>5</td><td>25</td><td>25</td><td>25</td></tr>
                 <tr>
-                  <td><code>x</code></td>
-                  <td>Input values or independent variable</td>
-                  <td>Study hours</td>
-                </tr>
-                <tr>
-                  <td><code>y</code></td>
-                  <td>Output values or dependent variable</td>
-                  <td>Marks</td>
-                </tr>
-                <tr>
-                  <td><code>degree</code></td>
-                  <td>Polynomial degree</td>
-                  <td>1 for line, 2 for parabola, 3 for cubic</td>
+                  <td><strong>15</strong></td>
+                  <td><strong>20</strong></td>
+                  <td><strong>55</strong></td>
+                  <td><strong>86</strong></td>
+                  <td><strong>66</strong></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div class="tag-row">
-            <span class="tag">degree 1 = line</span>
-            <span class="tag">degree 2 = curve</span>
-            <span class="tag">degree 3 = more flexible</span>
+          <div class="highlight">
+            Here, <code>n = 5</code>, <code>Σx = 15</code>, <code>Σy = 20</code>, <code>Σx² = 55</code>,
+            <code>Σy² = 86</code>, and <code>Σxy = 66</code>.
+          </div>
+
+          <div class="formula" style="margin-top:14px;">
+r = [5(66) - (15)(20)] / √([5(55) - 15²][5(86) - 20²])
+r = (330 - 300) / √((275 - 225)(430 - 400))
+r = 30 / √(50 × 30)
+r = 30 / √1500
+r ≈ 0.7746
+          </div>
+
+          <p class="highlight">
+            So the coefficient of correlation is about <strong>0.7746</strong>.
+            This shows a fairly strong positive linear relationship.
+          </p>
+        </div>
+
+        <div class="grid-2" style="margin-top:18px;">
+          <div class="card">
+            <span class="kicker">Python method 1</span>
+            <h3>Using <code>np.corrcoef()</code></h3>
+
+            <div class="code-wrap">
+              <button class="copy-btn" data-copy-target="code-corrcoef">Copy</button>
+              <pre><code id="code-corrcoef">import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 4, 5, 4, 5])
+
+r_matrix = np.corrcoef(x, y)
+print(r_matrix)
+
+r = np.corrcoef(x, y)[0, 1]
+print("Correlation coefficient =", r)</code></pre>
+            </div>
+
+            <p>
+              <code>np.corrcoef(x, y)</code> returns a <strong>2 × 2 correlation matrix</strong>.
+            </p>
+            <ul>
+              <li><code>[0,0]</code> = correlation of x with x = 1</li>
+              <li><code>[1,1]</code> = correlation of y with y = 1</li>
+              <li><code>[0,1]</code> = correlation of x with y</li>
+              <li><code>[1,0]</code> = correlation of y with x</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <span class="kicker">Python method 2</span>
+            <h3>Manual formula in Python</h3>
+
+            <div class="code-wrap">
+              <button class="copy-btn" data-copy-target="code-corr-manual">Copy</button>
+              <pre><code id="code-corr-manual">import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 4, 5, 4, 5])
+
+n = len(x)
+
+sum_x = np.sum(x)
+sum_y = np.sum(y)
+sum_xy = np.sum(x * y)
+sum_x2 = np.sum(x ** 2)
+sum_y2 = np.sum(y ** 2)
+
+r = (n * sum_xy - sum_x * sum_y) / np.sqrt(
+    (n * sum_x2 - sum_x ** 2) *
+    (n * sum_y2 - sum_y ** 2)
+)
+
+print("Correlation coefficient =", r)</code></pre>
+            </div>
+
+            <p>
+              This second method shows the full logic very clearly and is excellent for learning.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="examples" class="section">
+    <section id="polyfit" class="section">
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>4. Step-by-Step Examples</h2>
-            <p>We will build understanding one level at a time.</p>
+            <h2>3. NumPy <code>polyfit()</code></h2>
+            <p>This function finds the coefficients of the best-fit polynomial for the given data.</p>
           </div>
         </div>
 
-        <div class="accordion">
+        <div class="grid-2">
+          <div class="formula-card">
+            <span class="kicker">Basic syntax</span>
+            <h3>Function form</h3>
+            <div class="formula-big">np.polyfit(x, y, degree)</div>
+            <p>
+              Here, <code>x</code> contains input values, <code>y</code> contains output values,
+              and <code>degree</code> decides the type of polynomial.
+            </p>
+          </div>
 
+          <div class="formula-card">
+            <span class="kicker">Main return value</span>
+            <h3>What it returns</h3>
+            <div class="formula-big">Returns: NumPy array of coefficients</div>
+            <p>
+              <code>polyfit()</code> returns the coefficients from <strong>highest power to lowest power</strong>.
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+          <span class="kicker">Most important rule</span>
+          <h3>How many coefficients are returned?</h3>
+          <p>
+            If the polynomial degree is <code>n</code>, then <code>polyfit()</code> returns
+            <strong>n + 1 coefficients</strong>.
+          </p>
+
+          <div class="table-wrap" style="margin-top:12px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Degree</th>
+                  <th>Return structure</th>
+                  <th>Equation form</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><code>[m, b]</code></td>
+                  <td><code>y = mx + b</code></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><code>[a, b, c]</code></td>
+                  <td><code>y = ax² + bx + c</code></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td><code>[a, b, c, d]</code></td>
+                  <td><code>y = ax³ + bx² + cx + d</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="accordion" style="margin-top:18px;">
           <details open>
-            <summary>Example 1 — Straight line fitting</summary>
+            <summary>Example 1 — Degree 1 return value in complete detail</summary>
             <div class="details-body">
               <p>
-                Let us take a small dataset and fit a straight line to it using degree 1.
+                Let us fit a straight line:
               </p>
 
               <div class="code-wrap">
-                <button class="copy-btn" data-copy-target="code-ex1">Copy</button>
-                <pre><code id="code-ex1">import numpy as np
+                <button class="copy-btn" data-copy-target="code-polyfit1">Copy</button>
+                <pre><code id="code-polyfit1">import numpy as np
 
 x = np.array([1, 2, 3, 4, 5])
 y = np.array([2, 4, 5, 4, 5])
 
 coeff = np.polyfit(x, y, 1)
-
-m = coeff[0]
-b = coeff[1]
-
-print("Slope =", m)
-print("Intercept =", b)</code></pre>
+print(coeff)</code></pre>
               </div>
 
-              <div class="highlight">
-                <strong>Meaning:</strong> this returns two values because a line has two coefficients:
-                slope and intercept.
-              </div>
+              <p>
+                A typical output may look like:
+              </p>
+
+              <div class="formula">[0.6  2.2]</div>
+
+              <p>
+                This means:
+              </p>
+
+              <div class="formula">y = 0.6x + 2.2</div>
 
               <div class="steps" style="margin-top:16px;">
                 <div class="step">
-                  <h3>Step 1</h3>
-                  <p><code>x</code> stores input values and <code>y</code> stores output values.</p>
+                  <h3>First value</h3>
+                  <p><code>0.6</code> is the slope <code>m</code>. For every 1 unit increase in x, y tends to rise by about 0.6.</p>
                 </div>
                 <div class="step">
-                  <h3>Step 2</h3>
-                  <p><code>np.polyfit(x, y, 1)</code> means fit a polynomial of degree 1, that is, a straight line.</p>
+                  <h3>Second value</h3>
+                  <p><code>2.2</code> is the intercept <code>b</code>. It is the value of y when x = 0 on the fitted line.</p>
                 </div>
                 <div class="step">
-                  <h3>Step 3</h3>
-                  <p>The result contains <code>m</code> and <code>b</code> for the equation <code>y = mx + b</code>.</p>
+                  <h3>Final fitted line</h3>
+                  <p>The best-fit line is <code>y = 0.6x + 2.2</code>.</p>
                 </div>
+              </div>
+
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-polyfit1-use">Copy</button>
+                <pre><code id="code-polyfit1-use">m = coeff[0]
+b = coeff[1]
+
+y_pred = m * x + b
+print(y_pred)</code></pre>
               </div>
             </div>
           </details>
 
           <details>
-            <summary>Example 2 — Predicting values using the line</summary>
+            <summary>Example 2 — Degree 2 return value in complete detail</summary>
             <div class="details-body">
               <p>
-                Once you get the coefficients, you can compute predicted values.
+                Now fit a quadratic curve:
               </p>
 
               <div class="code-wrap">
-                <button class="copy-btn" data-copy-target="code-ex2">Copy</button>
-                <pre><code id="code-ex2">import numpy as np
+                <button class="copy-btn" data-copy-target="code-polyfit2">Copy</button>
+                <pre><code id="code-polyfit2">import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([1, 4, 9, 16, 25])
+
+coeff = np.polyfit(x, y, 2)
+print(coeff)</code></pre>
+              </div>
+
+              <p>A typical output will be very close to:</p>
+              <div class="formula">[1.0  0.0  0.0]</div>
+
+              <p>This means:</p>
+              <div class="formula">y = 1.0x² + 0.0x + 0.0</div>
+
+              <p>
+                So the return value means:
+              </p>
+              <ul>
+                <li><code>coeff[0]</code> = coefficient of <code>x²</code></li>
+                <li><code>coeff[1]</code> = coefficient of <code>x</code></li>
+                <li><code>coeff[2]</code> = constant term</li>
+              </ul>
+
+              <p class="highlight">
+                The biggest learning point is this: <code>polyfit()</code> always returns coefficients from highest degree to constant term.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>Example 3 — Degree 3 return value in complete detail</summary>
+            <div class="details-body">
+              <p>For a cubic fit:</p>
+
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-polyfit3">Copy</button>
+                <pre><code id="code-polyfit3">coeff = np.polyfit(x, y, 3)
+print(coeff)</code></pre>
+              </div>
+
+              <p>The returned array structure is:</p>
+              <div class="formula">[a, b, c, d]</div>
+
+              <p>This corresponds to:</p>
+              <div class="formula">y = ax³ + bx² + cx + d</div>
+
+              <p>
+                Again, coefficient order is from highest power to lowest power.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>Advanced note — What happens with full=True?</summary>
+            <div class="details-body">
+              <p>
+                Sometimes you may see:
+              </p>
+
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-fulltrue">Copy</button>
+                <pre><code id="code-fulltrue">coeff, residuals, rank, singular_values, rcond = np.polyfit(x, y, 1, full=True)
+
+print("coeff =", coeff)
+print("residuals =", residuals)
+print("rank =", rank)
+print("singular_values =", singular_values)
+print("rcond =", rcond)</code></pre>
+              </div>
+
+              <p>Now the function returns more than just coefficients:</p>
+              <ul>
+                <li><code>coeff</code> → fitted coefficients</li>
+                <li><code>residuals</code> → total squared fitting error</li>
+                <li><code>rank</code> → effective rank of the internal matrix</li>
+                <li><code>singular_values</code> → singular values of the scaled Vandermonde matrix</li>
+                <li><code>rcond</code> → cutoff used for very small singular values</li>
+              </ul>
+
+              <p>
+                For most beginner and intermediate uses, the standard form without <code>full=True</code> is enough.
+              </p>
+            </div>
+          </details>
+        </div>
+
+        <div class="note" style="margin-top:18px;">
+          <strong>Important difference from correlation:</strong> correlation tells how strongly x and y are linearly related.
+          <code>polyfit()</code> gives the coefficients of a fitted equation.
+        </div>
+      </div>
+    </section>
+
+    <section id="poly1d" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>4. NumPy <code>poly1d()</code></h2>
+            <p>This function takes coefficients and returns a polynomial object.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="formula-card">
+            <span class="kicker">Main idea</span>
+            <h3>What it returns</h3>
+            <div class="formula-big">Returns: a polynomial object</div>
+            <p>
+              This is not just a plain list and not just a plain number. It is an object that represents a polynomial.
+            </p>
+          </div>
+
+          <div class="formula-card">
+            <span class="kicker">Why it is useful</span>
+            <h3>What you can do with it</h3>
+            <div class="formula-big">print it • call it • get coeffs • derivative • integral • roots</div>
+            <p>
+              In simple words, <code>poly1d</code> turns coefficients into something that behaves like a mathematical function.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion" style="margin-top:18px;">
+          <details open>
+            <summary>Example 1 — Building a polynomial object</summary>
+            <div class="details-body">
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-poly1d-basic">Copy</button>
+                <pre><code id="code-poly1d-basic">import numpy as np
+
+coeff = [2, 3, 4]
+p = np.poly1d(coeff)
+
+print(p)</code></pre>
+              </div>
+
+              <p>This means the polynomial is:</p>
+              <div class="formula">p(x) = 2x² + 3x + 4</div>
+
+              <p>
+                So <code>poly1d()</code> has taken the list <code>[2, 3, 4]</code> and created a polynomial object for it.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>Example 2 — Evaluating the polynomial object like a function</summary>
+            <div class="details-body">
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-poly1d-eval">Copy</button>
+                <pre><code id="code-poly1d-eval">import numpy as np
+
+p = np.poly1d([2, 3, 4])
+
+print(p(2))</code></pre>
+              </div>
+
+              <p>
+                This computes:
+              </p>
+              <div class="formula">2(2²) + 3(2) + 4 = 8 + 6 + 4 = 18</div>
+
+              <p>
+                So <code>p(2)</code> gives <code>18</code>.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>Example 3 — Using polyfit with poly1d</summary>
+            <div class="details-body">
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-polyfit-poly1d">Copy</button>
+                <pre><code id="code-polyfit-poly1d">import numpy as np
 
 x = np.array([1, 2, 3, 4, 5])
 y = np.array([2, 4, 5, 4, 5])
 
-m, b = np.polyfit(x, y, 1)
-
-y_pred = m * x + b
-
-print("Predicted values:", y_pred)</code></pre>
-              </div>
-
-              <p>
-                Here we use the fitted line equation directly to get predictions for the same x-values.
-              </p>
-            </div>
-          </details>
-
-          <details>
-            <summary>Example 3 — Quadratic fitting</summary>
-            <div class="details-body">
-              <p>
-                Some data bends upward or downward. In that case, a curve may be better than a line.
-              </p>
-
-              <div class="code-wrap">
-                <button class="copy-btn" data-copy-target="code-ex3">Copy</button>
-                <pre><code id="code-ex3">import numpy as np
-
-x = np.array([1, 2, 3, 4, 5])
-y = np.array([1, 4, 9, 16, 25])
-
-coeff = np.polyfit(x, y, 2)
-
-a = coeff[0]
-b = coeff[1]
-c = coeff[2]
-
-print("a =", a)
-print("b =", b)
-print("c =", c)</code></pre>
-              </div>
-
-              <p>
-                The equation is:
-              </p>
-              <div class="formula">y = ax² + bx + c</div>
-
-              <p class="highlight">
-                Degree 2 returns three coefficients because a quadratic equation has three parts.
-              </p>
-            </div>
-          </details>
-
-          <details>
-            <summary>Example 4 — Using poly1d for a cleaner workflow</summary>
-            <div class="details-body">
-              <p>
-                <code>np.poly1d()</code> converts coefficients into a polynomial object, which is easier to use.
-              </p>
-
-              <div class="code-wrap">
-                <button class="copy-btn" data-copy-target="code-ex4">Copy</button>
-                <pre><code id="code-ex4">import numpy as np
-
-x = np.array([1, 2, 3, 4, 5])
-y = np.array([1, 4, 9, 16, 25])
-
-coeff = np.polyfit(x, y, 2)
+coeff = np.polyfit(x, y, 1)
 p = np.poly1d(coeff)
 
+print("coefficients =", coeff)
+print("polynomial object:")
 print(p)
 print("Prediction at x = 6:", p(6))</code></pre>
               </div>
 
               <p>
-                This is cleaner than manually writing <code>a*x**2 + b*x + c</code> every time.
+                If <code>coeff</code> is something like <code>[0.6, 2.2]</code>, then <code>p</code> represents:
               </p>
+              <div class="formula">p(x) = 0.6x + 2.2</div>
             </div>
           </details>
 
           <details>
-            <summary>Example 5 — Plotting the fitted result</summary>
+            <summary>Example 4 — Important attributes and methods of poly1d</summary>
             <div class="details-body">
               <p>
-                Plotting makes understanding much easier.
+                Suppose:
               </p>
 
               <div class="code-wrap">
-                <button class="copy-btn" data-copy-target="code-ex5">Copy</button>
-                <pre><code id="code-ex5">import numpy as np
-import matplotlib.pyplot as plt
+                <button class="copy-btn" data-copy-target="code-poly1d-attrs">Copy</button>
+                <pre><code id="code-poly1d-attrs">import numpy as np
 
-x = np.array([1, 2, 3, 4, 5])
-y = np.array([2, 4, 5, 4, 5])
+p = np.poly1d([2, -3, 5])
 
-coeff = np.polyfit(x, y, 1)
-p = np.poly1d(coeff)
+print("coeffs =", p.coeffs)
+print("order =", p.order)
+print("roots =", p.r)
 
-x_new = np.linspace(x.min(), x.max(), 100)
-y_new = p(x_new)
+dp = p.deriv()
+print("derivative =", dp)
 
-plt.scatter(x, y, label="Actual data")
-plt.plot(x_new, y_new, label="Best-fit line")
-plt.title("NumPy polyfit Example")
-plt.xlabel("x")
-plt.ylabel("y")
-plt.legend()
-plt.grid(True)
-plt.show()</code></pre>
+ip = p.integ()
+print("integral =", ip)</code></pre>
               </div>
 
-              <div class="note" style="margin-top:16px;">
-                <strong>Why use <code>linspace</code>?</strong> It creates many x-values between the minimum and maximum,
-                so the fitted line or curve looks smooth.
+              <p>
+                This polynomial is:
+              </p>
+              <div class="formula">p(x) = 2x² - 3x + 5</div>
+
+              <div class="table-wrap" style="margin-top:12px;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Expression</th>
+                      <th>Meaning</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><code>p.coeffs</code></td>
+                      <td>Returns the coefficients array</td>
+                    </tr>
+                    <tr>
+                      <td><code>p.order</code></td>
+                      <td>Returns the degree of the polynomial</td>
+                    </tr>
+                    <tr>
+                      <td><code>p.r</code></td>
+                      <td>Returns the roots</td>
+                    </tr>
+                    <tr>
+                      <td><code>p.deriv()</code></td>
+                      <td>Returns the derivative polynomial</td>
+                    </tr>
+                    <tr>
+                      <td><code>p.integ()</code></td>
+                      <td>Returns the integral polynomial</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </details>
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+          <span class="kicker">Best comparison</span>
+          <h3><code>polyfit()</code> vs <code>poly1d()</code></h3>
+
+          <div class="table-wrap" style="margin-top:12px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Function</th>
+                  <th>Return value</th>
+                  <th>Main use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>np.polyfit(x, y, degree)</code></td>
+                  <td>NumPy array of coefficients</td>
+                  <td>Find the best-fit polynomial pieces</td>
+                </tr>
+                <tr>
+                  <td><code>np.poly1d(coeff)</code></td>
+                  <td>Polynomial object</td>
+                  <td>Use the polynomial easily for printing and prediction</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="highlight">
+            In one line: <code>polyfit()</code> tells you <strong>what the polynomial is</strong>,
+            and <code>poly1d()</code> gives you an object that lets you <strong>use that polynomial easily</strong>.
+          </div>
         </div>
       </div>
     </section>
@@ -1169,177 +1457,121 @@ plt.show()</code></pre>
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>5. Degree Understanding Table</h2>
-            <p>Choosing the right degree is important. Too low can miss the pattern. Too high can overfit.</p>
+            <h2>5. How Correlation, polyfit, and poly1d Work Together</h2>
+            <p>This is the practical sequence you will use again and again.</p>
           </div>
         </div>
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Degree</th>
-                <th>Shape</th>
-                <th>Typical Equation Form</th>
-                <th>When to Use</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Straight line</td>
-                <td><code>y = mx + b</code></td>
-                <td>When the trend is almost linear</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Parabolic curve</td>
-                <td><code>y = ax² + bx + c</code></td>
-                <td>When the data bends smoothly</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Cubic curve</td>
-                <td><code>y = ax³ + bx² + cx + d</code></td>
-                <td>When the trend changes direction more than once</td>
-              </tr>
-              <tr>
-                <td>4+</td>
-                <td>More flexible</td>
-                <td>Higher-order polynomial</td>
-                <td>Use carefully, risk of overfitting</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="steps">
+          <div class="step">
+            <h3>First check the relationship</h3>
+            <p>Use the coefficient of correlation to see whether x and y have a meaningful linear relationship.</p>
+          </div>
+
+          <div class="step">
+            <h3>Then fit the line or curve</h3>
+            <p>Use <code>np.polyfit()</code> to get the coefficients of the best-fit polynomial.</p>
+          </div>
+
+          <div class="step">
+            <h3>Then build a usable model</h3>
+            <p>Use <code>np.poly1d()</code> to turn the coefficients into a callable polynomial object.</p>
+          </div>
+
+          <div class="step">
+            <h3>Then predict</h3>
+            <p>Use <code>p(new_x)</code> to estimate new y-values.</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+          <span class="kicker">Combined example</span>
+          <h3>All three in one program</h3>
+
+          <div class="code-wrap">
+            <button class="copy-btn" data-copy-target="code-combined">Copy</button>
+            <pre><code id="code-combined">import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 4, 5, 4, 5])
+
+# 1. coefficient of correlation
+r = np.corrcoef(x, y)[0, 1]
+print("Correlation coefficient r =", r)
+
+# 2. best-fit line coefficients
+coeff = np.polyfit(x, y, 1)
+print("polyfit coefficients =", coeff)
+
+# 3. polynomial object
+p = np.poly1d(coeff)
+print("poly1d object:")
+print(p)
+
+# 4. prediction
+print("Predicted y when x = 6:", p(6))</code></pre>
+          </div>
+
+          <p>
+            What this gives you:
+          </p>
+          <ul>
+            <li><code>r</code> tells how strongly x and y are linearly related</li>
+            <li><code>coeff</code> gives the fitted line coefficients</li>
+            <li><code>p</code> turns those coefficients into a usable polynomial object</li>
+            <li><code>p(6)</code> predicts a new y-value</li>
+          </ul>
+        </div>
+
+        <div class="note" style="margin-top:18px;">
+          <strong>Extra insight:</strong> in simple linear regression, <code>r²</code> is often used to describe
+          how much of the variation is explained by the line. This is called the coefficient of determination.
         </div>
       </div>
     </section>
 
-    <section id="mistakes" class="section">
+    <section class="section">
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>6. Common Mistakes</h2>
-            <p>These are the issues learners face most often when using <code>polyfit()</code>.</p>
+            <h2>6. Visual and Conceptual Warnings</h2>
+            <p>These are very important for correct understanding.</p>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="card">
-            <span class="kicker">Mistake 1</span>
-            <h3>Using the wrong degree</h3>
-            <p class="bad">Problem:</p>
+            <span class="kicker">Warning 1</span>
+            <h3>Correlation is not prediction</h3>
             <p>
-              If you force a straight line on strongly curved data, the fit will be poor.
-            </p>
-            <p class="good">Better:</p>
-            <p>
-              Inspect the data first and choose a degree that matches the trend without becoming unnecessarily complex.
+              A strong correlation does not by itself give a prediction formula.
+              It only tells you the strength and direction of linear relation.
             </p>
           </div>
 
           <div class="card">
-            <span class="kicker">Mistake 2</span>
-            <h3>Forgetting the coefficient order</h3>
-            <p class="bad">Problem:</p>
+            <span class="kicker">Warning 2</span>
+            <h3>Regression is not the same as correlation</h3>
             <p>
-              Learners often think the coefficients come in low-power-to-high-power order.
-            </p>
-            <p class="good">Better:</p>
-            <p>
-              NumPy returns coefficients from highest power to constant term.
+              Regression produces a fitted equation. Correlation measures how strongly the variables move together.
             </p>
           </div>
 
           <div class="card">
-            <span class="kicker">Mistake 3</span>
-            <h3>Overfitting</h3>
-            <p class="bad">Problem:</p>
+            <span class="kicker">Warning 3</span>
+            <h3>Degree choice matters</h3>
             <p>
-              Choosing a very high degree can make the polynomial follow tiny random variations instead of the real trend.
-            </p>
-            <p class="good">Better:</p>
-            <p>
-              Keep the degree as simple as possible while still capturing the pattern.
+              Too low a degree may miss the real pattern. Too high a degree may overfit the noise.
             </p>
           </div>
 
           <div class="card">
-            <span class="kicker">Mistake 4</span>
-            <h3>Thinking polyfit gives a machine learning model object</h3>
-            <p class="bad">Problem:</p>
+            <span class="kicker">Warning 4</span>
+            <h3>Coefficient order matters</h3>
             <p>
-              <code>polyfit()</code> returns coefficients, not a full scikit-learn model.
-            </p>
-            <p class="good">Better:</p>
-            <p>
-              Use <code>np.poly1d()</code> if you want an easy callable polynomial object.
+              In <code>polyfit()</code>, coefficients always come from highest power to constant term.
             </p>
           </div>
-        </div>
-
-        <div class="note" style="margin-top:18px;">
-          <strong>Very important:</strong> <code>polyfit()</code> is excellent for understanding fitting and regression ideas,
-          but for larger machine learning workflows, people often move to tools like scikit-learn.
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>7. Practical Real-Life Examples</h2>
-            <p>Let us connect the concept to simple real-world stories.</p>
-          </div>
-        </div>
-
-        <div class="grid-3">
-          <article class="card">
-            <span class="kicker">Education</span>
-            <h3>Study hours vs marks</h3>
-            <p>
-              You can fit a line to understand how marks change when study hours increase.
-            </p>
-          </article>
-
-          <article class="card">
-            <span class="kicker">Business</span>
-            <h3>Ad spend vs sales</h3>
-            <p>
-              Businesses use fitted trends to estimate how much sales may rise when budget increases.
-            </p>
-          </article>
-
-          <article class="card">
-            <span class="kicker">Science</span>
-            <h3>Growth patterns</h3>
-            <p>
-              Scientists and analysts use fitted curves to model observations and study general trends.
-            </p>
-          </article>
-        </div>
-
-        <div class="card" style="margin-top:18px;">
-          <span class="kicker">Mini business example</span>
-          <h3>Sales prediction with a fitted line</h3>
-
-          <div class="code-wrap">
-            <button class="copy-btn" data-copy-target="code-biz">Copy</button>
-            <pre><code id="code-biz">import numpy as np
-
-ads = np.array([1, 2, 3, 4, 5])
-sales = np.array([10, 20, 28, 40, 52])
-
-coeff = np.polyfit(ads, sales, 1)
-model = np.poly1d(coeff)
-
-print("Predicted sales for ad value 6:", model(6))</code></pre>
-          </div>
-
-          <p>
-            This is simple, but it builds the exact intuition needed for prediction.
-          </p>
         </div>
       </div>
     </section>
@@ -1348,60 +1580,60 @@ print("Predicted sales for ad value 6:", model(6))</code></pre>
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>8. MCQ Quiz</h2>
-            <p>Test whether the main ideas are clear.</p>
+            <h2>7. MCQ Quiz</h2>
+            <p>Check whether the combined lesson is clear.</p>
           </div>
         </div>
 
         <div class="quiz-card">
           <form id="quizForm">
             <div class="question">
-              <h4>1. What does <code>np.polyfit(x, y, 1)</code> mainly do?</h4>
+              <h4>1. What does the coefficient of correlation mainly measure?</h4>
               <div class="options">
-                <label><input type="radio" name="q1" value="0" /> Sorts the values of x and y</label>
-                <label><input type="radio" name="q1" value="1" /> Fits a straight line to the data</label>
-                <label><input type="radio" name="q1" value="0" /> Creates a histogram</label>
-                <label><input type="radio" name="q1" value="0" /> Removes outliers automatically</label>
+                <label><input type="radio" name="q1" value="1" /> Strength and direction of linear relationship</label>
+                <label><input type="radio" name="q1" value="0" /> Exact future value of y</label>
+                <label><input type="radio" name="q1" value="0" /> Number of coefficients in polyfit</label>
+                <label><input type="radio" name="q1" value="0" /> Size of the dataset only</label>
               </div>
             </div>
 
             <div class="question">
-              <h4>2. If degree is 2, how many coefficients are returned?</h4>
+              <h4>2. What does <code>np.polyfit(x, y, 1)</code> return?</h4>
               <div class="options">
-                <label><input type="radio" name="q2" value="0" /> 1</label>
-                <label><input type="radio" name="q2" value="0" /> 2</label>
-                <label><input type="radio" name="q2" value="1" /> 3</label>
-                <label><input type="radio" name="q2" value="0" /> 4</label>
+                <label><input type="radio" name="q2" value="0" /> A graph</label>
+                <label><input type="radio" name="q2" value="1" /> A NumPy array of coefficients</label>
+                <label><input type="radio" name="q2" value="0" /> A pandas DataFrame</label>
+                <label><input type="radio" name="q2" value="0" /> Only one number</label>
               </div>
             </div>
 
             <div class="question">
-              <h4>3. What is the benefit of <code>np.poly1d()</code>?</h4>
+              <h4>3. What does <code>np.poly1d(coeff)</code> return?</h4>
               <div class="options">
-                <label><input type="radio" name="q3" value="0" /> It deletes unwanted coefficients</label>
-                <label><input type="radio" name="q3" value="1" /> It makes the polynomial easier to use for prediction</label>
-                <label><input type="radio" name="q3" value="0" /> It plots graphs automatically</label>
-                <label><input type="radio" name="q3" value="0" /> It converts arrays into matrices</label>
+                <label><input type="radio" name="q3" value="0" /> A correlation matrix</label>
+                <label><input type="radio" name="q3" value="0" /> A list of roots only</label>
+                <label><input type="radio" name="q3" value="1" /> A polynomial object</label>
+                <label><input type="radio" name="q3" value="0" /> A new x array</label>
               </div>
             </div>
 
             <div class="question">
-              <h4>4. What is overfitting in the context of polynomial fitting?</h4>
+              <h4>4. For degree 2, what is the returned coefficient structure?</h4>
               <div class="options">
-                <label><input type="radio" name="q4" value="0" /> The data has too few rows</label>
-                <label><input type="radio" name="q4" value="0" /> NumPy returns too few coefficients</label>
-                <label><input type="radio" name="q4" value="1" /> The polynomial becomes too complex and starts fitting noise</label>
-                <label><input type="radio" name="q4" value="0" /> x and y have the same values</label>
+                <label><input type="radio" name="q4" value="0" /> <code>[m, b]</code></label>
+                <label><input type="radio" name="q4" value="1" /> <code>[a, b, c]</code></label>
+                <label><input type="radio" name="q4" value="0" /> <code>[a, b, c, d]</code></label>
+                <label><input type="radio" name="q4" value="0" /> <code>[x, y]</code></label>
               </div>
             </div>
 
             <div class="question">
-              <h4>5. In a degree 1 fit, the equation form is:</h4>
+              <h4>5. Which expression gives the actual correlation coefficient from <code>np.corrcoef(x, y)</code>?</h4>
               <div class="options">
-                <label><input type="radio" name="q5" value="1" /> <code>y = mx + b</code></label>
-                <label><input type="radio" name="q5" value="0" /> <code>y = ax² + bx + c</code></label>
-                <label><input type="radio" name="q5" value="0" /> <code>y = ax³ + bx² + cx + d</code></label>
-                <label><input type="radio" name="q5" value="0" /> <code>y = x / y</code></label>
+                <label><input type="radio" name="q5" value="0" /> <code>np.corrcoef(x, y)[0, 0]</code></label>
+                <label><input type="radio" name="q5" value="1" /> <code>np.corrcoef(x, y)[0, 1]</code></label>
+                <label><input type="radio" name="q5" value="0" /> <code>np.corrcoef(x, y)[1]</code></label>
+                <label><input type="radio" name="q5" value="0" /> <code>np.corrcoef(x, y)[2, 2]</code></label>
               </div>
             </div>
 
@@ -1416,63 +1648,12 @@ print("Predicted sales for ad value 6:", model(6))</code></pre>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>9. Practice Tasks</h2>
-            <p>These tasks help move your understanding from reading to doing.</p>
-          </div>
-        </div>
-
-        <div class="mini-grid">
-          <div class="mini-card">
-            <span class="kicker">Task 1</span>
-            <h3>Fit a straight line</h3>
-            <div class="code-wrap">
-              <button class="copy-btn" data-copy-target="code-task1">Copy</button>
-              <pre><code id="code-task1">x = [1, 2, 3, 4]
-y = [2, 3, 5, 7]</code></pre>
-            </div>
-            <p>Use degree 1. Print slope, intercept, and predicted values.</p>
-          </div>
-
-          <div class="mini-card">
-            <span class="kicker">Task 2</span>
-            <h3>Fit a quadratic curve</h3>
-            <div class="code-wrap">
-              <button class="copy-btn" data-copy-target="code-task2">Copy</button>
-              <pre><code id="code-task2">x = [1, 2, 3, 4]
-y = [1, 4, 9, 16]</code></pre>
-            </div>
-            <p>Use degree 2. Convert the result into a <code>poly1d</code> model and predict at <code>x = 5</code>.</p>
-          </div>
-
-          <div class="mini-card">
-            <span class="kicker">Task 3</span>
-            <h3>Try degree comparison</h3>
-            <p>
-              Use one dataset and compare degree 1 and degree 2. Which one looks more appropriate?
-            </p>
-          </div>
-
-          <div class="mini-card">
-            <span class="kicker">Task 4</span>
-            <h3>Plot the fit</h3>
-            <p>
-              Use <code>matplotlib</code> to plot actual data points and the fitted polynomial on the same graph.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="project" class="section">
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>10. Mini Project — Student Marks Predictor</h2>
-            <p>This mini project ties together fitting, prediction, and practical thinking.</p>
+            <h2>8. Mini Project — Study Hours, Marks, Correlation, and Prediction</h2>
+            <p>This project combines the whole lesson into one practical program.</p>
           </div>
         </div>
 
@@ -1481,16 +1662,13 @@ y = [1, 4, 9, 16]</code></pre>
             <span class="kicker">Project idea</span>
             <h3>Study hours vs marks</h3>
             <p>
-              Suppose you have data showing how many hours students studied and what marks they got.
-              Use <code>polyfit()</code> to model the relationship and predict marks for a new study duration.
+              We will:
             </p>
-
             <ul class="checklist">
-              <li>Create arrays for study hours and marks</li>
-              <li>Fit a degree 1 polynomial</li>
-              <li>Build a <code>poly1d</code> model</li>
-              <li>Predict marks for a new value</li>
-              <li>Plot the actual data and fitted line</li>
+              <li>Measure the coefficient of correlation between study hours and marks</li>
+              <li>Fit a best-fit line using <code>polyfit()</code></li>
+              <li>Create a polynomial object using <code>poly1d()</code></li>
+              <li>Predict marks for a new number of study hours</li>
             </ul>
           </div>
 
@@ -1503,14 +1681,24 @@ import matplotlib.pyplot as plt
 hours = np.array([1, 2, 3, 4, 5, 6])
 marks = np.array([38, 45, 57, 63, 74, 82])
 
+# 1. correlation
+r = np.corrcoef(hours, marks)[0, 1]
+print("Correlation coefficient =", r)
+
+# 2. best-fit line
 coeff = np.polyfit(hours, marks, 1)
+print("polyfit coefficients =", coeff)
+
+# 3. polynomial object
 model = np.poly1d(coeff)
+print("Model:")
+print(model)
 
+# 4. prediction
 predicted_for_7 = model(7)
+print("Predicted marks for 7 hours =", predicted_for_7)
 
-print("Model:", model)
-print("Predicted marks for 7 hours:", predicted_for_7)
-
+# 5. plot
 x_new = np.linspace(hours.min(), 7, 100)
 y_new = model(x_new)
 
@@ -1518,7 +1706,7 @@ plt.scatter(hours, marks, label="Actual data")
 plt.plot(x_new, y_new, label="Best-fit line")
 plt.xlabel("Study hours")
 plt.ylabel("Marks")
-plt.title("Student Marks Predictor")
+plt.title("Study Hours vs Marks")
 plt.legend()
 plt.grid(True)
 plt.show()</code></pre>
@@ -1527,8 +1715,8 @@ plt.show()</code></pre>
         </div>
 
         <div class="note" style="margin-top:18px;">
-          <strong>Premium insight:</strong> Even though this example is simple, it teaches the same
-          thinking used in real predictive systems: take data, fit a mathematical relationship, then use it for estimation.
+          <strong>Best summary of this project:</strong> first measure the relationship,
+          then fit the equation, then turn it into a usable model, then predict.
         </div>
       </div>
     </section>
@@ -1537,42 +1725,44 @@ plt.show()</code></pre>
       <div class="container">
         <div class="section-head">
           <div>
-            <h2>11. Final Summary</h2>
-            <p>Let us compress the full lesson into quick memory points.</p>
+            <h2>9. Final Summary</h2>
+            <p>Let us compress the whole lesson into quick memory points.</p>
           </div>
         </div>
 
         <div class="grid-3">
           <div class="card">
             <span class="kicker">Memory point 1</span>
-            <h3><code>polyfit()</code> fits a polynomial</h3>
+            <h3>Coefficient of correlation</h3>
             <p>
-              It uses x-values, y-values, and a chosen degree to produce the coefficients of the best-fit polynomial.
+              Measures the strength and direction of linear relation between x and y.
+              It lies between -1 and +1.
             </p>
           </div>
 
           <div class="card">
             <span class="kicker">Memory point 2</span>
-            <h3>Degree controls shape</h3>
+            <h3><code>polyfit()</code></h3>
             <p>
-              Degree 1 gives a line, degree 2 gives a parabola, and higher degrees allow more flexibility.
+              Returns the coefficients of the best-fit polynomial.
+              If degree is <code>n</code>, it returns <code>n + 1</code> coefficients.
             </p>
           </div>
 
           <div class="card">
             <span class="kicker">Memory point 3</span>
-            <h3><code>poly1d()</code> makes life easier</h3>
+            <h3><code>poly1d()</code></h3>
             <p>
-              It converts coefficients into a callable polynomial model that can be printed and used for prediction.
+              Returns a polynomial object that you can print, evaluate, differentiate, integrate, and inspect.
             </p>
           </div>
         </div>
 
         <div class="card" style="margin-top:18px;">
-          <span class="kicker">One-line conclusion</span>
+          <span class="kicker">One-line master summary</span>
           <h3>Best one-line understanding</h3>
           <p class="lead" style="margin:0;">
-            NumPy <code>polyfit()</code> is a simple but powerful tool that takes data points and returns the coefficients of the line or curve that best fits the trend.
+            Correlation tells how strongly the variables are related, <code>polyfit()</code> gives the coefficients of the best-fit equation, and <code>poly1d()</code> turns that equation into an object you can use like a function.
           </p>
         </div>
       </div>
@@ -1582,11 +1772,11 @@ plt.show()</code></pre>
       <div class="container">
         <div class="footer-card">
           <div>
-            <h3 style="margin-bottom:0;">Programmer's Picnic • NumPy polyfit V3 Premium</h3>
+            <h3 style="margin-bottom:0;">Programmer's Picnic • Correlation + polyfit + poly1d</h3>
             <p>Ground zero to premium understanding in simple English.</p>
           </div>
           <div class="tiny">
-            Build more lessons • Add MCQs • Add editor integration • Add speak tags
+            Ready for V4 with plots, speak tags, editor integration, and real MCQ engine
           </div>
         </div>
       </div>
@@ -1594,7 +1784,6 @@ plt.show()</code></pre>
   </main>
 
   <script>
-    // Copy buttons
     document.querySelectorAll(".copy-btn").forEach(function(btn){
       btn.addEventListener("click", async function(){
         const targetId = btn.getAttribute("data-copy-target");
@@ -1614,11 +1803,9 @@ plt.show()</code></pre>
       });
     });
 
-    // Quiz logic
     const checkQuizBtn = document.getElementById("checkQuizBtn");
     const resetQuizBtn = document.getElementById("resetQuizBtn");
     const quizResult = document.getElementById("quizResult");
-    const quizForm = document.getElementById("quizForm");
 
     function getRadioValue(name){
       const checked = document.querySelector('input[name="' + name + '"]:checked');
@@ -1646,13 +1833,13 @@ plt.show()</code></pre>
 
       if(score === 5){
         quizResult.className = "quiz-result show good-box";
-        quizResult.textContent = "Excellent! You scored 5/5. Your polyfit understanding is strong.";
+        quizResult.textContent = "Excellent! You scored 5/5. The combined lesson is clear.";
       }else if(score >= 3){
         quizResult.className = "quiz-result show mid-box";
-        quizResult.textContent = "Good work! You scored " + score + "/5. Revise degree, poly1d, and overfitting once more.";
+        quizResult.textContent = "Good work! You scored " + score + "/5. Revise correlation matrix, polyfit return values, and poly1d once more.";
       }else{
         quizResult.className = "quiz-result show bad-box";
-        quizResult.textContent = "You scored " + score + "/5. Read the examples again carefully and try once more.";
+        quizResult.textContent = "You scored " + score + "/5. Read the lesson again carefully and try once more.";
       }
     });
 
