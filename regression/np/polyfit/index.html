@@ -1,0 +1,1667 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NumPy polyfit — V3 Premium Lesson | Programmer's Picnic</title>
+
+  <meta
+    name="description"
+    content="A full ground-zero to premium lesson on NumPy polyfit with theory, intuition, worked examples, quiz, practice tasks, and a mini project in Programmer's Picnic style."
+  />
+  <meta
+    name="keywords"
+    content="NumPy polyfit, Python polyfit, polynomial fitting, linear regression, NumPy lesson, Programmer's Picnic"
+  />
+  <meta name="author" content="Champak Roy" />
+  <meta name="theme-color" content="#f59e0b" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+
+  <meta property="og:title" content="NumPy polyfit — V3 Premium Lesson" />
+  <meta
+    property="og:description"
+    content="Learn NumPy polyfit from ground zero to premium level with intuition, examples, quiz, and project."
+  />
+  <meta property="og:type" content="website" />
+
+  <script async crossorigin="anonymous"
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+
+  <style>
+    :root{
+      --bg:#fffaf0;
+      --bg2:#fff5df;
+      --panel:#ffffff;
+      --panel2:#fff8eb;
+      --text:#2b2112;
+      --muted:#6a5a3d;
+      --line:#ecd9aa;
+      --brand:#d97706;
+      --brand2:#f59e0b;
+      --brand3:#fbbf24;
+      --accent:#fff0c2;
+      --ok:#166534;
+      --bad:#b91c1c;
+      --info:#1d4ed8;
+      --shadow:0 18px 48px rgba(146, 91, 17, .12);
+      --shadow-soft:0 10px 28px rgba(146, 91, 17, .08);
+      --radius:22px;
+      --max:1200px;
+    }
+
+    *{box-sizing:border-box}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family:Inter, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(251,191,36,.16), transparent 22rem),
+        radial-gradient(circle at top left, rgba(217,119,6,.12), transparent 20rem),
+        linear-gradient(180deg, var(--bg), #fffdf8 45%, var(--bg2));
+      color:var(--text);
+      line-height:1.65;
+    }
+
+    a{
+      color:var(--brand);
+      text-decoration:none;
+    }
+
+    img{max-width:100%}
+
+    .container{
+      width:min(var(--max), calc(100% - 32px));
+      margin:auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(12px);
+      background:rgba(255,250,240,.82);
+      border-bottom:1px solid rgba(236,217,170,.8);
+    }
+
+    .topbar-inner{
+      width:min(var(--max), calc(100% - 32px));
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .logo{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:#fff;
+      background:linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow:var(--shadow-soft);
+      flex:0 0 auto;
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-text strong{
+      display:block;
+      font-size:1rem;
+      line-height:1.1;
+      font-family:"DM Sans", Inter, sans-serif;
+    }
+
+    .brand-text span{
+      display:block;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav a{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff8ea;
+      color:var(--text);
+      font-size:.92rem;
+      font-weight:700;
+    }
+
+    .nav a:hover{
+      border-color:#e7b556;
+      background:#fff0cf;
+    }
+
+    .hero{
+      padding:34px 0 18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+    }
+
+    .hero-card,
+    .side-card,
+    .card,
+    .note,
+    .quiz-card,
+    .mini-card,
+    .formula-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,248,235,.96));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-card{
+      padding:26px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-card:before{
+      content:"";
+      position:absolute;
+      right:-50px;
+      top:-50px;
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(251,191,36,.22), transparent 70%);
+      pointer-events:none;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#fff2d1;
+      color:#8a4b00;
+      border:1px solid #f0d18a;
+      font-weight:800;
+      font-size:.84rem;
+      letter-spacing:.02em;
+    }
+
+    h1,h2,h3{
+      font-family:"DM Sans", Inter, sans-serif;
+      line-height:1.18;
+      margin:0 0 12px;
+    }
+
+    h1{
+      font-size:clamp(2rem, 4vw, 3.4rem);
+      margin-top:14px;
+    }
+
+    h2{
+      font-size:clamp(1.45rem, 2.2vw, 2rem);
+    }
+
+    h3{
+      font-size:1.1rem;
+    }
+
+    .lead{
+      font-size:1.05rem;
+      color:#4b3b23;
+      max-width:68ch;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:800;
+      font-size:.96rem;
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--brand), var(--brand2));
+      color:#fff;
+      box-shadow:0 12px 30px rgba(217,119,6,.24);
+    }
+
+    .btn-secondary{
+      background:#fff4db;
+      color:var(--text);
+      border:1px solid #efcf8a;
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top:22px;
+    }
+
+    .pill{
+      background:#fffaf1;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      font-weight:700;
+      color:#594a2c;
+    }
+
+    .side-card{
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .side-box{
+      background:#fffaf1;
+      border:1px dashed #e3bf72;
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .side-box strong{
+      display:block;
+      margin-bottom:8px;
+      color:#8a4b00;
+      font-family:"DM Sans", Inter, sans-serif;
+    }
+
+    .formula{
+      background:#2b2112;
+      color:#fff7ea;
+      border-radius:18px;
+      padding:18px;
+      font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:1rem;
+      overflow:auto;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+    }
+
+    .section{
+      padding:18px 0;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:14px;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      max-width:60ch;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:18px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:18px;
+    }
+
+    .card{
+      padding:22px;
+    }
+
+    .card p:last-child,
+    .card ul:last-child{
+      margin-bottom:0;
+    }
+
+    .kicker{
+      display:inline-block;
+      margin-bottom:10px;
+      color:#a05700;
+      background:#fff0cf;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid #f0cf88;
+      font-weight:800;
+      font-size:.84rem;
+    }
+
+    .code-wrap{
+      position:relative;
+      margin:14px 0 0;
+    }
+
+    pre{
+      margin:0;
+      white-space:pre-wrap;
+      word-break:break-word;
+      background:#1f1b16;
+      color:#fff7ea;
+      padding:18px 18px 20px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      overflow:auto;
+      font-size:.95rem;
+      line-height:1.62;
+      box-shadow:var(--shadow-soft);
+    }
+
+    code{
+      font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .copy-btn{
+      position:absolute;
+      top:10px;
+      right:10px;
+      border:none;
+      border-radius:12px;
+      padding:8px 12px;
+      font-size:.84rem;
+      font-weight:800;
+      cursor:pointer;
+      background:#fff2cf;
+      color:#543b12;
+      border:1px solid #e7c376;
+    }
+
+    .copy-btn:hover{
+      background:#ffe7ae;
+    }
+
+    .steps{
+      display:grid;
+      gap:14px;
+      counter-reset:item;
+    }
+
+    .step{
+      position:relative;
+      padding:18px 18px 18px 66px;
+      border-radius:20px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, #fff, #fffaf0);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .step:before{
+      counter-increment:item;
+      content:counter(item);
+      position:absolute;
+      left:18px;
+      top:18px;
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      color:#fff;
+      background:linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow:0 10px 20px rgba(217,119,6,.25);
+    }
+
+    .highlight{
+      border-left:5px solid var(--brand2);
+      padding:14px 16px;
+      border-radius:16px;
+      background:#fff7e8;
+      color:#5d4a2b;
+      margin-top:14px;
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow-soft);
+      background:#fff;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:720px;
+    }
+
+    th,td{
+      padding:14px 14px;
+      border-bottom:1px solid #f1e2bd;
+      text-align:left;
+      vertical-align:top;
+    }
+
+    th{
+      background:#fff4da;
+      color:#6d4708;
+      font-size:.94rem;
+      font-family:"DM Sans", Inter, sans-serif;
+    }
+
+    td{
+      background:#fffefb;
+    }
+
+    .good{color:var(--ok); font-weight:800;}
+    .bad{color:var(--bad); font-weight:800;}
+    .info{color:var(--info); font-weight:800;}
+
+    .accordion{
+      display:grid;
+      gap:14px;
+    }
+
+    details{
+      background:linear-gradient(180deg, #fff, #fff9ee);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow-soft);
+      overflow:hidden;
+    }
+
+    summary{
+      cursor:pointer;
+      list-style:none;
+      padding:18px 20px;
+      font-weight:800;
+      font-family:"DM Sans", Inter, sans-serif;
+      position:relative;
+    }
+
+    summary::-webkit-details-marker{display:none}
+
+    summary:after{
+      content:"+";
+      position:absolute;
+      right:18px;
+      top:14px;
+      font-size:1.35rem;
+      color:var(--brand);
+    }
+
+    details[open] summary:after{
+      content:"–";
+    }
+
+    .details-body{
+      padding:0 20px 18px;
+      color:#4f4127;
+    }
+
+    .formula-card{
+      padding:22px;
+      background:linear-gradient(135deg, #fff5db, #fffdf8);
+    }
+
+    .formula-big{
+      font-size:clamp(1.2rem, 2vw, 1.7rem);
+      text-align:center;
+      font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      background:#2b2112;
+      color:#fff7ea;
+      padding:18px;
+      border-radius:18px;
+      margin-top:12px;
+      overflow:auto;
+    }
+
+    .note{
+      padding:18px;
+      background:linear-gradient(180deg, #fff8e8, #fffdf9);
+    }
+
+    .note strong{
+      color:#8a4b00;
+    }
+
+    .quiz-card{
+      padding:22px;
+    }
+
+    .question{
+      padding:16px;
+      border:1px solid var(--line);
+      background:#fffcf7;
+      border-radius:18px;
+      margin-bottom:14px;
+    }
+
+    .question h4{
+      margin:0 0 12px;
+      font-size:1rem;
+      font-family:"DM Sans", Inter, sans-serif;
+    }
+
+    .options{
+      display:grid;
+      gap:10px;
+    }
+
+    .options label{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid #ead8ae;
+      background:#fff;
+      cursor:pointer;
+      transition:background .15s ease, border-color .15s ease;
+    }
+
+    .options label:hover{
+      background:#fff6e3;
+      border-color:#e2b65f;
+    }
+
+    .quiz-result{
+      margin-top:12px;
+      padding:16px;
+      border-radius:16px;
+      font-weight:800;
+      display:none;
+    }
+
+    .quiz-result.show{display:block}
+    .quiz-result.good-box{
+      background:#ecfdf3;
+      color:#166534;
+      border:1px solid #a7f3d0;
+    }
+
+    .quiz-result.mid-box{
+      background:#fff7ed;
+      color:#9a3412;
+      border:1px solid #fed7aa;
+    }
+
+    .quiz-result.bad-box{
+      background:#fef2f2;
+      color:#991b1b;
+      border:1px solid #fecaca;
+    }
+
+    .mini-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:18px;
+    }
+
+    .mini-card{
+      padding:22px;
+    }
+
+    .checklist{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .checklist li{
+      padding-left:30px;
+      position:relative;
+    }
+
+    .checklist li:before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:var(--ok);
+      font-weight:900;
+    }
+
+    .footer{
+      padding:30px 0 42px;
+    }
+
+    .footer-card{
+      background:linear-gradient(180deg, #fff8ea, #fffefb);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:24px;
+      box-shadow:var(--shadow);
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .footer-card p{
+      margin:6px 0 0;
+      color:var(--muted);
+    }
+
+    .tiny{
+      font-size:.88rem;
+      color:var(--muted);
+    }
+
+    .muted{
+      color:var(--muted);
+    }
+
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .tag{
+      padding:8px 12px;
+      border-radius:999px;
+      background:#fff2d4;
+      border:1px solid #edca84;
+      color:#7a4a08;
+      font-weight:800;
+      font-size:.84rem;
+    }
+
+    .center{
+      text-align:center;
+    }
+
+    @media (max-width:980px){
+      .hero-grid,
+      .grid-2,
+      .grid-3,
+      .mini-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-points{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:700px){
+      .topbar-inner{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .nav{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .hero-card,
+      .side-card,
+      .card,
+      .quiz-card,
+      .mini-card,
+      .formula-card{
+        padding:18px;
+      }
+
+      .step{
+        padding-left:58px;
+      }
+
+      .container,
+      .topbar-inner{
+        width:min(var(--max), calc(100% - 20px));
+      }
+
+      h1{
+        font-size:2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo">PP</div>
+        <div class="brand-text">
+          <strong>Programmer's Picnic</strong>
+          <span>NumPy polyfit • V3 Premium Lesson</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#theory">Theory</a>
+        <a href="#examples">Examples</a>
+        <a href="#mistakes">Mistakes</a>
+        <a href="#quiz">Quiz</a>
+        <a href="#project">Project</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-card">
+          <div class="eyebrow">NumPy • Data Fitting • Regression Base</div>
+          <h1>NumPy <code>polyfit()</code> from Ground Zero to V3 Premium</h1>
+          <p class="lead">
+            In this lesson, you will understand what <code>np.polyfit()</code> does, why it is useful,
+            how it finds a best-fit line or curve, how to interpret its coefficients, how to use
+            <code>np.poly1d()</code>, and how this connects to real machine learning intuition.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#start-learning">Start Learning</a>
+            <a class="btn btn-secondary" href="#quiz">Jump to Quiz</a>
+          </div>
+
+          <div class="hero-points">
+            <div class="pill">Straight line fitting</div>
+            <div class="pill">Polynomial curve fitting</div>
+            <div class="pill">Regression intuition</div>
+          </div>
+        </div>
+
+        <aside class="side-card">
+          <div class="side-box">
+            <strong>What you will learn</strong>
+            <div>✔ Meaning of best fit</div>
+            <div>✔ Syntax of <code>polyfit</code></div>
+            <div>✔ Degree 1, 2, 3 intuition</div>
+            <div>✔ <code>poly1d</code> usage</div>
+            <div>✔ Common mistakes</div>
+          </div>
+
+          <div class="side-box">
+            <strong>Core idea in one line</strong>
+            <div class="formula">np.polyfit(x, y, degree)</div>
+          </div>
+
+          <div class="side-box">
+            <strong>Quick memory line</strong>
+            <div>
+              <code>polyfit</code> takes data points and gives the coefficients of the best-fit polynomial.
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="start-learning">1. Overview</h2>
+            <p>Let us start from the most basic level and build up to a practical and premium understanding.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <span class="kicker">Why it exists</span>
+            <h3>Real data is messy</h3>
+            <p>
+              In real life, data points are usually not perfectly aligned. We often have observations like
+              study hours vs marks, ad spend vs sales, or temperature vs electricity usage.
+            </p>
+            <p>
+              We want a curve that captures the general trend. That is where <code>polyfit()</code> becomes useful.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="kicker">What it returns</span>
+            <h3>It returns coefficients</h3>
+            <p>
+              <code>np.polyfit()</code> does not directly return predicted values. It returns the coefficients
+              of the polynomial that best fits the data.
+            </p>
+            <p>
+              Example: for degree 1, it returns slope and intercept.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="kicker">Main use</span>
+            <h3>Trend fitting</h3>
+            <p>
+              It is widely used for line fitting, curve fitting, approximation, and as a stepping stone toward
+              regression ideas used in machine learning.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="theory" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>2. Theory and Intuition</h2>
+            <p>This section explains what is happening behind the scenes in a simple and practical way.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="formula-card">
+            <span class="kicker">Best-fit line</span>
+            <h3>For degree 1</h3>
+            <div class="formula-big">y = mx + b</div>
+            <p>
+              Here, <code>m</code> is the slope and <code>b</code> is the intercept.
+              When you use <code>np.polyfit(x, y, 1)</code>, NumPy finds the best values of
+              <code>m</code> and <code>b</code>.
+            </p>
+          </div>
+
+          <div class="formula-card">
+            <span class="kicker">Best-fit curve</span>
+            <h3>For degree 2</h3>
+            <div class="formula-big">y = ax² + bx + c</div>
+            <p>
+              When the data bends like a curve, a quadratic fit may be better. Then
+              <code>np.polyfit(x, y, 2)</code> returns <code>a</code>, <code>b</code>, and <code>c</code>.
+            </p>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:18px;">
+          <strong>Important intuition:</strong> <code>polyfit()</code> is trying to reduce the total error between
+          actual values and predicted values. In simple words, it tries to place the line or curve so that
+          it matches the overall trend as well as possible.
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+          <span class="kicker">Least squares idea</span>
+          <h3>What does “best fit” really mean?</h3>
+          <p>
+            Suppose the actual data values are <code>y</code> and the fitted values are <code>ŷ</code>.
+            Then the model wants the total squared error to be as small as possible.
+          </p>
+          <div class="formula">Minimize: Σ (y - ŷ)²</div>
+          <p class="highlight">
+            Squaring the errors makes negative and positive errors both count, and large mistakes are punished more strongly.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>3. Syntax</h2>
+            <p>The syntax is short, but the idea behind it is very powerful.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="code-wrap">
+            <button class="copy-btn" data-copy-target="code-syntax">Copy</button>
+            <pre><code id="code-syntax">np.polyfit(x, y, degree)</code></pre>
+          </div>
+
+          <div class="table-wrap" style="margin-top:16px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Part</th>
+                  <th>Meaning</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>x</code></td>
+                  <td>Input values or independent variable</td>
+                  <td>Study hours</td>
+                </tr>
+                <tr>
+                  <td><code>y</code></td>
+                  <td>Output values or dependent variable</td>
+                  <td>Marks</td>
+                </tr>
+                <tr>
+                  <td><code>degree</code></td>
+                  <td>Polynomial degree</td>
+                  <td>1 for line, 2 for parabola, 3 for cubic</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tag-row">
+            <span class="tag">degree 1 = line</span>
+            <span class="tag">degree 2 = curve</span>
+            <span class="tag">degree 3 = more flexible</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="examples" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>4. Step-by-Step Examples</h2>
+            <p>We will build understanding one level at a time.</p>
+          </div>
+        </div>
+
+        <div class="accordion">
+
+          <details open>
+            <summary>Example 1 — Straight line fitting</summary>
+            <div class="details-body">
+              <p>
+                Let us take a small dataset and fit a straight line to it using degree 1.
+              </p>
+
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-ex1">Copy</button>
+                <pre><code id="code-ex1">import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 4, 5, 4, 5])
+
+coeff = np.polyfit(x, y, 1)
+
+m = coeff[0]
+b = coeff[1]
+
+print("Slope =", m)
+print("Intercept =", b)</code></pre>
+              </div>
+
+              <div class="highlight">
+                <strong>Meaning:</strong> this returns two values because a line has two coefficients:
+                slope and intercept.
+              </div>
+
+              <div class="steps" style="margin-top:16px;">
+                <div class="step">
+                  <h3>Step 1</h3>
+                  <p><code>x</code> stores input values and <code>y</code> stores output values.</p>
+                </div>
+                <div class="step">
+                  <h3>Step 2</h3>
+                  <p><code>np.polyfit(x, y, 1)</code> means fit a polynomial of degree 1, that is, a straight line.</p>
+                </div>
+                <div class="step">
+                  <h3>Step 3</h3>
+                  <p>The result contains <code>m</code> and <code>b</code> for the equation <code>y = mx + b</code>.</p>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details>
+            <summary>Example 2 — Predicting values using the line</summary>
+            <div class="details-body">
+              <p>
+                Once you get the coefficients, you can compute predicted values.
+              </p>
+
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-ex2">Copy</button>
+                <pre><code id="code-ex2">import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 4, 5, 4, 5])
+
+m, b = np.polyfit(x, y, 1)
+
+y_pred = m * x + b
+
+print("Predicted values:", y_pred)</code></pre>
+              </div>
+
+              <p>
+                Here we use the fitted line equation directly to get predictions for the same x-values.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>Example 3 — Quadratic fitting</summary>
+            <div class="details-body">
+              <p>
+                Some data bends upward or downward. In that case, a curve may be better than a line.
+              </p>
+
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-ex3">Copy</button>
+                <pre><code id="code-ex3">import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([1, 4, 9, 16, 25])
+
+coeff = np.polyfit(x, y, 2)
+
+a = coeff[0]
+b = coeff[1]
+c = coeff[2]
+
+print("a =", a)
+print("b =", b)
+print("c =", c)</code></pre>
+              </div>
+
+              <p>
+                The equation is:
+              </p>
+              <div class="formula">y = ax² + bx + c</div>
+
+              <p class="highlight">
+                Degree 2 returns three coefficients because a quadratic equation has three parts.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>Example 4 — Using poly1d for a cleaner workflow</summary>
+            <div class="details-body">
+              <p>
+                <code>np.poly1d()</code> converts coefficients into a polynomial object, which is easier to use.
+              </p>
+
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-ex4">Copy</button>
+                <pre><code id="code-ex4">import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([1, 4, 9, 16, 25])
+
+coeff = np.polyfit(x, y, 2)
+p = np.poly1d(coeff)
+
+print(p)
+print("Prediction at x = 6:", p(6))</code></pre>
+              </div>
+
+              <p>
+                This is cleaner than manually writing <code>a*x**2 + b*x + c</code> every time.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>Example 5 — Plotting the fitted result</summary>
+            <div class="details-body">
+              <p>
+                Plotting makes understanding much easier.
+              </p>
+
+              <div class="code-wrap">
+                <button class="copy-btn" data-copy-target="code-ex5">Copy</button>
+                <pre><code id="code-ex5">import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 4, 5, 4, 5])
+
+coeff = np.polyfit(x, y, 1)
+p = np.poly1d(coeff)
+
+x_new = np.linspace(x.min(), x.max(), 100)
+y_new = p(x_new)
+
+plt.scatter(x, y, label="Actual data")
+plt.plot(x_new, y_new, label="Best-fit line")
+plt.title("NumPy polyfit Example")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend()
+plt.grid(True)
+plt.show()</code></pre>
+              </div>
+
+              <div class="note" style="margin-top:16px;">
+                <strong>Why use <code>linspace</code>?</strong> It creates many x-values between the minimum and maximum,
+                so the fitted line or curve looks smooth.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>5. Degree Understanding Table</h2>
+            <p>Choosing the right degree is important. Too low can miss the pattern. Too high can overfit.</p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Degree</th>
+                <th>Shape</th>
+                <th>Typical Equation Form</th>
+                <th>When to Use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Straight line</td>
+                <td><code>y = mx + b</code></td>
+                <td>When the trend is almost linear</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Parabolic curve</td>
+                <td><code>y = ax² + bx + c</code></td>
+                <td>When the data bends smoothly</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Cubic curve</td>
+                <td><code>y = ax³ + bx² + cx + d</code></td>
+                <td>When the trend changes direction more than once</td>
+              </tr>
+              <tr>
+                <td>4+</td>
+                <td>More flexible</td>
+                <td>Higher-order polynomial</td>
+                <td>Use carefully, risk of overfitting</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="mistakes" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>6. Common Mistakes</h2>
+            <p>These are the issues learners face most often when using <code>polyfit()</code>.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <span class="kicker">Mistake 1</span>
+            <h3>Using the wrong degree</h3>
+            <p class="bad">Problem:</p>
+            <p>
+              If you force a straight line on strongly curved data, the fit will be poor.
+            </p>
+            <p class="good">Better:</p>
+            <p>
+              Inspect the data first and choose a degree that matches the trend without becoming unnecessarily complex.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="kicker">Mistake 2</span>
+            <h3>Forgetting the coefficient order</h3>
+            <p class="bad">Problem:</p>
+            <p>
+              Learners often think the coefficients come in low-power-to-high-power order.
+            </p>
+            <p class="good">Better:</p>
+            <p>
+              NumPy returns coefficients from highest power to constant term.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="kicker">Mistake 3</span>
+            <h3>Overfitting</h3>
+            <p class="bad">Problem:</p>
+            <p>
+              Choosing a very high degree can make the polynomial follow tiny random variations instead of the real trend.
+            </p>
+            <p class="good">Better:</p>
+            <p>
+              Keep the degree as simple as possible while still capturing the pattern.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="kicker">Mistake 4</span>
+            <h3>Thinking polyfit gives a machine learning model object</h3>
+            <p class="bad">Problem:</p>
+            <p>
+              <code>polyfit()</code> returns coefficients, not a full scikit-learn model.
+            </p>
+            <p class="good">Better:</p>
+            <p>
+              Use <code>np.poly1d()</code> if you want an easy callable polynomial object.
+            </p>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:18px;">
+          <strong>Very important:</strong> <code>polyfit()</code> is excellent for understanding fitting and regression ideas,
+          but for larger machine learning workflows, people often move to tools like scikit-learn.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>7. Practical Real-Life Examples</h2>
+            <p>Let us connect the concept to simple real-world stories.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <span class="kicker">Education</span>
+            <h3>Study hours vs marks</h3>
+            <p>
+              You can fit a line to understand how marks change when study hours increase.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="kicker">Business</span>
+            <h3>Ad spend vs sales</h3>
+            <p>
+              Businesses use fitted trends to estimate how much sales may rise when budget increases.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="kicker">Science</span>
+            <h3>Growth patterns</h3>
+            <p>
+              Scientists and analysts use fitted curves to model observations and study general trends.
+            </p>
+          </article>
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+          <span class="kicker">Mini business example</span>
+          <h3>Sales prediction with a fitted line</h3>
+
+          <div class="code-wrap">
+            <button class="copy-btn" data-copy-target="code-biz">Copy</button>
+            <pre><code id="code-biz">import numpy as np
+
+ads = np.array([1, 2, 3, 4, 5])
+sales = np.array([10, 20, 28, 40, 52])
+
+coeff = np.polyfit(ads, sales, 1)
+model = np.poly1d(coeff)
+
+print("Predicted sales for ad value 6:", model(6))</code></pre>
+          </div>
+
+          <p>
+            This is simple, but it builds the exact intuition needed for prediction.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>8. MCQ Quiz</h2>
+            <p>Test whether the main ideas are clear.</p>
+          </div>
+        </div>
+
+        <div class="quiz-card">
+          <form id="quizForm">
+            <div class="question">
+              <h4>1. What does <code>np.polyfit(x, y, 1)</code> mainly do?</h4>
+              <div class="options">
+                <label><input type="radio" name="q1" value="0" /> Sorts the values of x and y</label>
+                <label><input type="radio" name="q1" value="1" /> Fits a straight line to the data</label>
+                <label><input type="radio" name="q1" value="0" /> Creates a histogram</label>
+                <label><input type="radio" name="q1" value="0" /> Removes outliers automatically</label>
+              </div>
+            </div>
+
+            <div class="question">
+              <h4>2. If degree is 2, how many coefficients are returned?</h4>
+              <div class="options">
+                <label><input type="radio" name="q2" value="0" /> 1</label>
+                <label><input type="radio" name="q2" value="0" /> 2</label>
+                <label><input type="radio" name="q2" value="1" /> 3</label>
+                <label><input type="radio" name="q2" value="0" /> 4</label>
+              </div>
+            </div>
+
+            <div class="question">
+              <h4>3. What is the benefit of <code>np.poly1d()</code>?</h4>
+              <div class="options">
+                <label><input type="radio" name="q3" value="0" /> It deletes unwanted coefficients</label>
+                <label><input type="radio" name="q3" value="1" /> It makes the polynomial easier to use for prediction</label>
+                <label><input type="radio" name="q3" value="0" /> It plots graphs automatically</label>
+                <label><input type="radio" name="q3" value="0" /> It converts arrays into matrices</label>
+              </div>
+            </div>
+
+            <div class="question">
+              <h4>4. What is overfitting in the context of polynomial fitting?</h4>
+              <div class="options">
+                <label><input type="radio" name="q4" value="0" /> The data has too few rows</label>
+                <label><input type="radio" name="q4" value="0" /> NumPy returns too few coefficients</label>
+                <label><input type="radio" name="q4" value="1" /> The polynomial becomes too complex and starts fitting noise</label>
+                <label><input type="radio" name="q4" value="0" /> x and y have the same values</label>
+              </div>
+            </div>
+
+            <div class="question">
+              <h4>5. In a degree 1 fit, the equation form is:</h4>
+              <div class="options">
+                <label><input type="radio" name="q5" value="1" /> <code>y = mx + b</code></label>
+                <label><input type="radio" name="q5" value="0" /> <code>y = ax² + bx + c</code></label>
+                <label><input type="radio" name="q5" value="0" /> <code>y = ax³ + bx² + cx + d</code></label>
+                <label><input type="radio" name="q5" value="0" /> <code>y = x / y</code></label>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+              <button type="button" class="btn btn-primary" id="checkQuizBtn">Check My Score</button>
+              <button type="reset" class="btn btn-secondary" id="resetQuizBtn">Reset Quiz</button>
+            </div>
+
+            <div id="quizResult" class="quiz-result"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>9. Practice Tasks</h2>
+            <p>These tasks help move your understanding from reading to doing.</p>
+          </div>
+        </div>
+
+        <div class="mini-grid">
+          <div class="mini-card">
+            <span class="kicker">Task 1</span>
+            <h3>Fit a straight line</h3>
+            <div class="code-wrap">
+              <button class="copy-btn" data-copy-target="code-task1">Copy</button>
+              <pre><code id="code-task1">x = [1, 2, 3, 4]
+y = [2, 3, 5, 7]</code></pre>
+            </div>
+            <p>Use degree 1. Print slope, intercept, and predicted values.</p>
+          </div>
+
+          <div class="mini-card">
+            <span class="kicker">Task 2</span>
+            <h3>Fit a quadratic curve</h3>
+            <div class="code-wrap">
+              <button class="copy-btn" data-copy-target="code-task2">Copy</button>
+              <pre><code id="code-task2">x = [1, 2, 3, 4]
+y = [1, 4, 9, 16]</code></pre>
+            </div>
+            <p>Use degree 2. Convert the result into a <code>poly1d</code> model and predict at <code>x = 5</code>.</p>
+          </div>
+
+          <div class="mini-card">
+            <span class="kicker">Task 3</span>
+            <h3>Try degree comparison</h3>
+            <p>
+              Use one dataset and compare degree 1 and degree 2. Which one looks more appropriate?
+            </p>
+          </div>
+
+          <div class="mini-card">
+            <span class="kicker">Task 4</span>
+            <h3>Plot the fit</h3>
+            <p>
+              Use <code>matplotlib</code> to plot actual data points and the fitted polynomial on the same graph.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="project" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>10. Mini Project — Student Marks Predictor</h2>
+            <p>This mini project ties together fitting, prediction, and practical thinking.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <span class="kicker">Project idea</span>
+            <h3>Study hours vs marks</h3>
+            <p>
+              Suppose you have data showing how many hours students studied and what marks they got.
+              Use <code>polyfit()</code> to model the relationship and predict marks for a new study duration.
+            </p>
+
+            <ul class="checklist">
+              <li>Create arrays for study hours and marks</li>
+              <li>Fit a degree 1 polynomial</li>
+              <li>Build a <code>poly1d</code> model</li>
+              <li>Predict marks for a new value</li>
+              <li>Plot the actual data and fitted line</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="code-wrap">
+              <button class="copy-btn" data-copy-target="code-project">Copy</button>
+              <pre><code id="code-project">import numpy as np
+import matplotlib.pyplot as plt
+
+hours = np.array([1, 2, 3, 4, 5, 6])
+marks = np.array([38, 45, 57, 63, 74, 82])
+
+coeff = np.polyfit(hours, marks, 1)
+model = np.poly1d(coeff)
+
+predicted_for_7 = model(7)
+
+print("Model:", model)
+print("Predicted marks for 7 hours:", predicted_for_7)
+
+x_new = np.linspace(hours.min(), 7, 100)
+y_new = model(x_new)
+
+plt.scatter(hours, marks, label="Actual data")
+plt.plot(x_new, y_new, label="Best-fit line")
+plt.xlabel("Study hours")
+plt.ylabel("Marks")
+plt.title("Student Marks Predictor")
+plt.legend()
+plt.grid(True)
+plt.show()</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:18px;">
+          <strong>Premium insight:</strong> Even though this example is simple, it teaches the same
+          thinking used in real predictive systems: take data, fit a mathematical relationship, then use it for estimation.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>11. Final Summary</h2>
+            <p>Let us compress the full lesson into quick memory points.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <span class="kicker">Memory point 1</span>
+            <h3><code>polyfit()</code> fits a polynomial</h3>
+            <p>
+              It uses x-values, y-values, and a chosen degree to produce the coefficients of the best-fit polynomial.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="kicker">Memory point 2</span>
+            <h3>Degree controls shape</h3>
+            <p>
+              Degree 1 gives a line, degree 2 gives a parabola, and higher degrees allow more flexibility.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="kicker">Memory point 3</span>
+            <h3><code>poly1d()</code> makes life easier</h3>
+            <p>
+              It converts coefficients into a callable polynomial model that can be printed and used for prediction.
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:18px;">
+          <span class="kicker">One-line conclusion</span>
+          <h3>Best one-line understanding</h3>
+          <p class="lead" style="margin:0;">
+            NumPy <code>polyfit()</code> is a simple but powerful tool that takes data points and returns the coefficients of the line or curve that best fits the trend.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-card">
+          <div>
+            <h3 style="margin-bottom:0;">Programmer's Picnic • NumPy polyfit V3 Premium</h3>
+            <p>Ground zero to premium understanding in simple English.</p>
+          </div>
+          <div class="tiny">
+            Build more lessons • Add MCQs • Add editor integration • Add speak tags
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Copy buttons
+    document.querySelectorAll(".copy-btn").forEach(function(btn){
+      btn.addEventListener("click", async function(){
+        const targetId = btn.getAttribute("data-copy-target");
+        const el = document.getElementById(targetId);
+        if(!el) return;
+
+        const text = el.innerText;
+        try{
+          await navigator.clipboard.writeText(text);
+          const old = btn.textContent;
+          btn.textContent = "Copied";
+          setTimeout(function(){ btn.textContent = old; }, 1200);
+        }catch(err){
+          btn.textContent = "Copy failed";
+          setTimeout(function(){ btn.textContent = "Copy"; }, 1200);
+        }
+      });
+    });
+
+    // Quiz logic
+    const checkQuizBtn = document.getElementById("checkQuizBtn");
+    const resetQuizBtn = document.getElementById("resetQuizBtn");
+    const quizResult = document.getElementById("quizResult");
+    const quizForm = document.getElementById("quizForm");
+
+    function getRadioValue(name){
+      const checked = document.querySelector('input[name="' + name + '"]:checked');
+      return checked ? Number(checked.value) : null;
+    }
+
+    checkQuizBtn.addEventListener("click", function(){
+      const answers = ["q1", "q2", "q3", "q4", "q5"];
+      let score = 0;
+      let answered = 0;
+
+      answers.forEach(function(q){
+        const v = getRadioValue(q);
+        if(v !== null){
+          answered++;
+          score += v;
+        }
+      });
+
+      if(answered < answers.length){
+        quizResult.className = "quiz-result show bad-box";
+        quizResult.textContent = "Please answer all questions before checking your score.";
+        return;
+      }
+
+      if(score === 5){
+        quizResult.className = "quiz-result show good-box";
+        quizResult.textContent = "Excellent! You scored 5/5. Your polyfit understanding is strong.";
+      }else if(score >= 3){
+        quizResult.className = "quiz-result show mid-box";
+        quizResult.textContent = "Good work! You scored " + score + "/5. Revise degree, poly1d, and overfitting once more.";
+      }else{
+        quizResult.className = "quiz-result show bad-box";
+        quizResult.textContent = "You scored " + score + "/5. Read the examples again carefully and try once more.";
+      }
+    });
+
+    resetQuizBtn.addEventListener("click", function(){
+      setTimeout(function(){
+        quizResult.className = "quiz-result";
+        quizResult.textContent = "";
+      }, 0);
+    });
+  </script>
+</body>
+</html>
