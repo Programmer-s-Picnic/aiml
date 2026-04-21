@@ -1,0 +1,884 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Test</title>
+</head>
+<body>
+  
+  
+
+<style>
+  :root {
+    --bg: #fffaf0;
+    --bg2: #fff4d6;
+    --card: #ffffff;
+    --soft: #fff7e6;
+    --text: #2b2112;
+    --muted: #6b5a3d;
+    --line: #ecd8a6;
+    --brand: #d97706;
+    --brand2: #f59e0b;
+    --brand3: #c2410c;
+    --shadow: 0 18px 45px rgba(117, 77, 8, 0.1);
+    --radius: 22px;
+    --max: 1220px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .aiml-live-class-hub {
+    margin: 0;
+    font-family:
+      Inter,
+      "DM Sans",
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      Arial,
+      sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at top left, rgba(245, 158, 11, 0.18), transparent 24%),
+      radial-gradient(circle at right center, rgba(217, 119, 6, 0.1), transparent 22%),
+      linear-gradient(180deg, var(--bg), #fffdf8 35%, var(--bg2) 100%);
+    line-height: 1.6;
+    padding-bottom: 24px;
+  }
+
+  .aiml-live-class-hub a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .aiml-live-class-hub .container {
+    width: min(var(--max), calc(100% - 24px));
+    margin: auto;
+  }
+
+  .aiml-live-class-hub .section {
+    padding: 28px 0;
+  }
+
+  .aiml-live-class-hub .grid {
+    display: grid;
+    gap: 18px;
+  }
+
+  .aiml-live-class-hub .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .aiml-live-class-hub .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(14px);
+    background: rgba(255, 250, 240, 0.88);
+    border-bottom: 1px solid rgba(217, 119, 6, 0.15);
+  }
+
+  .aiml-live-class-hub .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 72px;
+  }
+
+  .aiml-live-class-hub .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .aiml-live-class-hub .brand-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--brand3), var(--brand2));
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    box-shadow: 0 10px 24px rgba(217, 119, 6, 0.28);
+    flex: 0 0 auto;
+  }
+
+  .aiml-live-class-hub .brand-text strong {
+    display: block;
+    font-size: 1.05rem;
+  }
+
+  .aiml-live-class-hub .brand-text span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .aiml-live-class-hub .nav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .aiml-live-class-hub .nav a {
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.78);
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .aiml-live-class-hub .hero {
+    padding: 34px 0 20px;
+  }
+
+  .aiml-live-class-hub .hero-wrap {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 22px;
+    align-items: stretch;
+  }
+
+  .aiml-live-class-hub .hero-main {
+    padding: 28px;
+    background:
+      radial-gradient(circle at top right, rgba(255, 255, 255, 0.35), transparent 28%),
+      linear-gradient(135deg, #fff6db 0%, #fffdf7 45%, #fff3cf 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .aiml-live-class-hub .hero-main::after {
+    content: "";
+    position: absolute;
+    inset: auto -60px -60px auto;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.18), transparent 65%);
+    pointer-events: none;
+  }
+
+  .aiml-live-class-hub .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid #f4d08b;
+    background: #fff9eb;
+    color: var(--brand3);
+    font-weight: 800;
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+  }
+
+  .aiml-live-class-hub h1,
+  .aiml-live-class-hub h2,
+  .aiml-live-class-hub h3 {
+    line-height: 1.15;
+    margin: 0 0 10px;
+  }
+
+  .aiml-live-class-hub h1 {
+    font-size: clamp(2rem, 4vw, 3.4rem);
+  }
+
+  .aiml-live-class-hub h2 {
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+  }
+
+  .aiml-live-class-hub h3 {
+    font-size: 1.1rem;
+  }
+
+  .aiml-live-class-hub .lead {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0 0 18px;
+  }
+
+  .aiml-live-class-hub .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .aiml-live-class-hub .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 50px;
+    padding: 0 18px;
+    border-radius: 14px;
+    font-weight: 800;
+    border: 1px solid transparent;
+    transition:
+      0.2s transform ease,
+      0.2s box-shadow ease,
+      0.2s background ease;
+  }
+
+  .aiml-live-class-hub .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.08);
+  }
+
+  .aiml-live-class-hub .btn-primary {
+    color: #fff;
+    background: linear-gradient(135deg, var(--brand3), var(--brand2));
+  }
+
+  .aiml-live-class-hub .btn-secondary {
+    color: var(--brand3);
+    background: #fff;
+    border-color: var(--line);
+  }
+
+  .aiml-live-class-hub .btn-whatsapp {
+    color: #fff;
+    background: linear-gradient(135deg, #15803d, #22c55e);
+  }
+
+  .aiml-live-class-hub .hero-side {
+    display: grid;
+    gap: 18px;
+  }
+
+  .aiml-live-class-hub .mini-panel {
+    padding: 22px;
+  }
+
+  .aiml-live-class-hub .label {
+    color: var(--brand3);
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .aiml-live-class-hub .today-box {
+    padding: 20px;
+    border-radius: 18px;
+    border: 1px dashed #efc16d;
+    background: linear-gradient(180deg, #fff9ea, #fffef8);
+  }
+
+  .aiml-live-class-hub .today-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .aiml-live-class-hub .today-item {
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .aiml-live-class-hub .info-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .aiml-live-class-hub .info-card {
+    padding: 22px;
+  }
+
+  .aiml-live-class-hub .icon-box {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--brand), var(--brand2));
+    color: #fff;
+    font-size: 24px;
+    box-shadow: 0 10px 24px rgba(217, 119, 6, 0.25);
+    margin-bottom: 14px;
+  }
+
+  .aiml-live-class-hub .info-card p,
+  .aiml-live-class-hub .timing-note,
+  .aiml-live-class-hub .note,
+  .aiml-live-class-hub .footer-note,
+  .aiml-live-class-hub .links-note {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .aiml-live-class-hub .timing-box {
+    position: relative;
+    padding: 24px;
+    background:
+      radial-gradient(circle at top right, rgba(255, 255, 255, 0.28), transparent 28%),
+      linear-gradient(135deg, #ffefbf, #fff7de 48%, #fffefb 100%);
+    border: 2px solid #f59e0b;
+    box-shadow:
+      0 22px 55px rgba(217, 119, 6, 0.18),
+      0 0 0 6px rgba(245, 158, 11, 0.08);
+    overflow: hidden;
+  }
+
+  .aiml-live-class-hub .timing-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at top right, rgba(255, 255, 255, 0.32), transparent 26%),
+      linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(255, 255, 255, 0));
+    pointer-events: none;
+  }
+
+  .aiml-live-class-hub .timing-box .label {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #c2410c, #f59e0b);
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(217, 119, 6, 0.22);
+  }
+
+  .aiml-live-class-hub .editable-box {
+    margin-top: 14px;
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.82);
+  }
+
+  .aiml-live-class-hub .timing-box .editable-box {
+    border: 1.5px solid #f3c56b;
+    background: linear-gradient(180deg, #fffdf8, #fff6e3);
+    box-shadow: 0 8px 20px rgba(217, 119, 6, 0.08);
+  }
+
+  .aiml-live-class-hub .editable-label {
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--brand3);
+    margin-bottom: 8px;
+  }
+
+  .aiml-live-class-hub .editable-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .aiml-live-class-hub #speak18 {
+    display: inline-block;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fff0c2, #ffe08a);
+    border: 2px solid #f59e0b;
+    color: #8a3c00;
+    font-size: 1.15rem;
+    font-weight: 900;
+    box-shadow:
+      0 12px 26px rgba(245, 158, 11, 0.22),
+      0 0 0 6px rgba(245, 158, 11, 0.08);
+    animation: zoomTimingPulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes zoomTimingPulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 12px 26px rgba(245, 158, 11, 0.22),
+        0 0 0 0 rgba(245, 158, 11, 0.18);
+    }
+    50% {
+      transform: scale(1.03);
+      box-shadow:
+        0 16px 30px rgba(245, 158, 11, 0.28),
+        0 0 0 10px rgba(245, 158, 11, 0.1);
+    }
+  }
+
+  .aiml-live-class-hub #timing .btn-primary {
+    min-height: 58px;
+    padding: 0 24px;
+    font-size: 1rem;
+    box-shadow: 0 16px 30px rgba(194, 65, 12, 0.25);
+  }
+
+  .aiml-live-class-hub .contact-grid,
+  .aiml-live-class-hub .links-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .aiml-live-class-hub .contact-card,
+  .aiml-live-class-hub .link-card {
+    padding: 22px;
+  }
+
+  .aiml-live-class-hub .portal-links {
+    display: grid;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .aiml-live-class-hub .portal-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: #fff;
+    font-weight: 800;
+  }
+
+  .aiml-live-class-hub .portal-link span:last-child {
+    color: var(--brand3);
+  }
+
+  .aiml-live-class-hub .footer {
+    padding: 26px 0 36px;
+  }
+
+  .aiml-live-class-hub .footer-box {
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  @media (max-width: 1100px) {
+    .aiml-live-class-hub .hero-wrap,
+    .aiml-live-class-hub .contact-grid,
+    .aiml-live-class-hub .links-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .aiml-live-class-hub .info-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .aiml-live-class-hub .topbar-inner {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 10px 0;
+    }
+
+    .aiml-live-class-hub .nav {
+      justify-content: flex-start;
+    }
+
+    .aiml-live-class-hub .info-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .aiml-live-class-hub .hero-main,
+    .aiml-live-class-hub .mini-panel,
+    .aiml-live-class-hub .info-card,
+    .aiml-live-class-hub .timing-box,
+    .aiml-live-class-hub .contact-card,
+    .aiml-live-class-hub .link-card {
+      padding: 18px;
+    }
+
+    .aiml-live-class-hub h1 {
+      font-size: 2rem;
+    }
+
+    .aiml-live-class-hub .actions .btn {
+      width: 100%;
+    }
+
+    .aiml-live-class-hub .portal-link {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<div class="aiml-live-class-hub">
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">🎓</div>
+        <div class="brand-text">
+          <strong data-pp-speak-title="true">AI-ML Live Class Hub</strong>
+          <span>Learn With Champak | Programmer's Picnic</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#join">Join Now</a>
+        <a href="#timing">Timing</a>
+        <a href="#links">Platforms</a>
+        <a href="#connect">Connect</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div class="hero-main card">
+          <div class="eyebrow" id="speak0">
+            🚀 Live AI-ML learning, fast class joining, and all important links in one place
+          </div>
+
+          <h1 id="speak1">
+            Join the live class, access your learning platforms, and stay connected.
+          </h1>
+
+          <p class="lead" id="speak2">
+            Open Zoom quickly, join the WhatsApp group, chat directly, and access all your important AI-ML learning platforms from one simple page.
+          </p>
+
+          <div class="actions" id="join">
+            <a
+              class="btn btn-primary"
+              href="https://us04web.zoom.us/j/4428355179?pwd=yCZrJtx41cUAxDyApDM9eSrre1GSXe.1"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              🎥 Join Zoom Class
+            </a>
+
+            <a
+              class="btn btn-whatsapp"
+              href="https://chat.whatsapp.com/CLCBRoi5AuB816tQ86hpQb"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              👥 Join WhatsApp Group
+            </a>
+
+            <a
+              class="btn btn-secondary"
+              href="https://wa.me/919335874326?text=Hello%20Champak%20Roy%2C%20I%20want%20to%20ask%20about%20today%27s%20AI-ML%20class."
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              💬 Chat on WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="mini-panel card">
+            <div class="label">Live Class Access</div>
+            <h3 id="speak3">Simple and direct for students</h3>
+            <p class="note" id="speak4">
+              This page is designed to help students join the live class quickly without confusion.
+            </p>
+          </div>
+
+          <div class="mini-panel card">
+            <div class="label">Today's Highlights</div>
+            <div class="today-box">
+              <h3 id="speak5">Today's Learning Focus</h3>
+              <p class="note" id="speak6">
+                Statistics with NumPy
+              </p>
+
+              <div class="today-list">
+                <div class="today-item" id="speak7">
+                  ✅ Today’s topic: Python for AI-ML
+                </div>
+                <div class="today-item" id="speak8">
+                  ✅ Practice task: Solve today’s class exercises
+                </div>
+                <div class="today-item" id="speak9">
+                  ✅ Announcement: Join the WhatsApp group for updates
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="grid info-grid">
+          <div class="info-card card">
+            <div class="icon-box">🎥</div>
+            <h3 id="speak10">Zoom Link</h3>
+            <p id="speak11">
+              Join the live class room directly from this page.
+            </p>
+            <div class="actions">
+              <a
+                class="btn btn-secondary"
+                href="https://us04web.zoom.us/j/4428355179?pwd=yCZrJtx41cUAxDyApDM9eSrre1GSXe.1"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Open Zoom
+              </a>
+            </div>
+          </div>
+
+          <div class="info-card card">
+            <div class="icon-box">👥</div>
+            <h3 id="speak12">WhatsApp Group</h3>
+            <p id="speak13">
+              Stay updated with announcements, reminders, and shared learning resources.
+            </p>
+            <div class="actions">
+              <a
+                class="btn btn-whatsapp"
+                href="https://chat.whatsapp.com/CLCBRoi5AuB816tQ86hpQb"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Join Group
+              </a>
+            </div>
+          </div>
+
+          <div class="info-card card">
+            <div class="icon-box">💬</div>
+            <h3 id="speak14">Direct Chat</h3>
+            <p id="speak15">
+              Contact directly for doubts, joining details, and class-related questions.
+            </p>
+            <div class="actions">
+              <a
+                class="btn btn-secondary"
+                href="https://wa.me/919335874326?text=Hello%20Champak%20Roy%2C%20I%20have%20a%20question%20about%20the%20AI-ML%20class."
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Start Chat
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="timing">
+      <div class="container">
+        <div class="timing-box card">
+          <div class="label">Class Timing</div>
+          <h2 id="speak16">Today’s live session details</h2>
+          <p class="timing-note" id="speak17">
+            This is the most important section for students joining today’s class.
+          </p>
+
+          <div class="editable-box">
+            <div class="editable-label">Today's Zoom Timing</div>
+            <div class="editable-value" id="speak18">
+              Today 04:30 PM
+            </div>
+          </div>
+
+          <div class="editable-box">
+            <div class="editable-label">Today's Class Topic</div>
+            <div class="editable-value" id="speak19">
+              Introduction to NumPy Stats
+            </div>
+          </div>
+
+          <div class="editable-box">
+            <div class="editable-label">Special Note</div>
+            <div class="editable-value" id="speak20">
+              Please join 5 minutes early and keep your notebook ready.
+            </div>
+          </div>
+
+          <div class="actions">
+            <a
+              class="btn btn-primary"
+              href="https://us04web.zoom.us/j/4428355179?pwd=yCZrJtx41cUAxDyApDM9eSrre1GSXe.1"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Join Today’s Zoom on Statistics using NumPy
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="links">
+      <div class="container">
+        <div class="grid links-grid">
+          <div class="link-card card">
+            <div class="label">Learning Platforms</div>
+            <h2 id="speak21">Important portals</h2>
+            <p class="links-note" id="speak22">
+              These links connect students to the main learning spaces across your ecosystem.
+            </p>
+
+            <div class="portal-links">
+              <a
+                class="portal-link"
+                href="https://aiml.learnwithchampak.live/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span>AI-ML Platform</span>
+                <span>Open →</span>
+              </a>
+
+              <a
+                class="portal-link"
+                href="https://editor.learnwithchampak.live/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span>Practice Editor</span>
+                <span>Open →</span>
+              </a>
+
+              <a
+                class="portal-link"
+                href="https://dsa.learnwithchampak.live/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span>DSA Platform</span>
+                <span>Open →</span>
+              </a>
+
+              <a
+                class="portal-link"
+                href="https://videos.learnwithchampak.live/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span>Videos Portal</span>
+                <span>Open →</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="link-card card">
+            <div class="label">Connected Learning</div>
+            <h3 id="speak23">Keep learning beyond the live class</h3>
+            <p class="note" id="speak24">
+              Use these direct links to continue practice, revision, and concept building after class.
+            </p>
+
+            <div class="portal-links">
+              <a
+                class="portal-link"
+                href="https://aiml.learnwithchampak.live/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span>Start with AI-ML</span>
+                <span>Visit →</span>
+              </a>
+
+              <a
+                class="portal-link"
+                href="https://editor.learnwithchampak.live/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span>Practice in Editor</span>
+                <span>Visit →</span>
+              </a>
+
+              <a
+                class="portal-link"
+                href="https://videos.learnwithchampak.live/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span>Watch Learning Videos</span>
+                <span>Visit →</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="connect">
+      <div class="container">
+        <div class="grid contact-grid">
+          <div class="contact-card card">
+            <div class="label">Student Support</div>
+            <h3 id="speak25">Need help joining or following the class?</h3>
+            <p class="note" id="speak26">
+              Use the WhatsApp group for announcements and direct chat for personal doubts or joining problems.
+            </p>
+          </div>
+
+          <div class="contact-card card">
+            <div class="label">Daily Learning Flow</div>
+            <h3 id="speak27">Join, learn, practice, revise</h3>
+            <p class="note" id="speak28">
+              Attend the live class, practise in the editor, continue on the platform, and revise from the videos portal.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-box card">
+        <div>
+          <strong id="speak29">AI-ML Live Class Hub</strong>
+          <div class="footer-note">
+            Learn live with Champak Roy and keep all your important links in one simple place.
+          </div>
+        </div>
+
+        <div class="actions">
+          <a
+            class="btn btn-primary"
+            href="https://us04web.zoom.us/j/4428355179?pwd=yCZrJtx41cUAxDyApDM9eSrre1GSXe.1"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Join Zoom
+          </a>
+          <a
+            class="btn btn-secondary"
+            href="https://aiml.learnwithchampak.live/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Open AI-ML Site
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+</body>
+</html>
