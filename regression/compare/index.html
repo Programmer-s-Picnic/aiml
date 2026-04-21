@@ -1,0 +1,2411 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      Linear Regression with Basic Python, NumPy Polyfit, and SciPy — Complete
+      Lesson | Programmer's Picnic
+    </title>
+
+    <script
+      async
+      crossorigin="anonymous"
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
+    ></script>
+
+    <meta
+      name="description"
+      content="A complete Programmer's Picnic lesson on linear regression using basic Python, NumPy polyfit, and SciPy stats.linregress, with derivation, charts, examples, polynomial degree fitting, correlation coefficient, and MCQs."
+    />
+    <meta name="theme-color" content="#f59e0b" />
+    <meta name="color-scheme" content="light" />
+
+    <style>
+      :root {
+        --bg: #fffaf0;
+        --bg2: #fff4d6;
+        --panel: #ffffff;
+        --panel2: #fff7e8;
+        --text: #2b2112;
+        --muted: #6b5a3d;
+        --line: #eed9ab;
+        --brand: #d97706;
+        --brand2: #f59e0b;
+        --brand3: #fbbf24;
+        --accent: #c2410c;
+        --ok: #15803d;
+        --bad: #b91c1c;
+        --info: #1d4ed8;
+        --shadow: 0 18px 45px rgba(127, 72, 7, 0.12);
+        --radius: 22px;
+        --radius-sm: 14px;
+        --max: 1220px;
+        --mono:
+          ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono",
+          monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family:
+          Inter,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Arial,
+          sans-serif;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(251, 191, 36, 0.16),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at top right,
+            rgba(217, 119, 6, 0.1),
+            transparent 25%
+          ),
+          linear-gradient(180deg, var(--bg), var(--bg2));
+        color: var(--text);
+        line-height: 1.65;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .wrap {
+        width: min(var(--max), calc(100% - 24px));
+        margin: auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(12px);
+        background: rgba(255, 250, 240, 0.78);
+        border-bottom: 1px solid rgba(217, 119, 6, 0.16);
+      }
+      .topbar-inner {
+        width: min(var(--max), calc(100% - 24px));
+        margin: auto;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+      }
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        min-width: 0;
+      }
+      .logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 18px;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--brand), var(--brand3));
+        box-shadow: var(--shadow);
+        flex: 0 0 auto;
+      }
+      .logo::before,
+      .logo::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.45);
+        animation: floaty 6s ease-in-out infinite;
+      }
+      .logo::before {
+        width: 24px;
+        height: 24px;
+        left: 6px;
+        top: 8px;
+      }
+      .logo::after {
+        width: 16px;
+        height: 16px;
+        right: 8px;
+        bottom: 8px;
+        animation-delay: -2s;
+      }
+      @keyframes floaty {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-5px) scale(1.05);
+        }
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: 1.04rem;
+        line-height: 1.15;
+        letter-spacing: 0.2px;
+      }
+      .brand p {
+        margin: 2px 0 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .top-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+      }
+      .btn,
+      .chip,
+      button {
+        border: none;
+        border-radius: 999px;
+        padding: 10px 14px;
+        font: inherit;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+      .btn {
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+        color: #fff;
+        box-shadow: 0 10px 22px rgba(217, 119, 6, 0.22);
+        font-weight: 700;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+      .chip {
+        background: #fff;
+        color: var(--text);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        font-weight: 600;
+      }
+
+      .hero {
+        padding: 28px 0 18px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.35fr 0.95fr;
+        gap: 18px;
+      }
+      .card {
+        background: linear-gradient(180deg, var(--panel), var(--panel2));
+        border: 1px solid rgba(217, 119, 6, 0.14);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+      .hero-card {
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-card::after {
+        content: "";
+        position: absolute;
+        inset: auto -40px -40px auto;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(251, 191, 36, 0.22),
+          transparent 68%
+        );
+        pointer-events: none;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: #fff6dd;
+        border: 1px solid #f5deb0;
+        color: #8a4b00;
+        font-weight: 700;
+        font-size: 0.85rem;
+        margin-bottom: 12px;
+      }
+      .hero h2 {
+        margin: 0 0 10px;
+        font-size: clamp(1.7rem, 2.7vw, 3rem);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+      }
+      .hero p.lead {
+        font-size: 1.02rem;
+        color: var(--muted);
+        margin: 0 0 16px;
+        max-width: 70ch;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .stat {
+        padding: 14px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+      }
+      .stat .k {
+        font-size: 1.28rem;
+        font-weight: 800;
+      }
+      .stat .t {
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+
+      .mini-list {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+      }
+      .mini-list li + li {
+        margin-top: 6px;
+      }
+
+      .section {
+        padding: 10px 0 4px;
+      }
+      .section-title {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 18px 0 12px;
+      }
+      .section-title h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        letter-spacing: -0.02em;
+      }
+      .section-title p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      h4 {
+        margin: 0 0 10px;
+        font-size: 1.08rem;
+      }
+      h5 {
+        margin: 16px 0 8px;
+        font-size: 1rem;
+      }
+
+      .soft {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 16px;
+      }
+      .soft p:last-child,
+      .soft ul:last-child {
+        margin-bottom: 0;
+      }
+
+      .formula {
+        font-family: var(--mono);
+        font-size: 1.02rem;
+        padding: 14px 16px;
+        background: #fff9eb;
+        border: 1px dashed #e9c575;
+        border-radius: 16px;
+        overflow: auto;
+        color: #7a3f04;
+        font-weight: 700;
+      }
+      .equation-steps .formula + .formula {
+        margin-top: 10px;
+      }
+
+      .codebox {
+        position: relative;
+        margin: 12px 0 0;
+      }
+      .copy-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 2;
+        background: #fff;
+        color: var(--text);
+        border: 1px solid var(--line);
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+      pre {
+        margin: 0;
+        padding: 18px;
+        border-radius: 18px;
+        background: #1f1a14;
+        color: #f8e7c3;
+        overflow: auto;
+        border: 1px solid #3a3022;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        font: 14px/1.55 var(--mono);
+      }
+      code {
+        font-family: var(--mono);
+      }
+
+      .compare-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+      }
+      .compare-table th,
+      .compare-table td {
+        padding: 14px 12px;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid #f3e2b9;
+      }
+      .compare-table tr:last-child td {
+        border-bottom: none;
+      }
+      .compare-table th {
+        background: #fff6dd;
+        color: #7a3f04;
+        font-size: 0.92rem;
+      }
+
+      .canvas-wrap {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 12px;
+      }
+      canvas {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 14px;
+        background: linear-gradient(180deg, #fffdf7, #fff9ec);
+        border: 1px solid #f4e0b4;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-top: 14px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .field label {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #6f4a16;
+      }
+      .field input,
+      .field textarea,
+      .field select {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px solid #e9d5a1;
+        background: #fff;
+        color: var(--text);
+        padding: 12px 13px;
+        font: inherit;
+        outline: none;
+      }
+      .field textarea {
+        min-height: 98px;
+        resize: vertical;
+      }
+      .field input:focus,
+      .field textarea:focus,
+      .field select:focus {
+        border-color: var(--brand2);
+        box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.14);
+      }
+
+      .inline-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+
+      .output {
+        margin-top: 14px;
+        border-radius: 18px;
+        background: #fff;
+        border: 1px solid var(--line);
+        padding: 16px;
+      }
+      .output-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 12px;
+      }
+      .metric {
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fffaf0;
+      }
+      .metric .name {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .metric .val {
+        font-size: 1.2rem;
+        font-weight: 800;
+        margin-top: 4px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-weight: 800;
+        font-size: 0.84rem;
+        letter-spacing: 0.02em;
+      }
+      .badge.ok {
+        background: #eaf7ee;
+        color: #166534;
+        border: 1px solid #b8e0c2;
+      }
+      .badge.info {
+        background: #eef5ff;
+        color: #1d4ed8;
+        border: 1px solid #c5d8ff;
+      }
+      .badge.warn {
+        background: #fff5e8;
+        color: #b45309;
+        border: 1px solid #f0d3ad;
+      }
+      .badge.bad {
+        background: #fdecec;
+        color: #b91c1c;
+        border: 1px solid #f5b8b8;
+      }
+
+      .callout {
+        border-left: 5px solid var(--brand);
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: #fff8e8;
+        color: #6e4a15;
+      }
+
+      .quiz-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .q-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+        padding: 16px;
+      }
+      .q-card + .q-card {
+        margin-top: 14px;
+      }
+      .q-title {
+        font-weight: 800;
+        margin-bottom: 10px;
+      }
+      .options {
+        display: grid;
+        gap: 10px;
+      }
+      .option {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 12px 13px;
+        border: 1px solid #ead7a7;
+        border-radius: 14px;
+        background: #fffaf0;
+        cursor: pointer;
+        transition: 0.18s ease;
+      }
+      .option:hover {
+        transform: translateY(-1px);
+        border-color: #d9b86a;
+      }
+      .option input {
+        margin-top: 4px;
+      }
+      .option.correct {
+        background: #edf9f0;
+        border-color: #9ed2ab;
+      }
+      .option.wrong {
+        background: #fff0f0;
+        border-color: #edb5b5;
+      }
+      .explanation {
+        margin-top: 10px;
+        padding: 12px 13px;
+        border-radius: 14px;
+        background: #fff8e8;
+        border: 1px solid #f0d8a1;
+        display: none;
+      }
+      .explanation.show {
+        display: block;
+      }
+
+      .toc {
+        position: sticky;
+        top: 84px;
+      }
+      .toc ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 8px;
+      }
+      .toc a {
+        display: block;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: #fff;
+        border: 1px solid var(--line);
+        color: var(--text);
+        font-weight: 700;
+      }
+      .toc a:hover {
+        background: #fff8e9;
+        text-decoration: none;
+      }
+
+      .footer {
+        padding: 34px 0 48px;
+        color: var(--muted);
+      }
+      .footer-card {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .small {
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+      .center {
+        text-align: center;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .mt8 {
+        margin-top: 8px;
+      }
+      .mt12 {
+        margin-top: 12px;
+      }
+      .mt16 {
+        margin-top: 16px;
+      }
+      .mt20 {
+        margin-top: 20px;
+      }
+      .mt24 {
+        margin-top: 24px;
+      }
+      .mb0 {
+        margin-bottom: 0;
+      }
+
+      [id^="speak"] {
+        scroll-margin-top: 92px;
+      }
+
+      @media (max-width: 1060px) {
+        .hero-grid,
+        .grid-2,
+        .grid-3,
+        .grid-4,
+        .controls,
+        .output-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 760px) {
+        .hero-grid,
+        .grid-2,
+        .grid-3,
+        .grid-4,
+        .controls,
+        .output-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .topbar-inner {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .top-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1 data-pp-speak-title>
+              Programmer's Picnic — Regression Master Lesson
+            </h1>
+            <p>
+              Ground zero to practical implementation with derivation, charts,
+              code, and quiz
+            </p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a class="chip" href="#lesson-map">Lesson map</a>
+          <a class="chip" href="#playground">Live playground</a>
+          <a class="chip" href="#mcq-zone">MCQ zone</a>
+          <button class="btn" id="runTopBtn">Run lesson demo</button>
+        </div>
+      </div>
+    </div>
+
+    <header class="hero wrap">
+      <div class="hero-grid">
+        <section class="card hero-card">
+          <div class="eyebrow">
+            📈 Regression • Correlation • Best Degree Fit
+          </div>
+          <h2 id="speak0">
+            Linear Regression using Basic Python, NumPy Polyfit, and SciPy
+          </h2>
+          <p class="lead" id="speak1">
+            In this lesson, we will understand what regression is, why we need
+            it, how the straight-line equation is derived, how to implement it
+            using plain Python, NumPy, and SciPy, and how to search for the best
+            polynomial degree for a dataset. We will also compute the
+            coefficient of correlation and compare the three approaches clearly.
+          </p>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="k">3</div>
+              <div class="t">Main implementations</div>
+            </div>
+            <div class="stat">
+              <div class="k">1</div>
+              <div class="t">Best degree finder</div>
+            </div>
+            <div class="stat">
+              <div class="k">2</div>
+              <div class="t">Interactive charts</div>
+            </div>
+            <div class="stat">
+              <div class="k">10</div>
+              <div class="t">MCQs with score</div>
+            </div>
+          </div>
+
+          <div class="inline-actions">
+            <a class="btn" href="#what-is-regression">Start learning</a>
+            <a class="chip" href="#full-code">Jump to full code</a>
+            <a class="chip" href="#degree-finder">Best degree fit</a>
+          </div>
+
+          <div class="soft mt16">
+            <h4 class="mb0">Official references</h4>
+            <ul class="mini-list mt8">
+              <li><a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html" target="_blank" rel="noopener noreferrer">NumPy polyfit documentation</a></li>
+              <li><a href="https://numpy.org/doc/stable/reference/routines.polynomials.html" target="_blank" rel="noopener noreferrer">NumPy polynomial tools overview</a></li>
+              <li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html" target="_blank" rel="noopener noreferrer">SciPy stats.linregress documentation</a></li>
+              <li><a href="https://docs.scipy.org/doc/scipy/reference/stats.html" target="_blank" rel="noopener noreferrer">SciPy statistics module overview</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <aside class="card toc" id="lesson-map">
+          <h4>Lesson map</h4>
+          <ul>
+            <li><a href="#what-is-regression">1. What is regression?</a></li>
+            <li><a href="#why-regression">2. Why do we need it?</a></li>
+            <li><a href="#equation-line">3. Equation of a line</a></li>
+            <li>
+              <a href="#derivation">4. Derivation of slope and intercept</a>
+            </li>
+            <li><a href="#correlation">5. Correlation and R²</a></li>
+            <li><a href="#comparison">6. Method comparison</a></li>
+            <li><a href="#worked-example">7. Worked example</a></li>
+            <li><a href="#playground">8. Interactive playground</a></li>
+            <li><a href="#degree-finder">9. Best degree fit</a></li>
+            <li><a href="#full-code">10. Full Python code</a></li>
+            <li><a href="#mcq-zone">11. MCQ quiz</a></li>
+          </ul>
+          <div class="soft mt16">
+            <h5 class="mb0">What you will be able to do</h5>
+            <ul class="mini-list mt8">
+              <li>Fit a line manually using formulas</li>
+              <li>Use <code>np.polyfit</code> and <code>np.poly1d</code> — <a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html" target="_blank" rel="noopener noreferrer">NumPy docs</a></li>
+              <li>Use <code>scipy.stats.linregress</code> — <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html" target="_blank" rel="noopener noreferrer">SciPy docs</a></li>
+              <li>Calculate <code>r</code> and <code>R²</code></li>
+              <li>Find the best polynomial degree</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="section" id="what-is-regression">
+        <div class="section-title">
+          <h3 id="speak2">1) What is regression?</h3>
+          <p>
+            Regression tries to find a mathematical relationship between input
+            and output.
+          </p>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <p id="speak3">
+              Regression is a method used to model the relationship between
+              variables. Usually, we have an input variable
+              <strong>x</strong> and an output variable <strong>y</strong>. We
+              want to find a function that connects them.
+            </p>
+            <p id="speak4">
+              In the simplest case, we assume the relationship is linear. That
+              means we believe the points roughly follow a straight line. Then
+              we try to find the best straight line that passes as close as
+              possible to the data.
+            </p>
+            <div class="formula">y = mx + c</div>
+            <p id="speak5">
+              Here, <strong>m</strong> is the slope and <strong>c</strong> is
+              the intercept. The slope tells us how much y changes when x
+              increases by 1. The intercept tells us the value of y when x is 0.
+            </p>
+          </div>
+          <div class="card">
+            <h4>Simple intuition</h4>
+            <div class="soft">
+              <p id="speak6">
+                Suppose a student studies more hours and usually gets better
+                marks. The exact marks may not lie perfectly on a straight line,
+                but the overall trend may still be roughly linear.
+              </p>
+              <ul class="mini-list" id="speak7">
+                <li>x = study hours</li>
+                <li>y = marks scored</li>
+                <li>Regression line = best trend line</li>
+              </ul>
+            </div>
+
+            <div class="callout mt16" id="speak8">
+              Regression is about <strong>fitting a function</strong>.
+              Correlation is about
+              <strong>measuring how strongly two variables move together</strong
+              >.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="why-regression">
+        <div class="section-title">
+          <h3 id="speak9">2) Why do we need regression?</h3>
+          <p>Because real data is noisy, and we still want a useful trend.</p>
+        </div>
+        <div class="grid grid-3">
+          <div class="card">
+            <h4>Prediction</h4>
+            <p id="speak10">
+              Once we fit a line or polynomial, we can predict the output for a
+              new input value. If we know future x, we can estimate future y.
+            </p>
+          </div>
+          <div class="card">
+            <h4>Understanding trend</h4>
+            <p id="speak11">
+              Regression tells us whether the data is generally rising, falling,
+              or curved. It gives numerical meaning to a visible pattern.
+            </p>
+          </div>
+          <div class="card">
+            <h4>Model comparison</h4>
+            <p id="speak12">
+              We can compare different models, such as a line, a quadratic
+              curve, or a cubic curve, and see which one matches the data
+              better.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="equation-line">
+        <div class="section-title">
+          <h3 id="speak13">3) Equation of a straight line</h3>
+          <p>This is the core model for linear regression.</p>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <div class="formula">y = mx + c</div>
+            <ul class="mini-list mt12" id="speak14">
+              <li><strong>y</strong> = predicted output</li>
+              <li><strong>x</strong> = input</li>
+              <li><strong>m</strong> = slope of the line</li>
+              <li><strong>c</strong> = y-intercept</li>
+            </ul>
+            <p id="speak15">
+              If the slope is positive, the line rises from left to right. If
+              the slope is negative, the line falls. If the slope is zero, the
+              line is flat.
+            </p>
+          </div>
+          <div class="card">
+            <h4>Example</h4>
+            <div class="formula">y = 2x + 3</div>
+            <p id="speak16">
+              Here the slope is 2. That means when x increases by 1, y increases
+              by 2. The intercept is 3. That means when x = 0, y = 3.
+            </p>
+            <div class="soft">
+              <p class="mb0" id="speak17">If x = 5, then y = 2 × 5 + 3 = 13.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="derivation">
+        <div class="section-title">
+          <h3 id="speak18">4) Derivation of linear regression formulas</h3>
+          <p>We derive the best line by minimizing total squared error.</p>
+        </div>
+
+        <div class="card">
+          <p id="speak19">Suppose we have points:</p>
+          <div class="formula">
+            (x₁, y₁), (x₂, y₂), (x₃, y₃), ... , (xₙ, yₙ)
+          </div>
+          <p id="speak20">We want a line:</p>
+          <div class="formula">ŷ = mx + c</div>
+          <p id="speak21">The prediction for each point is:</p>
+          <div class="formula">ŷᵢ = mxᵢ + c</div>
+          <p id="speak22">The error for each point is:</p>
+          <div class="formula">eᵢ = yᵢ - ŷᵢ = yᵢ - (mxᵢ + c)</div>
+          <p id="speak23">
+            We square each error so that negative and positive errors do not
+            cancel each other. Then we add them:
+          </p>
+          <div class="formula">S = Σ (yᵢ - mxᵢ - c)²</div>
+          <p id="speak24">
+            We want the values of m and c that make S as small as possible. This
+            is called the least squares method.
+          </p>
+
+          <div class="equation-steps mt16">
+            <div class="formula">∂S / ∂c = -2 Σ (yᵢ - mxᵢ - c) = 0</div>
+            <div class="formula">Σy = mΣx + nc</div>
+            <div class="formula">c = (Σy - mΣx) / n</div>
+          </div>
+
+          <div class="equation-steps mt16">
+            <div class="formula">∂S / ∂m = -2 Σ xᵢ(yᵢ - mxᵢ - c) = 0</div>
+            <div class="formula">Σxy = mΣx² + cΣx</div>
+          </div>
+
+          <p id="speak25">Now solve the two equations together and we get:</p>
+
+          <div class="equation-steps">
+            <div class="formula">m = [nΣxy - (Σx)(Σy)] / [nΣx² - (Σx)²]</div>
+            <div class="formula">c = [Σy - mΣx] / n</div>
+          </div>
+
+          <div class="callout mt20" id="speak26">
+            These two formulas are the heart of manual linear regression in
+            basic Python.
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="correlation">
+        <div class="section-title">
+          <h3 id="speak27">5) Coefficient of correlation and R²</h3>
+          <p>These help us judge how well the model matches the data.</p>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h4>Pearson correlation coefficient</h4>
+            <div class="formula">
+              r = Σ[(xᵢ - x̄)(yᵢ - ȳ)] / √(Σ(xᵢ - x̄)² · Σ(yᵢ - ȳ)²)
+            </div>
+            <p id="speak28">The value of r lies between -1 and +1.</p>
+            <ul class="mini-list" id="speak29">
+              <li>r close to +1 means strong positive linear relationship</li>
+              <li>r close to -1 means strong negative linear relationship</li>
+              <li>r close to 0 means weak linear relationship</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Coefficient of determination</h4>
+            <div class="formula">R² = 1 - (SSres / SStotal)</div>
+            <div class="formula mt12">SSres = Σ(yᵢ - ŷᵢ)²</div>
+            <div class="formula mt12">SStotal = Σ(yᵢ - ȳ)²</div>
+            <p id="speak30">
+              R² tells us what fraction of the variation in y is explained by
+              the model. Closer to 1 usually means a better fit on the current
+              dataset.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="comparison">
+        <div class="section-title">
+          <h3 id="speak31">6) Comparing the three methods</h3>
+          <p>
+            All three can fit a line, but they differ in convenience and depth.
+          </p>
+        </div>
+        <div class="card">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Main idea</th>
+                <th>Good for</th>
+                <th>Limitation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Basic Python</strong></td>
+                <td>Use manual formulas for slope and intercept</td>
+                <td>Learning the math and interviews</td>
+                <td>More code and no advanced statistics built in</td>
+              </tr>
+              <tr>
+                <td><strong>NumPy polyfit</strong></td>
+                <td>Use least squares polynomial fitting<br><a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html" target="_blank" rel="noopener noreferrer">Official NumPy polyfit docs</a></td>
+                <td>Quick fitting, polynomial models, concise code</td>
+                <td>You compute many metrics yourself</td>
+              </tr>
+              <tr>
+                <td><strong>SciPy linregress</strong></td>
+                <td>Specialized linear regression function<br><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html" target="_blank" rel="noopener noreferrer">Official SciPy linregress docs</a></td>
+                <td>Linear regression with r, p-value, std errors</td>
+                <td>Mainly for linear fit, not general polynomial search</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="worked-example">
+        <div class="section-title">
+          <h3 id="speak32">7) Worked example by hand</h3>
+          <p>Let us calculate slope and intercept for a small dataset.</p>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h4>Dataset</h4>
+            <div class="formula">x = [1, 2, 3, 4, 5, 6]</div>
+            <div class="formula mt12">y = [2, 4, 5, 4, 5, 7]</div>
+
+            <div class="soft mt16">
+              <p class="mb0" id="speak33">First compute: n, Σx, Σy, Σxy, Σx²</p>
+            </div>
+
+            <div class="equation-steps mt16">
+              <div class="formula">n = 6</div>
+              <div class="formula">Σx = 1+2+3+4+5+6 = 21</div>
+              <div class="formula">Σy = 2+4+5+4+5+7 = 27</div>
+              <div class="formula">Σxy = 2+8+15+16+25+42 = 108</div>
+              <div class="formula">Σx² = 1+4+9+16+25+36 = 91</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Now apply the formula</h4>
+            <div class="equation-steps">
+              <div class="formula">m = [6×108 - 21×27] / [6×91 - 21²]</div>
+              <div class="formula">m = (648 - 567) / (546 - 441)</div>
+              <div class="formula">m = 81 / 105 = 0.77142857...</div>
+            </div>
+
+            <div class="equation-steps mt16">
+              <div class="formula">c = [27 - (0.77142857 × 21)] / 6</div>
+              <div class="formula">c = (27 - 16.2) / 6</div>
+              <div class="formula">c = 1.8</div>
+            </div>
+
+            <div class="callout mt20" id="speak34">
+              So the fitted line is approximately:
+              <strong>y = 0.7714x + 1.8</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="playground">
+        <div class="section-title">
+          <h3 id="speak35">8) Interactive regression playground</h3>
+          <p>
+            Enter your own x and y values, then compare the methods and see the
+            chart.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="controls">
+            <div class="field">
+              <label for="xInput">x values (comma separated)</label>
+              <textarea id="xInput">1,2,3,4,5,6,7,8</textarea>
+            </div>
+            <div class="field">
+              <label for="yInput">y values (comma separated)</label>
+              <textarea id="yInput">1.2,2.1,2.9,4.2,5.1,5.8,7.2,8.1</textarea>
+            </div>
+            <div class="field">
+              <label for="maxDegree">Maximum polynomial degree</label>
+              <input id="maxDegree" type="number" min="1" max="10" value="5" />
+            </div>
+            <div class="field">
+              <label for="predX">Predict y for x =</label>
+              <input id="predX" type="number" step="any" value="9" />
+            </div>
+          </div>
+
+          <div class="inline-actions">
+            <button class="btn" id="runBtn">Run comparison</button>
+            <button class="chip" id="loadLinearBtn">
+              Load near-linear sample
+            </button>
+            <button class="chip" id="loadCurveBtn">Load curved sample</button>
+            <button class="chip" id="loadNoisyBtn">Load noisy sample</button>
+          </div>
+
+          <div class="output" id="summaryBox">
+            <div class="badge info">Ready to run</div>
+            <p class="mt12 mb0 muted">
+              The lesson will calculate manual linear regression, NumPy-style
+              polynomial fitting, SciPy-style statistics, and best polynomial
+              degree match.
+            </p>
+
+            <div class="output-grid">
+              <div class="metric">
+                <div class="name">Basic Python line</div>
+                <div class="val" id="basicLineVal">—</div>
+              </div>
+              <div class="metric">
+                <div class="name">NumPy degree 1 line</div>
+                <div class="val" id="numpyLineVal">—</div>
+              </div>
+              <div class="metric">
+                <div class="name">SciPy line</div>
+                <div class="val" id="scipyLineVal">—</div>
+              </div>
+              <div class="metric">
+                <div class="name">Best degree</div>
+                <div class="val" id="bestDegreeVal">—</div>
+              </div>
+              <div class="metric">
+                <div class="name">Best coefficient of correlation</div>
+                <div class="val" id="bestRVal">—</div>
+              </div>
+              <div class="metric">
+                <div class="name">Predicted y for given x</div>
+                <div class="val" id="predYVal">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-2 mt20">
+            <div class="canvas-wrap">
+              <h4>Data and fitted curves</h4>
+              <canvas id="fitCanvas" width="900" height="520"></canvas>
+              <p class="small mt12">
+                Points are the dataset. The straight line is the linear fit. The
+                curved line is the best polynomial fit found.
+              </p>
+            </div>
+
+            <div class="canvas-wrap">
+              <h4>Degree vs fit quality</h4>
+              <canvas id="degreeCanvas" width="900" height="520"></canvas>
+              <p class="small mt12">
+                This chart shows how the score changes with polynomial degree.
+                High training fit is useful, but too much degree can overfit.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-3 mt20">
+            <div class="soft">
+              <h4>Basic Python result</h4>
+              <div id="basicDetails" class="small">
+                Run the demo to see details.
+              </div>
+            </div>
+            <div class="soft">
+              <h4>NumPy-style result</h4>
+              <div id="numpyDetails" class="small">
+                Run the demo to see details.
+              </div>
+            </div>
+            <div class="soft">
+              <h4>SciPy-style result</h4>
+              <div id="scipyDetails" class="small">
+                Run the demo to see details.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="degree-finder">
+        <div class="section-title">
+          <h3 id="speak36">9) How the best degree finder works</h3>
+          <p>
+            We test several polynomial degrees and choose the best fit score.
+          </p>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h4>Idea</h4>
+            <p id="speak37">
+              We start from degree 1 and go up to a chosen maximum degree. For
+              each degree, we:
+            </p>
+            <ul class="mini-list" id="speak38">
+              <li>fit the polynomial</li>
+              <li>calculate predictions on the given data</li>
+              <li>
+                compute the coefficient of correlation between actual and
+                predicted y
+              </li>
+              <li>compute R²</li>
+              <li>keep the best one</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Important warning</h4>
+            <div class="callout" id="speak39">
+              A very high degree can memorize the training data too closely.
+              That can look excellent on the current points but perform badly on
+              new points. So “best degree” on training data is not always best
+              for real prediction.
+            </div>
+            <p class="mt12" id="speak40">
+              For stronger model selection, use a validation set or
+              cross-validation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="full-code">
+        <div class="section-title">
+          <h3 id="speak41">10) Full Python code</h3>
+          <p>
+            This single script compares all methods and finds the best degree.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="codebox">
+            <button class="copy-btn" data-copy-target="pyFullCode">
+              Copy code
+            </button>
+            <pre id="pyFullCode">
+import math
+import numpy as np
+from scipy import stats
+
+# =========================================================
+# SAMPLE DATA
+# =========================================================
+x = [1, 2, 3, 4, 5, 6, 7, 8]
+y = [1.2, 2.1, 2.9, 4.2, 5.1, 5.8, 7.2, 8.1]
+
+
+# =========================================================
+# UTILITY FUNCTIONS
+# =========================================================
+def mean(arr):
+    return sum(arr) / len(arr)
+
+
+def ss_total(y_true):
+    y_bar = mean(y_true)
+    return sum((yi - y_bar) ** 2 for yi in y_true)
+
+
+def ss_residual(y_true, y_pred):
+    return sum((yi - yp) ** 2 for yi, yp in zip(y_true, y_pred))
+
+
+def r_squared(y_true, y_pred):
+    sst = ss_total(y_true)
+    if sst == 0:
+        return 1.0
+    ssr = ss_residual(y_true, y_pred)
+    return 1 - (ssr / sst)
+
+
+def pearson_r_basic(a, b):
+    if len(a) != len(b):
+        raise ValueError("Both arrays must have the same length.")
+    if len(a) &lt; 2:
+        raise ValueError("At least 2 points are required.")
+
+    ma = mean(a)
+    mb = mean(b)
+
+    num = sum((ai - ma) * (bi - mb) for ai, bi in zip(a, b))
+    den_a = math.sqrt(sum((ai - ma) ** 2 for ai in a))
+    den_b = math.sqrt(sum((bi - mb) ** 2 for bi in b))
+
+    if den_a == 0 or den_b == 0:
+        return 0.0
+
+    return num / (den_a * den_b)
+
+
+# =========================================================
+# 1) BASIC PYTHON LINEAR REGRESSION
+# =========================================================
+def linear_regression_basic(x, y):
+    if len(x) != len(y):
+        raise ValueError("x and y must have same length.")
+    n = len(x)
+    if n &lt; 2:
+        raise ValueError("At least 2 data points are required.")
+
+    sum_x = sum(x)
+    sum_y = sum(y)
+    sum_xy = sum(xi * yi for xi, yi in zip(x, y))
+    sum_x2 = sum(xi * xi for xi in x)
+
+    denominator = n * sum_x2 - sum_x ** 2
+    if denominator == 0:
+        raise ValueError("Cannot fit line: all x values may be identical.")
+
+    slope = (n * sum_xy - sum_x * sum_y) / denominator
+    intercept = (sum_y - slope * sum_x) / n
+
+    y_pred = [slope * xi + intercept for xi in x]
+    r2 = r_squared(y, y_pred)
+    r = pearson_r_basic(x, y)
+
+    return {
+        "method": "Basic Python Linear Regression",
+        "slope": slope,
+        "intercept": intercept,
+        "y_pred": y_pred,
+        "r": r,
+        "r2": r2,
+    }
+
+
+# =========================================================
+# 2) NUMPY POLYFIT / POLY1D
+# =========================================================
+def regression_numpy_polyfit(x, y, degree=1):
+    x_np = np.array(x, dtype=float)
+    y_np = np.array(y, dtype=float)
+
+    coeffs = np.polyfit(x_np, y_np, degree)
+    poly = np.poly1d(coeffs)
+    y_pred = poly(x_np)
+
+    r = float(np.corrcoef(y_np, y_pred)[0, 1]) if len(y_np) &gt; 1 else 0.0
+    r2 = float(r_squared(list(y_np), list(y_pred)))
+
+    return {
+        "method": f"NumPy polyfit degree {degree}",
+        "degree": degree,
+        "coefficients": coeffs,
+        "poly1d": poly,
+        "y_pred": y_pred,
+        "r": r,
+        "r2": r2,
+    }
+
+
+# =========================================================
+# 3) SCIPY LINEAR REGRESSION
+# =========================================================
+def regression_scipy_linregress(x, y):
+    result = stats.linregress(x, y)
+    y_pred = [result.slope * xi + result.intercept for xi in x]
+    r2 = result.rvalue ** 2
+
+    return {
+        "method": "SciPy stats.linregress",
+        "slope": result.slope,
+        "intercept": result.intercept,
+        "r": result.rvalue,
+        "r2": r2,
+        "p_value": result.pvalue,
+        "slope_stderr": result.stderr,
+        "intercept_stderr": result.intercept_stderr,
+        "y_pred": y_pred,
+    }
+
+
+# =========================================================
+# 4) FIND BEST DEGREE
+# =========================================================
+def find_best_degree(x, y, min_degree=1, max_degree=6):
+    x_np = np.array(x, dtype=float)
+    y_np = np.array(y, dtype=float)
+
+    if len(x_np) != len(y_np):
+        raise ValueError("x and y must have same length.")
+    if len(x_np) &lt; 2:
+        raise ValueError("At least 2 data points are required.")
+
+    results = []
+
+    for deg in range(min_degree, max_degree + 1):
+        if deg &gt;= len(x_np):
+            continue
+
+        coeffs = np.polyfit(x_np, y_np, deg)
+        poly = np.poly1d(coeffs)
+        y_pred = poly(x_np)
+
+        r = float(np.corrcoef(y_np, y_pred)[0, 1]) if len(y_np) &gt; 1 else 0.0
+        r2 = float(r_squared(list(y_np), list(y_pred)))
+
+        results.append({
+            "degree": deg,
+            "coefficients": coeffs,
+            "poly1d": poly,
+            "y_pred": y_pred,
+            "r": r,
+            "abs_r": abs(r),
+            "r2": r2,
+        })
+
+    if not results:
+        raise ValueError("No valid degree could be tested.")
+
+    best = max(results, key=lambda item: (item["r2"], item["abs_r"]))
+
+    return {
+        "all_results": results,
+        "best": best,
+    }
+
+
+# =========================================================
+# 5) COMPARISON DRIVER
+# =========================================================
+def compare_regression_methods(x, y, max_degree=6):
+    basic = linear_regression_basic(x, y)
+    numpy_linear = regression_numpy_polyfit(x, y, degree=1)
+    scipy_linear = regression_scipy_linregress(x, y)
+    degree_search = find_best_degree(x, y, min_degree=1, max_degree=max_degree)
+
+    print("=" * 70)
+    print("1) BASIC PYTHON LINEAR REGRESSION")
+    print("=" * 70)
+    print(f"Slope     : {basic['slope']:.6f}")
+    print(f"Intercept : {basic['intercept']:.6f}")
+    print(f"r         : {basic['r']:.6f}")
+    print(f"R^2       : {basic['r2']:.6f}")
+    print()
+
+    print("=" * 70)
+    print("2) NUMPY POLYFIT LINEAR REGRESSION (DEGREE 1)")
+    print("=" * 70)
+    print("Coefficients [slope, intercept]:")
+    print(numpy_linear["coefficients"])
+    print(f"r         : {numpy_linear['r']:.6f}")
+    print(f"R^2       : {numpy_linear['r2']:.6f}")
+    print()
+
+    print("=" * 70)
+    print("3) SCIPY STATS LINREGRESS")
+    print("=" * 70)
+    print(f"Slope               : {scipy_linear['slope']:.6f}")
+    print(f"Intercept           : {scipy_linear['intercept']:.6f}")
+    print(f"r                   : {scipy_linear['r']:.6f}")
+    print(f"R^2                 : {scipy_linear['r2']:.6f}")
+    print(f"p-value             : {scipy_linear['p_value']:.6f}")
+    print(f"Slope Std Error     : {scipy_linear['slope_stderr']:.6f}")
+    print(f"Intercept Std Error : {scipy_linear['intercept_stderr']:.6f}")
+    print()
+
+    print("=" * 70)
+    print("4) BEST DEGREE SEARCH")
+    print("=" * 70)
+    print("Degree-wise summary:")
+    for item in degree_search["all_results"]:
+        print(
+            f"Degree {item['degree']:>2} | "
+            f"r = {item['r']:.6f} | "
+            f"|r| = {item['abs_r']:.6f} | "
+            f"R^2 = {item['r2']:.6f}"
+        )
+
+    best = degree_search["best"]
+    print()
+    print("BEST DEGREE FOUND")
+    print(f"Best degree                 : {best['degree']}")
+    print(f"Best coefficient of corr. r : {best['r']:.6f}")
+    print(f"Best |r|                    : {best['abs_r']:.6f}")
+    print(f"Best R^2                    : {best['r2']:.6f}")
+    print("Best polynomial coefficients:")
+    print(best["coefficients"])
+    print("Polynomial:")
+    print(best["poly1d"])
+
+    return {
+        "basic": basic,
+        "numpy_linear": numpy_linear,
+        "scipy_linear": scipy_linear,
+        "degree_search": degree_search,
+    }
+
+
+# =========================================================
+# RUN
+# =========================================================
+if __name__ == "__main__":
+    output = compare_regression_methods(x, y, max_degree=5)</pre
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="mcq-zone">
+        <div class="section-title">
+          <h3 id="speak42">11) MCQ quiz</h3>
+          <p>Test whether the concepts are clear.</p>
+        </div>
+
+        <div class="card">
+          <div class="quiz-toolbar">
+            <div class="badge warn" id="quizStatus">Not submitted yet</div>
+            <div class="inline-actions" style="margin-top: 0">
+              <button class="btn" id="submitQuizBtn">Submit quiz</button>
+              <button class="chip" id="resetQuizBtn">Reset quiz</button>
+            </div>
+          </div>
+
+          <div id="quizContainer"></div>
+
+          <div class="output mt16" id="quizResultBox">
+            <strong>Your score:</strong> <span id="quizScore">0 / 10</span>
+            <p class="small mb0 mt8">
+              Read the explanations carefully. They are part of the lesson.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <h3 id="speak43">12) Final summary</h3>
+          <p>What to remember from this lesson.</p>
+        </div>
+        <div class="grid grid-3">
+          <div class="card">
+            <h4>Basic Python</h4>
+            <p id="speak44">
+              Use this when you want to understand the derivation and the real
+              formulas behind linear regression.
+            </p>
+          </div>
+          <div class="card">
+            <h4>NumPy polyfit</h4>
+            <p id="speak45">
+              Use this when you want fast numerical fitting and when you want to
+              test higher polynomial degrees easily.
+            </p>
+          </div>
+          <div class="card">
+            <h4>SciPy linregress</h4>
+            <p id="speak46">
+              Use this when you want linear regression plus useful statistics
+              such as r-value, p-value, and standard errors.
+            </p>
+          </div>
+        </div>
+
+        <div class="card mt20">
+          <div class="callout" id="speak47">
+            The line itself is only one part of the story. Always check fit
+            quality, understand what the coefficients mean, and be careful with
+            very high polynomial degrees.
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="card footer-card">
+          <div>
+            <strong>Programmer's Picnic</strong>
+            <div class="small">
+              Regression lesson page with derivation, charts, examples, and
+              MCQs.
+            </div>
+          </div>
+          <div class="small">
+            Built in a single HTML file for easy hosting and editing.
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      // ----------------------------
+      // Utility helpers
+      // ----------------------------
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) =>
+        Array.from(root.querySelectorAll(sel));
+
+      function parseNumberList(text) {
+        return text
+          .split(/[\n,]+/)
+          .map((s) => s.trim())
+          .filter(Boolean)
+          .map(Number)
+          .filter((v) => Number.isFinite(v));
+      }
+
+      function mean(arr) {
+        return arr.reduce((a, b) => a + b, 0) / arr.length;
+      }
+
+      function ssTotal(y) {
+        const yBar = mean(y);
+        return y.reduce((sum, yi) => sum + (yi - yBar) ** 2, 0);
+      }
+
+      function ssResidual(y, yPred) {
+        return y.reduce((sum, yi, i) => sum + (yi - yPred[i]) ** 2, 0);
+      }
+
+      function rSquared(y, yPred) {
+        const sst = ssTotal(y);
+        if (sst === 0) return 1;
+        const ssr = ssResidual(y, yPred);
+        return 1 - ssr / sst;
+      }
+
+      function pearsonR(a, b) {
+        if (a.length !== b.length || a.length < 2) return 0;
+        const ma = mean(a);
+        const mb = mean(b);
+
+        let num = 0,
+          denA = 0,
+          denB = 0;
+        for (let i = 0; i < a.length; i++) {
+          const da = a[i] - ma;
+          const db = b[i] - mb;
+          num += da * db;
+          denA += da * da;
+          denB += db * db;
+        }
+        if (denA === 0 || denB === 0) return 0;
+        return num / Math.sqrt(denA * denB);
+      }
+
+      function formatNum(n, digits = 4) {
+        if (!Number.isFinite(n)) return "—";
+        return Number(n).toFixed(digits);
+      }
+
+      // ----------------------------
+      // Basic Python style linear regression in JS
+      // ----------------------------
+      function linearRegressionBasic(x, y) {
+        const n = x.length;
+        const sumX = x.reduce((a, b) => a + b, 0);
+        const sumY = y.reduce((a, b) => a + b, 0);
+        const sumXY = x.reduce((sum, xi, i) => sum + xi * y[i], 0);
+        const sumX2 = x.reduce((sum, xi) => sum + xi * xi, 0);
+
+        const denom = n * sumX2 - sumX * sumX;
+        if (denom === 0)
+          throw new Error("All x values appear identical. Cannot fit a line.");
+
+        const slope = (n * sumXY - sumX * sumY) / denom;
+        const intercept = (sumY - slope * sumX) / n;
+        const yPred = x.map((xi) => slope * xi + intercept);
+        const r = pearsonR(x, y);
+        const r2 = rSquared(y, yPred);
+
+        return { slope, intercept, yPred, r, r2 };
+      }
+
+      // ----------------------------
+      // Gaussian elimination solver for polynomial regression
+      // ----------------------------
+      function solveLinearSystem(A, b) {
+        const n = A.length;
+        const M = A.map((row, i) => [...row, b[i]]);
+
+        for (let i = 0; i < n; i++) {
+          let maxRow = i;
+          for (let k = i + 1; k < n; k++) {
+            if (Math.abs(M[k][i]) > Math.abs(M[maxRow][i])) maxRow = k;
+          }
+          [M[i], M[maxRow]] = [M[maxRow], M[i]];
+
+          const pivot = M[i][i];
+          if (Math.abs(pivot) < 1e-12)
+            throw new Error("Matrix is singular or unstable for this degree.");
+
+          for (let j = i; j <= n; j++) M[i][j] /= pivot;
+
+          for (let k = 0; k < n; k++) {
+            if (k === i) continue;
+            const factor = M[k][i];
+            for (let j = i; j <= n; j++) {
+              M[k][j] -= factor * M[i][j];
+            }
+          }
+        }
+
+        return M.map((row) => row[n]);
+      }
+
+      function polyfitLeastSquares(x, y, degree) {
+        const n = degree + 1;
+
+        const xPowers = [];
+        for (let p = 0; p <= 2 * degree; p++) {
+          xPowers[p] = x.reduce((sum, xi) => sum + xi ** p, 0);
+        }
+
+        const A = [];
+        for (let row = 0; row < n; row++) {
+          const arr = [];
+          for (let col = 0; col < n; col++) {
+            arr.push(xPowers[row + col]);
+          }
+          A.push(arr);
+        }
+
+        const b = [];
+        for (let row = 0; row < n; row++) {
+          b.push(x.reduce((sum, xi, i) => sum + y[i] * xi ** row, 0));
+        }
+
+        const coeffAsc = solveLinearSystem(A, b);
+        const coeffDesc = coeffAsc.slice().reverse();
+        return coeffDesc;
+      }
+
+      function polyPredict(coeffsDesc, x) {
+        return x.map((xi) => {
+          let val = 0;
+          for (let i = 0; i < coeffsDesc.length; i++) {
+            val += coeffsDesc[i] * xi ** (coeffsDesc.length - 1 - i);
+          }
+          return val;
+        });
+      }
+
+      function regressionPolyfitLike(x, y, degree = 1) {
+        const coeffs = polyfitLeastSquares(x, y, degree);
+        const yPred = polyPredict(coeffs, x);
+        const r = pearsonR(y, yPred);
+        const r2 = rSquared(y, yPred);
+        return { degree, coefficients: coeffs, yPred, r, r2 };
+      }
+
+      function linregressScipyStyle(x, y) {
+        const basic = linearRegressionBasic(x, y);
+        const n = x.length;
+        const yPred = basic.yPred;
+        const residuals = y.map((yi, i) => yi - yPred[i]);
+
+        const sumX = x.reduce((a, b) => a + b, 0);
+        const xMean = sumX / n;
+        const sxx = x.reduce((sum, xi) => sum + (xi - xMean) ** 2, 0);
+        const sse = residuals.reduce((sum, e) => sum + e * e, 0);
+        const stderr = Math.sqrt(sse / (n - 2) / sxx);
+        const interceptStderr = Math.sqrt(
+          (sse / (n - 2)) * (1 / n + (xMean * xMean) / sxx),
+        );
+
+        return {
+          slope: basic.slope,
+          intercept: basic.intercept,
+          r: basic.r,
+          r2: basic.r2,
+          pValueText: "Use SciPy in Python for exact p-value.",
+          slopeStderr: stderr,
+          interceptStderr,
+        };
+      }
+
+      function findBestDegree(x, y, maxDegree = 6) {
+        const results = [];
+        for (let deg = 1; deg <= maxDegree; deg++) {
+          if (deg >= x.length) break;
+          try {
+            const fit = regressionPolyfitLike(x, y, deg);
+            results.push({
+              degree: deg,
+              coefficients: fit.coefficients,
+              yPred: fit.yPred,
+              r: fit.r,
+              absR: Math.abs(fit.r),
+              r2: fit.r2,
+            });
+          } catch (err) {
+            // skip unstable degree
+          }
+        }
+
+        if (!results.length)
+          throw new Error("No valid polynomial degree could be tested.");
+        results.sort((a, b) => {
+          if (b.r2 !== a.r2) return b.r2 - a.r2;
+          return b.absR - a.absR;
+        });
+        return {
+          best: results[0],
+          allResults: results,
+        };
+      }
+
+      // ----------------------------
+      // Chart drawing
+      // ----------------------------
+      function drawAxes(ctx, width, height, pad, xMin, xMax, yMin, yMax) {
+        ctx.clearRect(0, 0, width, height);
+
+        const gx = (x) =>
+          pad + ((x - xMin) / (xMax - xMin || 1)) * (width - 2 * pad);
+        const gy = (y) =>
+          height - pad - ((y - yMin) / (yMax - yMin || 1)) * (height - 2 * pad);
+
+        ctx.fillStyle = "#fffaf0";
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.strokeStyle = "#ecd49b";
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i <= 5; i++) {
+          const xx = pad + (i * (width - 2 * pad)) / 5;
+          const yy = pad + (i * (height - 2 * pad)) / 5;
+
+          ctx.beginPath();
+          ctx.moveTo(xx, pad);
+          ctx.lineTo(xx, height - pad);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(pad, yy);
+          ctx.lineTo(width - pad, yy);
+          ctx.stroke();
+        }
+
+        ctx.strokeStyle = "#8a5a12";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(pad, height - pad);
+        ctx.lineTo(width - pad, height - pad);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(pad, pad);
+        ctx.lineTo(pad, height - pad);
+        ctx.stroke();
+
+        ctx.fillStyle = "#6b5a3d";
+        ctx.font = "12px Inter, sans-serif";
+
+        for (let i = 0; i <= 5; i++) {
+          const xv = xMin + (i * (xMax - xMin)) / 5;
+          const yv = yMin + (i * (yMax - yMin)) / 5;
+          const xx = pad + (i * (width - 2 * pad)) / 5;
+          const yy = height - pad - (i * (height - 2 * pad)) / 5;
+          ctx.fillText(Number(xv).toFixed(2), xx - 14, height - pad + 18);
+          ctx.fillText(Number(yv).toFixed(2), 8, yy + 4);
+        }
+
+        return { gx, gy };
+      }
+
+      function drawFitChart(
+        canvas,
+        x,
+        y,
+        linearPred,
+        bestPred,
+        predX,
+        predY,
+        bestDegree,
+      ) {
+        const ctx = canvas.getContext("2d");
+        const width = canvas.width;
+        const height = canvas.height;
+        const pad = 52;
+
+        const xAll = x.concat([predX]).filter(Number.isFinite);
+        const yAll = y
+          .concat(linearPred, bestPred, [predY])
+          .filter(Number.isFinite);
+
+        const xMin = Math.min(...xAll) - 0.5;
+        const xMax = Math.max(...xAll) + 0.5;
+        const yMin = Math.min(...yAll) - 0.5;
+        const yMax = Math.max(...yAll) + 0.5;
+
+        const { gx, gy } = drawAxes(
+          ctx,
+          width,
+          height,
+          pad,
+          xMin,
+          xMax,
+          yMin,
+          yMax,
+        );
+
+        // data points
+        ctx.fillStyle = "#d97706";
+        x.forEach((xi, i) => {
+          ctx.beginPath();
+          ctx.arc(gx(xi), gy(y[i]), 5.2, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // linear line
+        ctx.strokeStyle = "#2563eb";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        x.forEach((xi, i) => {
+          const px = gx(xi),
+            py = gy(linearPred[i]);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        });
+        ctx.stroke();
+
+        // best polynomial line using many points
+        const denseX = [];
+        const steps = 120;
+        const step = (xMax - xMin) / steps;
+        for (let i = 0; i <= steps; i++) denseX.push(xMin + i * step);
+
+        // get coefficients from current state
+        const fit = regressionPolyfitLike(x, y, bestDegree);
+        const denseY = polyPredict(fit.coefficients, denseX);
+
+        ctx.strokeStyle = "#15803d";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        denseX.forEach((xi, i) => {
+          const px = gx(xi),
+            py = gy(denseY[i]);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        });
+        ctx.stroke();
+
+        // prediction point
+        if (Number.isFinite(predX) && Number.isFinite(predY)) {
+          ctx.fillStyle = "#b91c1c";
+          ctx.beginPath();
+          ctx.arc(gx(predX), gy(predY), 5.6, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // legend
+        const legend = [
+          { label: "Data points", color: "#d97706" },
+          { label: "Linear fit", color: "#2563eb" },
+          {
+            label: `Best polynomial fit (deg ${bestDegree})`,
+            color: "#15803d",
+          },
+          { label: "Prediction point", color: "#b91c1c" },
+        ];
+        let ly = 18;
+        legend.forEach((item) => {
+          ctx.fillStyle = item.color;
+          ctx.fillRect(width - 270, ly, 16, 10);
+          ctx.fillStyle = "#4b3420";
+          ctx.font = "13px Inter, sans-serif";
+          ctx.fillText(item.label, width - 246, ly + 9);
+          ly += 20;
+        });
+      }
+
+      function drawDegreeChart(canvas, results) {
+        const ctx = canvas.getContext("2d");
+        const width = canvas.width;
+        const height = canvas.height;
+        const pad = 52;
+
+        const xVals = results.map((r) => r.degree);
+        const yVals = results.map((r) => r.r2);
+
+        const xMin = Math.min(...xVals) - 0.5;
+        const xMax = Math.max(...xVals) + 0.5;
+        const yMin = Math.max(0, Math.min(...yVals) - 0.05);
+        const yMax = Math.min(1.05, Math.max(...yVals) + 0.05);
+
+        const { gx, gy } = drawAxes(
+          ctx,
+          width,
+          height,
+          pad,
+          xMin,
+          xMax,
+          yMin,
+          yMax,
+        );
+
+        ctx.strokeStyle = "#7c3aed";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        results.forEach((r, i) => {
+          const px = gx(r.degree);
+          const py = gy(r.r2);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        });
+        ctx.stroke();
+
+        results.forEach((r) => {
+          ctx.fillStyle = "#7c3aed";
+          ctx.beginPath();
+          ctx.arc(gx(r.degree), gy(r.r2), 5, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        ctx.fillStyle = "#4b3420";
+        ctx.font = "13px Inter, sans-serif";
+        ctx.fillText("R² score by degree", width - 170, 22);
+      }
+
+      // ----------------------------
+      // UI update
+      // ----------------------------
+      function equationText(slope, intercept) {
+        const sign = intercept >= 0 ? "+" : "-";
+        return `y = ${formatNum(slope, 4)}x ${sign} ${formatNum(Math.abs(intercept), 4)}`;
+      }
+
+      function runDemo() {
+        const x = parseNumberList($("#xInput").value);
+        const y = parseNumberList($("#yInput").value);
+        const maxDegree = parseInt($("#maxDegree").value || "5", 10);
+        const predX = parseFloat($("#predX").value);
+
+        if (x.length !== y.length || x.length < 2) {
+          alert(
+            "Please enter valid x and y lists with the same length and at least 2 values.",
+          );
+          return;
+        }
+
+        try {
+          const basic = linearRegressionBasic(x, y);
+          const numpyLike = regressionPolyfitLike(x, y, 1);
+          const scipyLike = linregressScipyStyle(x, y);
+          const degreeSearch = findBestDegree(x, y, maxDegree);
+          const best = degreeSearch.best;
+          const predY = polyPredict(best.coefficients, [predX])[0];
+
+          $("#basicLineVal").textContent = equationText(
+            basic.slope,
+            basic.intercept,
+          );
+          $("#numpyLineVal").textContent = equationText(
+            numpyLike.coefficients[0],
+            numpyLike.coefficients[1],
+          );
+          $("#scipyLineVal").textContent = equationText(
+            scipyLike.slope,
+            scipyLike.intercept,
+          );
+          $("#bestDegreeVal").textContent = `Degree ${best.degree}`;
+          $("#bestRVal").textContent =
+            `${formatNum(best.r, 6)} | R² ${formatNum(best.r2, 6)}`;
+          $("#predYVal").textContent = formatNum(predY, 6);
+
+          $("#basicDetails").innerHTML = `
+          <strong>Slope:</strong> ${formatNum(basic.slope, 6)}<br>
+          <strong>Intercept:</strong> ${formatNum(basic.intercept, 6)}<br>
+          <strong>r:</strong> ${formatNum(basic.r, 6)}<br>
+          <strong>R²:</strong> ${formatNum(basic.r2, 6)}
+        `;
+
+          $("#numpyDetails").innerHTML = `
+          <strong>Degree:</strong> 1<br>
+          <strong>Coefficients:</strong> [${numpyLike.coefficients.map((v) => formatNum(v, 6)).join(", ")}]<br>
+          <strong>r:</strong> ${formatNum(numpyLike.r, 6)}<br>
+          <strong>R²:</strong> ${formatNum(numpyLike.r2, 6)}
+        `;
+
+          $("#scipyDetails").innerHTML = `
+          <strong>Slope:</strong> ${formatNum(scipyLike.slope, 6)}<br>
+          <strong>Intercept:</strong> ${formatNum(scipyLike.intercept, 6)}<br>
+          <strong>r:</strong> ${formatNum(scipyLike.r, 6)}<br>
+          <strong>R²:</strong> ${formatNum(scipyLike.r2, 6)}<br>
+          <strong>Slope std error:</strong> ${formatNum(scipyLike.slopeStderr, 6)}<br>
+          <strong>Intercept std error:</strong> ${formatNum(scipyLike.interceptStderr, 6)}
+        `;
+
+          $("#summaryBox .badge").className = "badge ok";
+          $("#summaryBox .badge").textContent = "Comparison complete";
+
+          drawFitChart(
+            $("#fitCanvas"),
+            x,
+            y,
+            basic.yPred,
+            best.yPred,
+            predX,
+            predY,
+            best.degree,
+          );
+          drawDegreeChart($("#degreeCanvas"), degreeSearch.allResults);
+        } catch (err) {
+          $("#summaryBox .badge").className = "badge bad";
+          $("#summaryBox .badge").textContent = "Could not compute";
+          $("#summaryBox p").textContent = err.message;
+        }
+      }
+
+      // ----------------------------
+      // Samples
+      // ----------------------------
+      function loadSample(type) {
+        if (type === "linear") {
+          $("#xInput").value = "1,2,3,4,5,6,7,8";
+          $("#yInput").value = "1.2,2.1,2.9,4.2,5.1,5.8,7.2,8.1";
+          $("#maxDegree").value = "5";
+          $("#predX").value = "9";
+        } else if (type === "curve") {
+          $("#xInput").value = "1,2,3,4,5,6,7,8,9";
+          $("#yInput").value = "2.5,3.8,6.1,9.4,13.8,19.1,25.5,32.9,41.2";
+          $("#maxDegree").value = "6";
+          $("#predX").value = "10";
+        } else {
+          $("#xInput").value = "1,2,3,4,5,6,7,8,9,10";
+          $("#yInput").value = "3.1,5.2,4.8,8.4,10.1,9.7,12.8,15.1,14.7,18.5";
+          $("#maxDegree").value = "6";
+          $("#predX").value = "11";
+        }
+        runDemo();
+      }
+
+      // ----------------------------
+      // Quiz engine
+      // ----------------------------
+      const quizData = [
+        {
+          q: "What is the general equation of a straight line in linear regression?",
+          options: ["y = x² + c", "y = mx + c", "x = my + c", "y = m/x + c"],
+          answer: 1,
+          explanation: "Linear regression fits a line of the form y = mx + c.",
+        },
+        {
+          q: "What does the slope m represent?",
+          options: [
+            "The value of y when x = 0",
+            "How much y changes when x increases by 1",
+            "The average of x and y",
+            "The number of points",
+          ],
+          answer: 1,
+          explanation:
+            "Slope measures the change in y for a one-unit increase in x.",
+        },
+        {
+          q: "What does the intercept c represent?",
+          options: [
+            "The value of y when x = 0",
+            "The strongest correlation",
+            "The prediction error",
+            "The degree of the polynomial",
+          ],
+          answer: 0,
+          explanation: "The intercept is the predicted y-value when x is zero.",
+        },
+        {
+          q: "Why do we square the errors in least squares regression?",
+          options: [
+            "To make numbers smaller",
+            "To remove units",
+            "To prevent positive and negative errors from cancelling",
+            "To reduce the number of data points",
+          ],
+          answer: 2,
+          explanation:
+            "Squaring ensures all errors contribute positively and larger errors are penalized more.",
+        },
+        {
+          q: "Which method is best for learning the derivation from ground zero?",
+          options: [
+            "Basic Python formulas",
+            "Only SciPy",
+            "Only NumPy arrays",
+            "Only charts",
+          ],
+          answer: 0,
+          explanation:
+            "Basic Python using the formulas is best for learning what is happening mathematically.",
+        },
+        {
+          q: "Which method is naturally useful for trying many polynomial degrees?",
+          options: [
+            "NumPy polyfit style fitting",
+            "Only manual slope formula",
+            "Only linregress",
+            "None",
+          ],
+          answer: 0,
+          explanation:
+            "Polynomial fitting is naturally handled by polyfit-like logic.",
+        },
+        {
+          q: "What does a Pearson correlation coefficient close to +1 mean?",
+          options: [
+            "Strong positive linear relationship",
+            "Strong negative linear relationship",
+            "No relationship at all",
+            "Always a polynomial relationship",
+          ],
+          answer: 0,
+          explanation:
+            "r near +1 indicates a strong positive linear relationship.",
+        },
+        {
+          q: "What does R² mainly tell us?",
+          options: [
+            "The number of degrees tested",
+            "How much variation in y is explained by the model",
+            "The value of x when y is zero",
+            "Whether the dataset is sorted",
+          ],
+          answer: 1,
+          explanation:
+            "R² measures the proportion of variation in y explained by the fitted model.",
+        },
+        {
+          q: "Why can a very high polynomial degree be risky?",
+          options: [
+            "Because the math becomes illegal",
+            "Because it can overfit the training data",
+            "Because x values disappear",
+            "Because y values become integers",
+          ],
+          answer: 1,
+          explanation:
+            "A high-degree polynomial can fit the given points too closely and fail on new data.",
+        },
+        {
+          q: "Which method directly gives slope, intercept, correlation, and standard error information in Python?",
+          options: [
+            "Basic loops only",
+            "NumPy mean only",
+            "SciPy linregress",
+            "Plain print",
+          ],
+          answer: 2,
+          explanation:
+            "SciPy's linregress is designed for linear regression with statistical outputs.",
+        },
+      ];
+
+      function renderQuiz() {
+        const box = $("#quizContainer");
+        box.innerHTML = quizData
+          .map(
+            (item, idx) => `
+        <div class="q-card" data-q-index="${idx}">
+          <div class="q-title">${idx + 1}. ${item.q}</div>
+          <div class="options">
+            ${item.options
+              .map(
+                (opt, oi) => `
+              <label class="option">
+                <input type="radio" name="q${idx}" value="${oi}">
+                <span>${opt}</span>
+              </label>
+            `,
+              )
+              .join("")}
+          </div>
+          <div class="explanation">${item.explanation}</div>
+        </div>
+      `,
+          )
+          .join("");
+      }
+
+      function submitQuiz() {
+        let score = 0;
+        $$(".q-card").forEach((card, idx) => {
+          const selected = $(`input[name="q${idx}"]:checked`, card);
+          const options = $$(".option", card);
+          const exp = $(".explanation", card);
+          options.forEach((o) => o.classList.remove("correct", "wrong"));
+
+          if (selected) {
+            const chosen = Number(selected.value);
+            if (chosen === quizData[idx].answer) {
+              score++;
+              options[chosen].classList.add("correct");
+            } else {
+              options[chosen].classList.add("wrong");
+              options[quizData[idx].answer].classList.add("correct");
+            }
+          } else {
+            options[quizData[idx].answer].classList.add("correct");
+          }
+          exp.classList.add("show");
+        });
+
+        $("#quizScore").textContent = `${score} / ${quizData.length}`;
+        const status = $("#quizStatus");
+        if (score === quizData.length) {
+          status.className = "badge ok";
+          status.textContent = "Perfect score";
+        } else if (score >= 7) {
+          status.className = "badge info";
+          status.textContent = "Good work";
+        } else {
+          status.className = "badge warn";
+          status.textContent = "Review and retry";
+        }
+      }
+
+      function resetQuiz() {
+        renderQuiz();
+        $("#quizScore").textContent = `0 / ${quizData.length}`;
+        const status = $("#quizStatus");
+        status.className = "badge warn";
+        status.textContent = "Not submitted yet";
+      }
+
+      // ----------------------------
+      // Copy buttons
+      // ----------------------------
+      function initCopyButtons() {
+        $$("[data-copy-target]").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const target = document.getElementById(btn.dataset.copyTarget);
+            if (!target) return;
+            const text = target.innerText;
+            try {
+              await navigator.clipboard.writeText(text);
+              const old = btn.textContent;
+              btn.textContent = "Copied";
+              setTimeout(() => (btn.textContent = old), 1200);
+            } catch {
+              btn.textContent = "Copy failed";
+              setTimeout(() => (btn.textContent = "Copy code"), 1200);
+            }
+          });
+        });
+      }
+
+      // ----------------------------
+      // Events
+      // ----------------------------
+      $("#runBtn").addEventListener("click", runDemo);
+      $("#runTopBtn").addEventListener("click", () => {
+        document
+          .getElementById("playground")
+          .scrollIntoView({ behavior: "smooth" });
+        setTimeout(runDemo, 250);
+      });
+      $("#loadLinearBtn").addEventListener("click", () => loadSample("linear"));
+      $("#loadCurveBtn").addEventListener("click", () => loadSample("curve"));
+      $("#loadNoisyBtn").addEventListener("click", () => loadSample("noisy"));
+      $("#submitQuizBtn").addEventListener("click", submitQuiz);
+      $("#resetQuizBtn").addEventListener("click", resetQuiz);
+
+      // ----------------------------
+      // Init
+      // ----------------------------
+      renderQuiz();
+      initCopyButtons();
+      runDemo();
+    </script>
+
+    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+  </body>
+</html>
