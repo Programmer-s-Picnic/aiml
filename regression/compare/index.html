@@ -8,11 +8,13 @@
       Lesson | Programmer's Picnic
     </title>
 
+    <!-- Google Ads script commented out for development / lesson sharing
     <script
       async
       crossorigin="anonymous"
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
     ></script>
+    -->
 
     <meta
       name="description"
@@ -755,7 +757,7 @@
 
           <div class="hero-stats">
             <div class="stat">
-              <div class="k">3</div>
+              <div class="k">4</div>
               <div class="t">Main implementations</div>
             </div>
             <div class="stat">
@@ -777,16 +779,6 @@
             <a class="chip" href="#full-code">Jump to full code</a>
             <a class="chip" href="#degree-finder">Best degree fit</a>
           </div>
-
-          <div class="soft mt16">
-            <h4 class="mb0">Official references</h4>
-            <ul class="mini-list mt8">
-              <li><a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html" target="_blank" rel="noopener noreferrer">NumPy polyfit documentation</a></li>
-              <li><a href="https://numpy.org/doc/stable/reference/routines.polynomials.html" target="_blank" rel="noopener noreferrer">NumPy polynomial tools overview</a></li>
-              <li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html" target="_blank" rel="noopener noreferrer">SciPy stats.linregress documentation</a></li>
-              <li><a href="https://docs.scipy.org/doc/scipy/reference/stats.html" target="_blank" rel="noopener noreferrer">SciPy statistics module overview</a></li>
-            </ul>
-          </div>
         </section>
 
         <aside class="card toc" id="lesson-map">
@@ -804,14 +796,15 @@
             <li><a href="#playground">8. Interactive playground</a></li>
             <li><a href="#degree-finder">9. Best degree fit</a></li>
             <li><a href="#full-code">10. Full Python code</a></li>
+            <li><a href="#polyfit-modern">10B. NumPy Polynomial.fit</a></li>
             <li><a href="#mcq-zone">11. MCQ quiz</a></li>
           </ul>
           <div class="soft mt16">
             <h5 class="mb0">What you will be able to do</h5>
             <ul class="mini-list mt8">
               <li>Fit a line manually using formulas</li>
-              <li>Use <code>np.polyfit</code> and <code>np.poly1d</code> — <a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html" target="_blank" rel="noopener noreferrer">NumPy docs</a></li>
-              <li>Use <code>scipy.stats.linregress</code> — <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html" target="_blank" rel="noopener noreferrer">SciPy docs</a></li>
+              <li>Use <code>np.polyfit</code> and <code>np.poly1d</code></li>
+              <li>Use <code>scipy.stats.linregress</code></li>
               <li>Calculate <code>r</code> and <code>R²</code></li>
               <li>Find the best polynomial degree</li>
             </ul>
@@ -1050,13 +1043,13 @@
               </tr>
               <tr>
                 <td><strong>NumPy polyfit</strong></td>
-                <td>Use least squares polynomial fitting<br><a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html" target="_blank" rel="noopener noreferrer">Official NumPy polyfit docs</a></td>
+                <td>Use least squares polynomial fitting</td>
                 <td>Quick fitting, polynomial models, concise code</td>
                 <td>You compute many metrics yourself</td>
               </tr>
               <tr>
                 <td><strong>SciPy linregress</strong></td>
-                <td>Specialized linear regression function<br><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html" target="_blank" rel="noopener noreferrer">Official SciPy linregress docs</a></td>
+                <td>Specialized linear regression function</td>
                 <td>Linear regression with r, p-value, std errors</td>
                 <td>Mainly for linear fit, not general polynomial search</td>
               </tr>
@@ -1269,11 +1262,73 @@
         </div>
       </section>
 
-      <section class="section" id="full-code">
+            <section class="section" id="polyfit-modern">
+        <div class="section-title">
+          <h3 id="speak41a">10A) Should we also learn numpy.polynomial?</h3>
+          <p>Yes. It is the modern NumPy polynomial API and is worth knowing.</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h4>Why it matters</h4>
+            <p id="speak41b">
+              NumPy's older <code>np.polyfit</code> is still widely used and very useful.
+              But NumPy also provides the newer <code>numpy.polynomial</code> API.
+              In many new projects, <code>Polynomial.fit</code> is the better modern choice.
+            </p>
+            <div class="callout" id="speak41c">
+              A simple rule is this: learn <strong>np.polyfit</strong> because you will see it everywhere,
+              and also learn <strong>Polynomial.fit</strong> because it is the modern NumPy direction.
+            </div>
+            <div class="soft mt16">
+              <h5 class="mb0">Official links</h5>
+              <ul class="mini-list mt8">
+                <li><a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html" target="_blank" rel="noopener">NumPy polyfit documentation</a></li>
+                <li><a href="https://numpy.org/doc/stable/reference/generated/numpy.polynomial.polynomial.Polynomial.fit.html" target="_blank" rel="noopener">NumPy Polynomial.fit documentation</a></li>
+                <li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html" target="_blank" rel="noopener">SciPy linregress documentation</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4>Side-by-side modern example</h4>
+            <div class="codebox">
+              <button class="copy-btn" data-copy-target="polyModernCode">Copy code</button>
+<pre id="polyModernCode">import numpy as np
+from numpy.polynomial import Polynomial
+
+x = np.array([1, 2, 3, 4, 5, 6], dtype=float)
+y = np.array([2, 4, 5, 4, 5, 7], dtype=float)
+
+# Older common style
+coeffs = np.polyfit(x, y, 1)
+poly_old = np.poly1d(coeffs)
+print("np.polyfit slope, intercept:", coeffs)
+print("Prediction at x=7:", poly_old(7))
+
+# Modern NumPy polynomial API
+model = Polynomial.fit(x, y, deg=1)
+print("Scaled-domain model:", model)
+
+# Convert to ordinary power basis if you want readable coefficients
+model_power = model.convert()
+print("Power-basis coefficients [intercept, slope]:", model_power.coef)
+print("Prediction at x=7:", model(7))</pre>
+            </div>
+            <p class="small mt12">
+              Notice that <code>Polynomial.fit</code> returns a polynomial object directly.
+              After <code>convert()</code>, the coefficients are shown in increasing-power order:
+              intercept first, then slope, then higher terms.
+            </p>
+          </div>
+        </div>
+      </section>
+
+<section class="section" id="full-code">
         <div class="section-title">
           <h3 id="speak41">10) Full Python code</h3>
           <p>
-            This single script compares all methods and finds the best degree.
+            This single script compares all methods and finds the best degree. Below it, you also get a fourth modern NumPy example using <code>Polynomial.fit</code>.
           </p>
         </div>
 
@@ -1546,6 +1601,72 @@ if __name__ == "__main__":
         </div>
       </section>
 
+      <section class="section" id="polyfit-modern-code">
+        <div class="section-title">
+          <h3 id="speak41d">10B) Fourth implementation: NumPy Polynomial.fit</h3>
+          <p>This keeps the lesson current with the newer NumPy polynomial API.</p>
+        </div>
+
+        <div class="card">
+          <div class="codebox">
+            <button class="copy-btn" data-copy-target="pyPolyFitModernFull">Copy code</button>
+<pre id="pyPolyFitModernFull">import numpy as np
+from numpy.polynomial import Polynomial
+
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8], dtype=float)
+y = np.array([1.2, 2.1, 2.9, 4.2, 5.1, 5.8, 7.2, 8.1], dtype=float)
+
+# Fit degree-1 polynomial using the modern API
+model = Polynomial.fit(x, y, deg=1)
+
+# Predict on existing x values
+y_pred = model(x)
+
+# Convert to ordinary power basis for readable coefficients
+power_model = model.convert()
+intercept = power_model.coef[0]
+slope = power_model.coef[1]
+
+# Correlation between actual and predicted y
+r = np.corrcoef(y, y_pred)[0, 1]
+
+# R^2
+ss_total = np.sum((y - np.mean(y)) ** 2)
+ss_res = np.sum((y - y_pred) ** 2)
+r2 = 1 - (ss_res / ss_total)
+
+print("Polynomial.fit model:", model)
+print("Converted power-basis model:", power_model)
+print("Intercept:", intercept)
+print("Slope:", slope)
+print("r:", r)
+print("R^2:", r2)
+print("Prediction at x=9:", model(9))</pre>
+          </div>
+
+          <div class="grid grid-2 mt20">
+            <div class="soft">
+              <h4>What to notice</h4>
+              <ul class="mini-list">
+                <li><code>Polynomial.fit</code> gives you a fitted polynomial object directly.</li>
+                <li><code>model.convert()</code> changes it into the ordinary power basis.</li>
+                <li>The converted coefficients come as <strong>[intercept, slope, ...]</strong>.</li>
+                <li>Predictions can be made simply by calling the model like a function.</li>
+              </ul>
+            </div>
+            <div class="soft">
+              <h4>Relevant links</h4>
+              <ul class="mini-list">
+                <li><a href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html" target="_blank" rel="noopener">NumPy polyfit</a></li>
+                <li><a href="https://numpy.org/doc/stable/reference/generated/numpy.polynomial.polynomial.Polynomial.fit.html" target="_blank" rel="noopener">NumPy Polynomial.fit</a></li>
+                <li><a href="https://numpy.org/doc/stable/reference/routines.polynomials-package.html" target="_blank" rel="noopener">NumPy polynomial package overview</a></li>
+                <li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html" target="_blank" rel="noopener">SciPy linregress</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="mcq-zone">
         <div class="section-title">
           <h3 id="speak42">11) MCQ quiz</h3>
@@ -1586,10 +1707,11 @@ if __name__ == "__main__":
             </p>
           </div>
           <div class="card">
-            <h4>NumPy polyfit</h4>
+            <h4>NumPy polyfit and Polynomial.fit</h4>
             <p id="speak45">
-              Use this when you want fast numerical fitting and when you want to
-              test higher polynomial degrees easily.
+              Use <code>np.polyfit</code> when you want fast numerical fitting and when you want to
+              test higher polynomial degrees easily. Also learn <code>Polynomial.fit</code> as the
+              newer NumPy polynomial API.
             </p>
           </div>
           <div class="card">
