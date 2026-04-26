@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Multiple Linear Regression — V1 Ultra | Programmer's Picnic</title>
+
+  <meta name="description" content="Learn Multiple Linear Regression from ground zero with intuition, formula, Python implementation, NumPy solution, sklearn model, charts, examples, and MCQs." />
+  <meta name="theme-color" content="#f59e0b" />
+
+  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+
+  <style>
+    :root{
+      --bg:#fffaf0;
+      --bg2:#fff4d6;
+      --card:#ffffff;
+      --text:#2b2112;
+      --muted:#735c35;
+      --brand:#d97706;
+      --brand2:#f59e0b;
+      --border:#f1d7a8;
+      --code:#1f1303;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left,#fff1c2,transparent 35%),
+        linear-gradient(135deg,var(--bg),var(--bg2));
+      color:var(--text);
+      line-height:1.7;
+    }
+
+    header{
+      padding:48px 18px;
+      text-align:center;
+      background:linear-gradient(135deg,#92400e,#f59e0b);
+      color:white;
+    }
+
+    header h1{
+      margin:0;
+      font-size:clamp(2rem,5vw,4rem);
+    }
+
+    header p{
+      max-width:900px;
+      margin:14px auto 0;
+      font-size:1.15rem;
+    }
+
+    main{
+      max-width:1150px;
+      margin:auto;
+      padding:24px;
+    }
+
+    section{
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:24px;
+      margin:22px 0;
+      box-shadow:0 16px 45px rgba(146,64,14,.12);
+    }
+
+    h2{
+      color:#92400e;
+      margin-top:0;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:16px;
+    }
+
+    .card{
+      background:#fffdf8;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    code, pre{
+      font-family:Consolas, Monaco, monospace;
+    }
+
+    pre{
+      background:#1f1303;
+      color:#fff7ed;
+      padding:18px;
+      border-radius:18px;
+      overflow:auto;
+      line-height:1.55;
+    }
+
+    .formula{
+      background:#fff7df;
+      border-left:6px solid var(--brand);
+      padding:18px;
+      border-radius:16px;
+      font-size:1.2rem;
+      overflow:auto;
+    }
+
+    .btn{
+      border:0;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      color:white;
+      padding:12px 16px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:700;
+      box-shadow:0 10px 25px rgba(217,119,6,.25);
+    }
+
+    .quiz-option{
+      display:block;
+      width:100%;
+      margin:8px 0;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:#fffaf0;
+      cursor:pointer;
+      text-align:left;
+    }
+
+    .quiz-option.correct{background:#dcfce7}
+    .quiz-option.wrong{background:#fee2e2}
+
+    iframe{
+      width:100%;
+      min-height:520px;
+      border:1px solid var(--border);
+      border-radius:20px;
+      background:white;
+    }
+
+    .note{
+      background:#fffbeb;
+      border:1px solid #fde68a;
+      padding:14px;
+      border-radius:14px;
+      color:#713f12;
+    }
+
+    footer{
+      text-align:center;
+      padding:30px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1 id="speak0">Multiple Linear Regression</h1>
+  <p id="speak1">
+    Learn how prediction works when we have more than one input:
+    hours studied, sleep, practice, experience, rooms, area, price, and more.
+  </p>
+</header>
+
+<main>
+
+<section>
+  <h2 id="speak2">1. The Simple Idea</h2>
+  <p>
+    In simple linear regression, we use one input to predict one output.
+  </p>
+
+  <div class="formula">
+    y = a + bx
+  </div>
+
+  <p>
+    But real life usually depends on many inputs. For example, marks may depend on:
+  </p>
+
+  <div class="grid">
+    <div class="card">Hours studied</div>
+    <div class="card">Sleep</div>
+    <div class="card">Practice sessions</div>
+    <div class="card">Previous score</div>
+  </div>
+</section>
+
+<section>
+  <h2 id="speak3">2. Multiple Linear Regression Formula</h2>
+
+  <div class="formula">
+    y = a + b₁x₁ + b₂x₂ + b₃x₃ + ... + bₙxₙ
+  </div>
+
+  <p>
+    Here:
+  </p>
+
+  <div class="grid">
+    <div class="card"><b>y</b><br>Predicted output</div>
+    <div class="card"><b>a</b><br>Intercept or base value</div>
+    <div class="card"><b>x₁, x₂, x₃</b><br>Input features</div>
+    <div class="card"><b>b₁, b₂, b₃</b><br>Weights or coefficients</div>
+  </div>
+</section>
+
+<section>
+  <h2 id="speak4">3. Example</h2>
+
+  <p>
+    Suppose we want to predict marks using hours studied, sleep, and practice.
+  </p>
+
+  <div class="formula">
+    Marks = 10 + 5 × Hours + 2 × Sleep + 3 × Practice
+  </div>
+
+  <p>
+    Meaning:
+  </p>
+
+  <ul>
+    <li>Each extra study hour adds about 5 marks.</li>
+    <li>Each extra sleep hour adds about 2 marks.</li>
+    <li>Each practice session adds about 3 marks.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="speak5">4. Dataset</h2>
+
+<pre><code>Hours  Sleep  Practice  Marks
+2      6      1         50
+4      7      2         65
+6      8      3         80
+8      7      4         88
+10     8      5         98</code></pre>
+
+</section>
+
+<section>
+  <h2 id="speak6">5. Python Implementation from Scratch</h2>
+
+<pre><code>import numpy as np
+
+# Inputs: Hours, Sleep, Practice
+X = np.array([
+    [2, 6, 1],
+    [4, 7, 2],
+    [6, 8, 3],
+    [8, 7, 4],
+    [10, 8, 5]
+], dtype=float)
+
+# Output: Marks
+y = np.array([50, 65, 80, 88, 98], dtype=float)
+
+# Add intercept column of 1s
+X_b = np.c_[np.ones((X.shape[0], 1)), X]
+
+# Normal Equation:
+# beta = (X.T X)^-1 X.T y
+beta = np.linalg.inv(X_b.T @ X_b) @ X_b.T @ y
+
+print("Intercept:", beta[0])
+print("Coefficients:", beta[1:])
+
+# Predict marks for:
+# Hours = 7, Sleep = 8, Practice = 4
+new_student = np.array([1, 7, 8, 4])
+prediction = new_student @ beta
+
+print("Predicted marks:", prediction)</code></pre>
+
+</section>
+
+<section>
+  <h2 id="speak7">6. Using NumPy Least Squares</h2>
+
+<pre><code>import numpy as np
+
+X = np.array([
+    [2, 6, 1],
+    [4, 7, 2],
+    [6, 8, 3],
+    [8, 7, 4],
+    [10, 8, 5]
+], dtype=float)
+
+y = np.array([50, 65, 80, 88, 98], dtype=float)
+
+X_b = np.c_[np.ones((X.shape[0], 1)), X]
+
+beta, residuals, rank, s = np.linalg.lstsq(X_b, y, rcond=None)
+
+print("Intercept:", beta[0])
+print("Coefficients:", beta[1:])
+
+prediction = np.array([1, 7, 8, 4]) @ beta
+print("Predicted marks:", prediction)</code></pre>
+
+</section>
+
+<section>
+  <h2 id="speak8">7. Using sklearn</h2>
+
+<pre><code>import numpy as np
+from sklearn.linear_model import LinearRegression
+
+X = np.array([
+    [2, 6, 1],
+    [4, 7, 2],
+    [6, 8, 3],
+    [8, 7, 4],
+    [10, 8, 5]
+], dtype=float)
+
+y = np.array([50, 65, 80, 88, 98], dtype=float)
+
+model = LinearRegression()
+model.fit(X, y)
+
+print("Intercept:", model.intercept_)
+print("Coefficients:", model.coef_)
+
+new_student = np.array([[7, 8, 4]])
+prediction = model.predict(new_student)
+
+print("Predicted marks:", prediction[0])</code></pre>
+
+</section>
+
+<section>
+  <h2 id="speak9">8. Charts with Matplotlib</h2>
+
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+X = np.array([
+    [2, 6, 1],
+    [4, 7, 2],
+    [6, 8, 3],
+    [8, 7, 4],
+    [10, 8, 5]
+], dtype=float)
+
+y = np.array([50, 65, 80, 88, 98], dtype=float)
+
+model = LinearRegression()
+model.fit(X, y)
+
+predicted = model.predict(X)
+
+plt.scatter(y, predicted)
+plt.xlabel("Actual Marks")
+plt.ylabel("Predicted Marks")
+plt.title("Actual vs Predicted Marks")
+plt.grid(True)
+plt.show()
+
+plt.plot(y, label="Actual Marks", marker="o")
+plt.plot(predicted, label="Predicted Marks", marker="o")
+plt.xlabel("Student Number")
+plt.ylabel("Marks")
+plt.title("Actual and Predicted Marks")
+plt.legend()
+plt.grid(True)
+plt.show()</code></pre>
+
+</section>
+
+<section>
+  <h2 id="speak10">9. Important Concepts</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Feature</h3>
+      <p>An input column used for prediction.</p>
+    </div>
+
+    <div class="card">
+      <h3>Coefficient</h3>
+      <p>The weight or importance of a feature.</p>
+    </div>
+
+    <div class="card">
+      <h3>Intercept</h3>
+      <p>The base prediction when all inputs are zero.</p>
+    </div>
+
+    <div class="card">
+      <h3>Error</h3>
+      <p>The difference between actual and predicted output.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 id="speak11">10. Warning: More Inputs Are Not Always Better</h2>
+
+  <div class="note">
+    Adding more inputs can improve prediction, but useless or repeated inputs can damage the model.
+  </div>
+
+  <ul>
+    <li><b>Overfitting:</b> The model memorizes training data instead of learning general patterns.</li>
+    <li><b>Multicollinearity:</b> Two or more inputs carry almost the same information.</li>
+    <li><b>Noise:</b> Bad features confuse the model.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="speak12">11. Embedded Python Editor</h2>
+  <p>
+    Try the code live in the Programmer’s Picnic Python editor.
+  </p>
+
+  <iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"></iframe>
+</section>
+
+<section>
+  <h2 id="speak13">12. MCQ Quiz</h2>
+
+  <div id="quiz"></div>
+  <button class="btn" onclick="checkScore()">Check Score</button>
+  <p id="scoreBox"></p>
+</section>
+
+<section>
+  <h2 id="speak14">13. YouTube Closing Summary</h2>
+
+  <p>
+    Multiple Linear Regression is the natural upgrade of simple linear regression.
+    Instead of using one input, we use many inputs to predict one output.
+  </p>
+
+  <p>
+    One input gives us a line. Two inputs can give us a plane.
+    More inputs create a hyperplane.
+    But the goal remains the same:
+    find the best fitting model with minimum error.
+  </p>
+</section>
+
+</main>
+
+<footer>
+  Programmer's Picnic | Champak Roy
+</footer>
+
+<script>
+const questions = [
+  {
+    q: "What is Multiple Linear Regression used for?",
+    options: [
+      "Predicting one output using multiple inputs",
+      "Sorting numbers",
+      "Creating HTML pages",
+      "Encrypting passwords"
+    ],
+    answer: 0
+  },
+  {
+    q: "In y = a + b₁x₁ + b₂x₂, what is a?",
+    options: [
+      "Slope",
+      "Intercept",
+      "Error",
+      "Feature"
+    ],
+    answer: 1
+  },
+  {
+    q: "What does a coefficient represent?",
+    options: [
+      "The importance or effect of an input",
+      "The final output only",
+      "A random number",
+      "The number of rows"
+    ],
+    answer: 0
+  },
+  {
+    q: "What is the output variable usually called?",
+    options: [
+      "x",
+      "feature",
+      "y",
+      "coefficient"
+    ],
+    answer: 2
+  },
+  {
+    q: "Which library provides LinearRegression?",
+    options: [
+      "matplotlib",
+      "sklearn",
+      "os",
+      "random"
+    ],
+    answer: 1
+  },
+  {
+    q: "What is overfitting?",
+    options: [
+      "Model learns general pattern",
+      "Model memorizes training data too much",
+      "Model has no data",
+      "Model has no inputs"
+    ],
+    answer: 1
+  },
+  {
+    q: "What is multicollinearity?",
+    options: [
+      "When features are unrelated",
+      "When features repeat similar information",
+      "When output is missing",
+      "When there is only one feature"
+    ],
+    answer: 1
+  },
+  {
+    q: "What is the main goal of regression?",
+    options: [
+      "To classify images",
+      "To predict continuous values",
+      "To create websites",
+      "To delete errors"
+    ],
+    answer: 1
+  },
+  {
+    q: "What does np.linalg.lstsq help solve?",
+    options: [
+      "Least squares regression",
+      "Image editing",
+      "Text translation",
+      "Database connection"
+    ],
+    answer: 0
+  },
+  {
+    q: "More inputs always improve a model.",
+    options: [
+      "True",
+      "False"
+    ],
+    answer: 1
+  }
+];
+
+const quizBox = document.getElementById("quiz");
+
+questions.forEach((item, index) => {
+  const box = document.createElement("div");
+  box.className = "card";
+  box.innerHTML = `<h3>Q${index + 1}. ${item.q}</h3>`;
+
+  item.options.forEach((opt, optIndex) => {
+    const btn = document.createElement("button");
+    btn.className = "quiz-option";
+    btn.textContent = opt;
+    btn.onclick = () => {
+      box.querySelectorAll(".quiz-option").forEach(b => {
+        b.classList.remove("correct", "wrong");
+        b.dataset.selected = "false";
+      });
+
+      btn.dataset.selected = "true";
+
+      if (optIndex === item.answer) {
+        btn.classList.add("correct");
+      } else {
+        btn.classList.add("wrong");
+      }
+    };
+    box.appendChild(btn);
+  });
+
+  quizBox.appendChild(box);
+});
+
+function checkScore(){
+  let score = 0;
+
+  document.querySelectorAll("#quiz .card").forEach((card, index) => {
+    const selected = [...card.querySelectorAll(".quiz-option")]
+      .find(btn => btn.dataset.selected === "true");
+
+    if(selected){
+      const selectedIndex = questions[index].options.indexOf(selected.textContent);
+      if(selectedIndex === questions[index].answer){
+        score++;
+      }
+    }
+  });
+
+  document.getElementById("scoreBox").innerHTML =
+    `<b>Your Score:</b> ${score} / ${questions.length}`;
+}
+</script>
+
+</body>
+</html>
