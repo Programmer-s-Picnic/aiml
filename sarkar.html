@@ -1,0 +1,1016 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      Government Services Dashboard — India & UP | Programmer's Picnic
+    </title>
+ <script
+      async
+      crossorigin="anonymous"
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
+    ></script>
+    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+
+    <meta
+      name="description"
+      content="Quick access to Indian central and Uttar Pradesh government services including Aadhaar, PAN, ration card, Ayushman Bharat, electricity bill, land records, property tax, water bill and more."
+    />
+    <meta name="theme-color" content="#f59e0b" />
+
+    <style>
+      :root {
+        --bg: #fffaf0;
+        --bg2: #fff4d6;
+        --card: #ffffff;
+        --border: #f0dcc2;
+        --text: #2b2112;
+        --muted: #75562c;
+        --accent: #d97706;
+        --accent2: #f59e0b;
+        --soft: #fff7e6;
+        --danger: #991b1b;
+        --danger-bg: #fff1f2;
+        --green: #166534;
+        --green-bg: #f0fdf4;
+        --blue: #1d4ed8;
+        --blue-bg: #eff6ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(245, 158, 11, 0.22),
+            transparent 32%
+          ),
+          linear-gradient(135deg, var(--bg), var(--bg2));
+        color: var(--text);
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: white;
+        padding: 30px 18px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(146, 64, 14, 0.25);
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: clamp(25px, 4vw, 42px);
+      }
+
+      header p {
+        margin: 10px auto 0;
+        max-width: 850px;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1180px;
+        margin: 22px auto;
+        padding: 16px;
+      }
+
+      .notice,
+      .help-box,
+      .disclaimer {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 16px;
+        margin-bottom: 18px;
+        box-shadow: 0 8px 22px rgba(120, 70, 20, 0.06);
+        line-height: 1.6;
+      }
+
+      .notice {
+        border-left: 6px solid var(--accent2);
+      }
+
+      .help-box {
+        background: var(--blue-bg);
+        border-left: 6px solid var(--blue);
+      }
+
+      .help-box h3 {
+        margin: 0 0 8px;
+        color: var(--blue);
+      }
+
+      .help-box ul {
+        margin: 8px 0 0;
+        padding-left: 20px;
+      }
+
+      .tools {
+        display: grid;
+        grid-template-columns: 1fr 230px;
+        gap: 12px;
+        margin: 18px 0;
+      }
+
+      .tools input,
+      .tools select {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        font-size: 15px;
+        background: #fff;
+        color: var(--text);
+        outline: none;
+      }
+
+      .tools input:focus,
+      .tools select:focus {
+        border-color: var(--accent2);
+        box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.18);
+      }
+
+      .section-title {
+        margin: 30px 0 14px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #fff7e6, #fff);
+        border: 1px solid var(--border);
+      }
+
+      .section-title h2 {
+        margin: 0;
+        color: var(--accent);
+        font-size: 22px;
+      }
+
+      .section-title p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 17px;
+        box-shadow: 0 8px 22px rgba(120, 70, 20, 0.07);
+        transition: 0.25s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(120, 70, 20, 0.12);
+      }
+
+      .card h3 {
+        margin: 8px 0 8px;
+        color: var(--accent);
+        font-size: 19px;
+      }
+
+      .card p {
+        margin: 0 0 12px;
+        color: var(--muted);
+        line-height: 1.5;
+        font-size: 14px;
+      }
+
+      details {
+        margin: 12px 0;
+        padding: 10px;
+        border-radius: 12px;
+        background: var(--green-bg);
+        border: 1px solid #bbf7d0;
+        color: var(--green);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      summary {
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .tag {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        background: #fff1d6;
+        color: #8a4b08;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .card a {
+        display: inline-block;
+        padding: 9px 12px;
+        background: var(--accent2);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .card a:hover {
+        background: var(--accent);
+      }
+
+      .disclaimer {
+        margin-top: 32px;
+        background: var(--soft);
+        font-size: 14px;
+      }
+
+      .disclaimer strong {
+        color: var(--danger);
+      }
+
+      .mini-disclaimer {
+        margin-top: 16px;
+        padding: 12px;
+        border-radius: 14px;
+        background: var(--danger-bg);
+        color: var(--danger);
+        font-size: 13px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 22px 16px 30px;
+        font-size: 13px;
+        color: #7a5a2b;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      @media (max-width: 720px) {
+        .tools {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1 id="speak001">🇮🇳 Government Services Dashboard</h1>
+      <p id="speak002">
+        Central Government and Uttar Pradesh services in one simple page. Use
+        this page to quickly open Aadhaar, PAN, ration card, Ayushman Bharat,
+        electricity bill, land records, property tax, water bill and certificate
+        services.
+      </p>
+    </header>
+
+    <main class="container">
+      <div class="notice" id="speak003">
+        <strong>Important Note:</strong> This page is a convenience directory.
+        Always verify the official portal before entering Aadhaar, PAN, bank,
+        OTP, or payment details.
+      </div>
+
+      <div class="help-box" id="speak004">
+        <h3>How to use this page</h3>
+        <ul>
+          <li>Use the search box to find a service quickly.</li>
+          <li>
+            Use the category dropdown to filter Central, UP, Health, Identity,
+            Tax, Land, or Utility services.
+          </li>
+          <li>Every link opens in a  <strong>tab</strong>.</li>
+          <li>
+            Read the help note inside each card before using sensitive services.
+          </li>
+        </ul>
+      </div>
+
+      <div class="tools">
+        <input
+          id="searchBox"
+          type="search"
+          placeholder="Search: Aadhaar, PAN, ration card, electricity, water, land..."
+        />
+        <select id="categoryFilter">
+          <option value="all">All Services</option>
+          <option value="central">Central Government</option>
+          <option value="up">Uttar Pradesh</option>
+          <option value="health">Health</option>
+          <option value="identity">Identity</option>
+          <option value="tax">Tax / Bills</option>
+          <option value="land">Land / Property</option>
+          <option value="utility">Utilities</option>
+        </select>
+      </div>
+
+      <section>
+        <div class="section-title">
+          <h2 id="speak005">Central Government Services</h2>
+          <p id="speak006">
+            These services are generally valid across India. They include
+            Aadhaar, PAN, ration card, passport, voter ID, DigiLocker, UMANG,
+            Ayushman Bharat and national service portals.
+          </p>
+        </div>
+
+        <div class="help-box" id="speak007">
+          <h3>Help for Central Services</h3>
+          <ul>
+            <li>
+              For identity services, keep your mobile number ready because OTP
+              may be required.
+            </li>
+            <li>
+              For PAN and income tax services, check name, date of birth and
+              Aadhaar details carefully.
+            </li>
+            <li>
+              For ration card services, the final application usually goes
+              through the state portal.
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid">
+          <div
+            class="card service-card"
+            data-category="central identity"
+            data-keywords="aadhaar uidai aadhar update download verify mobile address"
+          >
+            <span class="tag">Central • Identity</span>
+            <h3 id="speak008">🪪 Aadhaar / UIDAI</h3>
+            <p id="speak009">
+              Aadhaar services, update, download, verification and mobile or
+              email verification.
+            </p>
+            <details id="speak010">
+              <summary>Help</summary>
+              Use this for Aadhaar download, update, verification and status
+              checking. Keep your Aadhaar number, enrollment ID, registered
+              mobile and OTP ready.
+            </details>
+            <div class="links">
+              <a href="https://uidai.gov.in/en/" target="_blank">UIDAI Home</a>
+              <a
+                href="https://uidai.gov.in/en/my-aadhaar/avail-aadhaar-services.html"
+                target="_blank"
+                >Aadhaar Services</a
+              >
+              <a
+                href="https://uidai.gov.in/en/my-aadhaar/update-aadhaar.html"
+                target="_blank"
+                >Update Aadhaar</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central identity tax"
+            data-keywords="pan card income tax apply correction instant epan protean nsdl utiitsl"
+          >
+            <span class="tag">Central • PAN</span>
+            <h3 id="speak011">💳 PAN Card</h3>
+            <p id="speak012">
+              Apply for PAN, update PAN details, and use instant e-PAN services.
+            </p>
+            <details id="speak013">
+              <summary>Help</summary>
+              Use this section for new PAN, PAN correction, e-PAN and
+              PAN-Aadhaar related services. Match your Aadhaar name and date of
+              birth before applying.
+            </details>
+            <div class="links">
+              <a
+                href="https://www.incometaxindia.gov.in/tax-services/apply-for-pan"
+                target="_blank"
+                >Apply PAN Info</a
+              >
+              <a
+                href="https://onlineservices.proteantech.in/paam/endUserRegisterContact.html"
+                target="_blank"
+                >Protean PAN</a
+              >
+              <a
+                href="https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/instant-e-pan"
+                target="_blank"
+                >Instant e-PAN</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central identity tax"
+            data-keywords="income tax itr pan aadhaar link refund tax filing"
+          >
+            <span class="tag">Central • Tax</span>
+            <h3 id="speak014">🧾 Income Tax Portal</h3>
+            <p id="speak015">
+              Income tax return filing, refund status, PAN-Aadhaar services and
+              tax forms.
+            </p>
+            <details id="speak016">
+              <summary>Help</summary>
+              Use this portal for ITR filing, refund tracking, AIS, TIS, Form
+              26AS and PAN-Aadhaar linking. Never share your password or OTP
+              with anyone.
+            </details>
+            <div class="links">
+              <a
+                href="https://www.incometax.gov.in/iec/foportal/"
+                target="_blank"
+                >Income Tax Portal</a
+              >
+              <a
+                href="https://www.incometax.gov.in/iec/foportal/help/all-topics/e-filing-services/link-aadhaar"
+                target="_blank"
+                >Link Aadhaar-PAN</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central utility"
+            data-keywords="ration card nfsa food security state portal beneficiary pds"
+          >
+            <span class="tag">Central • Ration</span>
+            <h3 id="speak017">🍚 Ration Card / NFSA</h3>
+            <p id="speak018">
+              National Food Security portal and state-wise ration card details.
+            </p>
+            <details id="speak019">
+              <summary>Help</summary>
+              Use NFSA to check ration card portals, beneficiary information and
+              state-wise food security details. For UP applications, use the UP
+              FCS portal also.
+            </details>
+            <div class="links">
+              <a href="https://nfsa.gov.in/" target="_blank">NFSA Home</a>
+              <a
+                href="https://nfsa.gov.in/portal/ration_card_state_portals_aa"
+                target="_blank"
+                >State Ration Portals</a
+              >
+              <a href="https://nfsa.gov.in/state/up" target="_blank"
+                >UP NFSA Page</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central identity"
+            data-keywords="voter id election voter registration epic search correction"
+          >
+            <span class="tag">Central • Voter</span>
+            <h3 id="speak020">🗳️ Voter ID</h3>
+            <p id="speak021">
+              Register as voter, search name, update voter details and download
+              e-EPIC.
+            </p>
+            <details id="speak022">
+              <summary>Help</summary>
+              Use this for new voter registration, correction, shifting address
+              and downloading e-EPIC. Keep your address proof and age proof
+              ready.
+            </details>
+            <div class="links">
+              <a href="https://voters.eci.gov.in/" target="_blank"
+                >Voter Services</a
+              >
+              <a href="https://www.eci.gov.in/" target="_blank"
+                >Election Commission</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central identity"
+            data-keywords="passport seva passport apply renewal appointment police verification"
+          >
+            <span class="tag">Central • Passport</span>
+            <h3 id="speak023">🛂 Passport Seva</h3>
+            <p id="speak024">
+              Apply for passport, renew passport, book appointment and track
+              status.
+            </p>
+            <details id="speak025">
+              <summary>Help</summary>
+              Use this portal for fresh passport, renewal, appointment booking
+              and tracking. Keep address proof, identity proof and old passport
+              details if applicable.
+            </details>
+            <div class="links">
+              <a href="https://www.passportindia.gov.in/" target="_blank"
+                >Passport Seva</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central identity"
+            data-keywords="digilocker documents certificate aadhaar driving license marksheet"
+          >
+            <span class="tag">Central • Documents</span>
+            <h3 id="speak026">📁 DigiLocker</h3>
+            <p id="speak027">
+              Access official digital documents like Aadhaar, driving license,
+              marksheets and certificates.
+            </p>
+            <details id="speak028">
+              <summary>Help</summary>
+              DigiLocker is useful for storing and sharing verified digital
+              documents. Login generally needs Aadhaar-linked mobile OTP.
+            </details>
+            <div class="links">
+              <a href="https://www.digilocker.gov.in/" target="_blank"
+                >Open DigiLocker</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central utility"
+            data-keywords="umang government services app pf aadhaar pan utility"
+          >
+            <span class="tag">Central • All-in-one</span>
+            <h3 id="speak029">📱 UMANG</h3>
+            <p id="speak030">
+              Unified mobile and web access to many central and state government
+              services.
+            </p>
+            <details id="speak031">
+              <summary>Help</summary>
+              UMANG is helpful when you do not know the exact department
+              website. You can search many government services in one place.
+            </details>
+            <div class="links">
+              <a href="https://web.umang.gov.in/" target="_blank">UMANG Web</a>
+              <a href="https://umang.gov.in/" target="_blank">UMANG Info</a>
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central health"
+            data-keywords="ayushman bharat pmjay health card hospital eligibility"
+          >
+            <span class="tag">Central • Health</span>
+            <h3 id="speak032">🏥 Ayushman Bharat</h3>
+            <p id="speak033">
+              PM-JAY health coverage, eligibility, hospital search and health
+              card services.
+            </p>
+            <details id="speak034">
+              <summary>Help</summary>
+              Use this to check Ayushman Bharat eligibility, beneficiary details
+              and hospital information. Keep mobile number, ration card or
+              family ID details ready if required.
+            </details>
+            <div class="links">
+              <a href="https://pmjay.gov.in/" target="_blank">PM-JAY Portal</a>
+              <a href="https://beneficiary.nha.gov.in/" target="_blank"
+                >Beneficiary Portal</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central health"
+            data-keywords="cowin vaccination certificate covid vaccine"
+          >
+            <span class="tag">Central • Health</span>
+            <h3 id="speak035">💉 CoWIN</h3>
+            <p id="speak036">Vaccination certificate and related services.</p>
+            <details id="speak037">
+              <summary>Help</summary>
+              Use this portal to access vaccination certificates and related
+              records. Keep your registered mobile number ready.
+            </details>
+            <div class="links">
+              <a href="https://www.cowin.gov.in/" target="_blank"
+                >CoWIN Portal</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central utility"
+            data-keywords="national government services portal india services certificates schemes"
+          >
+            <span class="tag">Central • Master Portal</span>
+            <h3 id="speak038">🔗 National Government Services</h3>
+            <p id="speak039">
+              Single-window access to online services provided by different
+              government entities.
+            </p>
+            <details id="speak040">
+              <summary>Help</summary>
+              Use this when you are not sure which portal is correct. Search by
+              service name, department or state.
+            </details>
+            <div class="links">
+              <a href="https://services.india.gov.in/" target="_blank"
+                >Services Portal</a
+              >
+              <a href="https://www.india.gov.in/" target="_blank"
+                >National Portal</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="central utility"
+            data-keywords="epfo pf provident fund uan pension claim withdrawal"
+          >
+            <span class="tag">Central • Employment</span>
+            <h3 id="speak041">💼 EPFO / PF</h3>
+            <p id="speak042">
+              Provident fund, UAN, claim status, pension and employee services.
+            </p>
+            <details id="speak043">
+              <summary>Help</summary>
+              Use this for PF passbook, claim, UAN activation and
+              pension-related services. Keep UAN, Aadhaar-linked mobile and bank
+              details ready.
+            </details>
+            <div class="links">
+              <a href="https://www.epfindia.gov.in/" target="_blank"
+                >EPFO Home</a
+              >
+              <a
+                href="https://unifiedportal-mem.epfindia.gov.in/memberinterface/"
+                target="_blank"
+                >Member Portal</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2 id="speak044">Uttar Pradesh State Services</h2>
+          <p id="speak045">
+            These services are focused on Uttar Pradesh. They include
+            electricity bill, UP ration card, land records, property
+            registration, municipality tax, water services and certificates.
+          </p>
+        </div>
+
+        <div class="help-box" id="speak046">
+          <h3>Help for UP Services</h3>
+          <ul>
+            <li>
+              For electricity bills, keep your account number or consumer number
+              ready.
+            </li>
+            <li>
+              For land records, keep district, tehsil, village, khasra or
+              khatauni details ready.
+            </li>
+            <li>
+              For municipality tax or water tax, keep house number, ward number
+              or property ID ready.
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid">
+          <div
+            class="card service-card"
+            data-category="up health"
+            data-keywords="ayushman up pmjay health card hospital eligibility"
+          >
+            <span class="tag">UP • Health</span>
+            <h3 id="speak047">🏥 Ayushman Bharat UP</h3>
+            <p id="speak048">
+              UP-specific Ayushman Bharat services and related health
+              information.
+            </p>
+            <details id="speak049">
+              <summary>Help</summary>
+              Use this for UP-related Ayushman information. For national
+              eligibility and beneficiary login, use the PM-JAY beneficiary
+              portal.
+            </details>
+            <div class="links">
+              <a href="https://ayushmanup.in/" target="_blank">Ayushman UP</a>
+              <a href="https://pmjay.gov.in/" target="_blank"
+                >PM-JAY National</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="up utility tax"
+            data-keywords="electricity bill uppcl mvvnl power payment bijli bill"
+          >
+            <span class="tag">UP • Electricity</span>
+            <h3 id="speak050">⚡ Electricity Bill</h3>
+            <p id="speak051">
+              Pay electricity bill and access UP power services.
+            </p>
+            <details id="speak052">
+              <summary>Help</summary>
+              Use UPPCL for bill payment and electricity services. Keep your
+              account number, registered mobile or consumer details ready before
+              payment.
+            </details>
+            <div class="links">
+              <a href="https://www.uppclonline.com/" target="_blank"
+                >UPPCL Bill Payment</a
+              >
+              <a href="https://www.mvvnl.in/" target="_blank">MVVNL Portal</a>
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="up utility"
+            data-keywords="ration card up fcs food civil supplies nfsa pds"
+          >
+            <span class="tag">UP • Ration</span>
+            <h3 id="speak053">🍚 UP Ration Card</h3>
+            <p id="speak054">
+              Food and Civil Supplies Department, ration card and PDS-related
+              services.
+            </p>
+            <details id="speak055">
+              <summary>Help</summary>
+              Use this for UP ration card details, food supply department
+              services and PDS information. Keep ration card number or family
+              details ready.
+            </details>
+            <div class="links">
+              <a href="https://fcs.up.gov.in/" target="_blank"
+                >UP FCS Portal</a
+              >
+              <a href="https://nfsa.gov.in/state/up" target="_blank"
+                >UP NFSA Page</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="up land"
+            data-keywords="bhulekh land records khasra khatauni up property"
+          >
+            <span class="tag">UP • Land</span>
+            <h3 id="speak056">🌾 UP Bhulekh</h3>
+            <p id="speak057">
+              Check land records, khasra, khatauni and land ownership
+              information.
+            </p>
+            <details id="speak058">
+              <summary>Help</summary>
+              Use UP Bhulekh to check land records. You may need district,
+              tehsil, village, khasra number, khata number or owner name.
+            </details>
+            <div class="links">
+              <a href="https://upbhulekh.gov.in/" target="_blank"
+                >UP Bhulekh</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="up land tax"
+            data-keywords="property registration stamp igrsup land registry deed"
+          >
+            <span class="tag">UP • Property</span>
+            <h3 id="speak059">📜 Property Registration</h3>
+            <p id="speak060">
+              Stamp and registration services for property documents in Uttar
+              Pradesh.
+            </p>
+            <details id="speak061">
+              <summary>Help</summary>
+              Use this for property registration, stamp duty and
+              document-related services. Verify party names, property details
+              and fees carefully.
+            </details>
+            <div class="links">
+              <a href="https://igrsup.gov.in/" target="_blank">IGRS UP</a>
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="up tax utility"
+            data-keywords="municipality tax property tax house tax nagar nigam e nagar sewa"
+          >
+            <span class="tag">UP • Municipal Tax</span>
+            <h3 id="speak062">🏠 Municipality / Property Tax</h3>
+            <p id="speak063">
+              Property tax, house tax, water tax, sewer tax and urban local body
+              services.
+            </p>
+            <details id="speak064">
+              <summary>Help</summary>
+              Use this for urban local body services. Keep property ID, ward
+              number, house number or registered mobile number ready.
+            </details>
+            <div class="links">
+              <a href="https://e-nagarsewaup.gov.in/" target="_blank"
+                >eNagarSewa UP</a
+              >
+              <a href="https://ulb.up.gov.in/" target="_blank">ULB UP</a>
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="up utility tax"
+            data-keywords="water bill sewer tax jal nigam jal kal water services"
+          >
+            <span class="tag">UP • Water</span>
+            <h3 id="speak065">💧 Water Bill / Sewer Tax</h3>
+            <p id="speak066">
+              Water services and municipal water or sewer tax payment links.
+            </p>
+            <details id="speak067">
+              <summary>Help</summary>
+              Use this for water and sewer-related services. In many cities,
+              water and sewer tax may be linked with municipality portals.
+            </details>
+            <div class="links">
+              <a href="https://jalnigamup.org/" target="_blank"
+                >UP Jal Nigam</a
+              >
+              <a href="https://e-nagarsewaup.gov.in/" target="_blank"
+                >Water / Sewer Tax</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="up identity"
+            data-keywords="edistrict certificate income caste domicile birth death up"
+          >
+            <span class="tag">UP • Certificates</span>
+            <h3 id="speak068">🧾 UP eDistrict</h3>
+            <p id="speak069">
+              Income, caste, domicile and other certificate services.
+            </p>
+            <details id="speak070">
+              <summary>Help</summary>
+              Use UP eDistrict for certificates. Keep Aadhaar, mobile number,
+              address proof and supporting documents ready.
+            </details>
+            <div class="links">
+              <a href="https://edistrict.up.gov.in/" target="_blank"
+                >UP eDistrict</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="card service-card"
+            data-category="up utility"
+            data-keywords="up government portal official services schemes departments"
+          >
+            <span class="tag">UP • Master Portal</span>
+            <h3 id="speak071">🏛️ UP Government Portal</h3>
+            <p id="speak072">
+              Official Uttar Pradesh government portal for departments and
+              services.
+            </p>
+            <details id="speak073">
+              <summary>Help</summary>
+              Use this portal when you need a department website, scheme
+              information or official UP government updates.
+            </details>
+            <div class="links">
+              <a href="https://up.gov.in/" target="_blank">UP Government</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="disclaimer" id="speak074">
+        <strong>Disclaimer:</strong><br /><br />
+
+        This website provides links to official government portals for user
+        convenience only. We do not own, operate, control, or represent any of
+        the external websites linked here. All services such as Aadhaar, PAN
+        card, ration card, Ayushman Bharat, electricity bill payment, land
+        records, property tax, water bill, certificates, and other government
+        services are managed by their respective government departments and
+        authorities. We are not responsible for:
+        <ul>
+          <li>Accuracy, availability, or updates of external websites</li>
+          <li>
+            Any loss, error, delay, failed transaction, or issue arising from
+            use of these services
+          </li>
+          <li>
+            Changes in policies, charges, eligibility rules, or procedures by
+            government portals
+          </li>
+          <li>
+            Any third-party advertisement, fake website, agent, or unofficial
+            service provider
+          </li>
+        </ul>
+
+        Users should always verify the official website address before
+        submitting personal information, OTP, Aadhaar number, PAN number, bank
+        details, or making any payment.
+
+        <div class="mini-disclaimer" id="speak075">
+          Safety Tip: Prefer official government domains such as
+          <strong>.gov.in</strong>, <strong>.nic.in</strong>, and verified
+          official portals. Avoid unknown links, agents, and unofficial payment
+          pages.
+        </div>
+      </div>
+    </main>
+
+    <footer id="speak076">Programmer’s Picnic | Champak Roy</footer>
+
+    <script>
+      const searchBox = document.getElementById("searchBox");
+      const categoryFilter = document.getElementById("categoryFilter");
+      const cards = document.querySelectorAll(".service-card");
+
+      function filterCards() {
+        const searchValue = searchBox.value.toLowerCase().trim();
+        const selectedCategory = categoryFilter.value;
+
+        cards.forEach(function (card) {
+          const text = card.innerText.toLowerCase();
+          const keywords = card.getAttribute("data-keywords").toLowerCase();
+          const categories = card.getAttribute("data-category").toLowerCase();
+
+          const matchesSearch =
+            searchValue === "" ||
+            text.includes(searchValue) ||
+            keywords.includes(searchValue);
+
+          const matchesCategory =
+            selectedCategory === "all" || categories.includes(selectedCategory);
+
+          if (matchesSearch && matchesCategory) {
+            card.classList.remove("hidden");
+          } else {
+            card.classList.add("hidden");
+          }
+        });
+      }
+
+      searchBox.addEventListener("input", filterCards);
+      categoryFilter.addEventListener("change", filterCards);
+    </script>
+     <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+     
+      <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+  </body>
+</html>
