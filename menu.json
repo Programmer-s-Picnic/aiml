@@ -1,0 +1,50 @@
+{
+  "brand": {
+    "title": "AI-ML Classes",
+    "subtitle": "Learn With Champak | Programmer's Picnic",
+    "badge": "AI"
+  },
+  "items": [
+    {
+      "label": "Home",
+      "href": "#top",
+      "icon": "🏠"
+    },
+    {
+      "label": "Important Links",
+      "href": "#links",
+      "icon": "🔗",
+      "children": [
+        {
+          "label": "Home",
+          "href": "https://www.learnwithchampak.live/",
+          "icon": "🗺️"
+        } 
+      ]
+    },
+    {
+      "label": "Editors",
+      "href": "https://editor.learnwithchampak.live/",
+      "icon": "📅",
+      "children": [
+
+           {
+          "label": "Python Editor",
+          "href": "https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1",
+          "icon": "🖥️"
+        },
+            
+        {
+          "label": "Zoom Schedule",
+          "href": "#schedule",
+          "icon": "🖥️"
+        }
+       
+       
+      ]
+    }
+    
+    
+   
+  ]
+}

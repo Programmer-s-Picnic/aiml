@@ -1,0 +1,135 @@
+{
+  "brand": {
+    "title": "AI-ML Classes",
+    "subtitle": "Learn With Champak | Programmer's Picnic",
+    "badge": "AI"
+  },
+  "items": [
+    {
+      "label": "Home",
+      "href": "#top",
+      "icon": "🏠"
+    },
+    {
+      "label": "Important Links",
+      "href": "#links",
+      "icon": "🔗",
+      "children": [
+        {
+          "label": "Home",
+          "href": "https://www.learnwithchampak.live/",
+          "icon": "🗺️"
+        },
+        {
+          "label": "Editors",
+          "href": "https://www.learnwithchampak.live/",
+          "icon": "🌐"
+        },
+       
+        {
+          "label": "Practice Editor",
+          "href": "https://editor.learnwithchampak.live/",
+          "icon": "🧪"
+        }
+      ]
+    },
+    {
+      "label": "Classes",
+      "href": "#schedule",
+      "icon": "📅",
+      "children": [
+        {
+          "label": "Zoom Schedule",
+          "href": "#schedule",
+          "icon": "🖥️"
+        },
+        {
+          "label": "Beginner Foundation",
+          "href": "#schedule",
+          "icon": "📘"
+        },
+        {
+          "label": "AI-ML Core Concepts",
+          "href": "#schedule",
+          "icon": "🤖"
+        },
+        {
+          "label": "Doubt + Project Session",
+          "href": "#schedule",
+          "icon": "🧩"
+        }
+      ]
+    },
+    {
+      "label": "Videos",
+      "href": "#videos",
+      "icon": "▶️",
+      "children": [
+        {
+          "label": "Python for AI-ML",
+          "href": "https://youtu.be/Rh4OWmt4ngE",
+          "icon": "🐍"
+        },
+        {
+          "label": "Statistics for ML",
+          "href": "https://youtu.be/0bHvVjCzZvA",
+          "icon": "📊"
+        },
+        {
+          "label": "Machine Learning Basics",
+          "href": "YOUR_VIDEO_LINK_3_HERE",
+          "icon": "🤖"
+        }
+      ]
+    },
+    {
+      "label": "Resources",
+      "href": "#links",
+      "icon": "📚",
+      "children": [
+        {
+          "label": "Class Notes",
+          "href": "YOUR_NOTES_PAGE_LINK_HERE",
+          "icon": "📝"
+        },
+        {
+          "label": "Assignments",
+          "href": "YOUR_ASSIGNMENTS_PAGE_LINK_HERE",
+          "icon": "📚"
+        },
+        {
+          "label": "Registration",
+          "href": "YOUR_REGISTRATION_LINK_HERE",
+          "icon": "✅"
+        },
+        {
+          "label": "Fees / Payment",
+          "href": "YOUR_PAYMENT_LINK_HERE",
+          "icon": "💳"
+        }
+      ]
+    },
+    {
+      "label": "Connect",
+      "href": "#connect",
+      "icon": "💬",
+      "children": [
+        {
+          "label": "WhatsApp Direct",
+          "href": "https://wa.me/919335874326?text=Hello%20Champak%20Roy%2C%20I%20want%20to%20know%20more%20about%20the%20AI-ML%20classes.",
+          "icon": "W"
+        },
+        {
+          "label": "WhatsApp Group",
+          "href": "YOUR_WHATSAPP_GROUP_LINK_HERE",
+          "icon": "G"
+        },
+        {
+          "label": "YouTube Channel",
+          "href": "https://www.youtube.com/@champaksworld",
+          "icon": "Y"
+        }
+      ]
+    }
+  ]
+}
