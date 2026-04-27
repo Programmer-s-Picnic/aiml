@@ -19,7 +19,7 @@
           "label": "Home",
           "href": "https://www.learnwithchampak.live/",
           "icon": "🗺️"
-        } 
+        }
       ]
     },
     {
@@ -27,24 +27,58 @@
       "href": "https://editor.learnwithchampak.live/",
       "icon": "📅",
       "children": [
-
-           {
+        {
           "label": "Python Editor",
           "href": "https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1",
           "icon": "🖥️"
         },
-            
+
         {
-          "label": "Zoom Schedule",
-          "href": "#schedule",
+          "label": "Javascript Editor",
+          "href": "https://editor.learnwithchampak.live/java-script/editor/",
+          "icon": "🖥️"
+        },
+        {
+          "label": "SQL Editor",
+          "href": "https://editor.learnwithchampak.live/sql/premium/",
+          "icon": "🖥️"
+        },
+        {
+          "label": "HTML Editor",
+          "href": "https://editor.learnwithchampak.live/samples/html/editor/",
+          "icon": "🖥️"
+        },
+        {
+          "label": "JSON Editor",
+          "href": "https://editor.learnwithchampak.live/samples/html/editor/json/",
+          "icon": "🖥️"
+        },
+        {
+          "label": "API Studio",
+          "href": "https://editor.learnwithchampak.live/api/",
+          "icon": "🖥️"
+        },
+        {
+          "label": "Face AI Demo",
+          "href": "https://editor.learnwithchampak.live/samples/face/",
+          "icon": "🖥️"
+        },
+        {
+          "label": "Zoom Meeting",
+          "href": "https://www.learnwithchampak.live/p/champak.html#timing",
+          "icon": "🖥️"
+        },
+        {
+          "label": "White Board",
+          "href": "https://editor.learnwithchampak.live/whiteboard/",
+          "icon": "🖥️"
+        },
+        {
+          "label": "Room Board",
+          "href": "https://editor.learnwithchampak.live/room/",
           "icon": "🖥️"
         }
-       
-       
       ]
     }
-    
-    
-   
   ]
 }
