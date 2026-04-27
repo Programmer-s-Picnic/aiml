@@ -232,7 +232,7 @@
       }
 
       .week {
-        background: rgba(255, 255, 255, 0.82);
+        background: rgba(255, 255, 255, 0.86);
         border: 1px solid #f1cf8c;
         border-radius: var(--radius);
         padding: 24px;
@@ -289,6 +289,32 @@
       .week li span {
         color: #8a5700;
         font-weight: 900;
+      }
+
+      .dataset-links {
+        margin-top: 16px;
+        padding: 14px;
+        border: 1px dashed #f3c76f;
+        border-radius: 16px;
+        background: #fff8e1;
+      }
+
+      .dataset-links b {
+        display: block;
+        margin-bottom: 8px;
+        color: #9a5f00;
+      }
+
+      .dataset-links a {
+        display: inline-block;
+        margin: 5px 7px 5px 0;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid #f1cf8c;
+        color: #7c4a00;
+        font-weight: 800;
+        font-size: 13px;
       }
 
       .cta {
@@ -378,7 +404,7 @@
               class="btn btn-whatsapp"
               target="_blank"
               href="https://wa.me/919335874326"
-              >Contact Champak Roy on WhatsApp</a
+              >Contact Champak Roy</a
             >
             <a
               class="btn btn-outline"
@@ -460,12 +486,16 @@
             <ul>
               <li>
                 <span>Learn:</span> notebook workflow, syntax, errors, print,
-                comments, editor basics
+                comments, editor basics, and VS Code setup awareness
               </li>
               <li>
-                <span>Practice:</span> calculator and logic tasks inside Colab
+                <span>Practice:</span> simple calculator and logic tasks inside
+                Colab
               </li>
-              <li><span>Output:</span> first personal Colab notebook</li>
+              <li>
+                <span>Output:</span> first personal Colab notebook and first
+                runs in the Learn With Champak editor
+              </li>
             </ul>
           </article>
 
@@ -504,7 +534,8 @@
                 arrays, shape, axis
               </li>
               <li>
-                <span>Practice:</span> mean, median, min, max, range with arrays
+                <span>Practice:</span> compute mean, median, min, max, range
+                with arrays
               </li>
               <li><span>Output:</span> basic numerical thinking notebook</li>
             </ul>
@@ -523,10 +554,19 @@
                 filtering
               </li>
               <li>
-                <span>Dataset:</span> small classroom CSV + Titanic preview
+                <span>Dataset:</span> small classroom CSV + Titanic preview,
+                explored inside Colab and editor practice
               </li>
               <li><span>Output:</span> first data inspection report</li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
+                >Titanic CSV</a
+              >
+            </div>
           </article>
 
           <article class="week">
@@ -534,7 +574,7 @@
             <h3>Data cleaning and preparation</h3>
             <p>
               Missing values, duplicates, datatype fixes, string cleanup, and
-              analysis-ready data.
+              making data analysis-ready.
             </p>
             <ul>
               <li>
@@ -542,16 +582,27 @@
                 control, type conversion
               </li>
               <li><span>Dataset:</span> Titanic or messy student dataset</li>
-              <li><span>Output:</span> cleaned dataset notebook</li>
+              <li>
+                <span>Output:</span> cleaned dataset notebook with before/after
+                comparison
+              </li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
+                >Titanic CSV</a
+              >
+            </div>
           </article>
 
           <article class="week">
             <small>Week 06</small><span class="tag">Data core</span>
             <h3>Visualization and insight building</h3>
             <p>
-              Bar charts, histograms, scatter plots, box plots, and simple data
-              storytelling.
+              Bar charts, histograms, scatter plots, box plots, and how to tell
+              a simple story from data.
             </p>
             <ul>
               <li>
@@ -562,6 +613,29 @@
               </li>
               <li><span>Output:</span> chart-driven short analysis notebook</li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
+                >Titanic CSV</a
+              >
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+                >Sales / Tips CSV</a
+              >
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/mpg.csv"
+                >MPG Regression CSV</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset"
+                >California Housing</a
+              >
+            </div>
           </article>
 
           <article class="week">
@@ -569,7 +643,7 @@
             <h3>Statistics for AI-ML</h3>
             <p>
               Mean, median, mode, variance, standard deviation, percentiles,
-              distributions, and interpretation.
+              distribution basics, and interpretation.
             </p>
             <ul>
               <li>
@@ -580,23 +654,59 @@
               </li>
               <li><span>Output:</span> statistics worksheet notebook</li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
+                >Tips / Stats CSV</a
+              >
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
+                >Titanic CSV</a
+              >
+            </div>
           </article>
 
           <article class="week">
             <small>Week 08</small><span class="tag">Data core</span>
             <h3>Correlation, probability, and dataset selection</h3>
             <p>
-              Understand relationships between variables and how datasets
-              support different problems.
+              Understand relationships between variables and learn how different
+              datasets support different problems.
             </p>
             <ul>
               <li>
-                <span>Learn:</span> correlation matrix, probability intuition,
-                target vs features
+                <span>Learn:</span> correlation matrix, simple probability
+                intuition, target vs features
               </li>
               <li><span>Datasets:</span> Iris, housing, wine overview</li>
               <li><span>Output:</span> dataset comparison notes in Colab</li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+                >Iris CSV</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/toy_dataset.html#iris-dataset"
+                >sklearn Iris</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/toy_dataset.html#wine-dataset"
+                >sklearn Wine</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset"
+                >California Housing</a
+              >
+            </div>
           </article>
 
           <article class="week">
@@ -604,50 +714,90 @@
             <h3>Text data basics and preprocessing</h3>
             <p>
               Move into NLP with tokenization, lowercasing, punctuation removal,
-              stopword awareness, and cleanup.
+              stopword awareness, and text cleanup.
             </p>
             <ul>
-              <li><span>Learn:</span> raw sentence to cleaned tokens</li>
+              <li>
+                <span>Learn:</span> basic NLP pipeline from raw sentence to
+                cleaned tokens
+              </li>
               <li><span>Dataset:</span> SMS Spam Collection small samples</li>
               <li><span>Output:</span> text preprocessing notebook</li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
+                >SMS Spam Collection</a
+              >
+            </div>
           </article>
 
           <article class="week">
             <small>Week 10</small><span class="tag">Similarity + NLP</span>
             <h3>Bag of Words, TF-IDF, and cosine similarity</h3>
             <p>
-              Represent text numerically and measure how similar two texts are.
+              One of the most practical weeks: represent text numerically and
+              measure how similar two texts are.
             </p>
             <ul>
               <li>
-                <span>Learn:</span> CountVectorizer, TF-IDF, vectors, dot
-                product, cosine similarity
+                <span>Learn:</span> CountVectorizer, TF-IDF idea, vectors, dot
+                product intuition, cosine similarity
               </li>
               <li>
                 <span>Practice:</span> compare sentences, articles, or titles
+                inside Colab
               </li>
               <li><span>Output:</span> mini text similarity notebook</li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
+                >SMS Spam Collection</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset"
+                >20 Newsgroups</a
+              >
+            </div>
           </article>
 
           <article class="week">
             <small>Week 11</small><span class="tag">Similarity + NLP</span>
             <h3>NLP mini applications</h3>
             <p>
-              Use similarity and vectorization in useful beginner projects like
-              recommendation, matching, and search ranking.
+              Use cosine similarity and vectorization in useful beginner
+              projects like recommendation, matching, and search ranking.
             </p>
             <ul>
               <li>
-                <span>Learn:</span> document matching, FAQ matching,
+                <span>Learn:</span> document matching, FAQ matching, basic
                 recommendation logic
               </li>
               <li>
-                <span>Dataset:</span> custom notes or product text dataset
+                <span>Dataset:</span> custom notes corpus or small movie/product
+                text dataset
               </li>
               <li><span>Output:</span> text matching mini project</li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset"
+                >20 Newsgroups</a
+              >
+              <a
+                target="_blank"
+                href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
+                >SMS Spam Collection</a
+              >
+            </div>
           </article>
 
           <article class="week">
@@ -658,13 +808,29 @@
               spam or sentiment-style tasks.
             </p>
             <ul>
-              <li><span>Learn:</span> train-test split, vectorize, classify</li>
               <li>
-                <span>Datasets:</span> SMS Spam, IMDB subset, or 20 Newsgroups
-                sample
+                <span>Learn:</span> train-test split for text, vectorize then
+                classify
+              </li>
+              <li>
+                <span>Datasets:</span> SMS Spam Collection, IMDB subset, or 20
+                Newsgroups sample
               </li>
               <li><span>Output:</span> first NLP classification notebook</li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
+                >SMS Spam Collection</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset"
+                >20 Newsgroups</a
+              >
+            </div>
           </article>
 
           <article class="week">
@@ -679,18 +845,34 @@
                 <span>Learn:</span> linear regression and evaluation basics
               </li>
               <li>
-                <span>Datasets:</span> housing or marks-prediction dataset
+                <span>Datasets:</span> housing or marks-prediction style dataset
               </li>
-              <li><span>Output:</span> regression notebook with charts</li>
+              <li>
+                <span>Output:</span> regression notebook with charts and
+                findings
+              </li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset"
+                >California Housing</a
+              >
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/mpg.csv"
+                >MPG Regression CSV</a
+              >
+            </div>
           </article>
 
           <article class="week">
             <small>Week 14</small><span class="tag">ML core</span>
-            <h3>Classification with benchmark datasets</h3>
+            <h3>Classification with important benchmark datasets</h3>
             <p>
-              Model category prediction problems with classic beginner-friendly
-              datasets.
+              Modeling category prediction problems with classic datasets that
+              are beginner-friendly and respected.
             </p>
             <ul>
               <li>
@@ -703,14 +885,37 @@
               </li>
               <li><span>Output:</span> classification comparison notebook</li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+                >Iris CSV</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/toy_dataset.html#wine-dataset"
+                >Wine Dataset</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/toy_dataset.html#breast-cancer-dataset"
+                >Breast Cancer Wisconsin</a
+              >
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
+                >Titanic CSV</a
+              >
+            </div>
           </article>
 
           <article class="week">
             <small>Week 15</small><span class="tag">ML core</span>
             <h3>Clustering and unsupervised learning awareness</h3>
             <p>
-              Understand grouping without labels and the difference between
-              supervised and unsupervised learning.
+              Introduce grouping without labels and help students understand the
+              difference between supervised and unsupervised learning.
             </p>
             <ul>
               <li>
@@ -725,6 +930,19 @@
                 interpretation
               </li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+                >Iris CSV</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/toy_dataset.html#iris-dataset"
+                >sklearn Iris</a
+              >
+            </div>
           </article>
 
           <article class="week">
@@ -732,12 +950,13 @@
             <h3>Mini capstone in Google Colab</h3>
             <p>
               Choose a path and build something presentable: analysis,
-              prediction, or text similarity/NLP mini app notebook.
+              prediction, or text similarity / NLP mini app notebook.
             </p>
             <ul>
               <li>
-                <span>Options:</span> dashboard, spam classifier,
-                recommendation, regression/classification project
+                <span>Project options:</span> analysis dashboard notebook, spam
+                classifier, recommendation / matching notebook, or
+                regression/classification project
               </li>
               <li>
                 <span>Deliverables:</span> Colab link, explanation, screenshots,
@@ -747,6 +966,34 @@
                 <span>Output:</span> portfolio-ready final notebook project
               </li>
             </ul>
+            <div class="dataset-links">
+              <b>Dataset Links</b>
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
+                >Titanic CSV</a
+              >
+              <a
+                target="_blank"
+                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+                >Iris CSV</a
+              >
+              <a
+                target="_blank"
+                href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
+                >SMS Spam Collection</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset"
+                >California Housing</a
+              >
+              <a
+                target="_blank"
+                href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset"
+                >20 Newsgroups</a
+              >
+            </div>
           </article>
         </div>
       </div>
