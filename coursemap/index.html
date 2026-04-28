@@ -1,4 +1,4 @@
-<!doctype html>
+image.name<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -1161,5 +1161,46 @@ label {
   <footer>
     © 2026 Programmer’s Picnic | Learn With Champak · AI-ML with Python Course
   </footer>
+
+
+<script>
+  document
+    .getElementById("whatsappDoubtForm")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("studentName").value.trim();
+      const week = document.getElementById("classWeek").value.trim();
+      const type = document.getElementById("doubtType").value;
+      const message = document.getElementById("doubtMessage").value.trim();
+      const image = document.getElementById("doubtImage").files[0];
+
+      let text =
+        "Hello Champak Roy,%0A%0A" +
+        "I have a doubt/query from the AI-ML with Python course.%0A%0A" +
+        "Name: " +
+        encodeURIComponent(name) +
+        "%0A" +
+        "Class / Week: " +
+        encodeURIComponent(week || "Not mentioned") +
+        "%0A" +
+        "Doubt Type: " +
+        encodeURIComponent(type) +
+        "%0A%0A" +
+        "Doubt / Query:%0A" +
+        encodeURIComponent(message);
+
+      if (image) {
+        text +=
+          "%0A%0AImage/Screenshot selected: " +
+          encodeURIComponent(image.name) +
+          "%0APlease attach this image manually in WhatsApp after the chat opens.";
+      }
+
+      window.open("https://wa.me/919335874326?text=" + text, "_blank");
+    });
+</script>
+
+
 </body>
 </html>
