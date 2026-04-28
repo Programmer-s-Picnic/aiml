@@ -1,1015 +1,626 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>AI-ML with Python Course | Learn With Champak</title>
-    <meta
-      name="description"
-      content="16-week AI-ML with Python course roadmap by Champak Roy. Learn Colab, Python, NumPy, pandas, visualization, NLP, ML, and capstone projects."
-    />
-    <meta name="theme-color" content="#f59e0b" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI-ML with Python Course | Learn With Champak</title>
+  <meta
+    name="description"
+    content="16-week AI-ML with Python course roadmap by Champak Roy. Learn Colab, Python, NumPy, pandas, visualization, NLP, ML, and capstone projects."
+  />
+  <meta name="theme-color" content="#f59e0b" />
 
-    <style>
-      :root {
-        --bg: #fff7e6;
-        --bg2: #fffaf0;
-        --card: #ffffff;
-        --text: #1f1608;
-        --muted: #6b4a1d;
-        --brand: #d97706;
-        --brand2: #f59e0b;
-        --line: #f3c76f;
-        --soft: #fff1c7;
-        --green: #16a34a;
-        --shadow: 0 18px 45px rgba(120, 72, 0, 0.13);
-        --radius: 24px;
-      }
+  <style>
+    :root {
+      --bg: #fff7e6;
+      --bg2: #fffaf0;
+      --card: #ffffff;
+      --text: #1f1608;
+      --muted: #6b4a1d;
+      --brand: #d97706;
+      --brand2: #f59e0b;
+      --line: #f3c76f;
+      --soft: #fff1c7;
+      --green: #16a34a;
+      --shadow: 0 18px 45px rgba(120, 72, 0, 0.13);
+      --radius: 24px;
+    }
 
-      * {
-        box-sizing: border-box;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background:
-          radial-gradient(circle at top left, #ffe9ae 0, transparent 32%),
-          radial-gradient(circle at top right, #fff0c9 0, transparent 28%),
-          linear-gradient(135deg, var(--bg), #fffdf8);
-        color: var(--text);
-        line-height: 1.65;
-      }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, #ffe9ae 0, transparent 32%),
+        radial-gradient(circle at top right, #fff0c9 0, transparent 28%),
+        linear-gradient(135deg, var(--bg), #fffdf8);
+      color: var(--text);
+      line-height: 1.65;
+    }
 
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-      .wrap {
-        width: min(1180px, 92%);
-        margin: auto;
-      }
+    .wrap {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
 
-      .hero {
-        padding: 42px 0 30px;
-      }
+    .hero {
+      padding: 42px 0 30px;
+    }
 
-      .hero-card {
-        background: linear-gradient(135deg, #fffdf8, #fff4d6);
-        border: 1px solid var(--line);
-        border-radius: 32px;
-        box-shadow: var(--shadow);
-        padding: 42px;
-        position: relative;
-        overflow: hidden;
-      }
+    .hero-card {
+      background: linear-gradient(135deg, #fffdf8, #fff4d6);
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: 42px;
+      position: relative;
+      overflow: hidden;
+    }
 
-      .hero-card:before {
-        content: "";
-        position: absolute;
-        width: 260px;
-        height: 260px;
-        border-radius: 50%;
-        background: rgba(245, 158, 11, 0.18);
-        right: -90px;
-        top: -90px;
-      }
+    .hero-card:before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(245, 158, 11, 0.18);
+      right: -90px;
+      top: -90px;
+    }
 
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        border-radius: 999px;
-        border: 1px solid var(--line);
-        background: #fff8e1;
-        color: #8a5700;
-        font-weight: 800;
-        font-size: 14px;
-      }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff8e1;
+      color: #8a5700;
+      font-weight: 800;
+      font-size: 14px;
+      position: relative;
+      z-index: 1;
+    }
 
-      h1 {
-        font-size: clamp(34px, 5vw, 66px);
-        line-height: 1.05;
-        margin: 20px 0 16px;
-        letter-spacing: -1.5px;
-      }
+    h1 {
+      font-size: clamp(34px, 5vw, 66px);
+      line-height: 1.05;
+      margin: 20px 0 16px;
+      letter-spacing: -1.5px;
+      position: relative;
+      z-index: 1;
+    }
 
-      .grad {
-        background: linear-gradient(90deg, var(--brand), var(--brand2));
-        -webkit-background-clip: text;
-        color: transparent;
-      }
+    .grad {
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
 
-      .lead {
-        max-width: 790px;
-        font-size: 19px;
-        color: var(--muted);
-        margin: 0 0 26px;
-      }
+    .lead {
+      max-width: 790px;
+      font-size: 19px;
+      color: var(--muted);
+      margin: 0 0 26px;
+      position: relative;
+      z-index: 1;
+    }
 
-      .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 14px;
-        margin-top: 25px;
-      }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 25px;
+      position: relative;
+      z-index: 1;
+    }
 
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 9px;
-        padding: 14px 20px;
-        border-radius: 16px;
-        font-weight: 900;
-        border: 1px solid transparent;
-        transition: 0.25s;
-        cursor: pointer;
-      }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 14px 20px;
+      border-radius: 16px;
+      font-weight: 900;
+      border: 1px solid transparent;
+      transition: 0.25s;
+      cursor: pointer;
+    }
 
-      .btn-main {
-        background: linear-gradient(135deg, var(--brand), var(--brand2));
-        color: white;
-        box-shadow: 0 12px 25px rgba(217, 119, 6, 0.25);
-      }
+    .btn-main {
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: white;
+      box-shadow: 0 12px 25px rgba(217, 119, 6, 0.25);
+    }
 
-      .btn-whatsapp {
-        background: #dcfce7;
-        color: #14532d;
-        border-color: #86efac;
-      }
+    .btn-whatsapp {
+      background: #dcfce7;
+      color: #14532d;
+      border-color: #86efac;
+    }
 
-      .btn-outline {
-        background: white;
-        color: #8a5700;
-        border-color: var(--line);
-      }
+    .btn-outline {
+      background: white;
+      color: #8a5700;
+      border-color: var(--line);
+    }
 
-      .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 16px 30px rgba(120, 72, 0, 0.16);
-      }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 30px rgba(120, 72, 0, 0.16);
+    }
 
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-        margin: 28px 0 0;
-      }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 28px 0 0;
+      position: relative;
+      z-index: 1;
+    }
 
-      .stat {
-        background: white;
-        border: 1px solid #f4d999;
-        border-radius: 20px;
-        padding: 18px;
-      }
+    .stat {
+      background: white;
+      border: 1px solid #f4d999;
+      border-radius: 20px;
+      padding: 18px;
+    }
 
-      .stat b {
-        display: block;
-        font-size: 28px;
-        color: var(--brand);
-      }
+    .stat b {
+      display: block;
+      font-size: 28px;
+      color: var(--brand);
+    }
 
-      .stat span {
-        color: var(--muted);
-        font-weight: 700;
-        font-size: 14px;
-      }
+    .stat span {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 14px;
+    }
 
-      .section {
-        padding: 38px 0;
-      }
+    .section {
+      padding: 38px 0;
+    }
 
-      .section-head {
-        text-align: center;
-        margin-bottom: 28px;
-      }
+    .section-head {
+      text-align: center;
+      margin-bottom: 28px;
+    }
 
-      .section-head h2 {
-        margin: 0;
-        font-size: clamp(28px, 4vw, 44px);
-      }
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+    }
 
-      .section-head p {
-        margin: 10px auto 0;
-        max-width: 760px;
-        color: var(--muted);
-        font-size: 17px;
-      }
+    .section-head p {
+      margin: 10px auto 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 17px;
+    }
 
-      .phases {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-        margin-top: 24px;
-      }
+    .phases {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
 
-      .phase {
-        background: white;
-        border: 1px solid #f4d999;
-        border-radius: 22px;
-        padding: 20px;
-        box-shadow: 0 12px 28px rgba(120, 72, 0, 0.08);
-      }
+    .phase {
+      background: white;
+      border: 1px solid #f4d999;
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: 0 12px 28px rgba(120, 72, 0, 0.08);
+    }
 
-      .phase h3 {
-        margin: 0 0 8px;
-        color: #9a5f00;
-      }
+    .phase h3 {
+      margin: 0 0 8px;
+      color: #9a5f00;
+    }
 
-      .phase p {
-        margin: 0;
-        color: var(--muted);
-        font-size: 15px;
+    .phase p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .schedule-box {
+      background: linear-gradient(135deg, #fffdf8, #fff1c7);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .day-card {
+      background: white;
+      border: 1px solid #f1cf8c;
+      border-radius: 22px;
+      padding: 18px;
+      transition: 0.25s;
+    }
+
+    .day-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 32px rgba(120, 72, 0, 0.12);
+    }
+
+    .day-card h3 {
+      margin: 0 0 8px;
+      color: #92400e;
+    }
+
+    .day-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .day-card.class-day {
+      border-color: #f59e0b;
+      background: #fff8e1;
+    }
+
+    .day-card.project-day {
+      border-color: #86efac;
+      background: #f0fdf4;
+    }
+
+    .zoom-panel {
+      margin-top: 24px;
+      background: linear-gradient(135deg, #92400e, #d97706, #f59e0b);
+      color: white;
+      border-radius: 26px;
+      padding: 26px;
+      text-align: center;
+    }
+
+    .zoom-panel h3 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .zoom-panel p {
+      margin: 0 auto 18px;
+      max-width: 760px;
+      color: #fff7d6;
+    }
+
+    .zoom-panel .btn {
+      background: white;
+      color: #92400e;
+    }
+
+    .timeline {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 16px 2px 4px;
+      margin-top: 18px;
+    }
+
+    .timeline span {
+      min-width: 140px;
+      text-align: center;
+      background: white;
+      border: 1px solid #f1cf8c;
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: #7c4a00;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .week {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid #f1cf8c;
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 14px 35px rgba(120, 72, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+      transition: 0.25s;
+    }
+
+    .week:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 45px rgba(120, 72, 0, 0.14);
+    }
+
+    .week small {
+      font-weight: 900;
+      color: #000;
+    }
+
+    .tag {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff8e1;
+      color: #9a5f00;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .week h3 {
+      margin: 24px 0 10px;
+      font-size: 20px;
+    }
+
+    .week p {
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
+
+    .week ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .week li {
+      margin: 8px 0;
+      font-weight: 700;
+    }
+
+    .week li span {
+      color: #8a5700;
+      font-weight: 900;
+    }
+
+    .dataset-links {
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px dashed #f3c76f;
+      border-radius: 16px;
+      background: #fff8e1;
+    }
+
+    .dataset-links b {
+      display: block;
+      margin-bottom: 8px;
+      color: #9a5f00;
+    }
+
+    .dataset-links a {
+      display: inline-block;
+      margin: 5px 7px 5px 0;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #f1cf8c;
+      color: #7c4a00;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .cta {
+      background: linear-gradient(135deg, #92400e, #d97706, #f59e0b);
+      color: white;
+      border-radius: 32px;
+      padding: 38px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      margin-bottom: 45px;
+    }
+
+    .cta h2 {
+      margin: 0 0 10px;
+      font-size: 36px;
+    }
+
+    .cta p {
+      margin: 0 auto 24px;
+      max-width: 720px;
+      color: #fff7d6;
+    }
+
+    .cta .btn {
+      background: white;
+      color: #92400e;
+    }
+
+    footer {
+      text-align: center;
+      padding: 26px;
+      color: var(--muted);
+      border-top: 1px solid #f3d28e;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    @media (max-width: 900px) {
+      .stats,
+      .phases,
+      .schedule-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 22px;
+        grid-template-columns: 1fr;
       }
 
-      .week {
-        background: rgba(255, 255, 255, 0.86);
-        border: 1px solid #f1cf8c;
-        border-radius: var(--radius);
-        padding: 24px;
-        box-shadow: 0 14px 35px rgba(120, 72, 0, 0.08);
-        position: relative;
-        overflow: hidden;
-        transition: 0.25s;
+      .hero-card {
+        padding: 28px;
       }
+    }
 
-      .week:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 45px rgba(120, 72, 0, 0.14);
-      }
-
-      .week small {
-        font-weight: 900;
-        color: #000;
+    @media (max-width: 560px) {
+      .stats,
+      .phases,
+      .schedule-grid {
+        grid-template-columns: 1fr;
       }
 
       .tag {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        padding: 8px 13px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        background: #fff8e1;
-        color: #9a5f00;
-        font-weight: 900;
-        font-size: 13px;
+        position: static;
+        display: inline-block;
+        margin-top: 12px;
       }
 
       .week h3 {
-        margin: 24px 0 10px;
-        font-size: 20px;
+        margin-top: 14px;
       }
 
-      .week p {
-        color: var(--muted);
-        margin: 0 0 14px;
+      .hero-actions {
+        flex-direction: column;
       }
 
-      .week ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+      .btn {
+        width: 100%;
       }
+    }
+  </style>
+</head>
 
-      .week li {
-        margin: 8px 0;
-        font-weight: 700;
-      }
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-card">
+        <span class="badge" id="speak0">Programmer’s Picnic | Learn With Champak</span>
 
-      .week li span {
-        color: #8a5700;
-        font-weight: 900;
-      }
+        <h1 id="speak1">
+          AI-ML with Python<br />
+          <span class="grad">16-Week Complete Roadmap</span>
+        </h1>
 
-      .dataset-links {
-        margin-top: 16px;
-        padding: 14px;
-        border: 1px dashed #f3c76f;
-        border-radius: 16px;
-        background: #fff8e1;
-      }
+        <p class="lead" id="speak2">
+          A beginner-friendly, project-based AI-ML learning path starting from
+          Google Colab and Python, moving through NumPy, pandas, statistics,
+          NLP, machine learning, and ending with a portfolio-ready capstone.
+        </p>
 
-      .dataset-links b {
-        display: block;
-        margin-bottom: 8px;
-        color: #9a5f00;
-      }
+        <div class="hero-actions">
+          <a class="btn btn-main" href="#schedule">View Class Schedule</a>
+          <a class="btn btn-outline" href="#course">View Full Course Roadmap</a>
+          <a
+            class="btn btn-whatsapp"
+            target="_blank"
+            href="https://wa.me/919335874326"
+            >Contact Champak Roy</a
+          >
+          <a
+            class="btn btn-outline"
+            target="_blank"
+            href="https://chat.whatsapp.com/CLCBRoi5AuB816tQ86hpQb"
+            >Join WhatsApp Group</a
+          >
+        </div>
 
-      .dataset-links a {
-        display: inline-block;
-        margin: 5px 7px 5px 0;
-        padding: 7px 10px;
-        border-radius: 999px;
-        background: #fff;
-        border: 1px solid #f1cf8c;
-        color: #7c4a00;
-        font-weight: 800;
-        font-size: 13px;
-      }
-
-      .cta {
-        background: linear-gradient(135deg, #92400e, #d97706, #f59e0b);
-        color: white;
-        border-radius: 32px;
-        padding: 38px;
-        text-align: center;
-        box-shadow: var(--shadow);
-        margin-bottom: 45px;
-      }
-
-      .cta h2 {
-        margin: 0 0 10px;
-        font-size: 36px;
-      }
-
-      .cta p {
-        margin: 0 auto 24px;
-        max-width: 720px;
-        color: #fff7d6;
-      }
-
-      .cta .btn {
-        background: white;
-        color: #92400e;
-      }
-
-      footer {
-        text-align: center;
-        padding: 26px;
-        color: var(--muted);
-        border-top: 1px solid #f3d28e;
-        background: rgba(255, 255, 255, 0.5);
-      }
-
-      @media (max-width: 900px) {
-        .stats,
-        .phases {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .grid {
-          grid-template-columns: 1fr;
-        }
-        .hero-card {
-          padding: 28px;
-        }
-      }
-
-      @media (max-width: 560px) {
-        .stats,
-        .phases {
-          grid-template-columns: 1fr;
-        }
-        .tag {
-          position: static;
-          display: inline-block;
-          margin-top: 12px;
-        }
-        .week h3 {
-          margin-top: 14px;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <header class="hero">
-      <div class="wrap">
-        <div class="hero-card">
-          <span class="badge">Programmer’s Picnic | Learn With Champak</span>
-
-          <h1>
-            AI-ML with Python<br />
-            <span class="grad">16-Week Complete Roadmap</span>
-          </h1>
-
-          <p class="lead">
-            A beginner-friendly, project-based AI-ML learning path starting from
-            Google Colab and Python, moving through NumPy, pandas, statistics,
-            NLP, machine learning, and ending with a portfolio-ready capstone.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-main" href="#course">View Full Course Roadmap</a>
-            <a
-              class="btn btn-whatsapp"
-              target="_blank"
-              href="https://wa.me/919335874326"
-              >Contact Champak Roy</a
-            >
-            <a
-              class="btn btn-outline"
-              target="_blank"
-              href="https://chat.whatsapp.com/CLCBRoi5AuB816tQ86hpQb"
-              >Join WhatsApp Group</a
-            >
-          </div>
-
-          <div class="stats">
-            <div class="stat"><b>16</b><span>Weeks</span></div>
-            <div class="stat"><b>4</b><span>Learning phases</span></div>
-            <div class="stat"><b>10+</b><span>Datasets</span></div>
-            <div class="stat"><b>1</b><span>Final capstone</span></div>
-          </div>
+        <div class="stats">
+          <div class="stat"><b>16</b><span>Weeks</span></div>
+          <div class="stat"><b>4</b><span>Learning phases</span></div>
+          <div class="stat"><b>10+</b><span>Datasets</span></div>
+          <div class="stat"><b>1</b><span>Final capstone</span></div>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <section class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Course Journey</h2>
-          <p>
-            From foundation coding to real AI-ML notebooks and project
-            presentation.
-          </p>
-        </div>
-
-        <div class="phases">
-          <div class="phase">
-            <h3>Foundation</h3>
-            <p>Python, Colab, logic, NumPy, arrays, pandas, and CSV files.</p>
-          </div>
-          <div class="phase">
-            <h3>Data Core</h3>
-            <p>
-              Cleaning, visualization, statistics, correlation, and dataset
-              selection.
-            </p>
-          </div>
-          <div class="phase">
-            <h3>Similarity + NLP</h3>
-            <p>
-              Text preprocessing, TF-IDF, cosine similarity, and text
-              classification.
-            </p>
-          </div>
-          <div class="phase">
-            <h3>ML Core + Capstone</h3>
-            <p>
-              Regression, classification, clustering, and a final portfolio
-              project.
-            </p>
-          </div>
-        </div>
+  <section class="section" id="schedule">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="speak3">Complete Class Schedule</h2>
+        <p id="speak4">
+          Alternate day live classes starting from Monday, with assignments,
+          doubts, weekly projects, and discussion support.
+        </p>
       </div>
-    </section>
 
-    <main id="course" class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Complete 16-Week Plan</h2>
-          <p>
-            Each week has a clear learning goal, practice direction, dataset
-            idea, and output.
-          </p>
+      <div class="schedule-box">
+        <div class="schedule-grid">
+          <div class="day-card class-day">
+            <h3>Monday</h3>
+            <p>Live Class<br />Evening 7:00 PM – 8:30 PM<br />Live on Zoom</p>
+          </div>
+
+          <div class="day-card">
+            <h3>Tuesday</h3>
+            <p>Assignments + Doubts<br />Practice discussion on WhatsApp group</p>
+          </div>
+
+          <div class="day-card class-day">
+            <h3>Wednesday</h3>
+            <p>Live Class<br />Evening 7:00 PM – 8:30 PM<br />Live on Zoom</p>
+          </div>
+
+          <div class="day-card">
+            <h3>Thursday</h3>
+            <p>Assignments + Doubts<br />Revision and WhatsApp discussion</p>
+          </div>
+
+          <div class="day-card class-day">
+            <h3>Friday</h3>
+            <p>Live Class<br />Evening 7:00 PM – 8:30 PM<br />Live on Zoom</p>
+          </div>
+
+          <div class="day-card">
+            <h3>Saturday</h3>
+            <p>Revision + Practice<br />Prepare for Sunday mini project</p>
+          </div>
+
+          <div class="day-card project-day">
+            <h3>Sunday</h3>
+            <p>
+              Small Project<br />Past week discussion<br />Trailer of coming week
+            </p>
+          </div>
+
+          <div class="day-card">
+            <h3>Support</h3>
+            <p>Doubts and discussions continue in the WhatsApp group.</p>
+          </div>
         </div>
 
-        <div class="grid">
-          <article class="week">
-            <small>Week 01</small><span class="tag">Foundation</span>
-            <h3>Google Colab + Python start</h3>
-            <p>
-              Introduction to Colab, cells, markdown, running code, variables,
-              input-output, data types, operators, Python editor, and VS Code
-              awareness.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> notebook workflow, syntax, errors, print,
-                comments, editor basics, and VS Code setup awareness
-              </li>
-              <li>
-                <span>Practice:</span> simple calculator and logic tasks inside
-                Colab
-              </li>
-              <li>
-                <span>Output:</span> first personal Colab notebook and first
-                runs in the Learn With Champak editor
-              </li>
-            </ul>
-          </article>
-
-          <article class="week">
-            <small>Week 02</small><span class="tag">Foundation</span>
-            <h3>Conditions, loops, functions, and strings</h3>
-            <p>
-              Flow control, reusable logic, string handling, and problem-solving
-              patterns.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> if-else, for, while, functions, return,
-                string methods
-              </li>
-              <li>
-                <span>Practice:</span> text cleaning and menu-based mini
-                programs
-              </li>
-              <li>
-                <span>Output:</span> utility notebook with reusable functions
-              </li>
-            </ul>
-          </article>
-
-          <article class="week">
-            <small>Week 03</small><span class="tag">Foundation</span>
-            <h3>Lists, dictionaries, NumPy, and arrays</h3>
-            <p>
-              Data structures plus the move from plain Python collections to
-              numerical arrays.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> indexing, slicing, dictionaries, NumPy
-                arrays, shape, axis
-              </li>
-              <li>
-                <span>Practice:</span> compute mean, median, min, max, range
-                with arrays
-              </li>
-              <li><span>Output:</span> basic numerical thinking notebook</li>
-            </ul>
-          </article>
-
-          <article class="week">
-            <small>Week 04</small><span class="tag">Foundation</span>
-            <h3>pandas and reading CSV files in Colab</h3>
-            <p>
-              Series, DataFrame, CSV upload, selection, filtering, and first
-              dataset inspection.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> read_csv, head, tail, info, describe,
-                filtering
-              </li>
-              <li>
-                <span>Dataset:</span> small classroom CSV + Titanic preview,
-                explored inside Colab and editor practice
-              </li>
-              <li><span>Output:</span> first data inspection report</li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
-                >Titanic CSV</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 05</small><span class="tag">Data core</span>
-            <h3>Data cleaning and preparation</h3>
-            <p>
-              Missing values, duplicates, datatype fixes, string cleanup, and
-              making data analysis-ready.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> null handling, fillna, dropna, duplicate
-                control, type conversion
-              </li>
-              <li><span>Dataset:</span> Titanic or messy student dataset</li>
-              <li>
-                <span>Output:</span> cleaned dataset notebook with before/after
-                comparison
-              </li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
-                >Titanic CSV</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 06</small><span class="tag">Data core</span>
-            <h3>Visualization and insight building</h3>
-            <p>
-              Bar charts, histograms, scatter plots, box plots, and how to tell
-              a simple story from data.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> matplotlib basics and chart interpretation
-              </li>
-              <li>
-                <span>Dataset:</span> Titanic, housing, or sales-style CSV
-              </li>
-              <li><span>Output:</span> chart-driven short analysis notebook</li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
-                >Titanic CSV</a
-              >
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
-                >Sales / Tips CSV</a
-              >
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/mpg.csv"
-                >MPG Regression CSV</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset"
-                >California Housing</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 07</small><span class="tag">Data core</span>
-            <h3>Statistics for AI-ML</h3>
-            <p>
-              Mean, median, mode, variance, standard deviation, percentiles,
-              distribution basics, and interpretation.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> descriptive statistics from ground level
-              </li>
-              <li>
-                <span>Practice:</span> compute stats with NumPy and pandas
-              </li>
-              <li><span>Output:</span> statistics worksheet notebook</li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv"
-                >Tips / Stats CSV</a
-              >
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
-                >Titanic CSV</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 08</small><span class="tag">Data core</span>
-            <h3>Correlation, probability, and dataset selection</h3>
-            <p>
-              Understand relationships between variables and learn how different
-              datasets support different problems.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> correlation matrix, simple probability
-                intuition, target vs features
-              </li>
-              <li><span>Datasets:</span> Iris, housing, wine overview</li>
-              <li><span>Output:</span> dataset comparison notes in Colab</li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-                >Iris CSV</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/toy_dataset.html#iris-dataset"
-                >sklearn Iris</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/toy_dataset.html#wine-dataset"
-                >sklearn Wine</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset"
-                >California Housing</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 09</small><span class="tag">Similarity + NLP</span>
-            <h3>Text data basics and preprocessing</h3>
-            <p>
-              Move into NLP with tokenization, lowercasing, punctuation removal,
-              stopword awareness, and text cleanup.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> basic NLP pipeline from raw sentence to
-                cleaned tokens
-              </li>
-              <li><span>Dataset:</span> SMS Spam Collection small samples</li>
-              <li><span>Output:</span> text preprocessing notebook</li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
-                >SMS Spam Collection</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 10</small><span class="tag">Similarity + NLP</span>
-            <h3>Bag of Words, TF-IDF, and cosine similarity</h3>
-            <p>
-              One of the most practical weeks: represent text numerically and
-              measure how similar two texts are.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> CountVectorizer, TF-IDF idea, vectors, dot
-                product intuition, cosine similarity
-              </li>
-              <li>
-                <span>Practice:</span> compare sentences, articles, or titles
-                inside Colab
-              </li>
-              <li><span>Output:</span> mini text similarity notebook</li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
-                >SMS Spam Collection</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset"
-                >20 Newsgroups</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 11</small><span class="tag">Similarity + NLP</span>
-            <h3>NLP mini applications</h3>
-            <p>
-              Use cosine similarity and vectorization in useful beginner
-              projects like recommendation, matching, and search ranking.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> document matching, FAQ matching, basic
-                recommendation logic
-              </li>
-              <li>
-                <span>Dataset:</span> custom notes corpus or small movie/product
-                text dataset
-              </li>
-              <li><span>Output:</span> text matching mini project</li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset"
-                >20 Newsgroups</a
-              >
-              <a
-                target="_blank"
-                href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
-                >SMS Spam Collection</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 12</small><span class="tag">Similarity + NLP</span>
-            <h3>Text classification introduction</h3>
-            <p>
-              A gentle bridge from text processing to machine learning using
-              spam or sentiment-style tasks.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> train-test split for text, vectorize then
-                classify
-              </li>
-              <li>
-                <span>Datasets:</span> SMS Spam Collection, IMDB subset, or 20
-                Newsgroups sample
-              </li>
-              <li><span>Output:</span> first NLP classification notebook</li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
-                >SMS Spam Collection</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset"
-                >20 Newsgroups</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 13</small><span class="tag">ML core</span>
-            <h3>Regression from ground zero</h3>
-            <p>
-              Targets, features, prediction, train-test split, fit, predict,
-              error, and interpretation.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> linear regression and evaluation basics
-              </li>
-              <li>
-                <span>Datasets:</span> housing or marks-prediction style dataset
-              </li>
-              <li>
-                <span>Output:</span> regression notebook with charts and
-                findings
-              </li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset"
-                >California Housing</a
-              >
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/mpg.csv"
-                >MPG Regression CSV</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 14</small><span class="tag">ML core</span>
-            <h3>Classification with important benchmark datasets</h3>
-            <p>
-              Modeling category prediction problems with classic datasets that
-              are beginner-friendly and respected.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> logistic regression, k-NN, accuracy,
-                confusion matrix
-              </li>
-              <li>
-                <span>Datasets:</span> Iris, Wine, Breast Cancer Wisconsin,
-                Titanic
-              </li>
-              <li><span>Output:</span> classification comparison notebook</li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-                >Iris CSV</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/toy_dataset.html#wine-dataset"
-                >Wine Dataset</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/toy_dataset.html#breast-cancer-dataset"
-                >Breast Cancer Wisconsin</a
-              >
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
-                >Titanic CSV</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 15</small><span class="tag">ML core</span>
-            <h3>Clustering and unsupervised learning awareness</h3>
-            <p>
-              Introduce grouping without labels and help students understand the
-              difference between supervised and unsupervised learning.
-            </p>
-            <ul>
-              <li>
-                <span>Learn:</span> k-means intuition, scaling awareness,
-                cluster interpretation
-              </li>
-              <li>
-                <span>Datasets:</span> Iris features or customer-style dataset
-              </li>
-              <li>
-                <span>Output:</span> clustering notebook with visual
-                interpretation
-              </li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-                >Iris CSV</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/toy_dataset.html#iris-dataset"
-                >sklearn Iris</a
-              >
-            </div>
-          </article>
-
-          <article class="week">
-            <small>Week 16</small><span class="tag">Capstone</span>
-            <h3>Mini capstone in Google Colab</h3>
-            <p>
-              Choose a path and build something presentable: analysis,
-              prediction, or text similarity / NLP mini app notebook.
-            </p>
-            <ul>
-              <li>
-                <span>Project options:</span> analysis dashboard notebook, spam
-                classifier, recommendation / matching notebook, or
-                regression/classification project
-              </li>
-              <li>
-                <span>Deliverables:</span> Colab link, explanation, screenshots,
-                conclusions
-              </li>
-              <li>
-                <span>Output:</span> portfolio-ready final notebook project
-              </li>
-            </ul>
-            <div class="dataset-links">
-              <b>Dataset Links</b>
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv"
-                >Titanic CSV</a
-              >
-              <a
-                target="_blank"
-                href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-                >Iris CSV</a
-              >
-              <a
-                target="_blank"
-                href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection"
-                >SMS Spam Collection</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset"
-                >California Housing</a
-              >
-              <a
-                target="_blank"
-                href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset"
-                >20 Newsgroups</a
-              >
-            </div>
-          </article>
+        <div class="timeline">
+          <span>Monday: Class</span>
+          <span>Tuesday: Practice</span>
+          <span>Wednesday: Class</span>
+          <span>Thursday: Practice</span>
+          <span>Friday: Class</span>
+          <span>Saturday: Revision</span>
+          <span>Sunday: Project</span>
         </div>
-      </div>
-    </main>
 
-    <section class="section">
-      <div class="wrap">
-        <div class="cta">
-          <h2>Ready to join the AI-ML journey?</h2>
-          <p>
-            Contact Champak Roy directly on WhatsApp or join the course WhatsApp
-            group for updates, classes, doubts, and resources.
+        <div class="zoom-panel">
+          <h3 id="speak5">Live Class Timing</h3>
+          <p id="speak6">
+            Evening 7:00 PM to 8:30 PM. Classes are live on Zoom. Doubts and
+            discussion will happen in the WhatsApp group.
           </p>
+
           <div class="hero-actions" style="justify-content: center">
-            <a class="btn" target="_blank" href="https://wa.me/919335874326"
-              >Contact Champak Roy</a
+            <a
+              class="btn"
+              target="_blank"
+              href="https://www.learnwithchampak.live/p/champak.html#timing"
+              >Join Zoom / Check Timing</a
             >
             <a
               class="btn"
@@ -1017,13 +628,351 @@
               href="https://chat.whatsapp.com/CLCBRoi5AuB816tQ86hpQb"
               >Join WhatsApp Group</a
             >
+            <a class="btn" target="_blank" href="https://wa.me/919335874326"
+              >Contact Champak Roy</a
+            >
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <footer>
-      © 2026 Programmer’s Picnic | Learn With Champak · AI-ML with Python Course
-    </footer>
-  </body>
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="speak7">Course Journey</h2>
+        <p id="speak8">
+          From foundation coding to real AI-ML notebooks and project
+          presentation.
+        </p>
+      </div>
+
+      <div class="phases">
+        <div class="phase">
+          <h3>Foundation</h3>
+          <p>Python, Colab, logic, NumPy, arrays, pandas, and CSV files.</p>
+        </div>
+        <div class="phase">
+          <h3>Data Core</h3>
+          <p>
+            Cleaning, visualization, statistics, correlation, and dataset
+            selection.
+          </p>
+        </div>
+        <div class="phase">
+          <h3>Similarity + NLP</h3>
+          <p>
+            Text preprocessing, TF-IDF, cosine similarity, and text
+            classification.
+          </p>
+        </div>
+        <div class="phase">
+          <h3>ML Core + Capstone</h3>
+          <p>
+            Regression, classification, clustering, and a final portfolio
+            project.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main id="course" class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="speak9">Complete 16-Week Plan</h2>
+        <p id="speak10">
+          Each week has a clear learning goal, practice direction, dataset
+          idea, and output.
+        </p>
+      </div>
+
+      <div class="grid">
+        <article class="week">
+          <small>Week 01</small><span class="tag">Foundation</span>
+          <h3>Google Colab + Python start</h3>
+          <p>
+            Introduction to Colab, cells, markdown, running code, variables,
+            input-output, data types, operators, Python editor, and VS Code
+            awareness.
+          </p>
+          <ul>
+            <li><span>Learn:</span> notebook workflow, syntax, errors, print, comments, editor basics, and VS Code setup awareness</li>
+            <li><span>Practice:</span> simple calculator and logic tasks inside Colab</li>
+            <li><span>Output:</span> first personal Colab notebook and first runs in the Learn With Champak editor</li>
+          </ul>
+        </article>
+
+        <article class="week">
+          <small>Week 02</small><span class="tag">Foundation</span>
+          <h3>Conditions, loops, functions, and strings</h3>
+          <p>Flow control, reusable logic, string handling, and problem-solving patterns.</p>
+          <ul>
+            <li><span>Learn:</span> if-else, for, while, functions, return, string methods</li>
+            <li><span>Practice:</span> text cleaning and menu-based mini programs</li>
+            <li><span>Output:</span> utility notebook with reusable functions</li>
+          </ul>
+        </article>
+
+        <article class="week">
+          <small>Week 03</small><span class="tag">Foundation</span>
+          <h3>Lists, dictionaries, NumPy, and arrays</h3>
+          <p>Data structures plus the move from plain Python collections to numerical arrays.</p>
+          <ul>
+            <li><span>Learn:</span> indexing, slicing, dictionaries, NumPy arrays, shape, axis</li>
+            <li><span>Practice:</span> compute mean, median, min, max, range with arrays</li>
+            <li><span>Output:</span> basic numerical thinking notebook</li>
+          </ul>
+        </article>
+
+        <article class="week">
+          <small>Week 04</small><span class="tag">Foundation</span>
+          <h3>pandas and reading CSV files in Colab</h3>
+          <p>Series, DataFrame, CSV upload, selection, filtering, and first dataset inspection.</p>
+          <ul>
+            <li><span>Learn:</span> read_csv, head, tail, info, describe, filtering</li>
+            <li><span>Dataset:</span> small classroom CSV + Titanic preview, explored inside Colab and editor practice</li>
+            <li><span>Output:</span> first data inspection report</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv">Titanic CSV</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 05</small><span class="tag">Data core</span>
+          <h3>Data cleaning and preparation</h3>
+          <p>Missing values, duplicates, datatype fixes, string cleanup, and making data analysis-ready.</p>
+          <ul>
+            <li><span>Learn:</span> null handling, fillna, dropna, duplicate control, type conversion</li>
+            <li><span>Dataset:</span> Titanic or messy student dataset</li>
+            <li><span>Output:</span> cleaned dataset notebook with before/after comparison</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv">Titanic CSV</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 06</small><span class="tag">Data core</span>
+          <h3>Visualization and insight building</h3>
+          <p>Bar charts, histograms, scatter plots, box plots, and how to tell a simple story from data.</p>
+          <ul>
+            <li><span>Learn:</span> matplotlib basics and chart interpretation</li>
+            <li><span>Dataset:</span> Titanic, housing, or sales-style CSV</li>
+            <li><span>Output:</span> chart-driven short analysis notebook</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv">Titanic CSV</a>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv">Sales / Tips CSV</a>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/mpg.csv">MPG Regression CSV</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset">California Housing</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 07</small><span class="tag">Data core</span>
+          <h3>Statistics for AI-ML</h3>
+          <p>Mean, median, mode, variance, standard deviation, percentiles, distribution basics, and interpretation.</p>
+          <ul>
+            <li><span>Learn:</span> descriptive statistics from ground level</li>
+            <li><span>Practice:</span> compute stats with NumPy and pandas</li>
+            <li><span>Output:</span> statistics worksheet notebook</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv">Tips / Stats CSV</a>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv">Titanic CSV</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 08</small><span class="tag">Data core</span>
+          <h3>Correlation, probability, and dataset selection</h3>
+          <p>Understand relationships between variables and learn how different datasets support different problems.</p>
+          <ul>
+            <li><span>Learn:</span> correlation matrix, simple probability intuition, target vs features</li>
+            <li><span>Datasets:</span> Iris, housing, wine overview</li>
+            <li><span>Output:</span> dataset comparison notes in Colab</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv">Iris CSV</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/toy_dataset.html#iris-dataset">sklearn Iris</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/toy_dataset.html#wine-dataset">sklearn Wine</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset">California Housing</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 09</small><span class="tag">Similarity + NLP</span>
+          <h3>Text data basics and preprocessing</h3>
+          <p>Move into NLP with tokenization, lowercasing, punctuation removal, stopword awareness, and text cleanup.</p>
+          <ul>
+            <li><span>Learn:</span> basic NLP pipeline from raw sentence to cleaned tokens</li>
+            <li><span>Dataset:</span> SMS Spam Collection small samples</li>
+            <li><span>Output:</span> text preprocessing notebook</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection">SMS Spam Collection</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 10</small><span class="tag">Similarity + NLP</span>
+          <h3>Bag of Words, TF-IDF, and cosine similarity</h3>
+          <p>Represent text numerically and measure how similar two texts are.</p>
+          <ul>
+            <li><span>Learn:</span> CountVectorizer, TF-IDF idea, vectors, dot product intuition, cosine similarity</li>
+            <li><span>Practice:</span> compare sentences, articles, or titles inside Colab</li>
+            <li><span>Output:</span> mini text similarity notebook</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection">SMS Spam Collection</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset">20 Newsgroups</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 11</small><span class="tag">Similarity + NLP</span>
+          <h3>NLP mini applications</h3>
+          <p>Use cosine similarity and vectorization in useful beginner projects like recommendation, matching, and search ranking.</p>
+          <ul>
+            <li><span>Learn:</span> document matching, FAQ matching, basic recommendation logic</li>
+            <li><span>Dataset:</span> custom notes corpus or small movie/product text dataset</li>
+            <li><span>Output:</span> text matching mini project</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset">20 Newsgroups</a>
+            <a target="_blank" href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection">SMS Spam Collection</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 12</small><span class="tag">Similarity + NLP</span>
+          <h3>Text classification introduction</h3>
+          <p>A gentle bridge from text processing to machine learning using spam or sentiment-style tasks.</p>
+          <ul>
+            <li><span>Learn:</span> train-test split for text, vectorize then classify</li>
+            <li><span>Datasets:</span> SMS Spam Collection, IMDB subset, or 20 Newsgroups sample</li>
+            <li><span>Output:</span> first NLP classification notebook</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection">SMS Spam Collection</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset">20 Newsgroups</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 13</small><span class="tag">ML core</span>
+          <h3>Regression from ground zero</h3>
+          <p>Targets, features, prediction, train-test split, fit, predict, error, and interpretation.</p>
+          <ul>
+            <li><span>Learn:</span> linear regression and evaluation basics</li>
+            <li><span>Datasets:</span> housing or marks-prediction style dataset</li>
+            <li><span>Output:</span> regression notebook with charts and findings</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset">California Housing</a>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/mpg.csv">MPG Regression CSV</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 14</small><span class="tag">ML core</span>
+          <h3>Classification with important benchmark datasets</h3>
+          <p>Modeling category prediction problems with classic datasets that are beginner-friendly and respected.</p>
+          <ul>
+            <li><span>Learn:</span> logistic regression, k-NN, accuracy, confusion matrix</li>
+            <li><span>Datasets:</span> Iris, Wine, Breast Cancer Wisconsin, Titanic</li>
+            <li><span>Output:</span> classification comparison notebook</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv">Iris CSV</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/toy_dataset.html#wine-dataset">Wine Dataset</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/toy_dataset.html#breast-cancer-dataset">Breast Cancer Wisconsin</a>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv">Titanic CSV</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 15</small><span class="tag">ML core</span>
+          <h3>Clustering and unsupervised learning awareness</h3>
+          <p>Introduce grouping without labels and help students understand the difference between supervised and unsupervised learning.</p>
+          <ul>
+            <li><span>Learn:</span> k-means intuition, scaling awareness, cluster interpretation</li>
+            <li><span>Datasets:</span> Iris features or customer-style dataset</li>
+            <li><span>Output:</span> clustering notebook with visual interpretation</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv">Iris CSV</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/toy_dataset.html#iris-dataset">sklearn Iris</a>
+          </div>
+        </article>
+
+        <article class="week">
+          <small>Week 16</small><span class="tag">Capstone</span>
+          <h3>Mini capstone in Google Colab</h3>
+          <p>Choose a path and build something presentable: analysis, prediction, or text similarity / NLP mini app notebook.</p>
+          <ul>
+            <li><span>Project options:</span> analysis dashboard notebook, spam classifier, recommendation / matching notebook, or regression/classification project</li>
+            <li><span>Deliverables:</span> Colab link, explanation, screenshots, conclusions</li>
+            <li><span>Output:</span> portfolio-ready final notebook project</li>
+          </ul>
+          <div class="dataset-links">
+            <b>Dataset Links</b>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/titanic.csv">Titanic CSV</a>
+            <a target="_blank" href="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv">Iris CSV</a>
+            <a target="_blank" href="https://archive.ics.uci.edu/dataset/228/sms+spam+collection">SMS Spam Collection</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset">California Housing</a>
+            <a target="_blank" href="https://scikit-learn.org/stable/datasets/real_world.html#the-20-newsgroups-text-dataset">20 Newsgroups</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Ready to join the AI-ML journey?</h2>
+        <p>
+          Contact Champak Roy directly on WhatsApp, join the course WhatsApp
+          group, or check the Zoom timing page for live class details.
+        </p>
+        <div class="hero-actions" style="justify-content: center">
+          <a
+            class="btn"
+            target="_blank"
+            href="https://www.learnwithchampak.live/p/champak.html#timing"
+            >Join Zoom / Check Timing</a
+          >
+          <a class="btn" target="_blank" href="https://wa.me/919335874326"
+            >Contact Champak Roy</a
+          >
+          <a
+            class="btn"
+            target="_blank"
+            href="https://chat.whatsapp.com/CLCBRoi5AuB816tQ86hpQb"
+            >Join WhatsApp Group</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Programmer’s Picnic | Learn With Champak · AI-ML with Python Course
+  </footer>
+</body>
 </html>
