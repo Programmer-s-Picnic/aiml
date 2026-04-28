@@ -1038,6 +1038,75 @@
 </section>
 
 
+
+<section class="section" id="doubt-form">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Ask Doubts, Queries, or Send Screenshots</h2>
+      <p>
+        Fill this form. It will open WhatsApp with your message ready to send to
+        Champak Roy.
+      </p>
+    </div>
+
+    <div class="schedule-box">
+      <form id="whatsappDoubtForm">
+        <div class="grid">
+          <div>
+            <label><b>Your Name</b></label>
+            <input id="studentName" type="text" placeholder="Enter your name" required />
+          </div>
+
+          <div>
+            <label><b>Class / Week</b></label>
+            <input id="classWeek" type="text" placeholder="Example: Week 03 NumPy" />
+          </div>
+
+          <div>
+            <label><b>Doubt Type</b></label>
+            <select id="doubtType">
+              <option>Python doubt</option>
+              <option>NumPy doubt</option>
+              <option>pandas doubt</option>
+              <option>Machine Learning doubt</option>
+              <option>Assignment doubt</option>
+              <option>Project doubt</option>
+              <option>Admission / fee query</option>
+              <option>Other query</option>
+            </select>
+          </div>
+
+          <div>
+            <label><b>Image / Screenshot</b></label>
+            <input id="doubtImage" type="file" accept="image/*" />
+          </div>
+        </div>
+
+        <div style="margin-top: 18px">
+          <label><b>Your Doubt or Query</b></label>
+          <textarea
+            id="doubtMessage"
+            rows="6"
+            placeholder="Write your doubt here..."
+            required
+          ></textarea>
+        </div>
+
+        <p style="color: var(--muted); font-weight: 700">
+          Note: WhatsApp web links cannot attach an image automatically from a
+          website form. After WhatsApp opens, please attach the selected image
+          manually in the chat.
+        </p>
+
+        <button class="btn btn-main" type="submit">Send Doubt on WhatsApp</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+
   <section class="section">
     <div class="wrap">
       <div class="cta">
