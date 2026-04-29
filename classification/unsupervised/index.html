@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<title>K-Means Clustering — V3 Premium | Programmer’s Picnic</title>
+
+<meta name="theme-color" content="#f59e0b" />
+
+<style>
+:root{
+  --bg:#fffaf0;
+  --card:#ffffff;
+  --text:#1f1608;
+  --brand:#d97706;
+  --brand2:#f59e0b;
+  --line:#f3c76f;
+  --soft:#fff1c7;
+  --radius:22px;
+}
+
+body{
+  margin:0;
+  font-family:system-ui;
+  background:linear-gradient(180deg,#fff7e6,#fffaf0);
+  color:var(--text);
+}
+
+.wrap{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:20px;
+  margin:18px 0;
+  box-shadow:0 12px 30px rgba(0,0,0,0.08);
+}
+
+h1,h2{
+  color:var(--brand);
+}
+
+pre{
+  background:#1f2937;
+  color:#fff;
+  padding:15px;
+  border-radius:12px;
+  overflow:auto;
+}
+
+textarea{
+  width:100%;
+  border-radius:12px;
+  padding:12px;
+}
+
+input{
+  padding:10px;
+  border-radius:10px;
+}
+
+button{
+  background:var(--brand);
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.quiz-option{
+  background:#fff;
+  border:1px solid var(--line);
+  padding:10px;
+  margin:8px 0;
+  border-radius:10px;
+  cursor:pointer;
+}
+.quiz-option:hover{
+  background:var(--soft);
+}
+.correct{background:#16a34a;color:#fff;}
+.wrong{background:#dc2626;color:#fff;}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<h1 id="speak1">K-Means Clustering — From Zero to Expert</h1>
+
+<div class="card">
+<h2 id="speak2">What is K-Means?</h2>
+<p id="speak3">K-Means groups similar data points automatically.</p>
+<p id="speak4">It is an unsupervised learning algorithm.</p>
+</div>
+
+<div class="card">
+<h2 id="speak5">Real Life Examples</h2>
+<ul>
+<li>Customer segmentation</li>
+<li>Student grouping</li>
+<li>Image compression</li>
+<li>Market research</li>
+</ul>
+</div>
+
+<div class="card">
+<h2 id="speak6">Steps</h2>
+<ol>
+<li>Pick K centers</li>
+<li>Measure distance</li>
+<li>Assign cluster</li>
+<li>Update centers</li>
+<li>Repeat</li>
+</ol>
+</div>
+
+<div class="card">
+<h2 id="speak7">Core Code</h2>
+
+<pre>
+import numpy as np
+
+def kmeans(X, k, max_iterations=100):
+    centroids = X[np.random.choice(X.shape[0], k, replace=False)]
+
+    for i in range(max_iterations):
+        distances = np.sqrt(((X - centroids[:, None]) ** 2).sum(axis=2))
+        labels = np.argmin(distances, axis=0)
+
+        new_centroids = []
+
+        for j in range(k):
+            pts = X[labels == j]
+            if len(pts)==0:
+                new_centroids.append(centroids[j])
+            else:
+                new_centroids.append(pts.mean(axis=0))
+
+        new_centroids = np.array(new_centroids)
+
+        if np.allclose(centroids, new_centroids):
+            break
+
+        centroids = new_centroids
+
+    return centroids, labels
+</pre>
+
+</div>
+
+<!-- LIVE DATA PANEL -->
+
+<div class="card">
+<h2 id="speak8">Live Dataset Panel</h2>
+
+<textarea id="datasetInput">
+[[1,2],[3,4],[5,6],[7,8]]
+</textarea>
+
+<br><br>
+
+<label>K value:</label>
+<input id="kInput" type="number" value="3">
+
+<br><br>
+
+<button onclick="generateCode()">Generate Code</button>
+
+<pre id="generatedCode"></pre>
+</div>
+
+<!-- EDITOR -->
+
+<div class="card">
+<h2 id="speak9">Run in Live Editor</h2>
+
+<a href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">
+<button>Open Editor</button>
+</a>
+
+<br><br>
+
+<iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+style="width:100%;height:500px;border-radius:15px;border:2px solid #f3c76f;"></iframe>
+
+</div>
+
+<!-- MINI PROJECT -->
+
+<div class="card">
+<h2 id="speak10">Mini Project: Customer Segmentation</h2>
+
+<pre>
+X = [
+[1000,2],
+[1200,3],
+[8000,12],
+[8500,11],
+[4000,6],
+[4200,7]
+]
+</pre>
+
+<pre>
+centroids, labels = kmeans(X,3)
+</pre>
+
+<p id="speak11">Clusters: Low, Medium, High value customers</p>
+
+</div>
+
+<!-- QUIZ -->
+
+<div class="card">
+<h2 id="speak12">Quiz</h2>
+
+<p>What is K?</p>
+<div class="quiz-option" onclick="check(this,true)">Number of clusters</div>
+<div class="quiz-option" onclick="check(this,false)">Iterations</div>
+
+<p>K-Means is?</p>
+<div class="quiz-option" onclick="check(this,true)">Unsupervised</div>
+<div class="quiz-option" onclick="check(this,false)">Supervised</div>
+
+</div>
+
+</div>
+
+<script>
+function check(el,correct){
+  el.classList.add(correct ? "correct":"wrong");
+}
+
+function generateCode(){
+  let data = document.getElementById("datasetInput").value;
+  let k = document.getElementById("kInput").value;
+
+  let code = `
+import numpy as np
+
+X = np.array(${data})
+
+centroids, labels = kmeans(X, ${k})
+
+print(centroids)
+print(labels)
+`;
+
+  document.getElementById("generatedCode").textContent = code;
+}
+</script>
+
+</body>
+</html>
