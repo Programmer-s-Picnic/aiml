@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      Pandas + CSV + Matplotlib — Complete Lesson | Programmer’s Picnic
+    </title>
+    <meta
+      name="description"
+      content="A comprehensive beginner-to-confident lesson on using Pandas to read CSV files and visualize data using Matplotlib, with copy buttons, downloadable Python scripts, and an embedded Programmer’s Picnic Python editor."
+    />
+    <meta
+      name="keywords"
+      content="pandas, csv, matplotlib, python, data analysis, dataframe, groupby, plotting, programmer's picnic"
+    />
+    <meta name="author" content="Programmer’s Picnic (Champak Roy)" />
+    <meta name="theme-color" content="#d97706" />
+    <meta name="robots" content="index,follow" />
+
+    <style>
+      :root {
+        --bg: #fff7e6;
+        --bg2: #fff1d6;
+        --card: rgba(255, 255, 255, 0.9);
+        --ink: #1f2937;
+        --muted: #6b7280;
+        --brand: #d97706;
+        --brand2: #f59e0b;
+        --border: #eadcc5;
+        --shadow: 0 18px 40px rgba(31, 41, 55, 0.12);
+        --r: 18px;
+        --mono:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        --sans:
+          ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+          Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        color: var(--ink);
+        background:
+          radial-gradient(
+            1000px 500px at 15% 0%,
+            rgba(217, 119, 6, 0.18),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 500px at 85% 10%,
+            rgba(245, 158, 11, 0.22),
+            transparent 60%
+          ),
+          linear-gradient(180deg, var(--bg), var(--bg2));
+      }
+      a {
+        color: inherit;
+      }
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 20px 16px 64px;
+      }
+      header.hero {
+        position: relative;
+        border: 1px solid var(--border);
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.92),
+          rgba(255, 255, 255, 0.78)
+        );
+        box-shadow: var(--shadow);
+        border-radius: calc(var(--r) + 8px);
+        padding: 18px 18px 14px;
+        overflow: hidden;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(217, 119, 6, 0.12);
+        border: 1px solid rgba(217, 119, 6, 0.25);
+        color: #7c2d12;
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .hero h1 {
+        margin: 10px 0 6px;
+        font-size: 28px;
+        line-height: 1.15;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        max-width: 78ch;
+      }
+      .hero .meta {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.75);
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 14px;
+        margin-top: 14px;
+        align-items: start;
+      }
+      @media (max-width: 980px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      nav.toc {
+        position: sticky;
+        top: 12px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 10px 28px rgba(31, 41, 55, 0.1);
+        border-radius: var(--r);
+        padding: 14px;
+      }
+      nav.toc h2 {
+        margin: 0 0 8px;
+        font-size: 15px;
+      }
+      .toc .search {
+        display: flex;
+        gap: 8px;
+        margin: 10px 0 8px;
+      }
+      .toc input {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        outline: none;
+        background: rgba(255, 255, 255, 0.9);
+      }
+      .toc ul {
+        list-style: none;
+        padding: 0;
+        margin: 8px 0 0;
+        display: grid;
+        gap: 6px;
+      }
+      .toc a {
+        display: block;
+        padding: 8px 10px;
+        border-radius: 12px;
+        text-decoration: none;
+        border: 1px solid transparent;
+        color: var(--ink);
+      }
+      .toc a:hover {
+        border-color: rgba(217, 119, 6, 0.25);
+        background: rgba(217, 119, 6, 0.06);
+      }
+      .toc a small {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 2px;
+      }
+      main {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.86);
+        box-shadow: var(--shadow);
+        border-radius: var(--r);
+        padding: 16px;
+        overflow: hidden;
+      }
+      section {
+        padding: 10px 0;
+        border-top: 1px dashed rgba(234, 220, 197, 0.9);
+      }
+      section:first-child {
+        border-top: none;
+      }
+      h2 {
+        margin: 6px 0 8px;
+        font-size: 20px;
+      }
+      h3 {
+        margin: 16px 0 8px;
+        font-size: 16px;
+      }
+      p {
+        margin: 8px 0;
+        line-height: 1.55;
+        color: #253041;
+      }
+
+      .note {
+        border: 1px solid rgba(217, 119, 6, 0.24);
+        background: rgba(217, 119, 6, 0.06);
+        border-radius: 14px;
+        padding: 10px 12px;
+        color: #1f2937;
+      }
+      .note strong {
+        color: #7c2d12;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+      .btn {
+        appearance: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: linear-gradient(180deg, var(--brand2), var(--brand));
+        color: white;
+        font-weight: 800;
+        box-shadow: 0 10px 20px rgba(217, 119, 6, 0.22);
+        transition: transform 0.08s ease;
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn.secondary {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--ink);
+        border: 1px solid var(--border);
+        box-shadow: none;
+        font-weight: 700;
+      }
+
+      .codeCard {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.92);
+        overflow: hidden;
+        margin: 12px 0;
+      }
+      .codeTop {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(234, 220, 197, 0.9);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 247, 230, 0.8),
+          rgba(255, 241, 214, 0.6)
+        );
+      }
+      .codeTop .label {
+        font-weight: 900;
+        font-size: 13px;
+        color: #7c2d12;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .codeTop .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .mini {
+        padding: 8px 10px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.85);
+        cursor: pointer;
+        font-weight: 800;
+        color: #1f2937;
+      }
+      pre {
+        margin: 0;
+        padding: 12px 12px 14px;
+        overflow: auto;
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.5;
+        background: rgba(17, 24, 39, 0.96);
+        color: #f8fafc;
+      }
+      pre code {
+        font-family: var(--mono);
+      }
+      .kbd {
+        font-family: var(--mono);
+        font-weight: 800;
+        padding: 2px 6px;
+        border-radius: 8px;
+        border: 1px solid rgba(234, 220, 197, 0.9);
+        background: rgba(255, 255, 255, 0.9);
+        color: #7c2d12;
+      }
+
+      /* --- Embedded editor card --- */
+      .editorWrap {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 14px 28px rgba(31, 41, 55, 0.1);
+        margin: 12px 0 14px;
+      }
+      .editorTop {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(234, 220, 197, 0.9);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 247, 230, 0.85),
+          rgba(255, 241, 214, 0.65)
+        );
+      }
+      .editorTop .left {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(217, 119, 6, 0.22);
+        background: rgba(217, 119, 6, 0.08);
+        color: #7c2d12;
+        font-weight: 900;
+        font-size: 12px;
+      }
+      .editorFrame {
+        width: 100%;
+        height: 560px;
+        border: 0;
+        display: block;
+        background: #0b1020;
+      }
+      @media (max-width: 720px) {
+        .editorFrame {
+          height: 520px;
+        }
+      }
+
+      footer {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 13px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <header class="hero" id="top">
+        <span class="badge">🍊 Programmer’s Picnic • Data Lesson</span>
+        <h1>Pandas + CSV + Matplotlib — Comprehensive Lesson</h1>
+        <p>
+          Learn how to read CSV files using <b>Pandas</b>, clean and analyze
+          data, then visualize insights using <b>Matplotlib</b>. Includes
+          copy-ready code, downloadable scripts, and an embedded Python editor.
+        </p>
+
+        <div class="meta">
+          <span class="pill">Level: Beginner → Confident</span>
+          <span class="pill">Works in VS Code</span>
+          <span class="pill">Offline HTML</span>
+          <span class="pill">Embedded Python Editor</span>
+        </div>
+      </header>
+
+      <div class="grid">
+        <nav class="toc" aria-label="Table of contents">
+          <h2>Table of Contents</h2>
+          <div class="toc .search search">
+            <input
+              id="tocSearch"
+              type="search"
+              placeholder="Search topics… (example: groupby, dates, bar)"
+            />
+          </div>
+          <ul id="tocList">
+            <li>
+              <a
+                href="#editor"
+                data-text="python editor embedded pyodide programmers picnic"
+                >⭐ Python Editor <small>Run code here</small></a
+              >
+            </li>
+            <li>
+              <a href="#setup" data-text="setup install verify"
+                >0) Setup <small>Install + verify</small></a
+              >
+            </li>
+            <li>
+              <a
+                href="#read-csv"
+                data-text="read csv delimiter encoding parse_dates na_values"
+                >2) Read CSV Properly <small>Real-world CSV handling</small></a
+              >
+            </li>
+            <li>
+              <a href="#charts" data-text="line bar histogram scatter examples"
+                >9) Chart Examples <small>4 common plot types</small></a
+              >
+            </li>
+            <li>
+              <a href="#workflow" data-text="full workflow script end-to-end"
+                >10) Full Workflow Script
+                <small>CSV → clean → analyze → plot</small></a
+              >
+            </li>
+          </ul>
+
+          <div class="row" style="margin-top: 10px">
+            <button class="btn secondary" id="expandAll">
+              Expand all code
+            </button>
+            <button class="btn secondary" id="collapseAll">
+              Collapse code
+            </button>
+          </div>
+          <p style="margin-top: 10px; color: var(--muted); font-size: 12px">
+            Tip: Use <span class="kbd">Ctrl</span> +
+            <span class="kbd">F</span> too.
+          </p>
+        </nav>
+
+        <main>
+          <!-- ⭐ Embedded Python Editor -->
+          <section id="editor">
+            <h2>⭐ Embedded Python Editor (Programmer’s Picnic)</h2>
+            <p>
+              Use this editor to test small Python snippets. For Pandas +
+              Matplotlib, your local VS Code setup is best, but you can still
+              practice syntax and logic here.
+            </p>
+
+            <div class="editorWrap">
+              <div class="editorTop">
+                <div class="left">
+                  <span class="tag">🧪 Live Python Editor</span>
+                  <span class="pill" style="padding: 6px 10px"
+                    >Tip: Run small snippets here</span
+                  >
+                </div>
+                <div class="row">
+                  <button
+                    class="btn secondary"
+                    id="openEditorTab"
+                    type="button"
+                  >
+                    Open in new tab
+                  </button>
+                </div>
+              </div>
+
+              <!-- Your Programmer’s Picnic Python Editor -->
+              <iframe
+                id="ppPythonEditor"
+                class="editorFrame"
+                title="Programmer’s Picnic Python Editor"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                allow="clipboard-read; clipboard-write; fullscreen"
+                sandbox="allow-scripts allow-forms allow-same-origin allow-downloads allow-popups allow-modals allow-pointer-lock"
+                src="https://www.learnwithchampak.live/2026/01/programmers-picnic-python-editor.html"
+              >
+              </iframe>
+            </div>
+
+            <div class="note">
+              <strong>If you embed this page on Blogger:</strong> you may need
+              to allow iframes in your template and keep
+              <span class="kbd">sandbox</span> permissive enough for the editor
+              to run.
+            </div>
+          </section>
+
+          <!-- 0) Setup -->
+          <section id="setup">
+            <h2>0) Setup (install + verify)</h2>
+            <div class="codeCard" data-collapsible="1">
+              <div class="codeTop">
+                <div class="label">📦 Install</div>
+                <div class="actions">
+                  <button class="mini" data-copy>Copy</button>
+                </div>
+              </div>
+              <pre><code>pip install pandas matplotlib</code></pre>
+            </div>
+
+            <div class="codeCard" data-collapsible="1">
+              <div class="codeTop">
+                <div class="label">✅ Verify</div>
+                <div class="actions">
+                  <button class="mini" data-copy>Copy</button>
+                </div>
+              </div>
+              <pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+print("pandas:", pd.__version__)
+print("matplotlib OK")</code></pre>
+            </div>
+          </section>
+
+          <!-- 2) Read CSV -->
+          <section id="read-csv">
+            <h2>2) Read CSV properly (real-world CSV handling)</h2>
+
+            <div
+              class="codeCard"
+              data-collapsible="1"
+              data-filename="read_csv_basic.py"
+            >
+              <div class="codeTop">
+                <div class="label">📄 Basic read</div>
+                <div class="actions">
+                  <button class="mini" data-copy>Copy</button>
+                  <button class="mini" data-download>Download .py</button>
+                </div>
+              </div>
+              <pre><code>import pandas as pd
+
+df = pd.read_csv("sales.csv")
+print(df.head())
+print(df.shape)
+print(df.columns)</code></pre>
+            </div>
+
+            <div
+              class="codeCard"
+              data-collapsible="1"
+              data-filename="read_csv_robust.py"
+            >
+              <div class="codeTop">
+                <div class="label">🛠 Robust read (dates + missing)</div>
+                <div class="actions">
+                  <button class="mini" data-copy>Copy</button>
+                  <button class="mini" data-download>Download .py</button>
+                </div>
+              </div>
+              <pre><code>import pandas as pd
+
+df = pd.read_csv(
+    "sales.csv",
+    parse_dates=["date"],
+    na_values=["NA", "N/A", "-", "null", ""],
+    on_bad_lines="skip"
+)
+
+print(df.info())</code></pre>
+            </div>
+          </section>
+
+          <!-- 9) Charts -->
+          <section id="charts">
+            <h2>9) Chart examples</h2>
+
+            <div class="codeCard" data-collapsible="1">
+              <div class="codeTop">
+                <div class="label">sales.csv (sample)</div>
+                <div class="actions">
+                  <button class="mini" data-copy>Copy</button>
+                </div>
+              </div>
+              <pre><code>date,city,amount
+2026-01-01,Varanasi,1200
+2026-01-01,Delhi,800
+2026-01-02,Varanasi,600
+2026-01-02,Lucknow,500
+2026-01-03,Delhi,1200
+2026-01-03,Varanasi,900</code></pre>
+            </div>
+
+            <div
+              class="codeCard"
+              data-collapsible="1"
+              data-filename="city_bar.py"
+            >
+              <div class="codeTop">
+                <div class="label">📊 city_bar.py</div>
+                <div class="actions">
+                  <button class="mini" data-copy>Copy</button>
+                  <button class="mini" data-download>Download .py</button>
+                </div>
+              </div>
+              <pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("sales.csv")
+by_city = df.groupby("city")["amount"].sum().sort_values(ascending=False)
+
+plt.figure()
+plt.bar(by_city.index, by_city.values)
+plt.title("Total Sales by City")
+plt.xlabel("City")
+plt.ylabel("Total Amount")
+plt.tight_layout()
+plt.show()</code></pre>
+            </div>
+
+            <div
+              class="codeCard"
+              data-collapsible="1"
+              data-filename="daily_line.py"
+            >
+              <div class="codeTop">
+                <div class="label">📈 daily_line.py</div>
+                <div class="actions">
+                  <button class="mini" data-copy>Copy</button>
+                  <button class="mini" data-download>Download .py</button>
+                </div>
+              </div>
+              <pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("sales.csv", parse_dates=["date"])
+daily = df.groupby(df["date"].dt.date)["amount"].sum()
+
+plt.figure()
+plt.plot(daily.index, daily.values, marker="o")
+plt.title("Daily Sales")
+plt.xlabel("Date")
+plt.ylabel("Amount")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()</code></pre>
+            </div>
+          </section>
+
+          <!-- 10) Workflow -->
+          <section id="workflow">
+            <h2>10) Full workflow script (end-to-end)</h2>
+
+            <div
+              class="codeCard"
+              data-collapsible="1"
+              data-filename="pandas_csv_matplotlib_workflow.py"
+            >
+              <div class="codeTop">
+                <div class="label">⭐ pandas_csv_matplotlib_workflow.py</div>
+                <div class="actions">
+                  <button class="mini" data-copy>Copy</button>
+                  <button class="mini" data-download>Download .py</button>
+                </div>
+              </div>
+              <pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+
+CSV_FILE = "sales.csv"
+
+def main():
+    df = pd.read_csv(CSV_FILE, parse_dates=["date"])
+    df.columns = [c.strip().lower().replace(" ", "_") for c in df.columns]
+    df["amount"] = pd.to_numeric(df["amount"], errors="coerce").fillna(0)
+    df = df.drop_duplicates()
+
+    by_city = df.groupby("city")["amount"].sum().sort_values(ascending=False)
+    daily = df.groupby(df["date"].dt.date)["amount"].sum()
+
+    by_city.to_csv("report_city_totals.csv")
+    daily.to_csv("report_daily_totals.csv")
+
+    plt.figure()
+    plt.bar(by_city.index, by_city.values)
+    plt.title("Total Sales by City")
+    plt.xlabel("City")
+    plt.ylabel("Total Amount")
+    plt.tight_layout()
+    plt.show()
+
+    plt.figure()
+    plt.plot(daily.index, daily.values, marker="o")
+    plt.title("Daily Sales Trend")
+    plt.xlabel("Date")
+    plt.ylabel("Amount")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+if __name__ == "__main__":
+    main()</code></pre>
+            </div>
+          </section>
+
+          <footer>
+            Programmer’s Picnic • Pandas + Matplotlib •
+            <a href="#top">Back to top ↑</a>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        // Open embedded editor in new tab
+        const editor = document.getElementById("ppPythonEditor");
+        const openBtn = document.getElementById("openEditorTab");
+        if (openBtn && editor) {
+          openBtn.addEventListener("click", () =>
+            window.open(editor.src, "_blank", "noopener"),
+          );
+        }
+
+        // TOC Search
+        const tocSearch = document.getElementById("tocSearch");
+        const tocList = document.getElementById("tocList");
+        const tocLinks = Array.from(tocList.querySelectorAll("a"));
+
+        tocSearch?.addEventListener("input", () => {
+          const q = tocSearch.value.trim().toLowerCase();
+          tocLinks.forEach((a) => {
+            const hay =
+              (a.getAttribute("data-text") || "") +
+              " " +
+              a.textContent.toLowerCase();
+            a.parentElement.style.display = !q || hay.includes(q) ? "" : "none";
+          });
+        });
+
+        // Copy buttons
+        function copyText(text) {
+          return navigator.clipboard.writeText(text);
+        }
+        function flash(btn, msg) {
+          const old = btn.textContent;
+          btn.textContent = msg;
+          setTimeout(() => {
+            btn.textContent = old;
+          }, 900);
+        }
+        document.querySelectorAll("[data-copy]").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const card = btn.closest(".codeCard");
+            const code = card.querySelector("pre code")?.innerText ?? "";
+            try {
+              await copyText(code);
+              flash(btn, "Copied ✓");
+            } catch (e) {
+              const ta = document.createElement("textarea");
+              ta.value = code;
+              document.body.appendChild(ta);
+              ta.select();
+              document.execCommand("copy");
+              ta.remove();
+              flash(btn, "Copied ✓");
+            }
+          });
+        });
+
+        // Download .py
+        function downloadFile(filename, content) {
+          const blob = new Blob([content], {
+            type: "text/plain;charset=utf-8",
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+        }
+        document.querySelectorAll("[data-download]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const card = btn.closest(".codeCard");
+            const filename = card.getAttribute("data-filename") || "code.py";
+            const content = card.querySelector("pre code")?.innerText ?? "";
+            downloadFile(filename, content);
+            flash(btn, "Downloaded ✓");
+          });
+        });
+
+        // Expand/Collapse code
+        const expandAll = document.getElementById("expandAll");
+        const collapseAll = document.getElementById("collapseAll");
+        const cards = Array.from(
+          document.querySelectorAll(".codeCard[data-collapsible='1']"),
+        );
+
+        function setCollapsed(collapsed) {
+          cards.forEach((card) => {
+            const pre = card.querySelector("pre");
+            pre.style.display = collapsed ? "none" : "block";
+          });
+        }
+        expandAll?.addEventListener("click", () => setCollapsed(false));
+        collapseAll?.addEventListener("click", () => setCollapsed(true));
+        setCollapsed(false);
+
+        // Smooth anchor scroll
+        document.querySelectorAll('a[href^="#"]').forEach((a) => {
+          a.addEventListener("click", (e) => {
+            const id = a.getAttribute("href");
+            if (!id || id === "#") return;
+            const el = document.querySelector(id);
+            if (!el) return;
+            e.preventDefault();
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+            history.replaceState(null, "", id);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

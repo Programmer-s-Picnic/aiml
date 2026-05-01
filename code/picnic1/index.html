@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      ML Foundations V4 Ultra — Regression, Classification & K-Means |
+      Programmer's Picnic
+    </title>
+
+    <meta
+      name="description"
+      content="Level 0 to Expert Machine Learning lesson covering regression, classification, K-Means, NumPy polyfit, polynomial fit, SciPy linear regression, interactive charts, Python editor, speak tags and MCQ quiz."
+    />
+    <meta name="theme-color" content="#f59e0b" />
+
+    <style>
+      :root {
+        --bg: #fff7e6;
+        --bg2: #fffaf0;
+        --card: #ffffff;
+        --text: #2b2112;
+        --muted: #6b5b3f;
+        --brand: #f59e0b;
+        --brand2: #d97706;
+        --brand3: #92400e;
+        --line: #f5d99b;
+        --good: #15803d;
+        --bad: #b91c1c;
+        --shadow: 0 18px 45px rgba(146, 64, 14, 0.14);
+        --radius: 24px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          Inter,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(245, 158, 11, 0.22),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at top right,
+            rgba(217, 119, 6, 0.16),
+            transparent 35%
+          ),
+          linear-gradient(135deg, var(--bg), var(--bg2));
+        line-height: 1.65;
+      }
+
+      a {
+        color: var(--brand3);
+        font-weight: 800;
+      }
+
+      .wrap {
+        max-width: 1180px;
+        margin: auto;
+        padding: 24px;
+      }
+
+      .hero {
+        padding: 38px;
+        border-radius: 32px;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.92),
+            rgba(255, 247, 230, 0.94)
+          ),
+          radial-gradient(
+            circle at 20% 10%,
+            rgba(245, 158, 11, 0.25),
+            transparent 30%
+          );
+        box-shadow: var(--shadow);
+        border: 1px solid var(--line);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .badge {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        background: #fff3cd;
+        color: #78350f;
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid #f6d365;
+        font-weight: 800;
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: clamp(34px, 6vw, 68px);
+        line-height: 1.02;
+        margin: 18px 0;
+        letter-spacing: -2px;
+      }
+
+      h2 {
+        font-size: clamp(26px, 4vw, 42px);
+        line-height: 1.12;
+        margin: 0 0 14px;
+        color: #7c2d12;
+      }
+
+      h3 {
+        font-size: 24px;
+        margin: 0 0 10px;
+        color: #92400e;
+      }
+      h4 {
+        font-size: 19px;
+        margin: 18px 0 8px;
+        color: #78350f;
+      }
+
+      .lead {
+        font-size: 20px;
+        color: var(--muted);
+        max-width: 850px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .card {
+        grid-column: span 12;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .half {
+        grid-column: span 6;
+      }
+      .third {
+        grid-column: span 4;
+      }
+      .two-third {
+        grid-column: span 8;
+      }
+
+      @media (max-width: 850px) {
+        .half,
+        .third,
+        .two-third {
+          grid-column: span 12;
+        }
+        .hero {
+          padding: 24px;
+        }
+      }
+
+      .pillrow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .pill {
+        padding: 9px 13px;
+        border-radius: 999px;
+        background: #fffbeb;
+        border: 1px solid var(--line);
+        font-weight: 800;
+        color: #78350f;
+      }
+
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(16px);
+        background: rgba(255, 247, 230, 0.82);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-inner {
+        max-width: 1180px;
+        margin: auto;
+        padding: 10px 24px;
+        display: flex;
+        gap: 10px;
+        overflow: auto;
+      }
+
+      .nav a {
+        white-space: nowrap;
+        text-decoration: none;
+        background: white;
+        border: 1px solid var(--line);
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: #78350f;
+        font-size: 14px;
+      }
+
+      .formula {
+        background: #451a03;
+        color: #fff7ed;
+        padding: 16px;
+        border-radius: 18px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        overflow: auto;
+        font-weight: 800;
+      }
+
+      pre {
+        background: #1c1917;
+        color: #fff7ed;
+        padding: 18px;
+        border-radius: 18px;
+        overflow: auto;
+        line-height: 1.5;
+        position: relative;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .copy {
+        border: 0;
+        background: var(--brand2);
+        color: white;
+        padding: 9px 13px;
+        border-radius: 12px;
+        font-weight: 900;
+        cursor: pointer;
+        margin-bottom: 8px;
+      }
+
+      .btn {
+        border: 0;
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+        color: white;
+        padding: 12px 16px;
+        border-radius: 16px;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(217, 119, 6, 0.24);
+      }
+
+      .btn.secondary {
+        background: #fff;
+        color: #78350f;
+        border: 1px solid var(--line);
+        box-shadow: none;
+      }
+
+      .table-wrap {
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #f3e1b3;
+        text-align: left;
+      }
+
+      th {
+        background: #fff3cd;
+        color: #78350f;
+      }
+
+      .note {
+        border-left: 6px solid var(--brand);
+        background: #fffbeb;
+        padding: 14px 16px;
+        border-radius: 14px;
+        color: #5f370e;
+        font-weight: 650;
+      }
+
+      canvas {
+        width: 100%;
+        min-height: 320px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 12px;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin: 12px 0;
+      }
+
+      input,
+      select {
+        padding: 11px 12px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fff;
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      iframe {
+        width: 100%;
+        min-height: 620px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: white;
+      }
+
+      .question {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        margin: 14px 0;
+        background: #fffdf8;
+      }
+
+      .option {
+        display: block;
+        margin: 8px 0;
+        padding: 10px;
+        border: 1px solid #f3e1b3;
+        border-radius: 14px;
+        cursor: pointer;
+        background: white;
+      }
+
+      .result {
+        font-weight: 900;
+        font-size: 20px;
+        margin-top: 16px;
+        padding: 16px;
+        border-radius: 16px;
+        background: #fffbeb;
+        border: 1px solid var(--line);
+      }
+
+      details {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: white;
+        padding: 14px 16px;
+        margin: 12px 0;
+      }
+
+      summary {
+        cursor: pointer;
+        font-weight: 900;
+        color: #78350f;
+      }
+
+      .footer {
+        text-align: center;
+        color: var(--muted);
+        padding: 30px 0 60px;
+      }
+
+      .pp-speaking-active {
+        outline: 4px solid rgba(245, 158, 11, 0.45);
+        background: #fff3cd !important;
+        border-radius: 12px;
+        transition: 0.25s;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="#intro">Intro</a>
+        <a href="#prediction">Prediction</a>
+        <a href="#regression">Regression</a>
+        <a href="#numpy">NumPy</a>
+        <a href="#classification">Classification</a>
+        <a href="#kmeans">K-Means</a>
+        <a href="#graphs">Interactive Graphs</a>
+        <a href="#editor">Python Editor</a>
+        <a href="#quiz">MCQ</a>
+      </div>
+    </nav>
+
+    <main class="wrap">
+      <section class="hero" id="intro">
+        <span class="badge">Programmer's Picnic | V4 Ultra Lesson</span>
+        <h1 id="speak0">
+          Machine Learning Foundations: Prediction, Regression, Classification
+          and K-Means
+        </h1>
+        <p class="lead" id="speak1">
+          This lesson starts from level zero and moves step by step toward
+          expert understanding. We will learn how machines predict numbers,
+          classify categories, and find groups in data.
+        </p>
+
+        <div class="pillrow">
+          <span class="pill">Level 0 to Expert</span>
+          <span class="pill">Speak Tags</span>
+          <span class="pill">Interactive Graphs</span>
+          <span class="pill">Python Editor</span>
+          <span class="pill">MCQ Quiz</span>
+        </div>
+      </section>
+<section class="grid">
+  <div class="card">
+    <h2 id="speak18">📸 Topics Covered (Class Whiteboard)</h2>
+    <p id="speak19">
+      These are the actual topics we completed in class. This lesson is built directly from this roadmap.
+    </p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      
+      <!-- IMAGE 1 -->
+      <div>
+        <img 
+          src="WhatsApp Image 2026-04-30 at 8.41.27 AM.jpeg"
+          alt="ML Topics Whiteboard 1"
+          style="width:100%;border-radius:18px;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,.15)"
+          onclick="zoomImage(this)"
+        />
+        <p style="font-weight:700;color:#78350f;margin-top:8px;">
+          Prediction & Classification Overview
+        </p>
+      </div>
+
+      <!-- IMAGE 2 -->
+      <div>
+        <img 
+          src="WhatsApp Image 2026-04-30 at 8.41.26 AM.jpeg"
+          alt="ML Topics Whiteboard 2"
+          style="width:100%;border-radius:18px;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,.15)"
+          onclick="zoomImage(this)"
+        />
+        <p style="font-weight:700;color:#78350f;margin-top:8px;">
+          Supervised vs Unsupervised (K-Means)
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+      <section class="grid">
+        <div class="card half">
+          <h2 id="speak2">The Big Picture</h2>
+          <p>
+            Machine Learning means teaching a computer using data instead of
+            writing every rule manually. The computer studies examples and then
+            makes a useful decision.
+          </p>
+          <div class="note">
+            Machine Learning is mainly about patterns. If data has a pattern, a
+            model can often learn it.
+          </div>
+        </div>
+
+        <div class="card half">
+          <h2 id="speak3">Three Big Tasks</h2>
+          <div class="table-wrap">
+            <table>
+              <tr>
+                <th>Task</th>
+                <th>Output</th>
+                <th>Example</th>
+              </tr>
+              <tr>
+                <td>Regression</td>
+                <td>Number</td>
+                <td>House price</td>
+              </tr>
+              <tr>
+                <td>Classification</td>
+                <td>Category</td>
+                <td>Spam or not spam</td>
+              </tr>
+              <tr>
+                <td>Clustering</td>
+                <td>Hidden group</td>
+                <td>Customer groups</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid" id="prediction">
+        <div class="card">
+          <h2 id="speak4">1. Prediction</h2>
+          <p>
+            Prediction means estimating a future or unknown value from existing
+            data. In Machine Learning, prediction usually means regression when
+            the answer is a number.
+          </p>
+
+          <h3>Two simple examples</h3>
+          <ul>
+            <li><b>Example 1:</b> Study hours → predicted marks.</li>
+            <li><b>Example 2:</b> Temperature → predicted ice cream sales.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="grid" id="regression">
+        <div class="card two-third">
+          <h2 id="speak5">2. Linear Regression</h2>
+          <p>
+            Linear Regression draws the best possible straight line through data
+            points. It is used when the relationship looks almost straight.
+          </p>
+
+          <div class="formula">y = mx + b</div>
+
+          <p>
+            Here, <b>x</b> is input, <b>y</b> is output, <b>m</b> is slope, and
+            <b>b</b> is intercept.
+          </p>
+
+          <h3>Two simple examples</h3>
+          <ul>
+            <li>
+              <b>Example 1:</b> More study hours usually means higher marks.
+            </li>
+            <li>
+              <b>Example 2:</b> Larger house area usually means higher house
+              price.
+            </li>
+          </ul>
+        </div>
+
+        <div class="card third">
+          <h2 id="speak6">Why important?</h2>
+          <p>
+            Linear Regression is often the first real Machine Learning model. It
+            teaches slope, error, prediction, and model fitting.
+          </p>
+        </div>
+      </section>
+
+      <section class="grid" id="numpy">
+        <div class="card half">
+          <h2 id="speak7">3. NumPy polyfit</h2>
+          <p>
+            NumPy <code>polyfit</code> can fit a straight line or curve. Degree
+            1 means linear regression.
+          </p>
+
+          <button class="copy" onclick="copyCode('code1')">Copy Code</button>
+          <pre id="code1"><code>import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([40, 50, 60, 70, 80])
+
+m, b = np.polyfit(x, y, 1)
+
+print("Slope:", m)
+print("Intercept:", b)
+print("Prediction for 6 hours:", m * 6 + b)</code></pre>
+        </div>
+
+        <div class="card half">
+          <h2 id="speak8">4. Polynomial Fit</h2>
+          <p>
+            Polynomial fit is useful when data is curved instead of straight.
+          </p>
+
+          <div class="formula">y = ax² + bx + c</div>
+
+          <button class="copy" onclick="copyCode('code2')">Copy Code</button>
+          <pre id="code2"><code>import numpy as np
+
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 5, 10, 17, 26])
+
+a, b, c = np.polyfit(x, y, 2)
+
+print(a, b, c)
+print("Prediction:", a*6**2 + b*6 + c)</code></pre>
+        </div>
+
+        <div class="card">
+          <h2 id="speak9">5. SciPy Linear Regression</h2>
+          <p>
+            SciPy linear regression gives slope and intercept, but it also gives
+            statistical values like correlation.
+          </p>
+
+          <button class="copy" onclick="copyCode('code3')">Copy Code</button>
+          <pre id="code3"><code>from scipy import stats
+
+x = [1, 2, 3, 4, 5]
+y = [40, 50, 60, 70, 80]
+
+result = stats.linregress(x, y)
+
+print("Slope:", result.slope)
+print("Intercept:", result.intercept)
+print("Correlation:", result.rvalue)</code></pre>
+        </div>
+      </section>
+
+      <section class="grid" id="classification">
+        <div class="card">
+          <h2 id="speak10">6. Classification</h2>
+          <p>
+            Classification predicts a category. The answer is not a number like
+            price. The answer is a label.
+          </p>
+
+          <div class="table-wrap">
+            <table>
+              <tr>
+                <th>Type</th>
+                <th>Input</th>
+                <th>Output</th>
+                <th>Example</th>
+              </tr>
+              <tr>
+                <td>Binary Classification</td>
+                <td>1 or more inputs</td>
+                <td>2 classes</td>
+                <td>Pass / Fail</td>
+              </tr>
+              <tr>
+                <td>Multi-class Classification</td>
+                <td>1 or more inputs</td>
+                <td>More than 2 classes</td>
+                <td>A / B / C grade</td>
+              </tr>
+            </table>
+          </div>
+
+          <h3>Two simple examples</h3>
+          <ul>
+            <li><b>Example 1:</b> Email → spam or not spam.</li>
+            <li><b>Example 2:</b> Animal image → cat, dog, or cow.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="grid" id="kmeans">
+        <div class="card two-third">
+          <h2 id="speak11">7. Unsupervised Learning and K-Means</h2>
+          <p>
+            In supervised learning, answers are already given during training.
+            In unsupervised learning, answers are not given. The model finds
+            groups by itself.
+          </p>
+
+          <p>
+            K-Means is a clustering algorithm. It groups similar points
+            together.
+          </p>
+
+          <h3>Two simple examples</h3>
+          <ul>
+            <li>
+              <b>Example 1:</b> Group students as beginner, intermediate, and
+              advanced.
+            </li>
+            <li>
+              <b>Example 2:</b> Group customers as low spender, medium spender,
+              and high spender.
+            </li>
+          </ul>
+        </div>
+
+        <div class="card third">
+          <h2 id="speak12">Expert warning</h2>
+          <p>
+            K-Means needs the value of K. It is also sensitive to outliers and
+            scale. Always normalize data for better clustering.
+          </p>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <h2 id="speak13">Regression vs Classification vs Clustering</h2>
+          <div class="table-wrap">
+            <table>
+              <tr>
+                <th>Point</th>
+                <th>Regression</th>
+                <th>Classification</th>
+                <th>Clustering</th>
+              </tr>
+              <tr>
+                <td>Output</td>
+                <td>Number</td>
+                <td>Category</td>
+                <td>Group</td>
+              </tr>
+              <tr>
+                <td>Training type</td>
+                <td>Supervised</td>
+                <td>Supervised</td>
+                <td>Unsupervised</td>
+              </tr>
+              <tr>
+                <td>Example</td>
+                <td>Price prediction</td>
+                <td>Spam detection</td>
+                <td>Customer segmentation</td>
+              </tr>
+              <tr>
+                <td>Question answered</td>
+                <td>How much?</td>
+                <td>Which class?</td>
+                <td>Which group?</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid" id="graphs">
+        <div class="card">
+          <h2 id="speak14">8. Interactive Graph Lab</h2>
+          <p>
+            Change the dataset and model type. The chart will update
+            automatically.
+          </p>
+
+          <div class="controls">
+            <label>
+              Dataset:
+              <select id="dataset">
+                <option value="study">Study Hours → Marks</option>
+                <option value="icecream">Temperature → Sales</option>
+                <option value="curve">Curved Growth</option>
+              </select>
+            </label>
+
+            <label>
+              Model:
+              <select id="modelType">
+                <option value="linear">Linear</option>
+                <option value="poly">Polynomial</option>
+              </select>
+            </label>
+
+            <button class="btn" onclick="drawChart()">Draw Graph</button>
+          </div>
+
+          <canvas id="chart" width="1000" height="420"></canvas>
+        </div>
+      </section>
+
+      <section class="grid" id="editor">
+        <div class="card">
+          <h2 id="speak15">9. Embedded Python Editor</h2>
+          <p>
+            Practice the same regression and classification examples in the live
+            Python editor.
+          </p>
+
+          <p>
+            <a
+              class="btn"
+              href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+              target="_blank"
+            >
+              Open Python Editor in New Tab
+            </a>
+          </p>
+
+          <iframe
+            src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <h2 id="speak16">10. Expert Notes</h2>
+
+          <details open>
+            <summary>Linear Regression assumptions</summary>
+            <p>
+              Linear Regression works best when the data has a roughly
+              straight-line relationship, errors are not extreme, and features
+              are not strongly duplicated.
+            </p>
+          </details>
+
+          <details>
+            <summary>Polynomial Regression danger</summary>
+            <p>
+              A very high degree can memorize training data and fail on new
+              data. This is called overfitting.
+            </p>
+          </details>
+
+          <details>
+            <summary>Classification boundary</summary>
+            <p>
+              Classification creates a decision boundary. Simple models create
+              simple boundaries. Advanced models create complex boundaries.
+            </p>
+          </details>
+
+          <details>
+            <summary>K-Means limitation</summary>
+            <p>
+              K-Means works well for round and separated clusters, but it may
+              fail on irregular shapes.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section class="grid" id="quiz">
+        <div class="card">
+          <h2 id="speak17">11. MCQ Quiz</h2>
+          <p>Choose the best answer and submit.</p>
+
+          <div id="quizBox"></div>
+
+          <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+          <button class="btn secondary" onclick="resetQuiz()">Reset</button>
+
+          <div id="quizResult" class="result" style="display: none"></div>
+        </div>
+      </section>
+
+      <section class="footer">
+        <p><b>Programmer's Picnic | Champak Roy</b></p>
+        <p>Machine Learning Foundations V4 Ultra</p>
+      </section>
+    </main>
+
+    <script>
+      function copyCode(id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text);
+        alert("Code copied!");
+      }
+
+      function linearFit(xs, ys) {
+        const n = xs.length;
+        const sx = xs.reduce((a, b) => a + b, 0);
+        const sy = ys.reduce((a, b) => a + b, 0);
+        const sxy = xs.reduce((a, x, i) => a + x * ys[i], 0);
+        const sx2 = xs.reduce((a, x) => a + x * x, 0);
+        const m = (n * sxy - sx * sy) / (n * sx2 - sx * sx);
+        const b = (sy - m * sx) / n;
+        return { m, b };
+      }
+
+      function quadFit(xs, ys) {
+        let X = xs.map((x) => [x * x, x, 1]);
+        let A = [
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+        ];
+        let B = [0, 0, 0];
+
+        for (let i = 0; i < xs.length; i++) {
+          for (let r = 0; r < 3; r++) {
+            B[r] += X[i][r] * ys[i];
+            for (let c = 0; c < 3; c++) A[r][c] += X[i][r] * X[i][c];
+          }
+        }
+
+        for (let i = 0; i < 3; i++) {
+          let max = i;
+          for (let j = i + 1; j < 3; j++) {
+            if (Math.abs(A[j][i]) > Math.abs(A[max][i])) max = j;
+          }
+
+          [A[i], A[max]] = [A[max], A[i]];
+          [B[i], B[max]] = [B[max], B[i]];
+
+          let pivot = A[i][i];
+          for (let c = i; c < 3; c++) A[i][c] /= pivot;
+          B[i] /= pivot;
+
+          for (let r = 0; r < 3; r++) {
+            if (r !== i) {
+              let factor = A[r][i];
+              for (let c = i; c < 3; c++) A[r][c] -= factor * A[i][c];
+              B[r] -= factor * B[i];
+            }
+          }
+        }
+
+        return { a: B[0], b: B[1], c: B[2] };
+      }
+
+      function getData() {
+        const d = document.getElementById("dataset").value;
+
+        if (d === "study") {
+          return {
+            title: "Study Hours → Marks",
+            xs: [1, 2, 3, 4, 5],
+            ys: [40, 50, 63, 72, 82],
+          };
+        }
+
+        if (d === "icecream") {
+          return {
+            title: "Temperature → Ice Cream Sales",
+            xs: [18, 22, 26, 30, 34],
+            ys: [90, 130, 180, 240, 310],
+          };
+        }
+
+        return {
+          title: "Curved Growth",
+          xs: [1, 2, 3, 4, 5, 6],
+          ys: [2, 5, 10, 17, 26, 37],
+        };
+      }
+
+      function drawChart() {
+        const canvas = document.getElementById("chart");
+        const ctx = canvas.getContext("2d");
+        const data = getData();
+        const type = document.getElementById("modelType").value;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const pad = 60;
+        const xs = data.xs;
+        const ys = data.ys;
+        const minX = Math.min(...xs);
+        const maxX = Math.max(...xs);
+        const minY = Math.min(...ys);
+        const maxY = Math.max(...ys);
+
+        function tx(x) {
+          return pad + ((x - minX) / (maxX - minX)) * (canvas.width - 2 * pad);
+        }
+        function ty(y) {
+          return (
+            canvas.height -
+            pad -
+            ((y - minY) / (maxY - minY)) * (canvas.height - 2 * pad)
+          );
+        }
+
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#92400e";
+        ctx.beginPath();
+        ctx.moveTo(pad, pad);
+        ctx.lineTo(pad, canvas.height - pad);
+        ctx.lineTo(canvas.width - pad, canvas.height - pad);
+        ctx.stroke();
+
+        ctx.fillStyle = "#2b2112";
+        ctx.font = "22px system-ui";
+        ctx.fillText(data.title + " (" + type + " model)", pad, 35);
+
+        ctx.fillStyle = "#d97706";
+        xs.forEach((x, i) => {
+          ctx.beginPath();
+          ctx.arc(tx(x), ty(ys[i]), 8, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillText("(" + x + "," + ys[i] + ")", tx(x) + 10, ty(ys[i]) - 8);
+        });
+
+        ctx.strokeStyle = "#15803d";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+
+        if (type === "linear") {
+          const fit = linearFit(xs, ys);
+          for (let i = 0; i <= 100; i++) {
+            const x = minX + ((maxX - minX) * i) / 100;
+            const y = fit.m * x + fit.b;
+            if (i === 0) ctx.moveTo(tx(x), ty(y));
+            else ctx.lineTo(tx(x), ty(y));
+          }
+        } else {
+          const fit = quadFit(xs, ys);
+          for (let i = 0; i <= 100; i++) {
+            const x = minX + ((maxX - minX) * i) / 100;
+            const y = fit.a * x * x + fit.b * x + fit.c;
+            if (i === 0) ctx.moveTo(tx(x), ty(y));
+            else ctx.lineTo(tx(x), ty(y));
+          }
+        }
+
+        ctx.stroke();
+      }
+
+      const questions = [
+        {
+          q: "Regression is mainly used to predict:",
+          options: ["A category", "A number", "A cluster", "A password"],
+          answer: 1,
+        },
+        {
+          q: "Classification is used when output is:",
+          options: [
+            "A label or category",
+            "Always a decimal",
+            "Always a graph",
+            "Always unknown",
+          ],
+          answer: 0,
+        },
+        {
+          q: "K-Means is an example of:",
+          options: [
+            "Regression",
+            "Supervised classification",
+            "Unsupervised clustering",
+            "Linear equation only",
+          ],
+          answer: 2,
+        },
+        {
+          q: "In y = mx + b, m means:",
+          options: ["Model name", "Slope", "Intercept", "Output"],
+          answer: 1,
+        },
+        {
+          q: "NumPy polyfit with degree 1 creates:",
+          options: [
+            "Linear fit",
+            "Image filter",
+            "K-Means cluster",
+            "Decision tree",
+          ],
+          answer: 0,
+        },
+        {
+          q: "Polynomial regression is useful when data is:",
+          options: ["Only text", "Curved", "Always binary", "Missing"],
+          answer: 1,
+        },
+        {
+          q: "Spam / Not Spam is an example of:",
+          options: [
+            "Binary classification",
+            "Regression",
+            "K-Means only",
+            "Polynomial fit",
+          ],
+          answer: 0,
+        },
+        {
+          q: "Customer segmentation is commonly done using:",
+          options: [
+            "Clustering",
+            "Only linear regression",
+            "Only HTML",
+            "Only CSS",
+          ],
+          answer: 0,
+        },
+        {
+          q: "A danger of very high degree polynomial fitting is:",
+          options: [
+            "Overfitting",
+            "Better generalization always",
+            "No prediction",
+            "No curve",
+          ],
+          answer: 0,
+        },
+        {
+          q: "SciPy linregress gives:",
+          options: [
+            "Only HTML",
+            "Slope, intercept and statistics",
+            "Only clusters",
+            "Only images",
+          ],
+          answer: 1,
+        },
+      ];
+
+      function loadQuiz() {
+        const box = document.getElementById("quizBox");
+        box.innerHTML = "";
+
+        questions.forEach((item, index) => {
+          const div = document.createElement("div");
+          div.className = "question";
+
+          div.innerHTML = `
+        <h3>Q${index + 1}. ${item.q}</h3>
+        ${item.options
+          .map(
+            (op, i) => `
+          <label class="option">
+            <input type="radio" name="q${index}" value="${i}">
+            ${op}
+          </label>
+        `,
+          )
+          .join("")}
+      `;
+
+          box.appendChild(div);
+        });
+      }
+
+      function submitQuiz() {
+        let score = 0;
+
+        questions.forEach((item, index) => {
+          const selected = document.querySelector(
+            `input[name="q${index}"]:checked`,
+          );
+          if (selected && Number(selected.value) === item.answer) score++;
+        });
+
+        const result = document.getElementById("quizResult");
+        result.style.display = "block";
+        result.innerHTML = `Your score: ${score}/${questions.length}<br>
+      ${score >= 8 ? "Excellent work!" : score >= 5 ? "Good. Revise the weak topics." : "Revise the lesson and try again."}`;
+      }
+
+      function resetQuiz() {
+        loadQuiz();
+        document.getElementById("quizResult").style.display = "none";
+      }
+
+      loadQuiz();
+      drawChart();
+    </script>
+
+    <script>
+      (function () {
+        const selector = '[id^="speak"]';
+        let items = [];
+        let index = 0;
+        let speaking = false;
+
+        function refresh() {
+          items = Array.from(document.querySelectorAll(selector));
+        }
+
+        function makePanel() {
+          const panel = document.createElement("div");
+          panel.style.cssText = `
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:9999;
+      background:white;
+      border:1px solid #f5d99b;
+      box-shadow:0 18px 45px rgba(146,64,14,.22);
+      border-radius:22px;
+      padding:14px;
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      max-width:330px;
+    `;
+
+          panel.innerHTML = `
+      <button class="btn" id="ppPlay">▶ Speak</button>
+      <button class="btn secondary" id="ppPause">⏸ Stop</button>
+      <button class="btn secondary" id="ppNext">Next</button>
+    `;
+
+          document.body.appendChild(panel);
+
+          document.getElementById("ppPlay").onclick = start;
+          document.getElementById("ppPause").onclick = stop;
+          document.getElementById("ppNext").onclick = next;
+        }
+
+        function speakElement(el) {
+          if (!el) return;
+          document
+            .querySelectorAll(".pp-speaking-active")
+            .forEach((x) => x.classList.remove("pp-speaking-active"));
+          el.classList.add("pp-speaking-active");
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+          const utter = new SpeechSynthesisUtterance(el.innerText);
+          utter.rate = 1;
+          utter.pitch = 1;
+          utter.volume = 1;
+
+          utter.onend = function () {
+            el.classList.remove("pp-speaking-active");
+            if (speaking) {
+              index++;
+              if (index < items.length) speakElement(items[index]);
+              else speaking = false;
+            }
+          };
+
+          speechSynthesis.cancel();
+          speechSynthesis.speak(utter);
+        }
+
+        function start() {
+          refresh();
+          speaking = true;
+          if (index >= items.length) index = 0;
+          speakElement(items[index]);
+        }
+
+        function stop() {
+          speaking = false;
+          speechSynthesis.cancel();
+          document
+            .querySelectorAll(".pp-speaking-active")
+            .forEach((x) => x.classList.remove("pp-speaking-active"));
+        }
+
+        function next() {
+          refresh();
+          index++;
+          if (index >= items.length) index = 0;
+          speaking = true;
+          speakElement(items[index]);
+        }
+
+        makePanel();
+      })();
+    </script>
+
+    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+    <script>
+function zoomImage(img){
+  const overlay = document.createElement("div");
+  overlay.style.cssText = `
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:rgba(0,0,0,.8);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    cursor:zoom-out;
+  `;
+
+  const clone = img.cloneNode();
+  clone.style.maxWidth = "90%";
+  clone.style.maxHeight = "90%";
+  clone.style.borderRadius = "18px";
+
+  overlay.appendChild(clone);
+
+  overlay.onclick = () => overlay.remove();
+
+  document.body.appendChild(overlay);
+}
+</script>
+  </body>
+</html>

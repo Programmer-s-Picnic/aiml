@@ -80,5 +80,51 @@
         }
       ]
     }
+    , {
+      "label": "AI-ML",
+      "href": "https://aiml.learnwithchampak.live/",
+      "icon": "📅",
+      "children": [
+        {
+          "label": "AI-ML Course Map",
+          "href": "https://aiml.learnwithchampak.live/coursemap/?tmode=1",
+          "icon": "🖥️"
+        },
+
+        {
+          "label": "AI-ML Terms",
+          "href": "https://aiml.learnwithchampak.live/lessons/terms/",
+          "icon": "🖥️"
+        },
+        {
+          "label": "AI-ML Statistics",
+          "href": "https://aiml.learnwithchampak.live/lessons/stats/",
+          "icon": "🖥️"
+        }
+      ]
+    }
+    , {
+      "label": "AI-ML Datasets",
+      "href": "#",
+      "icon": "📅",
+      "children": [
+        {
+          "label": "finance_demo.csv",
+          "href": "https://aiml.learnwithchampak.live/course/datasets/finance_demo.csv",
+          "icon": "🖥️"
+        },
+
+        {
+          "label": "AI-ML Terms",
+          "href": "https://aiml.learnwithchampak.live/lessons/terms/",
+          "icon": "🖥️"
+        },
+        {
+          "label": "AI-ML Statistics",
+          "href": "https://aiml.learnwithchampak.live/lessons/stats/",
+          "icon": "🖥️"
+        }
+      ]
+    }
   ]
 }

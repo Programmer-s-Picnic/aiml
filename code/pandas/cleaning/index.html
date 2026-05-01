@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      Dataset Cleaning to Linear Regression — Champak Roy | Programmer's Picnic
+    </title>
+    <script
+      async=""
+      crossorigin="anonymous"
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
+    ></script>
+
+    <meta
+      name="description"
+      content="Ground-zero to expert lesson on cleaning messy datasets and applying linear regression using numpy.polynomial.fit."
+    />
+    <meta name="theme-color" content="#f59e0b" />
+
+    <style>
+      :root {
+        --bg: #fff7e6;
+        --bg2: #fff1c7;
+        --card: #ffffff;
+        --text: #1f1608;
+        --muted: #6b4a1d;
+        --brand: #d97706;
+        --brand2: #f59e0b;
+        --line: #f3c76f;
+        --good: #15803d;
+        --bad: #b91c1c;
+        --code: #17120a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: radial-gradient(
+          circle at top left,
+          #fff0bd 0,
+          #fff7e6 32%,
+          #fffaf0 100%
+        );
+        color: var(--text);
+        line-height: 1.7;
+      }
+
+      header {
+        padding: 42px 18px;
+        background: linear-gradient(135deg, #92400e, #d97706, #f59e0b);
+        color: white;
+        text-align: center;
+      }
+
+      header h1 {
+        margin: 0 auto 14px;
+        max-width: 1050px;
+        font-size: clamp(2rem, 5vw, 4.3rem);
+        line-height: 1.05;
+      }
+
+      header p {
+        max-width: 850px;
+        margin: 0 auto;
+        font-size: 1.1rem;
+        opacity: 0.95;
+      }
+
+      .wrap {
+        max-width: 1180px;
+        margin: auto;
+        padding: 24px 16px 70px;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(255, 247, 230, 0.94);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+        padding: 10px 14px;
+      }
+
+      .topbar-inner {
+        max-width: 1180px;
+        margin: auto;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .btn {
+        border: 0;
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+        color: white;
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 8px 18px rgba(217, 119, 6, 0.22);
+      }
+
+      .btn.secondary {
+        background: white;
+        color: var(--brand);
+        border: 1px solid var(--line);
+        box-shadow: none;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 20px;
+        align-items: start;
+      }
+
+      @media (max-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 22px;
+        margin: 18px 0;
+        box-shadow: 0 18px 45px rgba(146, 64, 14, 0.08);
+      }
+
+      .card h2,
+      .card h3 {
+        margin-top: 0;
+        line-height: 1.2;
+      }
+
+      .badge {
+        display: inline-block;
+        background: #fff1c7;
+        color: #92400e;
+        border: 1px solid #f3c76f;
+        padding: 5px 10px;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+      }
+
+      pre {
+        background: var(--code);
+        color: #fff7ed;
+        padding: 16px;
+        overflow: auto;
+        border-radius: 18px;
+        border: 1px solid #3a2b12;
+        font-size: 0.93rem;
+      }
+
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        border: 1px solid #f2d38a;
+        padding: 10px;
+        text-align: left;
+        font-size: 0.95rem;
+      }
+
+      th {
+        background: #fff1c7;
+      }
+
+      .editor-frame {
+        width: 100%;
+        min-height: 620px;
+        border: 2px solid var(--brand2);
+        border-radius: 22px;
+        overflow: hidden;
+        background: white;
+      }
+
+      iframe {
+        width: 100%;
+        height: 620px;
+        border: 0;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .step {
+        background: #fff7e6;
+        border: 1px solid var(--line);
+        padding: 14px;
+        border-radius: 18px;
+        font-weight: 800;
+        text-align: center;
+      }
+
+      .quiz-option {
+        display: block;
+        width: 100%;
+        text-align: left;
+        margin: 8px 0;
+        padding: 11px 13px;
+        border-radius: 14px;
+        border: 1px solid #f2d38a;
+        background: white;
+        cursor: pointer;
+        font-weight: 650;
+      }
+
+      .quiz-option.correct {
+        background: #dcfce7;
+        border-color: #22c55e;
+      }
+
+      .quiz-option.wrong {
+        background: #fee2e2;
+        border-color: #ef4444;
+      }
+
+      .result {
+        font-weight: 900;
+        font-size: 1.1rem;
+        margin-top: 12px;
+      }
+
+      .speak-active {
+        outline: 4px solid rgba(245, 158, 11, 0.55);
+        background: #fff1c7;
+        border-radius: 14px;
+        padding: 6px;
+      }
+
+      .note {
+        background: #fffbeb;
+        border-left: 6px solid var(--brand2);
+        padding: 14px;
+        border-radius: 16px;
+      }
+
+      .footer {
+        text-align: center;
+        color: var(--muted);
+        padding-top: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1 id="speak1">Dataset Cleaning to Linear Regression — Champak Roy</h1>
+      <p id="speak2">
+        Learn from level zero to expert level: messy data, missing values,
+        duplicates, bad values, outliers, cleaning pipelines, and linear
+        regression using numpy.polynomial.fit.
+      </p>
+    </header>
+
+    <nav class="topbar">
+      <div class="topbar-inner">
+        <strong>Programmer's Picnic | Data Cleaning Lesson</strong>
+        <div>
+          <button class="btn" onclick="startSpeaking()">▶ Speak Lesson</button>
+          <button class="btn secondary" onclick="stopSpeaking()">■ Stop</button>
+          <a
+            class="btn secondary"
+            target="_blank"
+            href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+            >Open Python Editor</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <main class="wrap">
+      <section class="card">
+        <span class="badge">Level 0</span>
+        <h2 id="speak3">What is Data Cleaning?</h2>
+        <p id="speak4">
+          Data cleaning means preparing raw data so that it becomes useful for
+          analysis and machine learning. Real-world data often contains missing
+          values, duplicate rows, spelling mistakes, impossible values, wrong
+          data types, and outliers.
+        </p>
+
+        <div class="flow">
+          <div class="step">Raw Data</div>
+          <div class="step">Inspect</div>
+          <div class="step">Clean</div>
+          <div class="step">Transform</div>
+          <div class="step">Model</div>
+          <div class="step">Evaluate</div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <span class="badge">Level 10</span>
+          <h2 id="speak5">Basic Cleaning Mindset</h2>
+          <p id="speak6">
+            Before cleaning, always inspect the dataset. Do not blindly delete
+            rows. First understand what is wrong.
+          </p>
+
+          <pre><code>import pandas as pd
+import numpy as np
+from numpy.polynomial import Polynomial
+
+df.info()
+df.describe()
+df.isnull().sum()
+df.duplicated().sum()</code></pre>
+        </div>
+
+        <div class="card">
+          <span class="badge">Formula</span>
+          <h2 id="speak7">Linear Regression Idea</h2>
+          <p id="speak8">
+            Linear regression tries to find a straight-line relationship between
+            input x and output y.
+          </p>
+
+          <pre><code># y = c + mx
+model = Polynomial.fit(x, y, deg=1)
+normal_model = model.convert()
+print(normal_model.coef)</code></pre>
+        </div>
+      </section>
+
+      <section class="card">
+        <span class="badge">Dataset 1</span>
+        <h2 id="speak9">Incomplete Data + Duplicate Rows</h2>
+
+        <pre><code>df1 = pd.DataFrame({
+    "hours": [1, 2, 2, 3, None, 5],
+    "score": [50, 55, 55, None, 65, 70]
+})
+
+df1 = df1.drop_duplicates()
+df1 = df1.dropna()
+
+x = df1["hours"]
+y = df1["score"]
+
+model = Polynomial.fit(x, y, deg=1)
+print(model.convert().coef)</code></pre>
+
+        <p id="speak10">
+          Here we remove duplicate rows and then remove rows where hours or
+          score is missing.
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="badge">Dataset 2</span>
+        <h2 id="speak11">Bad Text Values Inside Numeric Columns</h2>
+
+        <pre><code>df2 = pd.DataFrame({
+    "hours": [1, "two", 3, 4, 5],
+    "score": [50, 55, "??", 65, 70]
+})
+
+df2["hours"] = pd.to_numeric(df2["hours"], errors="coerce")
+df2["score"] = pd.to_numeric(df2["score"], errors="coerce")
+
+df2 = df2.dropna()
+
+x = df2["hours"]
+y = df2["score"]
+
+model = Polynomial.fit(x, y, deg=1)
+print(model.convert().coef)</code></pre>
+
+        <p id="speak12">
+          The function pandas.to_numeric converts valid numbers and changes bad
+          values into NaN. Then we clean those NaN rows.
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="badge">Dataset 3</span>
+        <h2 id="speak13">Outliers</h2>
+
+        <pre><code>df3 = pd.DataFrame({
+    "hours": [1, 2, 3, 4, 5, 100],
+    "score": [50, 55, 60, 65, 70, 10]
+})
+
+df3 = df3[(df3["hours"] &lt; 10) &amp; (df3["score"] &gt; 40)]
+
+x = df3["hours"]
+y = df3["score"]
+
+model = Polynomial.fit(x, y, deg=1)
+print(model.convert().coef)</code></pre>
+
+        <p id="speak14">
+          Outliers are extreme values. Sometimes they are mistakes. Sometimes
+          they are important signals. Expert cleaning means checking before
+          removing.
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="badge">Dataset 4</span>
+        <h2 id="speak15">Mixed Problems</h2>
+
+        <pre><code>df4 = pd.DataFrame({
+    "hours": [1, 2, 2, "three", None, 5],
+    "score": [50, 55, 55, 60, "N/A", 70]
+})
+
+df4["hours"] = pd.to_numeric(df4["hours"], errors="coerce")
+df4["score"] = pd.to_numeric(df4["score"], errors="coerce")
+
+df4 = df4.drop_duplicates()
+df4 = df4.fillna(df4.mean(numeric_only=True))
+
+x = df4["hours"]
+y = df4["score"]
+
+model = Polynomial.fit(x, y, deg=1)
+print(model.convert().coef)</code></pre>
+
+        <p id="speak16">
+          This dataset contains duplicates, missing values, and text inside
+          number columns. We use a complete cleaning sequence.
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="badge">Dataset 5</span>
+        <h2 id="speak17">Reusable Expert Cleaning Function</h2>
+
+        <pre><code>def clean_dataset(df):
+    df = df.copy()
+
+    # Remove duplicate rows
+    df = df.drop_duplicates()
+
+    # Convert everything possible to numbers
+    for col in df.columns:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    # Fill missing values with column mean
+    df = df.fillna(df.mean(numeric_only=True))
+
+    return df
+
+
+df5 = pd.DataFrame({
+    "hours": [1, 2, 3, 4, 5, 6, "bad", None, 6],
+    "score": [52, 54, 63, 64, 68, 72, "??", None, 72]
+})
+
+df5 = clean_dataset(df5)
+
+x = df5["hours"]
+y = df5["score"]
+
+model = Polynomial.fit(x, y, deg=1)
+print(model.convert().coef)</code></pre>
+
+        <p id="speak18">
+          At expert level, we do not repeat cleaning code again and again. We
+          create a reusable cleaning function.
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="badge">Embedded Editor</span>
+        <h2 id="speak19">Practice in the Live Python Editor</h2>
+        <p id="speak20">
+          Use the editor below to paste the examples, modify the datasets, add
+          your own bad data, and test the cleaning pipeline.
+        </p>
+
+        <div class="editor-frame">
+          <iframe
+            src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+          ></iframe>
+        </div>
+      </section>
+
+      <section class="card">
+        <span class="badge">Complete Practice Code</span>
+        <h2 id="speak21">One Full Program</h2>
+
+        <pre><code>import pandas as pd
+import numpy as np
+from numpy.polynomial import Polynomial
+
+def clean_dataset(df):
+    df = df.copy()
+    df = df.drop_duplicates()
+
+    for col in df.columns:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    df = df.fillna(df.mean(numeric_only=True))
+    return df
+
+datasets = []
+
+datasets.append(pd.DataFrame({
+    "hours": [1, 2, 2, 3, None, 5],
+    "score": [50, 55, 55, None, 65, 70]
+}))
+
+datasets.append(pd.DataFrame({
+    "hours": [1, "two", 3, 4, 5],
+    "score": [50, 55, "??", 65, 70]
+}))
+
+datasets.append(pd.DataFrame({
+    "hours": [1, 2, 3, 4, 5, 100],
+    "score": [50, 55, 60, 65, 70, 10]
+}))
+
+datasets.append(pd.DataFrame({
+    "hours": [1, 2, 2, "three", None, 5],
+    "score": [50, 55, 55, 60, "N/A", 70]
+}))
+
+datasets.append(pd.DataFrame({
+    "hours": [1, 2, 3, 4, 5, 6, "bad", None, 6],
+    "score": [52, 54, 63, 64, 68, 72, "??", None, 72]
+}))
+
+for i, df in enumerate(datasets, start=1):
+    print("\\nDATASET", i)
+    print("Raw data:")
+    print(df)
+
+    clean_df = clean_dataset(df)
+
+    # Simple outlier protection
+    clean_df = clean_df[
+        (clean_df["hours"] &lt; clean_df["hours"].quantile(0.95)) |
+        (clean_df["hours"] == clean_df["hours"].median())
+    ]
+
+    print("Clean data:")
+    print(clean_df)
+
+    x = clean_df["hours"]
+    y = clean_df["score"]
+
+    model = Polynomial.fit(x, y, deg=1)
+    converted = model.convert()
+
+    print("Regression coefficients:")
+    print(converted.coef)
+
+    print("Prediction for 7 hours:")
+    print(converted(7))</code></pre>
+      </section>
+
+      <section class="card">
+        <span class="badge">MCQ Engine</span>
+        <h2 id="speak22">Quiz: Test Your Understanding</h2>
+        <div id="quiz"></div>
+        <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+        <button class="btn secondary" onclick="resetQuiz()">Reset</button>
+        <div id="quizResult" class="result"></div>
+      </section>
+
+      <section class="card">
+        <span class="badge">Expert Summary</span>
+        <h2 id="speak23">Final Expert Rules</h2>
+        <div class="note" id="speak24">
+          Clean data carefully. Do not delete blindly. Convert data types.
+          Handle missing values. Remove duplicates. Investigate outliers. Then
+          apply regression and evaluate the result.
+        </div>
+      </section>
+
+      <div class="footer">
+        <p>Made for Programmer's Picnic | Champak Roy</p>
+      </div>
+    </main>
+
+    <script>
+      const quizData = [
+        {
+          q: "What is the first step before cleaning a dataset?",
+          options: [
+            "Delete all missing rows immediately",
+            "Inspect the dataset",
+            "Run regression directly",
+            "Convert everything to text",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What does drop_duplicates() do?",
+          options: [
+            "Deletes all columns",
+            "Removes repeated rows",
+            "Fills missing values",
+            "Creates a regression model",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What does errors='coerce' do in pd.to_numeric?",
+          options: [
+            "Converts bad values to NaN",
+            "Deletes the dataframe",
+            "Converts numbers to strings",
+            "Sorts the dataframe",
+          ],
+          answer: 0,
+        },
+        {
+          q: "Which NumPy tool is used here for regression?",
+          options: [
+            "numpy.array.sort",
+            "numpy.polynomial.Polynomial.fit",
+            "numpy.random.randint",
+            "numpy.mean only",
+          ],
+          answer: 1,
+        },
+        {
+          q: "What is an outlier?",
+          options: [
+            "A normal average value",
+            "A duplicate column",
+            "An extreme unusual value",
+            "A Python keyword",
+          ],
+          answer: 2,
+        },
+        {
+          q: "For linear regression using Polynomial.fit, which degree is used?",
+          options: ["0", "1", "2", "10"],
+          answer: 1,
+        },
+        {
+          q: "Why should we not blindly remove outliers?",
+          options: [
+            "Because outliers are always correct",
+            "Because outliers may contain important real-world signals",
+            "Because Python does not allow it",
+            "Because regression needs bad data",
+          ],
+          answer: 1,
+        },
+      ];
+
+      function renderQuiz() {
+        const box = document.getElementById("quiz");
+        box.innerHTML = "";
+
+        quizData.forEach((item, index) => {
+          const div = document.createElement("div");
+          div.className = "card";
+          div.style.boxShadow = "none";
+          div.innerHTML = `<h3>Q${index + 1}. ${item.q}</h3>`;
+
+          item.options.forEach((opt, optIndex) => {
+            const label = document.createElement("label");
+            label.className = "quiz-option";
+            label.innerHTML = `
+          <input type="radio" name="q${index}" value="${optIndex}">
+          ${opt}
+        `;
+            div.appendChild(label);
+          });
+
+          box.appendChild(div);
+        });
+      }
+
+      function submitQuiz() {
+        let score = 0;
+
+        quizData.forEach((item, index) => {
+          const selected = document.querySelector(
+            `input[name="q${index}"]:checked`,
+          );
+          const labels = document.querySelectorAll(`input[name="q${index}"]`);
+
+          labels.forEach((input) => {
+            const parent = input.closest(".quiz-option");
+            parent.classList.remove("correct", "wrong");
+
+            if (Number(input.value) === item.answer) {
+              parent.classList.add("correct");
+            }
+
+            if (
+              selected &&
+              input === selected &&
+              Number(input.value) !== item.answer
+            ) {
+              parent.classList.add("wrong");
+            }
+          });
+
+          if (selected && Number(selected.value) === item.answer) {
+            score++;
+          }
+        });
+
+        document.getElementById("quizResult").innerHTML =
+          `Your score: ${score}/${quizData.length}`;
+      }
+
+      function resetQuiz() {
+        renderQuiz();
+        document.getElementById("quizResult").innerHTML = "";
+      }
+
+      renderQuiz();
+
+      let utterance;
+      let speakIndex = 0;
+      let speakItems = [];
+
+      function startSpeaking() {
+        stopSpeaking();
+
+        speakItems = Array.from(document.querySelectorAll('[id^="speak"]'));
+        speakIndex = 0;
+        speakNext();
+      }
+
+      function speakNext() {
+        if (speakIndex >= speakItems.length) return;
+
+        document.querySelectorAll(".speak-active").forEach((el) => {
+          el.classList.remove("speak-active");
+        });
+
+        const el = speakItems[speakIndex];
+        el.classList.add("speak-active");
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        utterance = new SpeechSynthesisUtterance(el.innerText);
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        utterance.lang = "en-IN";
+
+        utterance.onend = () => {
+          speakIndex++;
+          speakNext();
+        };
+
+        speechSynthesis.speak(utterance);
+      }
+
+      function stopSpeaking() {
+        speechSynthesis.cancel();
+        document.querySelectorAll(".speak-active").forEach((el) => {
+          el.classList.remove("speak-active");
+        });
+      }
+    </script>
+  </body>
+</html>

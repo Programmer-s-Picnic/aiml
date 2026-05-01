@@ -1,0 +1,1089 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Programmer’s Picnic — SQL in Pandas (Complete Lesson)</title>
+
+  <meta name="description" content="A comprehensive, beginner-to-advanced HTML lesson on using SQL with Pandas: read_sql, to_sql, SQLite, SQLAlchemy, parameterized queries, joins, chunks, performance, and exercises + MCQs." />
+  <meta name="theme-color" content="#d97706" />
+
+  <style>
+    :root{
+      --bg:#fff7e6;
+      --bg2:#fff1d6;
+      --card:rgba(255,255,255,.92);
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --brand:#d97706;
+      --brand2:#f59e0b;
+      --border:#eadcc5;
+      --shadow:0 18px 40px rgba(31,41,55,.14);
+      --r:18px;
+      --codebg:#0b1220;
+      --codeink:#e5e7eb;
+      --ok:#16a34a;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --link:#0f766e;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 700px at 10% 0%, #fff 0%, var(--bg) 40%, var(--bg2) 100%);
+      line-height:1.55;
+    }
+    a{color:var(--link);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1100px;margin:0 auto;padding:22px}
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,247,230,.88);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .topbar-inner{
+      max-width:1100px;margin:0 auto;padding:12px 22px;
+      display:flex;align-items:center;gap:12px;justify-content:space-between;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:800;letter-spacing:.2px;
+    }
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      box-shadow:0 10px 18px rgba(217,119,6,.22);
+      display:grid;place-items:center;color:white;font-weight:900;
+      user-select:none;
+    }
+    .brand small{display:block;color:var(--muted);font-weight:600}
+    .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .btn{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#fff, #fff7ea);
+      padding:9px 12px;border-radius:12px;
+      box-shadow:0 8px 18px rgba(31,41,55,.08);
+      cursor:pointer;
+      font-weight:700;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      border-color:rgba(217,119,6,.35);
+      background:linear-gradient(180deg,#fff, #fff1d6);
+    }
+    .pill{
+      font-size:12px;font-weight:800;
+      color:#7c2d12;
+      background:rgba(245,158,11,.18);
+      border:1px solid rgba(245,158,11,.35);
+      padding:6px 10px;border-radius:999px;
+      white-space:nowrap;
+    }
+    .hero{
+      margin-top:16px;
+      padding:18px;
+      background:linear-gradient(145deg, rgba(255,255,255,.95), rgba(255,255,255,.86));
+      border:1px solid var(--border);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+    }
+    h1{margin:0 0 8px;font-size:26px;line-height:1.2}
+    .sub{color:var(--muted);margin:0}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--r);
+      box-shadow:0 12px 26px rgba(31,41,55,.10);
+      padding:16px;
+    }
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+    .toc{
+      position:sticky;top:78px;
+      padding:14px;
+    }
+    .toc h2{margin:0 0 10px;font-size:16px}
+    .toc a{
+      display:block;
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid transparent;
+      color:var(--ink);
+      font-weight:700;
+      font-size:13.5px;
+      margin-bottom:6px;
+      background:rgba(255,241,214,.55);
+    }
+    .toc a:hover{
+      border-color:rgba(217,119,6,.25);
+      background:rgba(255,241,214,.85);
+      text-decoration:none;
+    }
+    .section{
+      padding:18px;
+    }
+    .section h2{
+      margin:0 0 8px;
+      font-size:20px;
+      border-left:5px solid rgba(217,119,6,.55);
+      padding-left:10px;
+    }
+    .section h3{margin:16px 0 8px;font-size:16px}
+    .muted{color:var(--muted)}
+    .note{
+      border:1px solid rgba(245,158,11,.35);
+      background:rgba(245,158,11,.10);
+      padding:12px 12px;
+      border-radius:14px;
+    }
+    .ok{
+      border:1px solid rgba(22,163,74,.30);
+      background:rgba(22,163,74,.10);
+      padding:12px 12px;
+      border-radius:14px;
+    }
+    .warn{
+      border:1px solid rgba(239,68,68,.25);
+      background:rgba(239,68,68,.08);
+      padding:12px 12px;
+      border-radius:14px;
+    }
+    .kpi{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:10px;
+    }
+    @media (max-width: 720px){ .kpi{grid-template-columns:1fr} }
+    .kpi .box{
+      border:1px solid var(--border);
+      background:rgba(255,241,214,.45);
+      padding:12px;border-radius:16px;
+    }
+    .kpi .box b{display:block;font-size:13px}
+    .kpi .box span{display:block;color:var(--muted);font-weight:650;font-size:12px;margin-top:4px}
+    .code{
+      position:relative;
+      margin:10px 0 12px;
+    }
+    pre{
+      margin:0;
+      padding:14px 14px 12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(11,18,32,.98), rgba(11,18,32,.92));
+      color:var(--codeink);
+      overflow:auto;
+      font-size:13px;
+      line-height:1.5;
+      box-shadow:0 18px 34px rgba(31,41,55,.22);
+    }
+    code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .copy{
+      position:absolute;top:10px;right:10px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      padding:8px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:12px;
+      user-select:none;
+    }
+    .copy:hover{background:rgba(255,255,255,.14)}
+    .two{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    }
+    @media (max-width: 900px){ .two{grid-template-columns:1fr} }
+    .qa{
+      margin-top:10px;
+      border:1px solid var(--border);
+      background:rgba(255,241,214,.45);
+      border-radius:16px;
+      padding:12px;
+    }
+    .qa details{
+      border:1px solid rgba(217,119,6,.18);
+      background:rgba(255,255,255,.65);
+      border-radius:14px;
+      padding:10px 12px;
+      margin:8px 0;
+    }
+    .qa summary{cursor:pointer;font-weight:800}
+    .tag{
+      display:inline-block;
+      padding:4px 10px;border-radius:999px;
+      border:1px solid rgba(217,119,6,.30);
+      background:rgba(217,119,6,.10);
+      font-weight:800;font-size:12px;margin-right:6px;
+    }
+    .footer{
+      margin:18px 0 40px;
+      text-align:center;
+      color:var(--muted);
+      font-weight:650;
+    }
+    .inline-code{
+      padding:2px 8px;border-radius:10px;
+      border:1px solid rgba(31,41,55,.10);
+      background:rgba(255,241,214,.55);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+    .iframeBox{
+      border:1px solid var(--border);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 16px 34px rgba(31,41,55,.12);
+      background:#fff;
+    }
+    iframe{width:100%;height:520px;border:0;display:block}
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo">PP</div>
+        <div>
+          <div>SQL in Pandas — Complete Lesson</div>
+          <small class="muted">read_sql • to_sql • SQLite • SQLAlchemy • performance • practice</small>
+        </div>
+      </div>
+      <div class="actions">
+        <span class="pill">Light Saffron Theme</span>
+        <button class="btn" id="btnExpand">Expand all</button>
+        <button class="btn primary" id="btnPrint">Print / Save PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="card">
+        <h1>Using SQL with Pandas (Beginner → Advanced)</h1>
+        <p class="sub">
+          Learn how to connect Pandas to databases, run SQL queries into DataFrames, write DataFrames back to SQL,
+          and build fast, safe, production-friendly data pipelines.
+        </p>
+
+        <div class="kpi">
+          <div class="box">
+            <b>Core APIs</b>
+            <span><span class="inline-code">pd.read_sql()</span>, <span class="inline-code">df.to_sql()</span></span>
+          </div>
+          <div class="box">
+            <b>Recommended Engine</b>
+            <span><span class="inline-code">SQLAlchemy</span> (works with most DBs)</span>
+          </div>
+          <div class="box">
+            <b>Best Practice</b>
+            <span>Parameterize queries + fetch in chunks</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="note">
+          <b>What you’ll build mentally</b>
+          <div class="muted" style="margin-top:6px">
+            A repeatable pattern:
+            <ol style="margin:8px 0 0 18px">
+              <li>Create connection / engine</li>
+              <li>Write SQL query (safe parameters)</li>
+              <li>Load to DataFrame</li>
+              <li>Transform with Pandas</li>
+              <li>Write back to SQL</li>
+            </ol>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <div class="ok">
+          <b>Works great for:</b>
+          <div class="muted" style="margin-top:6px">
+            Reports, dashboards, analytics pipelines, ETL/ELT steps, and quick data exploration.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <aside class="card toc">
+        <h2>Table of Contents</h2>
+        <a href="#s0">0) Quick Setup</a>
+        <a href="#s1">1) What “SQL in Pandas” means</a>
+        <a href="#s2">2) SQLite + pandas.read_sql</a>
+        <a href="#s3">3) SQLAlchemy engines (recommended)</a>
+        <a href="#s4">4) Parameterized queries (safe)</a>
+        <a href="#s5">5) Joins + group by + windows</a>
+        <a href="#s6">6) Writing DataFrames to SQL (to_sql)</a>
+        <a href="#s7">7) Chunking + streaming large queries</a>
+        <a href="#s8">8) Performance tips (indexes, pushdown)</a>
+        <a href="#s9">9) Common errors & fixes</a>
+        <a href="#s10">10) Mini practice tasks</a>
+        <a href="#s11">11) MCQs (with answers)</a>
+        <a href="#s12">12) Optional: Embedded Python Editor</a>
+      </aside>
+
+      <main class="card section">
+        <!-- ====================================================== -->
+        <section id="s0">
+          <h2>0) Quick Setup</h2>
+          <p class="muted">
+            You can practice this lesson using <b>SQLite</b> (no server needed). For MySQL/PostgreSQL, you’ll typically use SQLAlchemy + a DB driver.
+          </p>
+
+          <div class="two">
+            <div class="note">
+              <b>Install (recommended)</b>
+              <div class="muted">For most databases, SQLAlchemy is the cleanest way.</div>
+              <div class="code">
+                <button class="copy" data-copy="c0a">Copy</button>
+                <pre><code id="c0a">pip install pandas sqlalchemy</code></pre>
+              </div>
+              <div class="muted">SQLite uses Python built-in driver (<span class="inline-code">sqlite3</span>), so no extra DB driver needed.</div>
+            </div>
+
+            <div class="note">
+              <b>Optional drivers</b>
+              <div class="muted">Depending on your database:</div>
+              <ul class="muted" style="margin:8px 0 0 18px">
+                <li>PostgreSQL: <span class="inline-code">pip install psycopg2-binary</span> (or <span class="inline-code">psycopg</span>)</li>
+                <li>MySQL: <span class="inline-code">pip install pymysql</span> (or <span class="inline-code">mysqlclient</span>)</li>
+                <li>MS SQL: <span class="inline-code">pip install pyodbc</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="warn">
+            <b>Important:</b>
+            <div class="muted">
+              Pandas is not a database. It’s a fast in-memory tool. Use SQL for filtering/joins/aggregations on large datasets,
+              and use Pandas for final shaping, visualization, and business logic.
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s1" style="margin-top:18px">
+          <h2>1) What “SQL in Pandas” means</h2>
+          <p>
+            Pandas can <b>talk to SQL databases</b> so you can:
+          </p>
+          <ul>
+            <li><b>Read</b> SQL tables or query results into a DataFrame.</li>
+            <li><b>Write</b> a DataFrame back into a SQL table.</li>
+            <li><b>Combine</b> SQL (best for big joins/filters) + Pandas (best for flexible transformations).</li>
+          </ul>
+
+          <div class="note">
+            <b>Two main functions</b>
+            <div class="muted" style="margin-top:6px">
+              <span class="tag">Read</span> <span class="inline-code">pd.read_sql(sql, con)</span> — returns a DataFrame<br/>
+              <span class="tag">Write</span> <span class="inline-code">df.to_sql(name, con)</span> — writes a table
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s2" style="margin-top:18px">
+          <h2>2) SQLite + pd.read_sql (no server needed)</h2>
+          <p class="muted">
+            SQLite is perfect for learning because it’s a single file DB (e.g., <span class="inline-code">shop.db</span>).
+          </p>
+
+          <h3>2.1 Create a sample database + tables</h3>
+          <div class="code">
+            <button class="copy" data-copy="c2a">Copy</button>
+<pre><code id="c2a">import sqlite3
+import pandas as pd
+
+# Create (or open) a database file
+con = sqlite3.connect("shop.db")
+
+# Create tables + sample data
+con.executescript("""
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS orders;
+
+CREATE TABLE customers(
+  customer_id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  city TEXT NOT NULL
+);
+
+CREATE TABLE orders(
+  order_id INTEGER PRIMARY KEY,
+  customer_id INTEGER NOT NULL,
+  amount REAL NOT NULL,
+  created_at TEXT NOT NULL,
+  FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+);
+
+INSERT INTO customers(name, city) VALUES
+('Asha', 'Varanasi'),
+('Ravi', 'Lucknow'),
+('Neha', 'Delhi');
+
+INSERT INTO orders(customer_id, amount, created_at) VALUES
+(1, 399.0, '2026-01-10'),
+(1, 1200.5,'2026-01-18'),
+(2, 250.0, '2026-01-12'),
+(3, 999.0, '2026-01-20');
+""")
+
+con.commit()
+con.close()</code></pre>
+          </div>
+
+          <h3>2.2 Read a full table</h3>
+          <div class="code">
+            <button class="copy" data-copy="c2b">Copy</button>
+<pre><code id="c2b">import sqlite3
+import pandas as pd
+
+con = sqlite3.connect("shop.db")
+df_customers = pd.read_sql("SELECT * FROM customers;", con)
+df_orders = pd.read_sql("SELECT * FROM orders;", con)
+con.close()
+
+print(df_customers)
+print(df_orders)</code></pre>
+          </div>
+
+          <h3>2.3 Read a query result (filter + sort)</h3>
+          <div class="code">
+            <button class="copy" data-copy="c2c">Copy</button>
+<pre><code id="c2c">import sqlite3
+import pandas as pd
+
+con = sqlite3.connect("shop.db")
+
+sql = """
+SELECT order_id, customer_id, amount, created_at
+FROM orders
+WHERE amount &gt;= 500
+ORDER BY amount DESC;
+"""
+df = pd.read_sql(sql, con)
+
+con.close()
+print(df)</code></pre>
+          </div>
+
+          <div class="note">
+            <b>Tip:</b>
+            <div class="muted">
+              Use SQL for filtering large tables. Then use Pandas for formatting, charts, exporting to CSV/Excel, etc.
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s3" style="margin-top:18px">
+          <h2>3) SQLAlchemy engines (recommended approach)</h2>
+          <p class="muted">
+            SQLAlchemy standardizes connections across databases. With it, the same Pandas code can work for SQLite, PostgreSQL, MySQL, etc.
+          </p>
+
+          <h3>3.1 SQLite engine example</h3>
+          <div class="code">
+            <button class="copy" data-copy="c3a">Copy</button>
+<pre><code id="c3a">import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///shop.db")  # file-based sqlite database
+df = pd.read_sql("SELECT * FROM customers;", engine)
+print(df)</code></pre>
+          </div>
+
+          <h3>3.2 Connection strings (patterns)</h3>
+          <div class="code">
+            <button class="copy" data-copy="c3b">Copy</button>
+<pre><code id="c3b"># PostgreSQL (example)
+# engine = create_engine("postgresql+psycopg2://USER:PASSWORD@HOST:5432/DBNAME")
+
+# MySQL (example)
+# engine = create_engine("mysql+pymysql://USER:PASSWORD@HOST:3306/DBNAME")
+
+# SQL Server (example via pyodbc)
+# engine = create_engine("mssql+pyodbc://USER:PASSWORD@HOST/DBNAME?driver=ODBC+Driver+17+for+SQL+Server")</code></pre>
+          </div>
+
+          <div class="warn">
+            <b>Security note:</b>
+            <div class="muted">
+              Don’t hardcode passwords in files you share. Use environment variables or a secrets manager.
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s4" style="margin-top:18px">
+          <h2>4) Parameterized queries (safe SQL)</h2>
+          <p>
+            The biggest mistake beginners make is building SQL using string concatenation. That can lead to SQL Injection.
+          </p>
+
+          <h3>4.1 Safe parameters with SQLite (DB-API style)</h3>
+          <div class="code">
+            <button class="copy" data-copy="c4a">Copy</button>
+<pre><code id="c4a">import sqlite3
+import pandas as pd
+
+min_amount = 500
+
+con = sqlite3.connect("shop.db")
+sql = "SELECT * FROM orders WHERE amount &gt;= ? ORDER BY amount DESC;"
+df = pd.read_sql(sql, con, params=(min_amount,))
+con.close()
+
+print(df)</code></pre>
+          </div>
+
+          <h3>4.2 Safe parameters with SQLAlchemy (recommended)</h3>
+          <div class="code">
+            <button class="copy" data-copy="c4b">Copy</button>
+<pre><code id="c4b">import pandas as pd
+from sqlalchemy import create_engine, text
+
+engine = create_engine("sqlite:///shop.db")
+
+sql = text("""
+SELECT * FROM orders
+WHERE amount &gt;= :min_amount
+ORDER BY amount DESC
+""")
+
+df = pd.read_sql(sql, engine, params={"min_amount": 500})
+print(df)</code></pre>
+          </div>
+
+          <div class="ok">
+            <b>Rule:</b>
+            <div class="muted">
+              Always pass user inputs through <span class="inline-code">params</span> (never manually paste them into SQL strings).
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s5" style="margin-top:18px">
+          <h2>5) Joins + GROUP BY + window functions</h2>
+          <p class="muted">
+            SQL shines here: joining big tables and aggregating quickly (especially when indexes exist).
+          </p>
+
+          <h3>5.1 Join orders with customer names</h3>
+          <div class="code">
+            <button class="copy" data-copy="c5a">Copy</button>
+<pre><code id="c5a">import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///shop.db")
+
+sql = """
+SELECT
+  o.order_id,
+  c.name,
+  c.city,
+  o.amount,
+  o.created_at
+FROM orders o
+JOIN customers c ON c.customer_id = o.customer_id
+ORDER BY o.created_at;
+"""
+
+df = pd.read_sql(sql, engine)
+print(df)</code></pre>
+          </div>
+
+          <h3>5.2 GROUP BY (total spend per customer)</h3>
+          <div class="code">
+            <button class="copy" data-copy="c5b">Copy</button>
+<pre><code id="c5b">import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///shop.db")
+
+sql = """
+SELECT
+  c.customer_id,
+  c.name,
+  SUM(o.amount) AS total_spend,
+  COUNT(*) AS orders_count
+FROM customers c
+JOIN orders o ON o.customer_id = c.customer_id
+GROUP BY c.customer_id, c.name
+ORDER BY total_spend DESC;
+"""
+
+df = pd.read_sql(sql, engine)
+print(df)</code></pre>
+          </div>
+
+          <h3>5.3 Window function (running total per customer)</h3>
+          <p class="muted">Window functions are powerful for rankings, running totals, and comparisons without losing row-level data.</p>
+          <div class="code">
+            <button class="copy" data-copy="c5c">Copy</button>
+<pre><code id="c5c">import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///shop.db")
+
+sql = """
+SELECT
+  o.order_id,
+  o.customer_id,
+  o.amount,
+  o.created_at,
+  SUM(o.amount) OVER (
+    PARTITION BY o.customer_id
+    ORDER BY o.created_at
+  ) AS running_total
+FROM orders o
+ORDER BY o.customer_id, o.created_at;
+"""
+
+df = pd.read_sql(sql, engine)
+print(df)</code></pre>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s6" style="margin-top:18px">
+          <h2>6) Writing DataFrames back to SQL (df.to_sql)</h2>
+          <p class="muted">
+            Use <span class="inline-code">to_sql</span> for loading transformed data into a database table.
+          </p>
+
+          <h3>6.1 Create a DataFrame and write it</h3>
+          <div class="code">
+            <button class="copy" data-copy="c6a">Copy</button>
+<pre><code id="c6a">import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///shop.db")
+
+df_new = pd.DataFrame({
+  "name": ["Irfan", "Meera"],
+  "city": ["Pune", "Varanasi"]
+})
+
+# if_exists:
+# 'fail' (default) = error if table exists
+# 'replace' = drop + recreate
+# 'append' = add rows
+df_new.to_sql("new_customers", engine, if_exists="replace", index=False)
+
+# Verify
+df_check = pd.read_sql("SELECT * FROM new_customers;", engine)
+print(df_check)</code></pre>
+          </div>
+
+          <h3>6.2 Append data (common in pipelines)</h3>
+          <div class="code">
+            <button class="copy" data-copy="c6b">Copy</button>
+<pre><code id="c6b">import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///shop.db")
+
+df_more = pd.DataFrame({
+  "name": ["Sonia"],
+  "city": ["Delhi"]
+})
+
+df_more.to_sql("new_customers", engine, if_exists="append", index=False)
+
+print(pd.read_sql("SELECT * FROM new_customers;", engine))</code></pre>
+          </div>
+
+          <div class="note">
+            <b>Data types:</b>
+            <div class="muted">
+              Pandas will infer types, but for strict schemas you can set column types via SQLAlchemy (advanced),
+              or create the table in SQL first, then append.
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s7" style="margin-top:18px">
+          <h2>7) Chunking & reading large results safely</h2>
+          <p class="muted">
+            Loading millions of rows at once can crash your RAM. Use chunks to stream results and process gradually.
+          </p>
+
+          <h3>7.1 Read in chunks</h3>
+          <div class="code">
+            <button class="copy" data-copy="c7a">Copy</button>
+<pre><code id="c7a">import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///shop.db")
+
+sql = "SELECT * FROM orders;"
+chunks = pd.read_sql(sql, engine, chunksize=2)
+
+total = 0
+rows = 0
+
+for chunk in chunks:
+  rows += len(chunk)
+  total += chunk["amount"].sum()
+
+print("rows:", rows)
+print("total amount:", total)</code></pre>
+          </div>
+
+          <h3>7.2 Chunk + transform + write back (mini ETL)</h3>
+          <div class="code">
+            <button class="copy" data-copy="c7b">Copy</button>
+<pre><code id="c7b">import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///shop.db")
+
+# Example: add a derived column and store to a new table
+chunks = pd.read_sql("SELECT * FROM orders;", engine, chunksize=2)
+
+first = True
+for chunk in chunks:
+  chunk["amount_with_gst"] = chunk["amount"] * 1.18
+  chunk.to_sql("orders_enriched", engine,
+               if_exists=("replace" if first else "append"),
+               index=False)
+  first = False
+
+print(pd.read_sql("SELECT * FROM orders_enriched;", engine))</code></pre>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s8" style="margin-top:18px">
+          <h2>8) Performance tips (real-world)</h2>
+          <div class="two">
+            <div class="note">
+              <b>Push work to SQL</b>
+              <div class="muted" style="margin-top:6px">
+                If the table is huge, do filtering/joins/aggregation in SQL first:
+                <ul style="margin:8px 0 0 18px">
+                  <li>Use <span class="inline-code">WHERE</span> to reduce rows</li>
+                  <li>Use <span class="inline-code">SELECT</span> to reduce columns</li>
+                  <li>Use <span class="inline-code">GROUP BY</span> to aggregate early</li>
+                </ul>
+              </div>
+            </div>
+            <div class="note">
+              <b>Add indexes (DB-side)</b>
+              <div class="muted" style="margin-top:6px">
+                Indexes speed up joins and filters:
+                <div class="code">
+                  <button class="copy" data-copy="c8a">Copy</button>
+<pre><code id="c8a">-- example (run in SQL):
+CREATE INDEX IF NOT EXISTS idx_orders_customer ON orders(customer_id);
+CREATE INDEX IF NOT EXISTS idx_orders_created  ON orders(created_at);</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="note" style="margin-top:12px">
+            <b>Golden workflow</b>
+            <div class="muted">
+              SQL for heavy lifting → Pandas for final touches → store results back to SQL.
+            </div>
+          </div>
+
+          <div class="warn" style="margin-top:12px">
+            <b>Avoid:</b>
+            <div class="muted">
+              Reading entire tables unnecessarily (no WHERE), then doing all joins in Pandas for very large data.
+              Pandas joins are great, but DB engines are optimized for big relational operations.
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s9" style="margin-top:18px">
+          <h2>9) Common errors & quick fixes</h2>
+
+          <div class="qa">
+            <details>
+              <summary>“no such table: …”</summary>
+              <div class="muted">
+                You’re connected to the wrong database file / schema, or the table name is wrong.
+                For SQLite, confirm the DB file path. For other DBs, confirm schema and connection string.
+              </div>
+            </details>
+
+            <details>
+              <summary>“database is locked” (SQLite)</summary>
+              <div class="muted">
+                Another process is writing to the DB. Use short transactions, close connections, and avoid many writers at once.
+              </div>
+            </details>
+
+            <details>
+              <summary>“ObjectNotExecutableError” (SQLAlchemy)</summary>
+              <div class="muted">
+                Wrap SQL strings using <span class="inline-code">text(...)</span> when needed:
+                <span class="inline-code">from sqlalchemy import text</span>.
+              </div>
+            </details>
+
+            <details>
+              <summary>Dates come as strings</summary>
+              <div class="muted">
+                Convert in Pandas:
+                <span class="inline-code">df["created_at"] = pd.to_datetime(df["created_at"])</span>
+                or do DB casting if supported.
+              </div>
+            </details>
+
+            <details>
+              <summary>Writing to SQL creates an unwanted index column</summary>
+              <div class="muted">
+                Use <span class="inline-code">index=False</span> in <span class="inline-code">to_sql</span>.
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s10" style="margin-top:18px">
+          <h2>10) Mini practice tasks (with answers)</h2>
+          <p class="muted">Use the <span class="inline-code">shop.db</span> tables from earlier sections.</p>
+
+          <div class="qa">
+            <details>
+              <summary>Task 1: Show total spend per city</summary>
+              <div class="muted" style="margin-top:8px">Expected: join customers + orders, group by city.</div>
+              <div class="code">
+                <button class="copy" data-copy="t10a">Copy</button>
+<pre><code id="t10a">import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///shop.db")
+
+sql = """
+SELECT c.city, SUM(o.amount) AS total_spend, COUNT(*) AS orders_count
+FROM customers c
+JOIN orders o ON o.customer_id = c.customer_id
+GROUP BY c.city
+ORDER BY total_spend DESC;
+"""
+
+df = pd.read_sql(sql, engine)
+print(df)</code></pre>
+              </div>
+            </details>
+
+            <details>
+              <summary>Task 2: Find customers who have no orders</summary>
+              <div class="muted" style="margin-top:8px">Hint: LEFT JOIN + WHERE ... IS NULL</div>
+              <div class="code">
+                <button class="copy" data-copy="t10b">Copy</button>
+<pre><code id="t10b">import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///shop.db")
+
+sql = """
+SELECT c.customer_id, c.name, c.city
+FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.customer_id
+WHERE o.order_id IS NULL;
+"""
+
+df = pd.read_sql(sql, engine)
+print(df)</code></pre>
+              </div>
+            </details>
+
+            <details>
+              <summary>Task 3: Read orders from a date range using safe parameters</summary>
+              <div class="muted" style="margin-top:8px">Use SQLAlchemy + named params.</div>
+              <div class="code">
+                <button class="copy" data-copy="t10c">Copy</button>
+<pre><code id="t10c">import pandas as pd
+from sqlalchemy import create_engine, text
+
+engine = create_engine("sqlite:///shop.db")
+
+sql = text("""
+SELECT *
+FROM orders
+WHERE created_at BETWEEN :start_date AND :end_date
+ORDER BY created_at
+""")
+
+df = pd.read_sql(sql, engine, params={"start_date": "2026-01-12", "end_date": "2026-01-20"})
+print(df)</code></pre>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s11" style="margin-top:18px">
+          <h2>11) MCQs (with answers)</h2>
+
+          <div class="qa">
+            <details>
+              <summary>1) Which function loads SQL query results into a DataFrame?</summary>
+              <div class="muted" style="margin-top:8px">
+                A) df.to_sql &nbsp; B) pd.read_sql &nbsp; C) df.read_sql &nbsp; D) pd.to_sql<br><br>
+                <b>Answer:</b> B) <span class="inline-code">pd.read_sql</span>
+              </div>
+            </details>
+
+            <details>
+              <summary>2) What is the safest way to include user input in SQL queries?</summary>
+              <div class="muted" style="margin-top:8px">
+                A) String concatenation &nbsp; B) f-strings &nbsp; C) params / bind variables &nbsp; D) copy-paste<br><br>
+                <b>Answer:</b> C) <span class="inline-code">params</span> (bind variables)
+              </div>
+            </details>
+
+            <details>
+              <summary>3) What does df.to_sql(..., if_exists="append") do?</summary>
+              <div class="muted" style="margin-top:8px">
+                A) Deletes table &nbsp; B) Adds rows to existing table &nbsp; C) Creates DB &nbsp; D) Drops database<br><br>
+                <b>Answer:</b> B) Adds rows to existing table
+              </div>
+            </details>
+
+            <details>
+              <summary>4) Why use chunksize in pd.read_sql?</summary>
+              <div class="muted" style="margin-top:8px">
+                A) For better formatting &nbsp; B) To avoid loading huge data into RAM at once &nbsp; C) For printing &nbsp; D) For sorting<br><br>
+                <b>Answer:</b> B) Stream data in parts to manage memory
+              </div>
+            </details>
+
+            <details>
+              <summary>5) Best place for large joins and aggregations?</summary>
+              <div class="muted" style="margin-top:8px">
+                A) Always Pandas &nbsp; B) Always Excel &nbsp; C) Database (SQL) first &nbsp; D) Not possible<br><br>
+                <b>Answer:</b> C) Database engines are optimized for large relational work
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- ====================================================== -->
+        <section id="s12" style="margin-top:18px">
+          <h2>12) Optional: Embedded Python Editor</h2>
+          <p class="muted">
+            If you want, you can embed your Python editor here and run the examples interactively.
+          </p>
+          <div class="iframeBox">
+            <iframe
+              title="Programmer’s Picnic — Python Editor"
+              loading="lazy"
+              referrerpolicy="no-referrer"
+              src="https://www.learnwithchampak.live/2026/01/programmers-picnic-python-editor.html"></iframe>
+          </div>
+
+          <div class="note" style="margin-top:12px">
+            <b>Teacher tip (7 PM batch):</b>
+            <div class="muted">
+              Give students <span class="inline-code">shop.db</span> as a downloadable file, then ask them to complete Tasks 1–3 and paste screenshots of output.
+            </div>
+          </div>
+        </section>
+
+        <div class="footer">
+          Programmer’s Picnic • SQL in Pandas • Practice daily, ship weekly 🚀
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Copy buttons for code blocks
+    (function(){
+      function toast(msg){
+        const t = document.createElement("div");
+        t.textContent = msg;
+        t.style.position="fixed";
+        t.style.left="50%";
+        t.style.bottom="24px";
+        t.style.transform="translateX(-50%)";
+        t.style.padding="10px 12px";
+        t.style.borderRadius="12px";
+        t.style.background="rgba(11,18,32,.92)";
+        t.style.color="#fff";
+        t.style.border="1px solid rgba(255,255,255,.16)";
+        t.style.boxShadow="0 16px 30px rgba(31,41,55,.25)";
+        t.style.zIndex="999999";
+        t.style.fontWeight="800";
+        t.style.fontSize="12.5px";
+        document.body.appendChild(t);
+        setTimeout(()=>{ t.style.opacity="0"; t.style.transition="opacity .25s"; }, 900);
+        setTimeout(()=>{ t.remove(); }, 1200);
+      }
+
+      document.addEventListener("click", async (e)=>{
+        const btn = e.target.closest(".copy");
+        if(!btn) return;
+        const id = btn.getAttribute("data-copy");
+        const el = document.getElementById(id);
+        if(!el) return;
+
+        const text = el.innerText;
+        try{
+          await navigator.clipboard.writeText(text);
+          toast("Copied ✅");
+        }catch(err){
+          // Fallback
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position="fixed";
+          ta.style.left="-9999px";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+          toast("Copied ✅ (fallback)");
+        }
+      });
+
+      // Expand all details
+      const btnExpand = document.getElementById("btnExpand");
+      let expanded = false;
+      btnExpand.addEventListener("click", ()=>{
+        expanded = !expanded;
+        document.querySelectorAll("details").forEach(d => d.open = expanded);
+        btnExpand.textContent = expanded ? "Collapse all" : "Expand all";
+      });
+
+      // Print
+      document.getElementById("btnPrint").addEventListener("click", ()=> window.print());
+    })();
+  </script>
+</body>
+</html>

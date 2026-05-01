@@ -49,7 +49,9 @@
 
     return `
       <div class="pp-nav-item ${hasChildren ? "has-children" : ""}">
-        <a class="pp-nav-link ${placeholder ? "pp-placeholder-link" : ""}" href="${safeText(href)}">
+        <a class="pp-nav-link ${placeholder ? "pp-placeholder-link" : ""}" 
+           href="${safeText(href)}" 
+           target="champak">
           <span>${safeText(item.icon || "•")}</span>
           <span>${safeText(item.label)}</span>
           ${hasChildren ? '<b class="pp-caret">⌄</b>' : ""}
@@ -61,7 +63,9 @@
                   const childHref = child.href || "#";
                   const childPlaceholder = isPlaceholderLink(childHref);
                   return `
-                    <a class="pp-submenu-link ${childPlaceholder ? "pp-placeholder-link" : ""}" href="${safeText(childHref)}">
+                    <a class="pp-submenu-link ${childPlaceholder ? "pp-placeholder-link" : ""}" 
+                       href="${safeText(childHref)}" 
+                       target="champak">
                       <span class="pp-sub-icon">${safeText(child.icon || "•")}</span>
                       <span>${safeText(child.label)}</span>
                     </a>
@@ -81,7 +85,7 @@
     return `
       <div class="pp-nav-shell">
         <div class="pp-nav-inner">
-          <a class="pp-nav-brand" href="#top" aria-label="Go to top">
+          <a class="pp-nav-brand" href="#top">
             <span class="pp-nav-badge">${safeText(brand.badge || "AI")}</span>
             <span class="pp-nav-brand-text">
               <strong>${safeText(brand.title || "AI-ML Classes")}</strong>
@@ -126,7 +130,9 @@
     box.innerHTML = results.slice(0, 10).map((item) => {
       const placeholder = isPlaceholderLink(item.href);
       return `
-        <a class="pp-nav-result ${placeholder ? "pp-placeholder-link" : ""}" href="${safeText(item.href || "#")}">
+        <a class="pp-nav-result ${placeholder ? "pp-placeholder-link" : ""}" 
+           href="${safeText(item.href || "#")}" 
+           target="champak">
           <span>${safeText(item.icon || "🔎")}</span>
           <span>
             <strong>${safeText(item.label)}</strong>

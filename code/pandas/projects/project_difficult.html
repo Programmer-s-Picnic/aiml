@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Difficult Project — IoT Anomaly Monitor</title>
+  <meta name="theme-color" content="#d97706"/>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero" id="top">
+      <span class="badge">🍊 Programmer’s Picnic • Pandas Projects</span>
+      <h1>Difficult Project — IoT Anomaly Monitor</h1>
+      <p>MongoDB/JSONL → Pandas rolling anomaly detection → Matplotlib trend plot → export CSV/JSON/MongoDB/MySQL/PNG.</p>
+      <div class="meta">
+        <span class="pill">Pandas • Matplotlib</span>
+        <span class="pill">CSV • JSON • MySQL • MongoDB</span>
+        <span class="pill">Exports: CSV • JSON • MySQL • MongoDB • PNG</span>
+      </div>
+      <div class="btnrow" style="margin-top:12px">
+        <a class="btn secondary" href="index.html">← Back to index</a>
+        <a class="btn" href="#run">▶ Run Steps</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <nav class="toc" aria-label="Table of contents">
+        <h2>Contents</h2>
+        <input id="tocSearch" type="search" placeholder="Search in page…"/>
+        <ul id="tocList">
+          <li><a href="#goal" data-text="goal difficult">Goal<small>What you will build</small></a></li>
+<li><a href="#inputs" data-text="jsonl mongo">Data Entry<small>JSONL + MongoDB</small></a></li>
+<li><a href="#processing" data-text="rolling zscore">Processing<small>Rolling stats + z-score</small></a></li>
+<li><a href="#charts" data-text="matplotlib png">Charts<small>Matplotlib + PNG</small></a></li>
+<li><a href="#exports" data-text="export mongo mysql">Exports<small>CSV/JSON/Mongo/MySQL</small></a></li>
+<li><a href="#run" data-text="run">Run Steps<small>How to run</small></a></li>
+        </ul>
+        <div class="note" style="margin-top:10px">
+          Tip: Use <span class="kbd">Copy</span> / <span class="kbd">Download .py</span> on code blocks.
+        </div>
+      </nav>
+
+      <main>
+        
+<section id="goal">
+  <h2>Goal</h2>
+  <p>
+    Build an <b>IoT Anomaly Monitor</b> for time-series sensor readings.
+    Ingest readings from <b>MongoDB</b> (or JSONL first), compute rolling statistics, flag anomalies,
+    plot daily temperature trend, and export anomalies to <b>CSV + JSON + MongoDB + MySQL + PNG</b>.
+  </p>
+  <div class="note"><strong>Difficulty:</strong> Difficult • Time-series + rolling stats + multi-db exports.</div>
+</section>
+
+<section id="inputs">
+  <h2>Data entry sources</h2>
+  <p>Start with the included <span class="kbd">iot_readings.jsonl</span>, then switch to MongoDB input later.</p>
+
+  <div class="codeCard" data-filename="read_jsonl_iot.py">
+    <div class="codeTop">
+      <div class="label">📥 Read JSONL (one JSON per line)</div>
+      <div class="actions">
+        <button class="mini" data-copy>Copy</button>
+        <button class="mini" data-download>Download .py</button>
+      </div>
+    </div>
+    <pre><code>import json
+import pandas as pd
+
+rows = []
+with open("../data/iot_readings.jsonl","r",encoding="utf-8") as f:
+    for line in f:
+        if line.strip():
+            rows.append(json.loads(line))
+
+df = pd.DataFrame(rows)
+df["ts"] = pd.to_datetime(df["ts"], errors="coerce")
+print(df.head())
+print(df.info())</code></pre>
+  </div>
+
+  <div class="codeCard" data-filename="read_mongo_iot.py">
+    <div class="codeTop">
+      <div class="label">🍃 Read from MongoDB</div>
+      <div class="actions">
+        <button class="mini" data-copy>Copy</button>
+        <button class="mini" data-download>Download .py</button>
+      </div>
+    </div>
+    <pre><code>import pandas as pd
+from pymongo import MongoClient
+
+client = MongoClient("mongodb://localhost:27017")
+col = client["pp_iot"]["readings"]
+
+docs = list(col.find({}, {"_id": 0}))
+df = pd.DataFrame(docs)
+df["ts"] = pd.to_datetime(df["ts"], errors="coerce")
+
+print(df.head())</code></pre>
+  </div>
+</section>
+
+<section id="processing">
+  <h2>Pandas processing (rolling anomalies)</h2>
+  <p>Rolling mean/std per sensor. Flag anomaly if <span class="kbd">|z| &gt; 3</span>.</p>
+
+  <div class="codeCard" data-filename="rolling_anomaly.py">
+    <div class="codeTop">
+      <div class="label">🧠 Rolling z-score anomaly detection</div>
+      <div class="actions">
+        <button class="mini" data-copy>Copy</button>
+        <button class="mini" data-download>Download .py</button>
+      </div>
+    </div>
+    <pre><code>import pandas as pd
+
+df = pd.read_json("../data/iot_readings.jsonl", lines=True)
+df["ts"] = pd.to_datetime(df["ts"], errors="coerce")
+df = df.dropna(subset=["ts"]).sort_values(["sensor_id","ts"])
+
+window = 36  # 6 hours if data is every 10 mins
+grp = df.groupby("sensor_id", group_keys=False)
+
+df["temp_mean"] = grp["temp_c"].apply(lambda s: s.rolling(window, min_periods=12).mean())
+df["temp_std"]  = grp["temp_c"].apply(lambda s: s.rolling(window, min_periods=12).std())
+df["temp_z"]    = (df["temp_c"] - df["temp_mean"]) / df["temp_std"]
+
+df["is_anomaly"] = df["temp_z"].abs() > 3
+anoms = df[df["is_anomaly"]][["ts","sensor_id","site","temp_c","temp_z"]]
+print(anoms.head())</code></pre>
+  </div>
+</section>
+
+<section id="charts">
+  <h2>Charts (Matplotlib) → PNG</h2>
+  <p>Plot daily average temperature for one sensor and save PNG.</p>
+
+  <div class="codeCard" data-filename="chart_iot_daily.py">
+    <div class="codeTop">
+      <div class="label">📈 Daily temp trend</div>
+      <div class="actions">
+        <button class="mini" data-copy>Copy</button>
+        <button class="mini" data-download>Download .py</button>
+      </div>
+    </div>
+    <pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+import os
+
+os.makedirs("../output", exist_ok=True)
+
+df = pd.read_json("../data/iot_readings.jsonl", lines=True)
+df["ts"] = pd.to_datetime(df["ts"], errors="coerce")
+df = df.dropna(subset=["ts"])
+
+sensor = df["sensor_id"].value_counts().index[0]
+one = df[df["sensor_id"] == sensor].set_index("ts").sort_index()
+daily = one["temp_c"].resample("D").mean()
+
+plt.figure()
+plt.plot(daily.index, daily.values, marker="o")
+plt.title(f"Daily Avg Temp Trend — {sensor}")
+plt.xlabel("Date")
+plt.ylabel("Temp (°C)")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig("../output/iot_daily_temp_trend.png", dpi=200)
+plt.show()</code></pre>
+  </div>
+</section>
+
+<section id="exports">
+  <h2>Exports to CSV / JSON / MongoDB / MySQL</h2>
+
+  <div class="codeCard" data-filename="export_iot_files.py">
+    <div class="codeTop">
+      <div class="label">💾 Export anomalies to CSV + JSON</div>
+      <div class="actions">
+        <button class="mini" data-copy>Copy</button>
+        <button class="mini" data-download>Download .py</button>
+      </div>
+    </div>
+    <pre><code>import pandas as pd
+import os
+
+os.makedirs("../output", exist_ok=True)
+
+df = pd.read_json("../data/iot_readings.jsonl", lines=True)
+df["ts"] = pd.to_datetime(df["ts"], errors="coerce")
+df = df.dropna(subset=["ts"]).sort_values(["sensor_id","ts"])
+
+window = 36
+grp = df.groupby("sensor_id", group_keys=False)
+df["temp_mean"] = grp["temp_c"].apply(lambda s: s.rolling(window, min_periods=12).mean())
+df["temp_std"]  = grp["temp_c"].apply(lambda s: s.rolling(window, min_periods=12).std())
+df["temp_z"]    = (df["temp_c"] - df["temp_mean"]) / df["temp_std"]
+df["is_anomaly"] = df["temp_z"].abs() > 3
+
+anoms = df[df["is_anomaly"]][["ts","sensor_id","site","temp_c","temp_z"]]
+anoms.to_csv("../output/iot_anomalies.csv", index=False)
+anoms.to_json("../output/iot_anomalies.json", orient="records", indent=2)</code></pre>
+  </div>
+
+  <div class="codeCard" data-filename="export_iot_mongo.py">
+    <div class="codeTop">
+      <div class="label">🍃 Export to MongoDB</div>
+      <div class="actions">
+        <button class="mini" data-copy>Copy</button>
+        <button class="mini" data-download>Download .py</button>
+      </div>
+    </div>
+    <pre><code>import pandas as pd
+from pymongo import MongoClient
+
+df = pd.read_json("../output/iot_anomalies.json")
+
+client = MongoClient("mongodb://localhost:27017")
+col = client["pp_iot"]["anomalies"]
+
+col.delete_many({})
+if len(df) > 0:
+    col.insert_many(df.to_dict(orient="records"))
+
+print("Mongo export done ✅")</code></pre>
+  </div>
+
+  <div class="codeCard" data-filename="export_iot_mysql.py">
+    <div class="codeTop">
+      <div class="label">🗄 Export to MySQL</div>
+      <div class="actions">
+        <button class="mini" data-copy>Copy</button>
+        <button class="mini" data-download>Download .py</button>
+      </div>
+    </div>
+    <pre><code>import pandas as pd
+from sqlalchemy import create_engine
+
+MYSQL_URL = "mysql+pymysql://USER:PASSWORD@localhost:3306/DBNAME"
+
+df = pd.read_json("../output/iot_anomalies.json")
+engine = create_engine(MYSQL_URL, pool_pre_ping=True)
+
+df.to_sql("pp_iot_anomalies", con=engine, if_exists="replace", index=False)
+print("MySQL export done ✅")</code></pre>
+  </div>
+</section>
+
+<section id="run">
+  <h2>Run steps</h2>
+  <ol style="line-height:1.7;color:#253041;margin:8px 0 0;padding-left:18px">
+    <li>Install deps: <span class="kbd">pip install -r requirements.txt</span></li>
+    <li>Run JSONL version first: <span class="kbd">python difficult_iot_anomaly_monitor.py</span></li>
+    <li>Enable Mongo input/export by editing URLs inside script</li>
+    <li>Enable MySQL export similarly (edit MYSQL_URL)</li>
+    <li>Check <span class="kbd">output/</span> for CSV/JSON/PNG</li>
+  </ol>
+</section>
+
+        <div class="footer">Programmer’s Picnic • Build → Analyze → Visualize → Export • <a href="#top">Back to top ↑</a></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
