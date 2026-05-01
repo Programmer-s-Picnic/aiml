@@ -111,6 +111,8 @@
         font-weight: 800;
         cursor: pointer;
         box-shadow: 0 8px 18px rgba(217, 119, 6, 0.22);
+        text-decoration: none;
+        display: inline-block;
       }
 
       .btn.secondary {
@@ -320,6 +322,108 @@
           <div class="step">Transform</div>
           <div class="step">Model</div>
           <div class="step">Evaluate</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <span class="badge">Level 1 — Basic Python First</span>
+        <h2 id="speak25">Cleaning Data Using Basic Python Only</h2>
+
+        <p id="speak26">
+          Before using pandas, understand cleaning with normal Python lists and
+          dictionaries. This helps you understand what pandas does internally.
+        </p>
+
+        <h3>Messy Dataset</h3>
+
+        <pre><code>students = [
+    {"hours": 1, "score": 50},
+    {"hours": 2, "score": 55},
+    {"hours": 2, "score": 55},      # duplicate
+    {"hours": None, "score": 65},   # missing hours
+    {"hours": 4, "score": "bad"},   # bad score
+    {"hours": 5, "score": 70},
+]</code></pre>
+
+        <h3>Step 1: Remove Duplicates</h3>
+
+        <pre><code>unique_students = []
+seen = set()
+
+for row in students:
+    key = (row["hours"], row["score"])
+
+    if key not in seen:
+        unique_students.append(row)
+        seen.add(key)
+
+print(unique_students)</code></pre>
+
+        <h3>Step 2: Remove Missing and Bad Values</h3>
+
+        <pre><code>clean_students = []
+
+for row in unique_students:
+    hours = row["hours"]
+    score = row["score"]
+
+    if hours is None or score is None:
+        continue
+
+    if not isinstance(hours, (int, float)):
+        continue
+
+    if not isinstance(score, (int, float)):
+        continue
+
+    clean_students.append(row)
+
+print(clean_students)</code></pre>
+
+        <h3>Step 3: Separate x and y</h3>
+
+        <pre><code>x = []
+y = []
+
+for row in clean_students:
+    x.append(row["hours"])
+    y.append(row["score"])
+
+print("x values:", x)
+print("y values:", y)</code></pre>
+
+        <h3>Step 4: Basic Linear Regression Logic</h3>
+
+        <pre><code>n = len(x)
+
+mean_x = sum(x) / n
+mean_y = sum(y) / n
+
+numerator = 0
+denominator = 0
+
+for i in range(n):
+    numerator += (x[i] - mean_x) * (y[i] - mean_y)
+    denominator += (x[i] - mean_x) ** 2
+
+slope = numerator / denominator
+intercept = mean_y - slope * mean_x
+
+print("Slope:", slope)
+print("Intercept:", intercept)
+
+prediction = intercept + slope * 7
+print("Prediction for 7 hours:", prediction)</code></pre>
+
+        <p id="speak27">
+          This is the ground-zero idea. We removed duplicates, removed missing
+          values, removed bad values, separated input and output, and calculated
+          a regression line manually.
+        </p>
+
+        <div class="note" id="speak28">
+          Pandas makes this easier, but basic Python shows the real logic. First
+          learn the logic, then use pandas for speed and professional work.
         </div>
       </section>
 
@@ -619,6 +723,16 @@ for i, df in enumerate(datasets, start=1):
             "Inspect the dataset",
             "Run regression directly",
             "Convert everything to text",
+          ],
+          answer: 1,
+        },
+        {
+          q: "Why do we learn basic Python cleaning before pandas?",
+          options: [
+            "Because pandas is not useful",
+            "Because it helps us understand the real cleaning logic",
+            "Because Python lists are always faster",
+            "Because regression cannot work with pandas",
           ],
           answer: 1,
         },
