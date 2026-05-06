@@ -458,7 +458,8 @@
       <h1>Beginning NLP Lesson</h1>
       <p>
         NLP basics, tokenization, common words, synonyms, antonyms, text
-        similarity, vectors, cosine similarity, and a beginner Python example.
+        similarity, vectors, cosine similarity, and many real-life Python code
+        samples.
       </p>
       <p>By <strong>Champak Roy</strong></p>
     </header>
@@ -467,6 +468,7 @@
       <a href="#start">Start Lesson</a>
       <a href="#cosine">Cosine Similarity</a>
       <a href="#python">Python Example</a>
+      <a href="#code-samples">Code Samples</a>
       <a href="#editor">Practice Editor</a>
       <button onclick="toggleDark()">Dark / Light</button>
       <button onclick="window.print()">Print</button>
@@ -963,8 +965,540 @@ print(similarity)</code></pre>
         </div>
       </section>
 
+      <section id="code-samples">
+        <h2>10. More Real-Life Code Samples</h2>
+
+        <p>
+          These examples are designed like small real projects. Students can
+          copy one example at a time into the editor, run it, change the
+          sentences, and observe how the output changes.
+        </p>
+
+        <div class="note">
+          Teacher tip: Start with the pure Python examples first. Then move to
+          the scikit-learn examples after students understand tokens, important
+          words, and vectors.
+        </div>
+
+        <h3>Example 1: Simple Word Tokenizer Without Any Library</h3>
+        <p>
+          Real-life use: breaking a student message into words before checking
+          the topic.
+        </p>
+
+        <pre><code>message = "I want to learn Python and AI from Champak Roy"
+
+words = message.lower().split()
+
+print(words)</code></pre>
+
+        <h3>Example 2: Remove Common Words</h3>
+        <p>
+          Real-life use: keeping only the meaningful words from a search query.
+        </p>
+
+        <pre><code>sentence = "Champak Roy is teaching AI in the online class"
+
+common_words = ["is", "in", "the", "a", "an", "and", "to", "of"]
+
+words = sentence.lower().split()
+important_words = []
+
+for word in words:
+    if word not in common_words:
+        important_words.append(word)
+
+print("All words:", words)
+print("Important words:", important_words)</code></pre>
+
+        <h3>Example 3: Count Words in Student Feedback</h3>
+        <p>
+          Real-life use: finding repeated words in feedback after an AI-ML
+          class.
+        </p>
+
+        <pre><code>feedback = "The AI class was easy and the Python examples were easy to understand"
+
+words = feedback.lower().split()
+word_count = {}
+
+for word in words:
+    if word in word_count:
+        word_count[word] = word_count[word] + 1
+    else:
+        word_count[word] = 1
+
+print(word_count)</code></pre>
+
+        <h3>Example 4: Find Whether a Message Is About AI</h3>
+        <p>
+          Real-life use: detecting whether a visitor query belongs to an AI-ML
+          course page.
+        </p>
+
+        <pre><code>message = "Do you teach machine learning and neural networks?"
+
+ai_keywords = ["ai", "ml", "machine", "learning", "neural", "python", "data"]
+
+message_words = message.lower().split()
+
+found_keywords = []
+
+for word in message_words:
+    if word in ai_keywords:
+        found_keywords.append(word)
+
+if len(found_keywords) > 0:
+    print("This message is related to AI/ML")
+    print("Matched words:", found_keywords)
+else:
+    print("This message is not clearly related to AI/ML")</code></pre>
+
+        <h3>Example 5: Very Simple FAQ Matcher</h3>
+        <p>
+          Real-life use: matching a student question with the nearest prepared
+          answer.
+        </p>
+
+        <pre><code>faqs = {
+    "fees": "Please visit learnwithchampak.live for course fee details.",
+    "timing": "Classes are usually held according to the announced schedule.",
+    "python": "Yes, Python is used in our AI-ML classes.",
+    "certificate": "Certificate details will be shared by the teacher."
+}
+
+question = "Do you teach python in this course?"
+question = question.lower()
+
+answer_found = False
+
+for keyword in faqs:
+    if keyword in question:
+        print(faqs[keyword])
+        answer_found = True
+        break
+
+if answer_found == False:
+    print("Please contact Champak Roy for details.")</code></pre>
+
+        <h3>Example 6: Search Engine Style Matching</h3>
+        <p>
+          Real-life use: showing the most relevant lesson when a student
+          searches on the website.
+        </p>
+
+        <pre><code>lessons = [
+    "Python variables and arithmetic operators",
+    "Beginning NLP with text similarity",
+    "Machine learning with simple datasets",
+    "Google Search Console for Blogger",
+    "Sorting trace and algorithm detection"
+]
+
+search = "text similarity NLP"
+search_words = search.lower().split()
+
+scores = []
+
+for lesson in lessons:
+    lesson_words = lesson.lower().split()
+    score = 0
+
+    for word in search_words:
+        if word in lesson_words:
+            score = score + 1
+
+    scores.append([score, lesson])
+
+scores.sort(reverse=True)
+
+print("Best matching lessons:")
+for score, lesson in scores:
+    print(score, "-", lesson)</code></pre>
+
+        <h3>Example 7: Product Tag Detector</h3>
+        <p>
+          Real-life use: automatically tagging products in an affiliate or shop
+          page.
+        </p>
+
+        <pre><code>product_title = "Wireless keyboard and mouse combo for computer setup"
+
+categories = {
+    "computer": ["keyboard", "mouse", "monitor", "laptop", "computer"],
+    "mobile": ["phone", "charger", "cover", "earbuds"],
+    "study": ["book", "notebook", "pen", "desk"]
+}
+
+product_words = product_title.lower().split()
+
+for category, keywords in categories.items():
+    for word in product_words:
+        if word in keywords:
+            print("Category:", category)
+            break</code></pre>
+
+        <h3>Example 8: Sentiment-Like Feedback Checker</h3>
+        <p>
+          Real-life use: quickly checking whether class feedback is positive or
+          negative.
+        </p>
+
+        <pre><code>feedback = "The lesson was clear easy useful and practical"
+
+positive_words = ["good", "great", "clear", "easy", "useful", "practical"]
+negative_words = ["bad", "hard", "confusing", "boring", "difficult"]
+
+words = feedback.lower().split()
+positive_score = 0
+negative_score = 0
+
+for word in words:
+    if word in positive_words:
+        positive_score = positive_score + 1
+    if word in negative_words:
+        negative_score = negative_score + 1
+
+print("Positive score:", positive_score)
+print("Negative score:", negative_score)
+
+if positive_score > negative_score:
+    print("Feedback looks positive")
+elif negative_score > positive_score:
+    print("Feedback looks negative")
+else:
+    print("Feedback looks neutral")</code></pre>
+
+        <h3>Example 9: Find Similarity Using Common Words</h3>
+        <p>
+          Real-life use: comparing two lesson titles without any advanced
+          library.
+        </p>
+
+        <pre><code>text1 = "AI ML class by Champak Roy"
+text2 = "Machine learning course by Programmers Picnic"
+
+words1 = set(text1.lower().split())
+words2 = set(text2.lower().split())
+
+common = words1.intersection(words2)
+all_words = words1.union(words2)
+
+similarity = len(common) / len(all_words)
+
+print("Words in text 1:", words1)
+print("Words in text 2:", words2)
+print("Common words:", common)
+print("Simple similarity:", similarity)</code></pre>
+
+        <h3>Example 10: Improve Similarity Using Synonyms</h3>
+        <p>Real-life use: treating words like class and course as similar.</p>
+
+        <pre><code>text1 = "AI ML class"
+text2 = "machine learning course"
+
+synonyms = {
+    "ai": "artificial-intelligence",
+    "ml": "machine-learning",
+    "machine": "machine-learning",
+    "learning": "machine-learning",
+    "class": "course"
+}
+
+def normalize(text):
+    words = text.lower().split()
+    final_words = []
+
+    for word in words:
+        if word in synonyms:
+            final_words.append(synonyms[word])
+        else:
+            final_words.append(word)
+
+    return set(final_words)
+
+words1 = normalize(text1)
+words2 = normalize(text2)
+
+common = words1.intersection(words2)
+all_words = words1.union(words2)
+
+print("Normalized text 1:", words1)
+print("Normalized text 2:", words2)
+print("Common words:", common)
+print("Similarity:", len(common) / len(all_words))</code></pre>
+
+        <h3>Example 11: Cosine Similarity for Course Search</h3>
+        <p>
+          Real-life use: ranking course pages according to a student search
+          query.
+        </p>
+
+        <pre><code>from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+pages = [
+    "Python basics variables loops functions",
+    "NLP text similarity cosine similarity vectors",
+    "Machine learning model training dataset prediction",
+    "Blogger SEO Google Search Console sitemap"
+]
+
+query = "text similarity vectors"
+
+all_texts = [query] + pages
+
+vectorizer = CountVectorizer()
+vectors = vectorizer.fit_transform(all_texts)
+
+scores = cosine_similarity(vectors[0], vectors[1:])[0]
+
+for page, score in zip(pages, scores):
+    print(round(score, 2), "-", page)</code></pre>
+
+        <h3>Example 12: Compare Student Answers With Expected Answer</h3>
+        <p>
+          Real-life use: checking whether a written answer is close to the model
+          answer.
+        </p>
+
+        <pre><code>from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+expected_answer = "NLP helps computers understand human language"
+student_answer = "Natural language processing helps computer work with human text"
+
+texts = [expected_answer, student_answer]
+
+vectorizer = CountVectorizer()
+vectors = vectorizer.fit_transform(texts)
+
+score = cosine_similarity(vectors[0], vectors[1])[0][0]
+
+print("Similarity score:", round(score, 2))
+
+if score >= 0.5:
+    print("The answer is reasonably close")
+else:
+    print("The answer needs improvement")</code></pre>
+
+        <h3>Example 13: Mini Chatbot for Course Enquiry</h3>
+        <p>
+          Real-life use: a very simple chatbot for an AI-ML class landing page.
+        </p>
+
+        <pre><code>question = input("Ask your question: ").lower()
+
+if "python" in question:
+    print("Yes, Python is used in our AI-ML course.")
+elif "nlp" in question:
+    print("Yes, NLP is part of the AI-ML learning path.")
+elif "timing" in question or "time" in question:
+    print("Please check the latest class schedule on learnwithchampak.live.")
+elif "teacher" in question or "champak" in question:
+    print("The class is by Champak Roy.")
+else:
+    print("Please contact us for this question.")</code></pre>
+
+        <h3>Example 14: Detect Important Words From Blog Title</h3>
+        <p>
+          Real-life use: extracting useful words for SEO labels or search
+          description planning.
+        </p>
+
+        <pre><code>title = "Beginning NLP Lesson with Python and Cosine Similarity"
+
+common_words = ["with", "and", "the", "a", "an", "for", "to", "in"]
+
+words = title.lower().split()
+keywords = []
+
+for word in words:
+    if word not in common_words:
+        keywords.append(word)
+
+print("Suggested keywords:", keywords)</code></pre>
+
+        <h3>Example 15: Build a Tiny Vocabulary</h3>
+        <p>
+          Real-life use: preparing the list of all unique words before creating
+          vectors.
+        </p>
+
+        <pre><code>sentences = [
+    "Programmers Picnic teaches Python",
+    "Champak Roy teaches AI ML",
+    "Python helps in AI ML learning"
+]
+
+vocabulary = []
+
+for sentence in sentences:
+    words = sentence.lower().split()
+
+    for word in words:
+        if word not in vocabulary:
+            vocabulary.append(word)
+
+print("Vocabulary:")
+print(vocabulary)</code></pre>
+
+        <h3>Example 16: Convert Sentence Into a 0-1 Vector</h3>
+        <p>
+          Real-life use: showing beginners how text becomes numbers before using
+          machine learning.
+        </p>
+
+        <pre><code>vocabulary = ["python", "ai", "ml", "nlp", "class"]
+
+sentence = "python nlp class"
+words = sentence.lower().split()
+
+vector = []
+
+for vocab_word in vocabulary:
+    if vocab_word in words:
+        vector.append(1)
+    else:
+        vector.append(0)
+
+print("Vocabulary:", vocabulary)
+print("Sentence:", sentence)
+print("Vector:", vector)</code></pre>
+
+        <h3>Example 17: Create a Word Frequency Vector</h3>
+        <p>
+          Real-life use: counting how many times important words appear in a
+          paragraph.
+        </p>
+
+        <pre><code>vocabulary = ["python", "ai", "ml", "nlp", "class"]
+
+sentence = "python ai ai ml class class class"
+words = sentence.lower().split()
+
+vector = []
+
+for vocab_word in vocabulary:
+    count = words.count(vocab_word)
+    vector.append(count)
+
+print("Vocabulary:", vocabulary)
+print("Frequency vector:", vector)</code></pre>
+
+        <h3>Example 18: Mini Project — Find the Best Matching Course Page</h3>
+        <p>
+          Real-life use: a small search feature for learnwithchampak.live or
+          aiml.learnwithchampak.live.
+        </p>
+
+        <pre><code>from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+course_pages = {
+    "Python Basics": "variables operators loops functions beginner python",
+    "Beginning NLP": "tokenization vectors cosine similarity text similarity nlp",
+    "Machine Learning": "dataset training model prediction accuracy machine learning",
+    "SEO for Blogger": "google search console sitemap blogger seo indexing"
+}
+
+student_search = input("Search a lesson: ")
+
+texts = [student_search] + list(course_pages.values())
+
+vectorizer = CountVectorizer()
+vectors = vectorizer.fit_transform(texts)
+
+scores = cosine_similarity(vectors[0], vectors[1:])[0]
+
+page_names = list(course_pages.keys())
+
+best_index = scores.argmax()
+
+print("Best lesson:", page_names[best_index])
+print("Score:", round(scores[best_index], 2))</code></pre>
+
+        <h3>Example 19: Mini Project — Group Messages by Topic</h3>
+        <p>
+          Real-life use: sorting student messages into course enquiry, technical
+          doubt, or payment question.
+        </p>
+
+        <pre><code>messages = [
+    "What is the class timing?",
+    "I have an error in Python code",
+    "How much is the course fee?",
+    "Can I learn machine learning here?",
+    "My program is not printing output"
+]
+
+topics = {
+    "course enquiry": ["class", "timing", "learn", "course"],
+    "technical doubt": ["error", "code", "program", "printing", "output"],
+    "payment": ["fee", "payment", "price"]
+}
+
+for message in messages:
+    message_words = message.lower().split()
+    best_topic = "unknown"
+    best_score = 0
+
+    for topic, keywords in topics.items():
+        score = 0
+
+        for word in message_words:
+            if word in keywords:
+                score = score + 1
+
+        if score > best_score:
+            best_score = score
+            best_topic = topic
+
+    print(message, "-->", best_topic)</code></pre>
+
+        <h3>Example 20: Mini Project — Find Duplicate or Similar Titles</h3>
+        <p>
+          Real-life use: checking whether two blog titles are too similar before
+          publishing.
+        </p>
+
+        <pre><code>from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+old_titles = [
+    "Beginning NLP with Python",
+    "Python Arithmetic Operators for Beginners",
+    "Google Search Console Full Guide",
+    "Cosine Similarity in NLP"
+]
+
+new_title = "NLP basics with Python examples"
+
+texts = [new_title] + old_titles
+
+vectorizer = CountVectorizer()
+vectors = vectorizer.fit_transform(texts)
+
+scores = cosine_similarity(vectors[0], vectors[1:])[0]
+
+for title, score in zip(old_titles, scores):
+    print(round(score, 2), "-", title)
+
+highest_score = max(scores)
+
+if highest_score > 0.5:
+    print("Warning: This title may be similar to an existing title.")
+else:
+    print("This title looks different enough.")</code></pre>
+
+        <div class="success">
+          Classroom flow: Run Example 1 to 10 without installing anything. Then
+          run Example 11 onward after installing scikit-learn in the editor.
+        </div>
+      </section>
+
       <section id="editor">
-        <h2>10. Practice in Our Python Editor</h2>
+        <h2>11. Practice in Our Python Editor</h2>
 
         <p>
           Use the embedded Programmers Picnic Python editor below to run the NLP
@@ -1020,7 +1554,7 @@ print(similarity)</code></pre>
       </div>
 
       <section>
-        <h2>11. Complete Beginner Summary</h2>
+        <h2>12. Complete Beginner Summary</h2>
 
         <table>
           <tr>
@@ -1072,7 +1606,7 @@ print(similarity)</code></pre>
       </section>
 
       <section>
-        <h2>12. Practice Questions</h2>
+        <h2>13. Practice Questions</h2>
 
         <ol class="quiz">
           <li>What is the full form of NLP?</li>
@@ -1098,7 +1632,7 @@ print(similarity)</code></pre>
       </section>
 
       <section>
-        <h2>13. Mini Assignment</h2>
+        <h2>14. Mini Assignment</h2>
 
         <p>Create a tiny text similarity experiment.</p>
 
@@ -1166,6 +1700,6 @@ sentence3 = "The mango is yellow"</code></pre>
           console.log("AdSense loading skipped:", error);
         }
       });
-    </script>   `````````````````````````````````````````````````
+    </script>
   </body>
 </html>
