@@ -1,0 +1,1419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AI/ML Module Finder Wizard</title>
+     <!-- Programmers Picnic / Learn With Champak Scripts -->
+    <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+    <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+
+    <meta
+      name="description"
+      content="Beginner-friendly AI/ML Module Finder Wizard. Find the right AI, ML, NLP, Computer Vision, Generative AI, or Recommendation module for your task."
+    />
+
+    <!-- Google AdSense -->
+    <!-- Replace data-ad-slot values with your real AdSense ad unit slot IDs -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js?client=ca-pub-8321261883090494"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+
+    <!-- QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+      :root {
+        --bg: #fff8ec;
+        --card: #ffffff;
+        --text: #241407;
+        --muted: #6b5b4b;
+        --primary: #f59e0b;
+        --primary-dark: #b45309;
+        --soft: #ffedd5;
+        --soft-2: #fef3c7;
+        --border: #fed7aa;
+        --green: #15803d;
+        --red: #b91c1c;
+        --shadow: 0 18px 45px rgba(180, 83, 9, 0.15);
+      }
+
+      body.dark {
+        --bg: #1f1305;
+        --card: #2b1a08;
+        --text: #fff7ed;
+        --muted: #f5c99b;
+        --primary: #f59e0b;
+        --primary-dark: #fbbf24;
+        --soft: #3b260c;
+        --soft-2: #4a2f0e;
+        --border: #92400e;
+        --shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(245, 158, 11, 0.2),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(251, 191, 36, 0.18),
+            transparent 25%
+          ),
+          var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      .page {
+        width: min(1120px, 94%);
+        margin: auto;
+        padding: 28px 0 50px;
+      }
+
+      header {
+        background: linear-gradient(135deg, #f97316, #f59e0b, #fbbf24);
+        color: white;
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      header::after {
+        content: "AI";
+        position: absolute;
+        right: 24px;
+        bottom: -34px;
+        font-size: 130px;
+        font-weight: 900;
+        opacity: 0.13;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .brand {
+        font-weight: 800;
+        letter-spacing: 0.3px;
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        padding: 8px 14px;
+        border-radius: 999px;
+        backdrop-filter: blur(10px);
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 4rem);
+        line-height: 1;
+        max-width: 760px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .subtitle {
+        max-width: 730px;
+        margin: 16px 0 0;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        opacity: 0.96;
+        position: relative;
+        z-index: 1;
+      }
+
+      button {
+        border: 0;
+        cursor: pointer;
+        border-radius: 999px;
+        padding: 11px 16px;
+        font-weight: 800;
+        font-size: 0.95rem;
+        color: white;
+        background: var(--primary-dark);
+        transition:
+          transform 0.15s ease,
+          opacity 0.15s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        opacity: 0.94;
+      }
+
+      button.secondary {
+        color: var(--primary-dark);
+        background: white;
+      }
+
+      button.light {
+        color: var(--text);
+        background: var(--soft-2);
+        border: 1px solid var(--border);
+      }
+
+      .ad-box {
+        margin: 22px 0;
+        padding: 12px;
+        border: 1px dashed var(--border);
+        border-radius: 20px;
+        background: var(--card);
+        text-align: center;
+        box-shadow: var(--shadow);
+      }
+
+      .ad-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 800;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 22px;
+        margin-top: 24px;
+        align-items: start;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+
+      .card h2 {
+        margin: 0 0 8px;
+        font-size: 1.45rem;
+      }
+
+      .help {
+        color: var(--muted);
+        line-height: 1.6;
+        margin: 0 0 18px;
+      }
+
+      .steps {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+      }
+
+      .step-pill {
+        flex: 1;
+        min-width: 90px;
+        text-align: center;
+        padding: 9px 10px;
+        border-radius: 999px;
+        background: var(--soft);
+        color: var(--muted);
+        border: 1px solid var(--border);
+        font-weight: 800;
+        font-size: 0.85rem;
+      }
+
+      .step-pill.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      .question {
+        display: none;
+        animation: fade 0.25s ease;
+      }
+
+      .question.active {
+        display: block;
+      }
+
+      @keyframes fade {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .options {
+        display: grid;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .option {
+        border: 2px solid var(--border);
+        background: var(--soft);
+        border-radius: 20px;
+        padding: 15px;
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+        align-items: start;
+        transition: 0.18s ease;
+      }
+
+      .option:hover {
+        transform: translateY(-1px);
+        border-color: var(--primary);
+      }
+
+      .option input {
+        width: 19px;
+        height: 19px;
+        accent-color: var(--primary);
+        margin-top: 3px;
+      }
+
+      .option strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .option span {
+        color: var(--muted);
+        line-height: 1.45;
+        font-size: 0.94rem;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 22px;
+        flex-wrap: wrap;
+      }
+
+      .result-panel {
+        position: sticky;
+        top: 18px;
+      }
+
+      .score-box {
+        background: var(--soft);
+        border: 1px dashed var(--primary);
+        border-radius: 22px;
+        padding: 16px;
+        margin-top: 15px;
+      }
+
+      .module-list {
+        display: grid;
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .module {
+        border: 1px solid var(--border);
+        background: var(--soft);
+        border-radius: 22px;
+        padding: 16px;
+      }
+
+      .module-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: start;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--card);
+        color: var(--primary-dark);
+        border: 1px solid var(--border);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-weight: 800;
+        font-size: 0.8rem;
+      }
+
+      .module h3 {
+        margin: 0;
+        font-size: 1.12rem;
+      }
+
+      .module p {
+        color: var(--muted);
+        line-height: 1.55;
+        margin: 9px 0;
+      }
+
+      .module ul {
+        margin: 8px 0 0 18px;
+        padding: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .empty {
+        text-align: center;
+        padding: 30px 10px;
+        color: var(--muted);
+      }
+
+      .mini-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .mini-card {
+        background: var(--soft);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 14px;
+      }
+
+      .mini-card strong {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .mini-card span {
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.45;
+      }
+
+      .copy-box {
+        width: 100%;
+        min-height: 150px;
+        resize: vertical;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        padding: 14px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        line-height: 1.55;
+        margin-top: 14px;
+      }
+
+      .extra-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+
+      #qrcode {
+        display: inline-block;
+        padding: 12px;
+        border-radius: 16px;
+        background: white;
+        margin-top: 12px;
+      }
+
+      .footer-note {
+        text-align: center;
+        color: var(--muted);
+        margin-top: 24px;
+        font-size: 0.92rem;
+      }
+
+      .small-note {
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.5;
+        margin-top: 10px;
+      }
+
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .result-panel {
+          position: static;
+        }
+
+        .mini-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .header-actions {
+          width: 100%;
+        }
+
+        .header-actions button {
+          flex: 1;
+        }
+      }
+
+      @media print {
+        .header-actions,
+        .ad-box,
+        .nav,
+        .extra-actions {
+          display: none !important;
+        }
+
+        body {
+          background: white;
+        }
+
+        .card,
+        header {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="page">
+      <header>
+        <div class="topbar">
+          <div class="brand">
+            <i class="fa-solid fa-brain"></i>
+            Programmers Picnic AI-ML Classes
+          </div>
+
+          <div class="header-actions">
+            <button class="secondary" onclick="toggleDark()">
+              <i class="fa-solid fa-circle-half-stroke"></i>
+              Dark / Light
+            </button>
+
+            <button class="secondary" onclick="toggleFullScreen()">
+              <i class="fa-solid fa-expand"></i>
+              Fullscreen
+            </button>
+
+            <button class="secondary" onclick="shareWizard()">
+              <i class="fa-solid fa-share-nodes"></i>
+              Share
+            </button>
+          </div>
+        </div>
+
+        <h1>AI/ML Module Finder Wizard</h1>
+
+        <p class="subtitle">
+          Choose your task step by step. The wizard will suggest the right AI/ML
+          modules, tools, and a simple learning path for beginners.
+        </p>
+      </header>
+
+      <!-- Top Advertisement -->
+      <div class="ad-box">
+        <div class="ad-label">Advertisement</div>
+
+        <ins
+          class="adsbygoogle"
+          style="display: block"
+          data-ad-client="ca-pub-8321261883090494"
+          data-ad-slot="1234567890"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        >
+        </ins>
+
+        <script>
+          try {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {
+            console.warn("AdSense not loaded yet.");
+          }
+        </script>
+      </div>
+
+      <section class="layout">
+        <div class="card">
+          <div class="steps">
+            <div class="step-pill active" id="pill0">1. Task</div>
+            <div class="step-pill" id="pill1">2. Data</div>
+            <div class="step-pill" id="pill2">3. Output</div>
+            <div class="step-pill" id="pill3">4. Level</div>
+          </div>
+
+          <div class="question active" data-step="0">
+            <h2>What do you want to build?</h2>
+            <p class="help">
+              Pick the closest option. You do not need to know the technical
+              name.
+            </p>
+
+            <div class="options">
+              <label class="option">
+                <input type="radio" name="task" value="predict" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-chart-line"></i> Predict a
+                    value</strong
+                  >
+                  <span
+                    >Example: price prediction, marks prediction, sales
+                    prediction.</span
+                  >
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="task" value="classify" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-tags"></i> Classify into
+                    categories</strong
+                  >
+                  <span
+                    >Example: spam/not spam, disease/no disease,
+                    pass/fail.</span
+                  >
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="task" value="text" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-message"></i> Understand text</strong
+                  >
+                  <span
+                    >Example: chatbot, sentiment analysis, summary, question
+                    answering.</span
+                  >
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="task" value="image" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-image"></i> Understand images</strong
+                  >
+                  <span
+                    >Example: object detection, face detection, handwritten
+                    digit recognition.</span
+                  >
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="task" value="recommend" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-star"></i> Recommend
+                    something</strong
+                  >
+                  <span
+                    >Example: recommend products, videos, courses, books, or
+                    songs.</span
+                  >
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="task" value="automate" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-robot"></i> Automate work with
+                    AI</strong
+                  >
+                  <span
+                    >Example: AI assistant, content generator, email helper,
+                    report maker.</span
+                  >
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="question" data-step="1">
+            <h2>What type of data do you have?</h2>
+            <p class="help">This helps the wizard choose the correct module.</p>
+
+            <div class="options">
+              <label class="option">
+                <input type="radio" name="data" value="table" />
+                <div>
+                  <strong><i class="fa-solid fa-table"></i> Table data</strong>
+                  <span>Excel, CSV, database, rows and columns.</span>
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="data" value="text" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-align-left"></i> Text data</strong
+                  >
+                  <span>Reviews, comments, articles, messages, documents.</span>
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="data" value="image" />
+                <div>
+                  <strong><i class="fa-solid fa-camera"></i> Image data</strong>
+                  <span>Photos, screenshots, scanned pages, diagrams.</span>
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="data" value="time" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-clock"></i> Time-based data</strong
+                  >
+                  <span
+                    >Daily sales, stock prices, temperature, website
+                    traffic.</span
+                  >
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="data" value="mixed" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-layer-group"></i> Mixed data</strong
+                  >
+                  <span>Text + images + tables + files together.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="question" data-step="2">
+            <h2>What output do you need?</h2>
+            <p class="help">Choose what the final result should look like.</p>
+
+            <div class="options">
+              <label class="option">
+                <input type="radio" name="output" value="number" />
+                <div>
+                  <strong><i class="fa-solid fa-hashtag"></i> A number</strong>
+                  <span>Example: price, score, quantity, probability.</span>
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="output" value="label" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-tag"></i> A label or class</strong
+                  >
+                  <span>Example: spam, safe, risky, positive, negative.</span>
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="output" value="text" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-pen-nib"></i> Generated text</strong
+                  >
+                  <span
+                    >Example: answer, summary, explanation, email, lesson.</span
+                  >
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="output" value="ranking" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-ranking-star"></i> A ranking or
+                    recommendation</strong
+                  >
+                  <span
+                    >Example: top 5 products, best next lesson, similar
+                    items.</span
+                  >
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="output" value="visual" />
+                <div>
+                  <strong
+                    ><i class="fa-solid fa-eye"></i> A visual result</strong
+                  >
+                  <span>Example: detected object boxes, chart, image tag.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="question" data-step="3">
+            <h2>What is your current level?</h2>
+            <p class="help">The wizard will adjust the roadmap.</p>
+
+            <div class="options">
+              <label class="option">
+                <input type="radio" name="level" value="beginner" />
+                <div>
+                  <strong><i class="fa-solid fa-seedling"></i> Beginner</strong>
+                  <span>I know basic computer use or basic Python.</span>
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="level" value="intermediate" />
+                <div>
+                  <strong><i class="fa-solid fa-code"></i> Intermediate</strong>
+                  <span>I know Python, pandas, and some ML basics.</span>
+                </div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="level" value="advanced" />
+                <div>
+                  <strong><i class="fa-solid fa-rocket"></i> Advanced</strong>
+                  <span
+                    >I want model tuning, deployment, APIs, and production
+                    ideas.</span
+                  >
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="nav">
+            <button class="light" onclick="prevStep()">
+              <i class="fa-solid fa-arrow-left"></i>
+              Back
+            </button>
+
+            <div>
+              <button class="light" onclick="resetWizard()">
+                <i class="fa-solid fa-rotate-left"></i>
+                Reset
+              </button>
+
+              <button onclick="nextStep()">
+                Next
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <p class="small-note">
+            Tip: Start with one small project. Do not try all modules at once.
+          </p>
+        </div>
+
+        <aside class="card result-panel" id="pdfArea">
+          <h2>Your AI/ML Recommendation</h2>
+
+          <p class="help">
+            Results update after you answer the wizard questions.
+          </p>
+
+          <div id="resultArea" class="empty">Start by choosing your task.</div>
+
+          <div class="extra-actions">
+            <button onclick="downloadPDF()">
+              <i class="fa-solid fa-file-pdf"></i>
+              Download PDF
+            </button>
+
+            <button onclick="showQRCode()">
+              <i class="fa-solid fa-qrcode"></i>
+              QR Code
+            </button>
+
+            <button onclick="celebrate()">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              Celebrate
+            </button>
+          </div>
+
+          <div id="qrcode"></div>
+        </aside>
+      </section>
+
+      <!-- Middle Advertisement -->
+      <div class="ad-box">
+        <div class="ad-label">Advertisement</div>
+
+        <ins
+          class="adsbygoogle"
+          style="display: block"
+          data-ad-client="ca-pub-8321261883090494"
+          data-ad-slot="1234567890"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        >
+        </ins>
+
+        <script>
+          try {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {
+            console.warn("AdSense not loaded yet.");
+          }
+        </script>
+      </div>
+
+      <section class="card" style="margin-top: 24px">
+        <h2>Beginner Meaning of Common AI/ML Modules</h2>
+        <p class="help">Use this as a simple map while learning.</p>
+
+        <div class="mini-grid">
+          <div class="mini-card">
+            <strong><i class="fa-solid fa-brain"></i> Machine Learning</strong>
+            <span
+              >Teaches computers to learn patterns from data and make
+              predictions.</span
+            >
+          </div>
+
+          <div class="mini-card">
+            <strong
+              ><i class="fa-solid fa-network-wired"></i> Deep Learning</strong
+            >
+            <span
+              >Uses neural networks for images, speech, language, and complex
+              data.</span
+            >
+          </div>
+
+          <div class="mini-card">
+            <strong><i class="fa-solid fa-comments"></i> NLP</strong>
+            <span
+              >Natural Language Processing helps computers understand
+              text.</span
+            >
+          </div>
+
+          <div class="mini-card">
+            <strong
+              ><i class="fa-solid fa-camera-retro"></i> Computer Vision</strong
+            >
+            <span>Helps computers understand images and videos.</span>
+          </div>
+
+          <div class="mini-card">
+            <strong
+              ><i class="fa-solid fa-wand-magic-sparkles"></i> Generative
+              AI</strong
+            >
+            <span>Creates text, images, summaries, answers, or code.</span>
+          </div>
+
+          <div class="mini-card">
+            <strong
+              ><i class="fa-solid fa-cloud-arrow-up"></i> Deployment</strong
+            >
+            <span
+              >Turns your model into a website, API, or app that users can
+              use.</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <p class="footer-note">
+        learnwithchampak.live · aiml.learnwithchampak.live
+      </p>
+    </main>
+
+    <script>
+      let currentStep = 0;
+
+      const modules = {
+        predict: {
+          title: "Regression / Prediction Module",
+          tag: "Machine Learning",
+          icon: "fa-chart-line",
+          why: "Use this when your answer is a number.",
+          learn: [
+            "Python basics",
+            "NumPy and pandas",
+            "Data cleaning",
+            "Linear Regression",
+            "Decision Tree and Random Forest",
+            "Model evaluation using MAE, MSE, and R²",
+          ],
+          tools: "Python, pandas, scikit-learn, matplotlib",
+          project:
+            "House price prediction, marks prediction, or sales prediction.",
+        },
+
+        classify: {
+          title: "Classification Module",
+          tag: "Machine Learning",
+          icon: "fa-tags",
+          why: "Use this when your answer is a category or label.",
+          learn: [
+            "Data preparation",
+            "Train-test split",
+            "Logistic Regression",
+            "Decision Tree",
+            "Random Forest",
+            "Confusion matrix, accuracy, precision, recall",
+          ],
+          tools: "Python, pandas, scikit-learn",
+          project:
+            "Spam detection, pass/fail prediction, or disease/no disease classifier.",
+        },
+
+        text: {
+          title: "NLP Module",
+          tag: "Text AI",
+          icon: "fa-message",
+          why: "Use this when your input is text such as reviews, comments, questions, or documents.",
+          learn: [
+            "Text cleaning",
+            "Tokenization",
+            "Bag of Words and TF-IDF",
+            "Cosine similarity",
+            "Sentiment analysis",
+            "Text classification",
+            "Intro to LLMs and prompt design",
+          ],
+          tools: "Python, scikit-learn, NLTK, spaCy, transformers",
+          project:
+            "Review sentiment analyzer, FAQ bot, or document search tool.",
+        },
+
+        image: {
+          title: "Computer Vision Module",
+          tag: "Image AI",
+          icon: "fa-image",
+          why: "Use this when your input is an image, screenshot, scan, or video frame.",
+          learn: [
+            "Image basics",
+            "OpenCV basics",
+            "Image classification",
+            "Object detection",
+            "CNN basics",
+            "Transfer learning",
+          ],
+          tools: "Python, OpenCV, TensorFlow or PyTorch",
+          project:
+            "Handwritten digit recognizer, object detector, or image classifier.",
+        },
+
+        recommend: {
+          title: "Recommendation System Module",
+          tag: "Personalization",
+          icon: "fa-star",
+          why: "Use this when you want to suggest items to users.",
+          learn: [
+            "User-item data",
+            "Similarity",
+            "Cosine similarity",
+            "Content-based recommendation",
+            "Collaborative filtering basics",
+            "Ranking results",
+          ],
+          tools: "Python, pandas, scikit-learn",
+          project:
+            "Course recommender, product recommender, or video recommender.",
+        },
+
+        automate: {
+          title: "Generative AI / AI Assistant Module",
+          tag: "Automation",
+          icon: "fa-robot",
+          why: "Use this when you want AI to write, summarize, answer, or help users complete tasks.",
+          learn: [
+            "Prompt writing",
+            "LLM basics",
+            "Document question answering",
+            "RAG basics",
+            "AI agents basics",
+            "API integration",
+            "Simple web app deployment",
+          ],
+          tools:
+            "LLM API, JavaScript or Python, vector database, Flask/FastAPI",
+          project:
+            "AI lesson assistant, email helper, report maker, or document Q&A bot.",
+        },
+      };
+
+      function getValue(name) {
+        const checked = document.querySelector(`input[name="${name}"]:checked`);
+        return checked ? checked.value : "";
+      }
+
+      function setStep(step) {
+        currentStep = Math.max(0, Math.min(3, step));
+
+        document.querySelectorAll(".question").forEach((q) => {
+          q.classList.remove("active");
+        });
+
+        document
+          .querySelector(`.question[data-step="${currentStep}"]`)
+          .classList.add("active");
+
+        for (let i = 0; i <= 3; i++) {
+          document
+            .getElementById("pill" + i)
+            .classList.toggle("active", i === currentStep);
+        }
+
+        updateResult();
+      }
+
+      function nextStep() {
+        if (currentStep < 3) {
+          setStep(currentStep + 1);
+        } else {
+          updateResult(true);
+          celebrate();
+        }
+      }
+
+      function prevStep() {
+        setStep(currentStep - 1);
+      }
+
+      function resetWizard() {
+        document.querySelectorAll("input[type='radio']").forEach((input) => {
+          input.checked = false;
+        });
+
+        document.getElementById("qrcode").innerHTML = "";
+
+        setStep(0);
+
+        document.getElementById("resultArea").innerHTML = `
+        <div class="empty">Start by choosing your task.</div>
+      `;
+      }
+
+      function updateResult(finalView = false) {
+        const task = getValue("task");
+        const data = getValue("data");
+        const output = getValue("output");
+        const level = getValue("level");
+
+        const area = document.getElementById("resultArea");
+
+        if (!task) {
+          area.innerHTML = `<div class="empty">Start by choosing your task.</div>`;
+          return;
+        }
+
+        const selected = modules[task];
+
+        let extraModules = [];
+
+        if (data === "time") {
+          extraModules.push("Time Series Forecasting");
+        }
+
+        if (data === "mixed") {
+          extraModules.push("Multimodal AI");
+        }
+
+        if (output === "text") {
+          extraModules.push("Generative AI");
+        }
+
+        if (output === "ranking") {
+          extraModules.push("Ranking and Recommendation");
+        }
+
+        if (output === "visual") {
+          extraModules.push("Computer Vision Output Design");
+        }
+
+        let levelAdvice =
+          "Start slowly with small examples and build one mini project.";
+
+        if (level === "intermediate") {
+          levelAdvice =
+            "Use real datasets, compare models, and add proper evaluation.";
+        }
+
+        if (level === "advanced") {
+          levelAdvice =
+            "Add model tuning, API deployment, monitoring, and user feedback loops.";
+        }
+
+        const roadmap = createRoadmap(
+          selected,
+          data,
+          output,
+          level,
+          extraModules,
+        );
+
+        area.innerHTML = `
+        <div class="score-box">
+          <strong>Best starting module:</strong><br>
+          <i class="fa-solid ${selected.icon}"></i>
+          ${selected.title}
+        </div>
+
+        <div class="module-list">
+          <div class="module">
+            <div class="module-top">
+              <h3>
+                <i class="fa-solid ${selected.icon}"></i>
+                ${selected.title}
+              </h3>
+              <span class="tag">${selected.tag}</span>
+            </div>
+
+            <p><strong>Why:</strong> ${selected.why}</p>
+
+            <p><strong>Recommended tools:</strong> ${selected.tools}</p>
+
+            <p><strong>Mini project idea:</strong> ${selected.project}</p>
+
+            <p><strong>What to learn:</strong></p>
+            <ul>
+              ${selected.learn.map((item) => `<li>${item}</li>`).join("")}
+            </ul>
+          </div>
+
+          ${
+            extraModules.length
+              ? `
+              <div class="module">
+                <h3>
+                  <i class="fa-solid fa-plus"></i>
+                  Extra helpful modules
+                </h3>
+                <ul>
+                  ${extraModules.map((item) => `<li>${item}</li>`).join("")}
+                </ul>
+              </div>
+              `
+              : ""
+          }
+
+          <div class="module">
+            <h3>
+              <i class="fa-solid fa-route"></i>
+              Beginner-friendly path
+            </h3>
+
+            <p>${levelAdvice}</p>
+
+            <ul>
+              <li>Step 1: Understand the problem in simple words.</li>
+              <li>Step 2: Collect a small sample dataset.</li>
+              <li>Step 3: Clean the data.</li>
+              <li>Step 4: Train one simple model first.</li>
+              <li>Step 5: Check whether the result is useful.</li>
+              <li>Step 6: Improve slowly.</li>
+            </ul>
+          </div>
+        </div>
+
+        <textarea class="copy-box" readonly>${roadmap}</textarea>
+
+        <button style="margin-top: 12px;" onclick="copyRoadmap()">
+          <i class="fa-solid fa-copy"></i>
+          Copy Roadmap
+        </button>
+      `;
+
+        if (finalView) {
+          celebrate();
+        }
+      }
+
+      function createRoadmap(selected, data, output, level, extraModules) {
+        const dataText = data || "not selected";
+        const outputText = output || "not selected";
+        const levelText = level || "not selected";
+
+        return `AI/ML Module Recommendation
+
+Best Module:
+${selected.title}
+
+Module Type:
+${selected.tag}
+
+Data Type:
+${dataText}
+
+Expected Output:
+${outputText}
+
+Current Level:
+${levelText}
+
+Why this module:
+${selected.why}
+
+Tools:
+${selected.tools}
+
+Mini Project:
+${selected.project}
+
+Learning Topics:
+- ${selected.learn.join("\n- ")}
+
+Extra Helpful Modules:
+${extraModules.length ? "- " + extraModules.join("\n- ") : "None selected yet"}
+
+Beginner Path:
+1. Understand the problem.
+2. Collect a small dataset.
+3. Clean the data.
+4. Train one simple model.
+5. Test the result.
+6. Improve slowly.`;
+      }
+
+      function copyRoadmap() {
+        const box = document.querySelector(".copy-box");
+
+        if (!box) return;
+
+        box.select();
+        document.execCommand("copy");
+
+        alert("Roadmap copied!");
+      }
+
+      function toggleDark() {
+        document.body.classList.toggle("dark");
+      }
+
+      function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      }
+
+      function shareWizard() {
+        const text =
+          "AI/ML Module Finder Wizard - Find the right AI/ML module for your task.";
+
+        if (navigator.share) {
+          navigator.share({
+            title: "AI/ML Module Finder Wizard",
+            text,
+            url: location.href,
+          });
+        } else if (navigator.clipboard) {
+          navigator.clipboard.writeText(location.href);
+          alert("Page link copied!");
+        } else {
+          alert("Copy this page URL from the address bar.");
+        }
+      }
+
+      function downloadPDF() {
+        const area = document.getElementById("pdfArea");
+
+        const options = {
+          margin: 0.4,
+          filename: "ai-ml-module-roadmap.pdf",
+          image: {
+            type: "jpeg",
+            quality: 0.98,
+          },
+          html2canvas: {
+            scale: 2,
+          },
+          jsPDF: {
+            unit: "in",
+            format: "a4",
+            orientation: "portrait",
+          },
+        };
+
+        html2pdf().set(options).from(area).save();
+      }
+
+      function showQRCode() {
+        const box = document.getElementById("qrcode");
+        box.innerHTML = "";
+
+        new QRCode(box, {
+          text: location.href,
+          width: 150,
+          height: 150,
+        });
+      }
+
+      function celebrate() {
+        if (typeof confetti === "function") {
+          confetti({
+            particleCount: 120,
+            spread: 80,
+            origin: {
+              y: 0.65,
+            },
+          });
+        }
+      }
+
+      document.querySelectorAll("input[type='radio']").forEach((input) => {
+        input.addEventListener("change", updateResult);
+      });
+    </script>
+  </body>
+</html>
