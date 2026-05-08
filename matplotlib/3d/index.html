@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>3D in Matplotlib | Programmers Picnic AI-ML Classes</title>
+
+    <style>
+      :root {
+        --bg: #fff7ed;
+        --card: #ffffff;
+        --text: #241407;
+        --muted: #7c5b35;
+        --primary: #d97706;
+        --primary-dark: #92400e;
+        --accent: #f59e0b;
+        --line: #f2d6ad;
+        --code-bg: #1e1b16;
+        --code-text: #fff7ed;
+        --success: #15803d;
+        --danger: #b91c1c;
+        --shadow: 0 20px 50px rgba(146, 64, 14, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background:
+          radial-gradient(circle at top left, #fed7aa, transparent 32%),
+          radial-gradient(circle at top right, #fde68a, transparent 28%),
+          var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+      }
+
+      header {
+        padding: 32px 18px;
+        background: linear-gradient(135deg, #ffedd5, #fff7ed);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .wrap {
+        max-width: 1180px;
+        margin: auto;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .badge {
+        display: inline-block;
+        background: #fff;
+        color: var(--primary-dark);
+        border: 1px solid var(--line);
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 14px;
+        box-shadow: var(--shadow);
+      }
+
+      h1 {
+        font-size: clamp(34px, 5vw, 68px);
+        line-height: 1.05;
+        margin: 20px 0 14px;
+        color: var(--primary-dark);
+        letter-spacing: -1.5px;
+      }
+
+      .subtitle {
+        font-size: 20px;
+        max-width: 760px;
+        color: var(--muted);
+        margin-bottom: 20px;
+      }
+
+      .hero-card {
+        background: rgba(255, 255, 255, 0.82);
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card h2 {
+        margin-top: 0;
+        color: var(--primary-dark);
+      }
+
+      .quick-list {
+        padding-left: 20px;
+        margin-bottom: 0;
+      }
+
+      .btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      button,
+      .btn {
+        border: 0;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 18px;
+        border-radius: 14px;
+        font-weight: 800;
+        font-size: 15px;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      button:hover,
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(146, 64, 14, 0.18);
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .btn-light {
+        background: #fff;
+        color: var(--primary-dark);
+        border: 1px solid var(--line);
+      }
+
+      main {
+        padding: 28px 18px 60px;
+      }
+
+      .section {
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        padding: 26px;
+        margin: 24px 0;
+        box-shadow: var(--shadow);
+      }
+
+      .section h2 {
+        color: var(--primary-dark);
+        font-size: 32px;
+        margin-top: 0;
+        line-height: 1.2;
+      }
+
+      .section h3 {
+        color: var(--primary-dark);
+        margin-top: 26px;
+      }
+
+      .pill {
+        display: inline-block;
+        background: #ffedd5;
+        color: var(--primary-dark);
+        border: 1px solid var(--line);
+        padding: 5px 11px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 800;
+        margin: 4px 4px 4px 0;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .mini-card {
+        background: #fffaf3;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 18px;
+      }
+
+      .mini-card h3 {
+        margin-top: 0;
+      }
+
+      pre {
+        background: var(--code-bg);
+        color: var(--code-text);
+        overflow-x: auto;
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid #3f2d1b;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      code {
+        font-family: "Consolas", "Courier New", monospace;
+      }
+
+      .editor-shell {
+        background: #2b1d0e;
+        border-radius: 28px;
+        overflow: hidden;
+        border: 3px solid #92400e;
+        box-shadow: 0 26px 70px rgba(146, 64, 14, 0.35);
+        margin-top: 18px;
+      }
+
+      .editor-topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        background: linear-gradient(90deg, #92400e, #d97706);
+        color: #fff;
+        padding: 12px 16px;
+        font-weight: 800;
+      }
+
+      .editor-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .small-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+        border-radius: 10px;
+        background: #fff7ed;
+        color: #7c2d12;
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: 720px;
+        border: 0;
+        background: #fff;
+      }
+
+      .note {
+        background: #fff7ed;
+        border-left: 6px solid var(--primary);
+        padding: 16px 18px;
+        border-radius: 16px;
+        color: var(--muted);
+        margin: 18px 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border-radius: 18px;
+        margin-top: 18px;
+        background: #fff;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 12px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #ffedd5;
+        color: var(--primary-dark);
+      }
+
+      .footer {
+        text-align: center;
+        padding: 28px 16px;
+        color: var(--muted);
+        border-top: 1px solid var(--line);
+        background: #fff7ed;
+      }
+
+      .svg-box {
+        background: #fffaf3;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 16px;
+        margin-top: 16px;
+        overflow-x: auto;
+      }
+
+      .checklist label {
+        display: block;
+        background: #fffaf3;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 12px 14px;
+        margin: 10px 0;
+        cursor: pointer;
+      }
+
+      .checklist input {
+        transform: scale(1.2);
+        margin-right: 8px;
+      }
+
+      @media (max-width: 900px) {
+        .hero,
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        iframe {
+          height: 620px;
+        }
+
+        .section {
+          padding: 20px;
+        }
+      }
+
+      @media print {
+        .editor-shell,
+        .btn-row,
+        .editor-actions {
+          display: none;
+        }
+
+        body {
+          background: #fff;
+        }
+
+        .section,
+        .hero-card {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="wrap hero">
+        <div>
+          <span class="badge"
+            >Programmers Picnic AI-ML Classes by Champak Roy</span
+          >
+          <h1>3D in Matplotlib</h1>
+          <p class="subtitle">
+            A fascinating 0 to infinity lesson on creating 3D points, lines,
+            scatter plots, surfaces, wireframes, contours, vectors, animations,
+            and machine learning loss landscapes.
+          </p>
+
+          <div class="btn-row">
+            <a class="btn btn-primary" href="#editor"
+              >Open Embedded Python Editor</a
+            >
+            <a
+              class="btn btn-light"
+              href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+              target="_blank"
+            >
+              Open Editor in New Tab
+            </a>
+            <button class="btn btn-light" onclick="window.print()">
+              Print Lesson
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <h2>What students will learn</h2>
+          <ul class="quick-list">
+            <li>What x, y, and z mean in 3D plotting</li>
+            <li>How to create 3D axes in Matplotlib</li>
+            <li>
+              How to plot 3D scatter, line, surface, wireframe, and contour
+              plots
+            </li>
+            <li>How to use NumPy meshgrid</li>
+            <li>How to visualize ML loss surfaces</li>
+            <li>How to run every example inside the embedded Python editor</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="section">
+        <h2>0. The Big Idea</h2>
+
+        <p>In 2D plotting, every point has two values:</p>
+
+        <pre><code>x, y</code></pre>
+
+        <p>In 3D plotting, every point has three values:</p>
+
+        <pre><code>x, y, z</code></pre>
+
+        <div class="svg-box">
+          <svg
+            width="100%"
+            height="280"
+            viewBox="0 0 760 280"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="760" height="280" rx="22" fill="#fff7ed" />
+            <line
+              x1="370"
+              y1="210"
+              x2="610"
+              y2="210"
+              stroke="#d97706"
+              stroke-width="5"
+            />
+            <line
+              x1="370"
+              y1="210"
+              x2="220"
+              y2="250"
+              stroke="#d97706"
+              stroke-width="5"
+            />
+            <line
+              x1="370"
+              y1="210"
+              x2="370"
+              y2="45"
+              stroke="#d97706"
+              stroke-width="5"
+            />
+            <circle cx="370" cy="210" r="8" fill="#92400e" />
+
+            <text
+              x="620"
+              y="216"
+              font-size="26"
+              fill="#92400e"
+              font-weight="700"
+            >
+              X
+            </text>
+            <text
+              x="190"
+              y="260"
+              font-size="26"
+              fill="#92400e"
+              font-weight="700"
+            >
+              Y
+            </text>
+            <text
+              x="360"
+              y="36"
+              font-size="26"
+              fill="#92400e"
+              font-weight="700"
+            >
+              Z
+            </text>
+
+            <circle cx="500" cy="130" r="12" fill="#f59e0b" />
+            <line
+              x1="500"
+              y1="130"
+              x2="500"
+              y2="210"
+              stroke="#7c5b35"
+              stroke-dasharray="8 8"
+              stroke-width="3"
+            />
+            <text
+              x="520"
+              y="126"
+              font-size="20"
+              fill="#241407"
+              font-weight="700"
+            >
+              Point (x, y, z)
+            </text>
+
+            <text x="35" y="55" font-size="28" fill="#92400e" font-weight="800">
+              3D means one extra axis
+            </text>
+            <text x="35" y="90" font-size="18" fill="#7c5b35">
+              Matplotlib draws a 3D box where data has width, depth, and height.
+            </text>
+          </svg>
+        </div>
+
+        <div class="note">
+          The magic line is <strong>projection="3d"</strong>. Without this,
+          Matplotlib creates a normal 2D plot.
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>1. Setup</h2>
+
+        <p>Install Matplotlib and NumPy:</p>
+
+        <pre><code>pip install matplotlib numpy</code></pre>
+
+        <p>Basic 3D setup:</p>
+
+        <pre><code>import matplotlib.pyplot as plt
+
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+plt.show()</code></pre>
+
+        <span class="pill">fig = whole figure</span>
+        <span class="pill">ax = drawing area</span>
+        <span class="pill">projection="3d" = 3D mode</span>
+      </section>
+
+      <section class="section">
+        <h2>2. First 3D Point</h2>
+
+        <p>This program places one point at x = 1, y = 2, z = 3.</p>
+
+        <pre><code>import matplotlib.pyplot as plt
+
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.scatter(1, 2, 3)
+
+ax.set_title("My First 3D Point")
+ax.set_xlabel("X axis")
+ax.set_ylabel("Y axis")
+ax.set_zlabel("Z axis")
+
+plt.show()</code></pre>
+      </section>
+
+      <section class="section">
+        <h2>3. 3D Line Plot</h2>
+
+        <p>
+          A 3D line is created by connecting many 3D points. This example
+          creates a spiral.
+        </p>
+
+        <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+t = np.linspace(0, 10, 200)
+
+x = np.sin(t)
+y = np.cos(t)
+z = t
+
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.plot(x, y, z)
+
+ax.set_title("3D Spiral Line")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+plt.show()</code></pre>
+      </section>
+
+      <section class="section">
+        <h2>4. 3D Scatter Plot</h2>
+
+        <p>
+          A scatter plot shows individual points. This is useful for data
+          science.
+        </p>
+
+        <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(10)
+
+x = np.random.rand(100)
+y = np.random.rand(100)
+z = np.random.rand(100)
+
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.scatter(x, y, z)
+
+ax.set_title("3D Scatter Plot")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+plt.show()</code></pre>
+      </section>
+
+      <section class="section">
+        <h2>5. Surface Plot</h2>
+
+        <p>A surface plot is used when z depends on x and y.</p>
+
+        <pre><code>z = f(x, y)</code></pre>
+
+        <p>Example:</p>
+
+        <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+
+X, Y = np.meshgrid(x, y)
+
+Z = np.sin(np.sqrt(X**2 + Y**2))
+
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+surface = ax.plot_surface(X, Y, Z, cmap="viridis")
+
+fig.colorbar(surface, ax=ax, shrink=0.6, label="Z value")
+
+ax.set_title("3D Surface Plot")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+plt.show()</code></pre>
+
+        <div class="note">
+          Surface plots usually need <strong>np.meshgrid()</strong>. It creates
+          a grid of x and y values.
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>6. Wireframe Plot</h2>
+
+        <p>A wireframe is like the skeleton of a surface.</p>
+
+        <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-4, 4, 60)
+y = np.linspace(-4, 4, 60)
+
+X, Y = np.meshgrid(x, y)
+Z = np.cos(X) * np.sin(Y)
+
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_wireframe(X, Y, Z)
+
+ax.set_title("3D Wireframe Plot")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+plt.show()</code></pre>
+      </section>
+
+      <section class="section">
+        <h2>7. Machine Learning Loss Surface</h2>
+
+        <p>
+          This is one of the most powerful uses of 3D plotting. We can show how
+          loss changes when weight and bias change.
+        </p>
+
+        <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+w = np.linspace(-5, 5, 100)
+b = np.linspace(-5, 5, 100)
+
+W, B = np.meshgrid(w, b)
+
+Loss = (W - 2)**2 + (B - 1)**2
+
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_surface(W, B, Loss, cmap="viridis")
+
+ax.set_title("Machine Learning Loss Surface")
+ax.set_xlabel("Weight")
+ax.set_ylabel("Bias")
+ax.set_zlabel("Loss")
+
+plt.show()</code></pre>
+
+        <div class="note">
+          The lowest point of the surface is the best solution. This is the
+          visual idea behind gradient descent.
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>8. 3D Plot Types Cheat Sheet</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Plot</th>
+              <th>Command</th>
+              <th>Best Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>3D Point / Scatter</td>
+              <td><code>ax.scatter(x, y, z)</code></td>
+              <td>Raw 3D data points</td>
+            </tr>
+            <tr>
+              <td>3D Line</td>
+              <td><code>ax.plot(x, y, z)</code></td>
+              <td>Paths, spirals, curves</td>
+            </tr>
+            <tr>
+              <td>Surface</td>
+              <td><code>ax.plot_surface(X, Y, Z)</code></td>
+              <td>Mathematical surfaces</td>
+            </tr>
+            <tr>
+              <td>Wireframe</td>
+              <td><code>ax.plot_wireframe(X, Y, Z)</code></td>
+              <td>Surface structure</td>
+            </tr>
+            <tr>
+              <td>Contour</td>
+              <td><code>ax.contour3D(X, Y, Z)</code></td>
+              <td>Height levels</td>
+            </tr>
+            <tr>
+              <td>3D Bar</td>
+              <td><code>ax.bar3d(x, y, z, dx, dy, dz)</code></td>
+              <td>3D quantities</td>
+            </tr>
+            <tr>
+              <td>Vector</td>
+              <td><code>ax.quiver(x, y, z, u, v, w)</code></td>
+              <td>Direction and force</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section" id="editor">
+        <h2>9. Embedded Python Editor</h2>
+
+        <p>
+          Use this embedded editor to run the Matplotlib examples. Copy any code
+          from the lesson above and paste it inside the editor.
+        </p>
+
+        <div class="editor-shell">
+          <div class="editor-topbar">
+            <div>Python Starter Editor | Matplotlib 3D Practice</div>
+            <div class="editor-actions">
+              <button class="small-btn" onclick="reloadEditor()">Reload</button>
+              <button class="small-btn" onclick="openEditorNewTab()">
+                Open New Tab
+              </button>
+              <button class="small-btn" onclick="toggleEditorFullscreen()">
+                Fullscreen
+              </button>
+            </div>
+          </div>
+
+          <iframe
+            id="pythonEditor"
+            src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+            title="Programmers Picnic Python Editor"
+            allow="clipboard-read; clipboard-write; fullscreen"
+            loading="lazy"
+          >
+          </iframe>
+        </div>
+
+        <div class="note">
+          If the editor does not load inside the page because of browser or
+          server security settings, use the
+          <strong>Open New Tab</strong> button.
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>10. Student Practice Checklist</h2>
+
+        <div class="checklist">
+          <label><input type="checkbox" /> I created one 3D point.</label>
+          <label><input type="checkbox" /> I created a 3D line.</label>
+          <label><input type="checkbox" /> I created a 3D scatter plot.</label>
+          <label><input type="checkbox" /> I understood x, y, and z.</label>
+          <label><input type="checkbox" /> I used np.meshgrid().</label>
+          <label><input type="checkbox" /> I created a 3D surface.</label>
+          <label><input type="checkbox" /> I created a wireframe plot.</label>
+          <label
+            ><input type="checkbox" /> I created a machine learning loss
+            surface.</label
+          >
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>11. Final Challenge</h2>
+
+        <p>Build one complete Matplotlib 3D demo with a menu:</p>
+
+        <pre><code>1. 3D Scatter
+2. 3D Line
+3. 3D Surface
+4. Wireframe
+5. ML Loss Surface</code></pre>
+
+        <p>When the user enters a number, show the selected 3D plot.</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <strong>Programmers Picnic AI-ML Classes by Champak Roy</strong><br />
+      learnwithchampak.live | editor.learnwithchampak.live
+    </footer>
+
+    <script>
+      const EDITOR_URL =
+        "https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1";
+
+      function reloadEditor() {
+        const iframe = document.getElementById("pythonEditor");
+        iframe.src = EDITOR_URL + "&reload=" + Date.now();
+      }
+
+      function openEditorNewTab() {
+        window.open(EDITOR_URL, "_blank");
+      }
+
+      function toggleEditorFullscreen() {
+        const shell = document.querySelector(".editor-shell");
+
+        if (!document.fullscreenElement) {
+          shell.requestFullscreen().catch(function (error) {
+            alert("Fullscreen could not be started: " + error.message);
+          });
+        } else {
+          document.exitFullscreen();
+        }
+      }
+    </script>
+  </body>
+</html>
