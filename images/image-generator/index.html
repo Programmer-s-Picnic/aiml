@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Programmer’s Picnic — Free AI Image Generator</title>
+
+  <!-- Primary SEO -->
+  <meta name="description"
+    content="Programmer’s Picnic Free AI Image Generator by Champak Roy. Create educational images, AI-ML class visuals, NLP diagrams, YouTube thumbnails, and saffron themed learning banners." />
+
+  <meta name="keywords"
+    content="Programmer's Picnic, Champak Roy, AI image generator, free image generator, AI ML classes, NLP diagram, Python teaching image, learnwithchampak, saffron education theme" />
+
+  <meta name="author" content="Champak Roy" />
+
+  <!-- Open Graph / Facebook / WhatsApp / LinkedIn -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Programmer’s Picnic Free AI Image Generator" />
+  <meta property="og:description"
+    content="Create educational AI images, NLP diagrams, Python class visuals, YouTube thumbnails, and saffron themed banners for Programmer’s Picnic AI-ML Classes by Champak Roy." />
+  <meta property="og:site_name" content="Programmer’s Picnic" />
+  <meta property="og:locale" content="en_IN" />
+
+  <!-- Change this to the final published page URL -->
+  <meta property="og:url" content="https://editor.learnwithchampak.live/image%20generator/" />
+
+  <!-- Change this to your final preview image URL -->
+  <meta property="og:image" content="https://editor.learnwithchampak.live/image%20generator/sm.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Programmer’s Picnic Free AI Image Generator by Champak Roy" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Programmer’s Picnic Free AI Image Generator" />
+  <meta name="twitter:description"
+    content="Create educational AI images, NLP diagrams, Python class visuals, YouTube thumbnails, and saffron themed banners for Programmer’s Picnic AI-ML Classes by Champak Roy." />
+  <meta name="twitter:image" content="https://editor.learnwithchampak.live/image%20generator/sm.png" />
+  <meta name="twitter:image:alt" content="Programmer’s Picnic Free AI Image Generator by Champak Roy" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://editor.learnwithchampak.live/image%20generator/" />
+
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
+    crossorigin="anonymous"></script>
+
+  <!-- Programmers Picnic / Learn With Champak Scripts -->
+  <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+  <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+
+  <style>
+    :root {
+      --bg: #fffaf2;
+      --card: #ffffff;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --brand: #d97706;
+      --brand2: #f59e0b;
+      --soft: #fff7ed;
+      --border: #e5e7eb;
+      --shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+      --r: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    header {
+      padding: 18px 14px;
+      background: linear-gradient(90deg, #fff7ed, #fffbeb);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .title {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #92400e;
+      line-height: 1.25;
+    }
+
+    .tag {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+      font-size: 13px;
+      color: #7c2d12;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 920px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 12px 0 6px;
+      font-weight: 600;
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      outline: none;
+      font-size: 14px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    textarea {
+      min-height: 118px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    textarea:focus,
+    input:focus,
+    select:focus {
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.16);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 560px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 0;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 10px 24px rgba(217, 119, 6, 0.25);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn.secondary {
+      background: #fff;
+      color: #92400e;
+      border: 1px solid #fed7aa;
+      box-shadow: none;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    .out {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .imgbox {
+      border: 1px dashed #f1c58b;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fff7ed, #fff);
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 10px;
+      position: relative;
+    }
+
+    .imgbox img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+      animation: imageReveal 0.8s ease both;
+    }
+
+    @keyframes imageReveal {
+      from {
+        opacity: 0;
+        transform: scale(0.96);
+        filter: blur(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .status {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      min-height: 22px;
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .pillrow {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #7c2d12;
+      font-weight: 700;
+    }
+
+    .pill:hover {
+      background: #fff7ed;
+      border-color: #fed7aa;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 560px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .linkbtn {
+      display: none;
+      text-align: center;
+      text-decoration: none;
+      padding: 11px 14px;
+      border-radius: 16px;
+      border: 1px solid #fed7aa;
+      color: #92400e;
+      font-weight: 800;
+      background: #fff;
+    }
+
+    .preview-url {
+      word-break: break-all;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 10px;
+      border-radius: 14px;
+      font-size: 12px;
+      color: #78350f;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .drawing-stage {
+      width: min(360px, 92%);
+      min-height: 330px;
+      display: grid;
+      place-items: center;
+      gap: 10px;
+      text-align: center;
+      padding: 20px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at top, rgba(245, 158, 11, 0.22), transparent 45%),
+        linear-gradient(180deg, #fffaf2, #ffffff);
+      border: 1px solid #fed7aa;
+      box-shadow: 0 16px 36px rgba(146, 64, 14, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .drawing-stage::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: linear-gradient(120deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.35) 45%,
+          rgba(255, 255, 255, 0.75) 50%,
+          rgba(255, 255, 255, 0.35) 55%,
+          transparent 100%);
+      animation: shine 2.2s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes shine {
+      from {
+        transform: translateX(-40%) rotate(12deg);
+      }
+
+      to {
+        transform: translateX(40%) rotate(12deg);
+      }
+    }
+
+    .drawing-svg {
+      width: 260px;
+      max-width: 100%;
+      height: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .draw-line {
+      fill: none;
+      stroke: #92400e;
+      stroke-width: 7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 900;
+      stroke-dashoffset: 900;
+      animation: drawLine 3.8s ease-in-out infinite;
+    }
+
+    .draw-line.two {
+      stroke: #d97706;
+      animation-delay: 0.35s;
+    }
+
+    .draw-line.three {
+      stroke: #f59e0b;
+      animation-delay: 0.7s;
+    }
+
+    @keyframes drawLine {
+      0% {
+        stroke-dashoffset: 900;
+        opacity: 0.2;
+      }
+
+      35% {
+        opacity: 1;
+      }
+
+      70% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+      }
+
+      100% {
+        stroke-dashoffset: 0;
+        opacity: 0.35;
+      }
+    }
+
+    .pencil {
+      transform-origin: center;
+      animation: pencilMove 1.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes pencilMove {
+      from {
+        transform: translate(0, 0) rotate(-5deg);
+      }
+
+      to {
+        transform: translate(18px, -12px) rotate(6deg);
+      }
+    }
+
+    .drawing-title {
+      position: relative;
+      z-index: 1;
+      font-weight: 900;
+      color: #92400e;
+      font-size: 16px;
+    }
+
+    .drawing-sub {
+      position: relative;
+      z-index: 1;
+      color: #7c2d12;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .dots::after {
+      content: "";
+      animation: dots 1.2s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0% {
+        content: "";
+      }
+
+      25% {
+        content: ".";
+      }
+
+      50% {
+        content: "..";
+      }
+
+      75%,
+      100% {
+        content: "...";
+      }
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap title">
+      <h1>Programmer’s Picnic — Free AI Image Generator</h1>
+      <div class="tag">Champak Roy</div>
+    </div>
+  </header>
+
+  <main class="wrap grid">
+    <section class="card">
+      <label for="prompt">Prompt</label>
+      <textarea id="prompt"
+        placeholder="Example: Programmer’s Picnic AI-ML Classes by Champak Roy, friendly coding teacher explaining NLP with Python, saffron theme, educational illustration, clean composition"></textarea>
+
+      <div class="pillrow">
+        <button class="pill" type="button"
+          data-p="Programmer’s Picnic AI-ML Classes by Champak Roy, friendly Indian coding teacher explaining Python to beginners, soft saffron theme, educational illustration, clean board, laptop, code icons">
+          PP Teacher
+        </button>
+
+        <button class="pill" type="button"
+          data-p="Programmer’s Picnic Saturday Questions by Champak Roy, beginner DSA in Python, sorting trace and algorithm detection, classroom style, saffron theme, clean educational poster">
+          Saturday Questions
+        </button>
+
+        <button class="pill" type="button"
+          data-p="learnwithchampak.live and aiml.learnwithchampak.live, AI ML NLP Python learning banner, Champak Roy teaching students, warm saffron theme, modern clean layout">
+          Website Banner
+        </button>
+
+        <button class="pill" type="button"
+          data-p="Programmer’s Picnic by Champak Roy, NLP lesson visual, tokens vectors cosine similarity, beginner friendly diagram, saffron educational design, blank space for heading">
+          NLP Diagram
+        </button>
+
+        <button class="pill" type="button"
+          data-p="Programmer’s Picnic AI-ML Classes, YouTube thumbnail style, Champak Roy teaching Python AI ML, bold saffron highlights, laptop and code, high contrast">
+          YouTube Thumbnail
+        </button>
+      </div>
+
+      <label for="style">Style</label>
+      <select id="style">
+        <option value="">No extra style</option>
+        <option value="clean educational illustration, beginner friendly, soft saffron theme, neat composition">
+          Educational Illustration</option>
+        <option value="modern YouTube thumbnail, bold composition, vibrant saffron highlights, high contrast">YouTube
+          Thumbnail</option>
+        <option value="comic book style, expressive teacher, clean outlines, fun learning mood">Comic Style</option>
+        <option value="flat vector illustration, clean shapes, professional education design, saffron palette">Flat
+          Vector</option>
+        <option value="cinematic lighting, detailed, premium poster style, warm saffron glow">Cinematic Poster</option>
+      </select>
+
+      <label for="neg">Negative prompt</label>
+      <input id="neg"
+        value="blurry, low quality, watermark, distorted hands, extra fingers, unreadable text, wrong spelling, messy text" />
+
+      <div class="row">
+        <div>
+          <label for="w">Width</label>
+          <select id="w">
+            <option value="512">512</option>
+            <option value="768">768</option>
+            <option value="1024" selected>1024</option>
+            <option value="1280">1280</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="h">Height</label>
+          <select id="h">
+            <option value="512">512</option>
+            <option value="768">768</option>
+            <option value="1024" selected>1024</option>
+            <option value="720">720</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="visibility: hidden;" class="row">
+        <div>
+          <label for="seed">Seed</label>
+          <input id="seed" type="number" value="-1" />
+        </div>
+
+        <div style="visibility: hidden;">
+          <label for="model">Model</label>
+          <select id="model">
+            <option value="">Default</option>
+            <option value="flux">Flux</option>
+            <option value="turbo">Turbo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="enhance">Enhance prompt</label>
+          <select id="enhance">
+            <option value="true" selected>Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+
+        <div style="display: flex; align-items: end;">
+          <button class="btn" id="go" type="button">Generate Image</button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn secondary" id="clear" type="button">Clear</button>
+        <button class="btn secondary" id="copyUrl" type="button">Copy Image URL</button>
+      </div>
+
+      <div class="hint">
+        Tip: Use the same seed for similar style. Use <b>-1</b> for a random seed.
+        For 16:9 thumbnails, use width <b>1280</b> and height <b>720</b>.
+      </div>
+    </section>
+
+    <section class="card out">
+      <div class="status" id="status">Ready.</div>
+
+      <div class="imgbox" id="box">
+        <div class="small">Generated image will appear here.</div>
+      </div>
+
+      <a id="openImage" class="linkbtn" href="#" target="_blank" rel="noopener">Open image in new tab</a>
+
+      <div id="urlBox" class="preview-url"></div>
+    </section>
+  </main>
+
+  <footer>
+    Programmer’s Picnic AI-ML Classes by Champak Roy • learnwithchampak.live • aiml.learnwithchampak.live
+  </footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    let currentImageUrl = "";
+    let drawingTimer = null;
+
+    function randomSeed() {
+      return Math.floor(Math.random() * 999999999);
+    }
+
+    function cleanText(text) {
+      return String(text || "").replace(/\s+/g, " ").trim();
+    }
+
+    function showDrawingAnimation() {
+      $("box").innerHTML = `
+        <div class="drawing-stage">
+          <svg class="drawing-svg" viewBox="0 0 420 300" role="img" aria-label="Drawing animation">
+            <path class="draw-line" d="M65 210 C95 145, 145 108, 205 112 C270 116, 320 160, 344 222" />
+            <path class="draw-line two" d="M118 208 C130 170, 160 150, 200 150 C242 150, 278 174, 294 210" />
+            <path class="draw-line three" d="M145 238 C180 258, 238 258, 275 238" />
+
+            <circle cx="148" cy="142" r="12" fill="#92400e" opacity="0.9" />
+            <circle cx="270" cy="142" r="12" fill="#92400e" opacity="0.9" />
+
+            <path d="M135 86 C170 48, 248 48, 288 88" fill="none" stroke="#d97706" stroke-width="14" stroke-linecap="round" />
+
+            <g class="pencil">
+              <rect x="275" y="55" width="90" height="18" rx="6" fill="#f59e0b" transform="rotate(28 275 55)" />
+              <polygon points="356,105 386,115 361,132" fill="#92400e" />
+              <polygon points="383,113 395,117 386,124" fill="#1f2937" />
+            </g>
+
+            <rect x="92" y="235" width="236" height="24" rx="12" fill="#fff7ed" stroke="#fed7aa" />
+            <text x="210" y="252" text-anchor="middle" font-size="14" font-weight="800" fill="#92400e">
+              Programmer's Picnic
+            </text>
+          </svg>
+
+          <div class="drawing-title">
+            Programmer's Picnic Champak Roy drawing<span class="dots"></span>
+          </div>
+
+          <div class="drawing-sub">
+            Your image is being generated. The drawing will appear here when ready.
+          </div>
+        </div>
+      `;
+    }
+
+    function startDrawingStatus() {
+      const messages = [
+        "Sketching idea...",
+        "Drawing Programmer's Picnic composition...",
+        "Adding Champak Roy teaching mood...",
+        "Adding saffron educational theme...",
+        "Finishing the image..."
+      ];
+
+      let index = 0;
+      $("status").textContent = messages[index];
+
+      clearInterval(drawingTimer);
+
+      drawingTimer = setInterval(() => {
+        index = (index + 1) % messages.length;
+        $("status").textContent = messages[index];
+      }, 1400);
+    }
+
+    function stopDrawingStatus() {
+      clearInterval(drawingTimer);
+      drawingTimer = null;
+    }
+
+    document.querySelectorAll(".pill").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const add = btn.getAttribute("data-p");
+        const p = $("prompt").value.trim();
+        $("prompt").value = p ? p + ", " + add : add;
+        $("prompt").focus();
+      });
+    });
+
+    function buildImageUrl() {
+      const prompt = cleanText($("prompt").value);
+      const style = cleanText($("style").value);
+      const negative = cleanText($("neg").value);
+
+      let finalPrompt = prompt;
+
+      if (style) {
+        finalPrompt += ", " + style;
+      }
+
+      finalPrompt += ", brand mood: Programmer's Picnic AI-ML Classes by Champak Roy, saffron education theme, beginner friendly learning visual";
+
+      if (negative) {
+        finalPrompt += ", avoid: " + negative;
+      }
+
+      const width = $("w").value;
+      const height = $("h").value;
+      let seed = Number($("seed").value);
+
+      if (!seed || seed === -1) {
+        seed = randomSeed();
+      }
+
+      const model = $("model").value;
+      const enhance = $("enhance").value;
+
+      let url = "https://image.pollinations.ai/prompt/" + encodeURIComponent(finalPrompt);
+      url += "?width=" + encodeURIComponent(width);
+      url += "&height=" + encodeURIComponent(height);
+      url += "&seed=" + encodeURIComponent(seed);
+      url += "&nologo=true";
+      url += "&enhance=" + encodeURIComponent(enhance);
+
+      if (model) {
+        url += "&model=" + encodeURIComponent(model);
+      }
+
+      return {
+        url,
+        seed
+      };
+    }
+
+    function generate() {
+      const prompt = cleanText($("prompt").value);
+
+      if (!prompt) {
+        $("status").textContent = "Please enter a prompt.";
+        return;
+      }
+
+      $("go").disabled = true;
+      $("openImage").style.display = "none";
+      $("urlBox").style.display = "none";
+
+      showDrawingAnimation();
+      startDrawingStatus();
+
+      const result = buildImageUrl();
+      currentImageUrl = result.url;
+
+      const img = new Image();
+      img.alt = "Generated AI image for Programmer's Picnic by Champak Roy";
+
+      img.onload = () => {
+        stopDrawingStatus();
+
+        $("box").innerHTML = "";
+        $("box").appendChild(img);
+
+        $("openImage").href = currentImageUrl;
+        $("openImage").style.display = "block";
+
+        $("urlBox").textContent = currentImageUrl;
+        $("urlBox").style.display = "block";
+
+        $("status").textContent = "Done. Seed used: " + result.seed;
+        $("go").disabled = false;
+      };
+
+      img.onerror = () => {
+        stopDrawingStatus();
+
+        $("status").textContent = "Failed. Try again, simplify the prompt, or change the model.";
+        $("box").innerHTML = "<div class='small'>Image could not be loaded. The free API may be busy.</div>";
+        $("go").disabled = false;
+      };
+
+      img.src = currentImageUrl;
+    }
+
+    function clearAll() {
+      stopDrawingStatus();
+
+      $("prompt").value = "";
+      $("status").textContent = "Ready.";
+      $("box").innerHTML = "<div class='small'>Generated image will appear here.</div>";
+      $("openImage").style.display = "none";
+      $("urlBox").style.display = "none";
+      currentImageUrl = "";
+    }
+
+    async function copyImageUrl() {
+      if (!currentImageUrl) {
+        $("status").textContent = "No image URL to copy yet.";
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(currentImageUrl);
+        $("status").textContent = "Image URL copied.";
+      } catch (err) {
+        $("status").textContent = "Could not copy automatically. Select and copy the URL manually.";
+        $("urlBox").style.display = "block";
+      }
+    }
+
+    $("go").addEventListener("click", generate);
+    $("clear").addEventListener("click", clearAll);
+    $("copyUrl").addEventListener("click", copyImageUrl);
+
+    $("prompt").addEventListener("keydown", (e) => {
+      if (e.ctrlKey && e.key === "Enter") {
+        generate();
+      }
+    });
+  </script>
+</body>
+
+</html>
