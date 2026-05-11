@@ -1,0 +1,1372 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>3D Drawing in Matplotlib | Line, Diagonal, Plane, Cube, Cone, Sphere, Emoji</title>
+
+  <style>
+    :root {
+      --bg: #fff7ed;
+      --card: #ffffff;
+      --text: #241407;
+      --muted: #7c5b35;
+      --primary: #d97706;
+      --primary-dark: #92400e;
+      --accent: #f59e0b;
+      --line: #f2d6ad;
+      --code-bg: #1e1b16;
+      --code-text: #fff7ed;
+      --shadow: 0 20px 50px rgba(146, 64, 14, 0.13);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #fed7aa, transparent 30%),
+        radial-gradient(circle at top right, #fde68a, transparent 28%),
+        linear-gradient(180deg, #fff7ed, #fffbeb);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: auto;
+      padding: 0 18px;
+    }
+
+    header {
+      padding: 34px 0 28px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, #ffedd5, #fff7ed);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #fff;
+      color: var(--primary-dark);
+      border: 1px solid var(--line);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 66px);
+      line-height: 1.04;
+      margin: 20px 0 14px;
+      color: var(--primary-dark);
+      letter-spacing: -1.4px;
+    }
+
+    .subtitle {
+      font-size: 20px;
+      color: var(--muted);
+      max-width: 780px;
+      margin: 0 0 22px;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card h2 {
+      margin-top: 0;
+      color: var(--primary-dark);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    button,
+    .btn {
+      border: 0;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-weight: 850;
+      font-size: 15px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    button:hover,
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(146, 64, 14, 0.18);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-light {
+      background: #fff;
+      color: var(--primary-dark);
+      border: 1px solid var(--line);
+    }
+
+    main {
+      padding: 30px 0 60px;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 26px;
+      margin: 24px 0;
+      box-shadow: var(--shadow);
+    }
+
+    .section h2 {
+      color: var(--primary-dark);
+      font-size: 32px;
+      margin: 0 0 14px;
+      line-height: 1.2;
+    }
+
+    .section h3 {
+      color: var(--primary-dark);
+      margin-top: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .mini-card {
+      background: #fffaf3;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 8px;
+      color: var(--primary-dark);
+    }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      overflow-x: auto;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid #3f2d1b;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    code {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    .note {
+      background: #fff7ed;
+      border-left: 6px solid var(--primary);
+      padding: 16px 18px;
+      border-radius: 16px;
+      color: var(--muted);
+      margin: 18px 0;
+    }
+
+    .svg-box {
+      background: #fffaf3;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 16px;
+      margin-top: 16px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 18px;
+      margin-top: 18px;
+      background: #fff;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #ffedd5;
+      color: var(--primary-dark);
+    }
+
+    .editor-shell {
+      background: #2b1d0e;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 3px solid #92400e;
+      box-shadow: 0 26px 70px rgba(146, 64, 14, 0.35);
+      margin-top: 18px;
+    }
+
+    .editor-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(90deg, #92400e, #d97706);
+      color: #fff;
+      padding: 12px 16px;
+      font-weight: 850;
+    }
+
+    .editor-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .small-btn {
+      padding: 8px 12px;
+      font-size: 13px;
+      border-radius: 10px;
+      background: #fff7ed;
+      color: #7c2d12;
+      border: 0;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 720px;
+      border: 0;
+      background: #fff;
+    }
+
+    .checklist label {
+      display: block;
+      background: #fffaf3;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin: 10px 0;
+      cursor: pointer;
+    }
+
+    .checklist input {
+      transform: scale(1.2);
+      margin-right: 8px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 28px 16px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      background: #fff7ed;
+    }
+
+    @media (max-width: 900px) {
+
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      iframe {
+        height: 620px;
+      }
+
+      .section {
+        padding: 20px;
+      }
+
+      .editor-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media print {
+
+      .editor-shell,
+      .btn-row,
+      .editor-actions {
+        display: none;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      .section,
+      .hero-card {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap hero">
+      <div>
+        <span class="badge">Programmers Picnic AI-ML Classes by Champak Roy</span>
+
+        <h1>3D Drawing in Matplotlib</h1>
+
+        <p class="subtitle">
+          Draw a line, diagonal line, diagonal on a plane, plane, cube, cone, sphere,
+          and a fun emoji-style face using Python, NumPy, and Matplotlib 3D.
+        </p>
+
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#editor">Open Embedded Python Editor</a>
+
+          <a class="btn btn-light" href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+            target="_blank">
+            Open Editor in New Tab
+          </a>
+
+          <button class="btn btn-light" onclick="window.print()">Print Lesson</button>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <h2>Today we draw</h2>
+        <ul>
+          <li>A 3D line</li>
+          <li>A diagonal line</li>
+          <li>A diagonal across a plane</li>
+          <li>A flat plane</li>
+          <li>A cube using edges</li>
+          <li>A cone using a surface</li>
+          <li>A sphere using parametric equations</li>
+          <li>A simple 3D emoji face</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section class="section">
+      <h2>0. Visual Goal</h2>
+
+      <p>
+        In the previous lesson, we learned how to create basic 3D plots.
+        In this lesson, we start drawing recognizable 3D objects.
+      </p>
+
+      <div class="grid">
+        <div class="mini-card">
+          <h3>Line</h3>
+          <p>A path joining points in 3D space.</p>
+        </div>
+
+        <div class="mini-card">
+          <h3>Diagonal</h3>
+          <p>A line that moves through multiple axes together.</p>
+        </div>
+
+        <div class="mini-card">
+          <h3>Plane</h3>
+          <p>A flat sheet in 3D space.</p>
+        </div>
+
+        <div class="mini-card">
+          <h3>Cube</h3>
+          <p>A box made from 8 corners and 12 edges.</p>
+        </div>
+
+        <div class="mini-card">
+          <h3>Cone</h3>
+          <p>A circular base rising to one top point.</p>
+        </div>
+
+        <div class="mini-card">
+          <h3>Sphere and Emoji</h3>
+          <p>A ball, then a face made by combining shapes.</p>
+        </div>
+      </div>
+
+      <div class="svg-box">
+        <svg width="100%" height="320" viewBox="0 0 950 320" xmlns="http://www.w3.org/2000/svg">
+          <rect width="950" height="320" rx="24" fill="#fff7ed" />
+
+          <line x1="60" y1="245" x2="190" y2="115" stroke="#d97706" stroke-width="8" stroke-linecap="round" />
+          <text x="82" y="286" font-size="22" fill="#92400e" font-weight="800">Line</text>
+
+          <line x1="250" y1="250" x2="390" y2="90" stroke="#92400e" stroke-width="8" stroke-linecap="round" />
+          <circle cx="250" cy="250" r="9" fill="#d97706" />
+          <circle cx="390" cy="90" r="9" fill="#d97706" />
+          <text x="280" y="286" font-size="22" fill="#92400e" font-weight="800">Diagonal</text>
+
+          <polygon points="455,225 570,195 640,245 520,275" fill="#fed7aa" stroke="#92400e" stroke-width="4" />
+          <line x1="455" y1="225" x2="640" y2="245" stroke="#d97706" stroke-width="5" stroke-linecap="round" />
+          <text x="520" y="302" font-size="22" fill="#92400e" font-weight="800">Plane</text>
+
+          <rect x="690" y="135" width="85" height="85" fill="none" stroke="#d97706" stroke-width="5" />
+          <rect x="725" y="100" width="85" height="85" fill="none" stroke="#92400e" stroke-width="5" />
+          <line x1="690" y1="135" x2="725" y2="100" stroke="#92400e" stroke-width="4" />
+          <line x1="775" y1="135" x2="810" y2="100" stroke="#92400e" stroke-width="4" />
+          <line x1="775" y1="220" x2="810" y2="185" stroke="#92400e" stroke-width="4" />
+          <line x1="690" y1="220" x2="725" y2="185" stroke="#92400e" stroke-width="4" />
+          <text x="720" y="270" font-size="22" fill="#92400e" font-weight="800">Cube</text>
+
+          <ellipse cx="860" cy="225" rx="48" ry="18" fill="#fed7aa" stroke="#92400e" stroke-width="4" />
+          <line x1="812" y1="225" x2="860" y2="115" stroke="#d97706" stroke-width="5" />
+          <line x1="908" y1="225" x2="860" y2="115" stroke="#d97706" stroke-width="5" />
+          <circle cx="860" cy="115" r="6" fill="#92400e" />
+          <text x="832" y="270" font-size="22" fill="#92400e" font-weight="800">Cone</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>1. Common Setup for 3D Drawing</h2>
+
+      <p>
+        Most programs in this lesson begin with the same setup.
+      </p>
+
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+fig = plt.figure(figsize=(8, 7))
+ax = fig.add_subplot(projection="3d")
+
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+plt.show()</code></pre>
+
+      <div class="note">
+        In Matplotlib 3D, we do not draw objects directly like a game engine.
+        We build shapes from points, lines, surfaces, and mathematical equations.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>2. Draw a 3D Line</h2>
+
+      <p>
+        A line is a collection of points connected together.
+      </p>
+
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+t = np.linspace(0, 10, 100)
+
+x = t
+y = t
+z = t
+
+fig = plt.figure(figsize=(8, 7))
+ax = fig.add_subplot(projection="3d")
+
+ax.plot(x, y, z, linewidth=3)
+
+ax.set_title("3D Line")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+plt.show()</code></pre>
+
+      <h3>Try this</h3>
+
+      <pre><code>x = t
+y = t**2
+z = t**3</code></pre>
+
+      <p>
+        This creates a curved path instead of a straight line.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>2A. Draw a Diagonal Line</h2>
+
+      <p>
+        A diagonal line moves in more than one direction at the same time.
+        In 3D, a diagonal can move along X, Y, and Z together.
+      </p>
+
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+t = np.linspace(0, 5, 100)
+
+x = t
+y = t
+z = t
+
+fig = plt.figure(figsize=(8, 7))
+ax = fig.add_subplot(projection="3d")
+
+ax.plot(x, y, z, linewidth=4)
+
+ax.scatter([0, 5], [0, 5], [0, 5], s=80)
+
+ax.text(0, 0, 0, "Start", fontsize=12)
+ax.text(5, 5, 5, "End", fontsize=12)
+
+ax.set_title("3D Diagonal Line")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+ax.set_xlim(0, 5)
+ax.set_ylim(0, 5)
+ax.set_zlim(0, 5)
+
+ax.set_box_aspect([1, 1, 1])
+
+plt.show()</code></pre>
+
+      <div class="note">
+        This diagonal starts at <strong>(0, 0, 0)</strong> and ends at <strong>(5, 5, 5)</strong>.
+        It moves equally in X, Y, and Z directions.
+      </div>
+
+      <h3>Diagonal on a Plane</h3>
+
+      <p>
+        We can also draw a diagonal across a flat square plane.
+      </p>
+
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+fig = plt.figure(figsize=(8, 7))
+ax = fig.add_subplot(projection="3d")
+
+# Plane
+x = np.linspace(0, 5, 20)
+y = np.linspace(0, 5, 20)
+
+X, Y = np.meshgrid(x, y)
+Z = np.zeros_like(X)
+
+ax.plot_surface(X, Y, Z, alpha=0.35)
+
+# Diagonal on the plane
+d = np.linspace(0, 5, 100)
+
+ax.plot(d, d, np.zeros_like(d), linewidth=5)
+
+ax.scatter([0, 5], [0, 5], [0, 0], s=80)
+
+ax.text(0, 0, 0, "Start", fontsize=12)
+ax.text(5, 5, 0, "End", fontsize=12)
+
+ax.set_title("Diagonal on a Plane")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+ax.set_xlim(0, 5)
+ax.set_ylim(0, 5)
+ax.set_zlim(0, 5)
+
+ax.set_box_aspect([1, 1, 1])
+
+plt.show()</code></pre>
+
+      <div class="note">
+        Here the diagonal lies flat on the plane because all z values are 0.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3. Draw a Plane</h2>
+
+      <p>
+        A plane is a flat surface. We create many x and y points, then calculate z.
+      </p>
+
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-5, 5, 20)
+y = np.linspace(-5, 5, 20)
+
+X, Y = np.meshgrid(x, y)
+
+Z = 2 * X + Y
+
+fig = plt.figure(figsize=(8, 7))
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_surface(X, Y, Z, alpha=0.75)
+
+ax.set_title("Plane: z = 2x + y")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+plt.show()</code></pre>
+
+      <div class="note">
+        The equation <strong>z = 2x + y</strong> creates a slanted plane.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>4. Draw a Cube</h2>
+
+      <p>
+        A cube has 8 corners and 12 edges.
+        We can draw it using line segments.
+      </p>
+
+      <pre><code>import matplotlib.pyplot as plt
+
+fig = plt.figure(figsize=(8, 7))
+ax = fig.add_subplot(projection="3d")
+
+points = [
+    [0, 0, 0],
+    [1, 0, 0],
+    [1, 1, 0],
+    [0, 1, 0],
+    [0, 0, 1],
+    [1, 0, 1],
+    [1, 1, 1],
+    [0, 1, 1]
+]
+
+edges = [
+    [0, 1], [1, 2], [2, 3], [3, 0],
+    [4, 5], [5, 6], [6, 7], [7, 4],
+    [0, 4], [1, 5], [2, 6], [3, 7]
+]
+
+for edge in edges:
+    p1 = points[edge[0]]
+    p2 = points[edge[1]]
+
+    x = [p1[0], p2[0]]
+    y = [p1[1], p2[1]]
+    z = [p1[2], p2[2]]
+
+    ax.plot(x, y, z, linewidth=3)
+
+ax.scatter(
+    [p[0] for p in points],
+    [p[1] for p in points],
+    [p[2] for p in points],
+    s=60
+)
+
+ax.set_title("3D Cube Using Edges")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+ax.set_box_aspect([1, 1, 1])
+
+plt.show()</code></pre>
+
+      <h3>Cube with Body Diagonal</h3>
+
+      <p>
+        A cube diagonal joins one corner of the cube to the opposite corner.
+      </p>
+
+      <pre><code>import matplotlib.pyplot as plt
+
+fig = plt.figure(figsize=(8, 7))
+ax = fig.add_subplot(projection="3d")
+
+points = [
+    [0, 0, 0],
+    [1, 0, 0],
+    [1, 1, 0],
+    [0, 1, 0],
+    [0, 0, 1],
+    [1, 0, 1],
+    [1, 1, 1],
+    [0, 1, 1]
+]
+
+edges = [
+    [0, 1], [1, 2], [2, 3], [3, 0],
+    [4, 5], [5, 6], [6, 7], [7, 4],
+    [0, 4], [1, 5], [2, 6], [3, 7]
+]
+
+for edge in edges:
+    p1 = points[edge[0]]
+    p2 = points[edge[1]]
+
+    ax.plot(
+        [p1[0], p2[0]],
+        [p1[1], p2[1]],
+        [p1[2], p2[2]],
+        linewidth=3
+    )
+
+# Body diagonal
+ax.plot([0, 1], [0, 1], [0, 1], linewidth=5, color="black")
+
+ax.scatter([0, 1], [0, 1], [0, 1], s=100, color="black")
+
+ax.text(0, 0, 0, "Start", fontsize=12)
+ax.text(1, 1, 1, "Opposite Corner", fontsize=12)
+
+ax.set_title("Cube with Body Diagonal")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+ax.set_box_aspect([1, 1, 1])
+
+plt.show()</code></pre>
+
+      <div class="note">
+        The cube is not one single command here.
+        It is built from points and edges.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>5. Draw a Cone</h2>
+
+      <p>
+        A cone has a circular base and one top point.
+      </p>
+
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+theta = np.linspace(0, 2 * np.pi, 80)
+r = np.linspace(0, 1, 40)
+
+Theta, R = np.meshgrid(theta, r)
+
+X = R * np.cos(Theta)
+Y = R * np.sin(Theta)
+Z = 1 - R
+
+fig = plt.figure(figsize=(8, 7))
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_surface(X, Y, Z, alpha=0.85)
+
+ax.set_title("3D Cone")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+ax.set_box_aspect([1, 1, 1])
+
+plt.show()</code></pre>
+
+      <h3>How it works</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Part</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>theta</code></td>
+            <td>Angle around the circle</td>
+          </tr>
+          <tr>
+            <td><code>r</code></td>
+            <td>Radius from center</td>
+          </tr>
+          <tr>
+            <td><code>X = R * cos(Theta)</code></td>
+            <td>Horizontal circular position</td>
+          </tr>
+          <tr>
+            <td><code>Y = R * sin(Theta)</code></td>
+            <td>Depth circular position</td>
+          </tr>
+          <tr>
+            <td><code>Z = 1 - R</code></td>
+            <td>Height decreases as radius increases</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>6. Draw a Sphere</h2>
+
+      <p>
+        A sphere is created using two angles.
+      </p>
+
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+u = np.linspace(0, 2 * np.pi, 80)
+v = np.linspace(0, np.pi, 80)
+
+X = np.outer(np.cos(u), np.sin(v))
+Y = np.outer(np.sin(u), np.sin(v))
+Z = np.outer(np.ones_like(u), np.cos(v))
+
+fig = plt.figure(figsize=(8, 7))
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_surface(X, Y, Z, alpha=0.85)
+
+ax.set_title("3D Sphere")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+ax.set_box_aspect([1, 1, 1])
+
+plt.show()</code></pre>
+
+      <div class="note">
+        <strong>set_box_aspect([1, 1, 1])</strong> helps the sphere look like a real sphere, not a stretched egg.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>7. Example: 3D Emoji Face</h2>
+
+      <p>
+        Now let us combine shapes. We will make a simple emoji-style face.
+      </p>
+
+      <ul>
+        <li>Sphere for the head</li>
+        <li>Two black points for eyes</li>
+        <li>A curved smile line</li>
+      </ul>
+
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+fig = plt.figure(figsize=(8, 7))
+ax = fig.add_subplot(projection="3d")
+
+# Face sphere
+u = np.linspace(0, 2 * np.pi, 100)
+v = np.linspace(0, np.pi, 100)
+
+X = np.outer(np.cos(u), np.sin(v))
+Y = np.outer(np.sin(u), np.sin(v))
+Z = np.outer(np.ones_like(u), np.cos(v))
+
+ax.plot_surface(X, Y, Z, alpha=0.75)
+
+# Eyes
+ax.scatter([-0.35, 0.35], [-0.82, -0.82], [0.35, 0.35], s=180, color="black")
+
+# Smile
+smile_x = np.linspace(-0.45, 0.45, 80)
+smile_y = np.full_like(smile_x, -0.88)
+smile_z = -0.15 - 0.35 * smile_x**2
+
+ax.plot(smile_x, smile_y, smile_z, color="black", linewidth=5)
+
+# View from front
+ax.view_init(elev=10, azim=-90)
+
+ax.set_title("Simple 3D Emoji Face")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+ax.set_box_aspect([1, 1, 1])
+
+plt.show()</code></pre>
+
+      <div class="note">
+        This is not a real emoji image.
+        It is a 3D drawing made from a sphere, points, and a curve.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>8. Master Demo: All Shapes in One Program</h2>
+
+      <p>
+        This program shows a menu. Students can choose what they want to draw.
+      </p>
+
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+
+def setup_ax(title):
+    fig = plt.figure(figsize=(8, 7))
+    ax = fig.add_subplot(projection="3d")
+
+    ax.set_title(title)
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.set_zlabel("Z")
+
+    return fig, ax
+
+
+def draw_line():
+    t = np.linspace(0, 10, 100)
+
+    x = t
+    y = t
+    z = t
+
+    fig, ax = setup_ax("3D Line")
+    ax.plot(x, y, z, linewidth=3)
+
+    plt.show()
+
+
+def draw_diagonal():
+    t = np.linspace(0, 5, 100)
+
+    x = t
+    y = t
+    z = t
+
+    fig, ax = setup_ax("3D Diagonal Line")
+
+    ax.plot(x, y, z, linewidth=4)
+    ax.scatter([0, 5], [0, 5], [0, 5], s=80)
+
+    ax.text(0, 0, 0, "Start", fontsize=12)
+    ax.text(5, 5, 5, "End", fontsize=12)
+
+    ax.set_xlim(0, 5)
+    ax.set_ylim(0, 5)
+    ax.set_zlim(0, 5)
+    ax.set_box_aspect([1, 1, 1])
+
+    plt.show()
+
+
+def draw_diagonal_on_plane():
+    fig, ax = setup_ax("Diagonal on a Plane")
+
+    x = np.linspace(0, 5, 20)
+    y = np.linspace(0, 5, 20)
+
+    X, Y = np.meshgrid(x, y)
+    Z = np.zeros_like(X)
+
+    ax.plot_surface(X, Y, Z, alpha=0.35)
+
+    d = np.linspace(0, 5, 100)
+
+    ax.plot(d, d, np.zeros_like(d), linewidth=5)
+
+    ax.scatter([0, 5], [0, 5], [0, 0], s=80)
+
+    ax.text(0, 0, 0, "Start", fontsize=12)
+    ax.text(5, 5, 0, "End", fontsize=12)
+
+    ax.set_xlim(0, 5)
+    ax.set_ylim(0, 5)
+    ax.set_zlim(0, 5)
+    ax.set_box_aspect([1, 1, 1])
+
+    plt.show()
+
+
+def draw_plane():
+    x = np.linspace(-5, 5, 20)
+    y = np.linspace(-5, 5, 20)
+
+    X, Y = np.meshgrid(x, y)
+    Z = 2 * X + Y
+
+    fig, ax = setup_ax("Plane: z = 2x + y")
+    ax.plot_surface(X, Y, Z, alpha=0.75)
+
+    plt.show()
+
+
+def draw_cube():
+    fig, ax = setup_ax("3D Cube")
+
+    points = [
+        [0, 0, 0],
+        [1, 0, 0],
+        [1, 1, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+        [1, 0, 1],
+        [1, 1, 1],
+        [0, 1, 1]
+    ]
+
+    edges = [
+        [0, 1], [1, 2], [2, 3], [3, 0],
+        [4, 5], [5, 6], [6, 7], [7, 4],
+        [0, 4], [1, 5], [2, 6], [3, 7]
+    ]
+
+    for edge in edges:
+        p1 = points[edge[0]]
+        p2 = points[edge[1]]
+
+        x = [p1[0], p2[0]]
+        y = [p1[1], p2[1]]
+        z = [p1[2], p2[2]]
+
+        ax.plot(x, y, z, linewidth=3)
+
+    ax.scatter(
+        [p[0] for p in points],
+        [p[1] for p in points],
+        [p[2] for p in points],
+        s=60
+    )
+
+    ax.set_box_aspect([1, 1, 1])
+
+    plt.show()
+
+
+def draw_cube_with_diagonal():
+    fig, ax = setup_ax("Cube with Body Diagonal")
+
+    points = [
+        [0, 0, 0],
+        [1, 0, 0],
+        [1, 1, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+        [1, 0, 1],
+        [1, 1, 1],
+        [0, 1, 1]
+    ]
+
+    edges = [
+        [0, 1], [1, 2], [2, 3], [3, 0],
+        [4, 5], [5, 6], [6, 7], [7, 4],
+        [0, 4], [1, 5], [2, 6], [3, 7]
+    ]
+
+    for edge in edges:
+        p1 = points[edge[0]]
+        p2 = points[edge[1]]
+
+        ax.plot(
+            [p1[0], p2[0]],
+            [p1[1], p2[1]],
+            [p1[2], p2[2]],
+            linewidth=3
+        )
+
+    ax.plot([0, 1], [0, 1], [0, 1], linewidth=5, color="black")
+    ax.scatter([0, 1], [0, 1], [0, 1], s=100, color="black")
+
+    ax.text(0, 0, 0, "Start", fontsize=12)
+    ax.text(1, 1, 1, "Opposite Corner", fontsize=12)
+
+    ax.set_box_aspect([1, 1, 1])
+
+    plt.show()
+
+
+def draw_cone():
+    theta = np.linspace(0, 2 * np.pi, 80)
+    r = np.linspace(0, 1, 40)
+
+    Theta, R = np.meshgrid(theta, r)
+
+    X = R * np.cos(Theta)
+    Y = R * np.sin(Theta)
+    Z = 1 - R
+
+    fig, ax = setup_ax("3D Cone")
+    ax.plot_surface(X, Y, Z, alpha=0.85)
+    ax.set_box_aspect([1, 1, 1])
+
+    plt.show()
+
+
+def draw_sphere():
+    u = np.linspace(0, 2 * np.pi, 80)
+    v = np.linspace(0, np.pi, 80)
+
+    X = np.outer(np.cos(u), np.sin(v))
+    Y = np.outer(np.sin(u), np.sin(v))
+    Z = np.outer(np.ones_like(u), np.cos(v))
+
+    fig, ax = setup_ax("3D Sphere")
+    ax.plot_surface(X, Y, Z, alpha=0.85)
+    ax.set_box_aspect([1, 1, 1])
+
+    plt.show()
+
+
+def draw_emoji():
+    fig, ax = setup_ax("Simple 3D Emoji Face")
+
+    u = np.linspace(0, 2 * np.pi, 100)
+    v = np.linspace(0, np.pi, 100)
+
+    X = np.outer(np.cos(u), np.sin(v))
+    Y = np.outer(np.sin(u), np.sin(v))
+    Z = np.outer(np.ones_like(u), np.cos(v))
+
+    ax.plot_surface(X, Y, Z, alpha=0.75)
+
+    ax.scatter(
+        [-0.35, 0.35],
+        [-0.82, -0.82],
+        [0.35, 0.35],
+        s=180,
+        color="black"
+    )
+
+    smile_x = np.linspace(-0.45, 0.45, 80)
+    smile_y = np.full_like(smile_x, -0.88)
+    smile_z = -0.15 - 0.35 * smile_x**2
+
+    ax.plot(smile_x, smile_y, smile_z, color="black", linewidth=5)
+
+    ax.view_init(elev=10, azim=-90)
+    ax.set_box_aspect([1, 1, 1])
+
+    plt.show()
+
+
+print("3D Drawing in Matplotlib")
+print("1. Line")
+print("2. Diagonal Line")
+print("3. Diagonal on a Plane")
+print("4. Plane")
+print("5. Cube")
+print("6. Cube with Body Diagonal")
+print("7. Cone")
+print("8. Sphere")
+print("9. Emoji Face")
+
+choice = input("Enter your choice: ")
+
+if choice == "1":
+    draw_line()
+elif choice == "2":
+    draw_diagonal()
+elif choice == "3":
+    draw_diagonal_on_plane()
+elif choice == "4":
+    draw_plane()
+elif choice == "5":
+    draw_cube()
+elif choice == "6":
+    draw_cube_with_diagonal()
+elif choice == "7":
+    draw_cone()
+elif choice == "8":
+    draw_sphere()
+elif choice == "9":
+    draw_emoji()
+else:
+    print("Invalid choice")</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>9. Shape Formula Cheat Sheet</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Shape</th>
+            <th>Main Idea</th>
+            <th>Matplotlib Tool</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Line</td>
+            <td>Connect many points</td>
+            <td><code>ax.plot(x, y, z)</code></td>
+          </tr>
+          <tr>
+            <td>Diagonal Line</td>
+            <td>Move through X, Y, and Z together</td>
+            <td><code>ax.plot(t, t, t)</code></td>
+          </tr>
+          <tr>
+            <td>Diagonal on Plane</td>
+            <td>Move through X and Y while Z stays fixed</td>
+            <td><code>ax.plot(d, d, zeros)</code></td>
+          </tr>
+          <tr>
+            <td>Plane</td>
+            <td>Use <code>z = ax + by + c</code></td>
+            <td><code>ax.plot_surface(X, Y, Z)</code></td>
+          </tr>
+          <tr>
+            <td>Cube</td>
+            <td>Draw corners and edges</td>
+            <td><code>ax.plot()</code> repeatedly</td>
+          </tr>
+          <tr>
+            <td>Cube Diagonal</td>
+            <td>Join one corner to the opposite corner</td>
+            <td><code>ax.plot([0, 1], [0, 1], [0, 1])</code></td>
+          </tr>
+          <tr>
+            <td>Cone</td>
+            <td>Use radius and angle</td>
+            <td><code>ax.plot_surface()</code></td>
+          </tr>
+          <tr>
+            <td>Sphere</td>
+            <td>Use two angles</td>
+            <td><code>ax.plot_surface()</code></td>
+          </tr>
+          <tr>
+            <td>Emoji</td>
+            <td>Combine sphere, points, and curves</td>
+            <td><code>plot_surface</code>, <code>scatter</code>, <code>plot</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="editor">
+      <h2>10. Embedded Python Editor</h2>
+
+      <p>
+        Copy any code from this lesson and run it inside the editor.
+      </p>
+
+      <div class="editor-shell">
+        <div class="editor-topbar">
+          <div>Python Starter Editor | Matplotlib 3D Drawing Practice</div>
+
+          <div class="editor-actions">
+            <button class="small-btn" onclick="reloadEditor()">Reload</button>
+            <button class="small-btn" onclick="openEditorNewTab()">Open New Tab</button>
+            <button class="small-btn" onclick="toggleEditorFullscreen()">Fullscreen</button>
+          </div>
+        </div>
+
+        <iframe id="pythonEditor" src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+          title="Programmers Picnic Python Editor" allow="clipboard-read; clipboard-write; fullscreen" loading="lazy">
+        </iframe>
+      </div>
+
+      <div class="note">
+        If the editor does not load inside the page because of browser security settings,
+        use the <strong>Open New Tab</strong> button.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>11. Student Practice Checklist</h2>
+
+      <div class="checklist">
+        <label><input type="checkbox"> I drew a 3D line.</label>
+        <label><input type="checkbox"> I changed the line equation.</label>
+        <label><input type="checkbox"> I drew a 3D diagonal line.</label>
+        <label><input type="checkbox"> I drew a diagonal across a plane.</label>
+        <label><input type="checkbox"> I drew a plane.</label>
+        <label><input type="checkbox"> I understood meshgrid.</label>
+        <label><input type="checkbox"> I drew a cube using edges.</label>
+        <label><input type="checkbox"> I drew a cube body diagonal.</label>
+        <label><input type="checkbox"> I drew a cone using radius and angle.</label>
+        <label><input type="checkbox"> I drew a sphere using two angles.</label>
+        <label><input type="checkbox"> I created a simple 3D emoji face.</label>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>12. Homework</h2>
+
+      <h3>Easy</h3>
+      <p>Draw a line from point <code>(0, 0, 0)</code> to <code>(5, 5, 5)</code>.</p>
+
+      <h3>Medium</h3>
+      <p>Draw a diagonal across a square plane with side length 10.</p>
+
+      <h3>Hard</h3>
+      <p>Draw a cube with side length 2 and then draw a diagonal from one corner to the opposite corner.</p>
+
+      <h3>Infinity</h3>
+      <p>Create a 3D emoji with eyebrows, nose, mouth, ears, and a diagonal party hat.</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <strong>Programmers Picnic AI-ML Classes by Champak Roy</strong><br />
+    learnwithchampak.live | editor.learnwithchampak.live
+  </footer>
+
+  <script>
+    const EDITOR_URL = "https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1";
+
+    function reloadEditor() {
+      const iframe = document.getElementById("pythonEditor");
+      iframe.src = EDITOR_URL + "&reload=" + Date.now();
+    }
+
+    function openEditorNewTab() {
+      window.open(EDITOR_URL, "_blank");
+    }
+
+    function toggleEditorFullscreen() {
+      const shell = document.querySelector(".editor-shell");
+
+      if (!document.fullscreenElement) {
+        shell.requestFullscreen().catch(function (error) {
+          alert("Fullscreen could not be started: " + error.message);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+  </script>
+</body>
+
+</html>

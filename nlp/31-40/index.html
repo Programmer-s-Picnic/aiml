@@ -1,0 +1,1377 @@
+ <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NLP 31% to 40% | Text Similarity and Cosine Similarity</title>
+
+  <meta name="description" content="Programmers Picnic AI-ML Classes by Champak Roy. NLP 31% to 40% lesson on text similarity, vectors, CountVectorizer, cosine similarity, sentence comparison, and a mini project." />
+  <meta name="theme-color" content="#f59e0b" />
+
+  <!-- Google Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
+    crossorigin="anonymous"></script>
+
+  <!-- Usual JS Libraries -->
+  <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+  <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+
+  <style>
+    :root {
+      --bg: #fff7ed;
+      --bg2: #fffbeb;
+      --card: rgba(255,255,255,0.88);
+      --card2: #ffffff;
+      --ink: #231407;
+      --muted: #6b4f2a;
+      --line: rgba(146, 64, 14, 0.18);
+      --saffron: #f59e0b;
+      --saffron2: #fb923c;
+      --saffron3: #d97706;
+      --deep: #7c2d12;
+      --green: #15803d;
+      --blue: #2563eb;
+      --red: #dc2626;
+      --codebg: #15120c;
+      --code: #fff7ed;
+      --shadow: 0 20px 60px rgba(146, 64, 14, 0.16);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(245, 158, 11, 0.25), transparent 34%),
+        radial-gradient(circle at top right, rgba(251, 146, 60, 0.20), transparent 30%),
+        linear-gradient(135deg, var(--bg), var(--bg2));
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--deep);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 247, 237, 0.86);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--deep);
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--saffron), var(--saffron2));
+      color: white;
+      box-shadow: 0 10px 24px rgba(217, 119, 6, 0.25);
+      font-weight: 1000;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a,
+    .btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.7);
+      color: var(--deep);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(146,64,14,0.08);
+    }
+
+    .nav a:hover,
+    .btn:hover {
+      background: #fff;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      padding: 48px 0 24px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card {
+      padding: 34px;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.13);
+      color: var(--deep);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -0.06em;
+      color: #1f1306;
+    }
+
+    .lead {
+      font-size: clamp(17px, 2vw, 21px);
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--saffron3), var(--saffron));
+      color: white;
+      border: none;
+    }
+
+    .secondary {
+      background: #fff;
+    }
+
+    .progress-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+    }
+
+    .meter {
+      margin-top: 18px;
+      background: rgba(146, 64, 14, 0.12);
+      height: 18px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(146,64,14,0.12);
+    }
+
+    .meter-fill {
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--saffron3), var(--saffron), #facc15);
+      border-radius: 999px;
+    }
+
+    .percent-row {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 6px;
+      margin-top: 18px;
+    }
+
+    .percent-row span {
+      display: grid;
+      place-items: center;
+      min-height: 42px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-weight: 900;
+      color: var(--deep);
+      font-size: 13px;
+    }
+
+    .percent-row span.done {
+      background: rgba(245, 158, 11, 0.18);
+    }
+
+    section {
+      padding: 18px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(26px, 3vw, 40px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      color: var(--deep);
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      color: var(--deep);
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .card {
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .lesson-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .lesson-list li {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .num {
+      width: 54px;
+      height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(245,158,11,0.22), rgba(251,146,60,0.14));
+      color: var(--deep);
+      font-weight: 1000;
+      border: 1px solid rgba(245,158,11,0.22);
+    }
+
+    .callout {
+      border-left: 6px solid var(--saffron3);
+      background: rgba(245, 158, 11, 0.10);
+      padding: 16px;
+      border-radius: 18px;
+      margin: 14px 0;
+    }
+
+    .success {
+      border-left-color: var(--green);
+      background: rgba(22, 163, 74, 0.10);
+    }
+
+    .info {
+      border-left-color: var(--blue);
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    .warning {
+      border-left-color: var(--red);
+      background: rgba(220, 38, 38, 0.08);
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    pre {
+      background: var(--codebg);
+      color: var(--code);
+      padding: 18px;
+      border-radius: 18px;
+      overflow: auto;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    code.inline {
+      background: rgba(245, 158, 11, 0.14);
+      color: var(--deep);
+      padding: 2px 7px;
+      border-radius: 8px;
+      font-weight: 800;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    th,
+    td {
+      padding: 13px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: rgba(245, 158, 11, 0.14);
+      color: var(--deep);
+      font-weight: 1000;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .diagram {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .step-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .step-card strong {
+      color: var(--deep);
+    }
+
+    .editor-frame {
+      width: 100%;
+      height: 680px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: #fff;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .quiz {
+      counter-reset: q;
+      display: grid;
+      gap: 12px;
+    }
+
+    .quiz details {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+    }
+
+    .quiz summary {
+      cursor: pointer;
+      font-weight: 900;
+      color: var(--deep);
+    }
+
+    .quiz summary::before {
+      counter-increment: q;
+      content: counter(q) ". ";
+    }
+
+    .footer {
+      padding: 34px 0 48px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .mini-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .mini-nav a {
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: var(--deep);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .copy-btn {
+      float: right;
+      margin-bottom: 8px;
+      border: 0;
+      background: linear-gradient(135deg, var(--saffron3), var(--saffron));
+      color: white;
+      border-radius: 999px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .kbd {
+      display: inline-block;
+      border: 1px solid var(--line);
+      background: white;
+      border-bottom-width: 3px;
+      border-radius: 9px;
+      padding: 1px 7px;
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--deep);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav {
+        justify-content: flex-start;
+      }
+
+      .hero-card {
+        padding: 24px;
+      }
+
+      .percent-row {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .lesson-list li {
+        grid-template-columns: 1fr;
+      }
+
+      .editor-frame {
+        height: 620px;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .hero-actions,
+      .editor-frame,
+      .copy-btn {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+      }
+
+      .card,
+      .hero-card,
+      .progress-card {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo">PP</div>
+        <div>
+          Programmers Picnic<br />
+          <span class="small">AI-ML Classes by Champak Roy</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#roadmap">Roadmap</a>
+        <a href="#concept">Concept</a>
+        <a href="#cosine">Cosine</a>
+        <a href="#project">Project</a>
+        <a href="#editor">Editor</a>
+        <a href="#quiz">Quiz</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <span class="badge">NLP 31% to 40% • Text Similarity</span>
+
+          <h1>From Words to Meaningful Comparison</h1>
+
+          <p class="lead">
+            In this lesson, students learn how NLP compares two pieces of text.
+            We move from simple words to vectors, CountVectorizer, cosine similarity,
+            and finally a mini project: Similar Sentence Finder.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#editor">Open Embedded Python Editor</a>
+            <button class="btn secondary" onclick="window.print()">Print Lesson</button>
+            <button class="btn secondary" onclick="sharePage()">Share</button>
+          </div>
+
+          <div class="mini-nav">
+            <a href="https://learnwithchampak.live" target="_blank">learnwithchampak.live</a>
+            <a href="https://aiml.learnwithchampak.live" target="_blank">AI-ML Site</a>
+            <a href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">Python Editor</a>
+          </div>
+        </div>
+
+        <aside class="progress-card card">
+          <div>
+            <h3>Current Course Progress</h3>
+            <p>
+              We are now entering the zone where NLP begins to feel intelligent.
+              The computer will not only clean text. It will compare text.
+            </p>
+
+            <div class="meter">
+              <div class="meter-fill"></div>
+            </div>
+
+            <div class="percent-row">
+              <span class="done">31%</span>
+              <span class="done">32%</span>
+              <span class="done">33%</span>
+              <span class="done">34%</span>
+              <span class="done">35%</span>
+              <span class="done">36%</span>
+              <span class="done">37%</span>
+              <span class="done">38%</span>
+              <span class="done">39%</span>
+              <span class="done">40%</span>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>Main idea:</strong><br />
+            To compare text, first convert text into numbers. Then compare those numbers.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="section-title">
+        <h2>31% to 40% Roadmap</h2>
+        <span class="small">10 small steps</span>
+      </div>
+
+      <div class="card">
+        <ul class="lesson-list">
+          <li><span class="num">31%</span><span><strong>What is text similarity?</strong><br />Understanding when two sentences are close, related, or different.</span></li>
+          <li><span class="num">32%</span><span><strong>Why computers cannot directly understand meaning</strong><br />Computers need numbers, not raw human language.</span></li>
+          <li><span class="num">33%</span><span><strong>Converting text into numbers</strong><br />The first big idea behind NLP models.</span></li>
+          <li><span class="num">34%</span><span><strong>Bag of Words idea</strong><br />Represent a sentence by counting words.</span></li>
+          <li><span class="num">35%</span><span><strong>CountVectorizer concept</strong><br />Use Python to automatically create word-count vectors.</span></li>
+          <li><span class="num">36%</span><span><strong>What is Cosine Similarity?</strong><br />Compare the direction of two vectors.</span></li>
+          <li><span class="num">37%</span><span><strong>Comparing two sentences</strong><br />Calculate a similarity score between sentences.</span></li>
+          <li><span class="num">38%</span><span><strong>Mini project</strong><br />Build a Similar Sentence Finder.</span></li>
+          <li><span class="num">39%</span><span><strong>Real use cases</strong><br />Search, recommendation, doubt matching, chatbot matching.</span></li>
+          <li><span class="num">40%</span><span><strong>Revision and test</strong><br />Check whether the student can explain and code the concept.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="concept">
+      <div class="section-title">
+        <h2>Level 0 Explanation</h2>
+        <span class="small">Beginner friendly</span>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>What is text similarity?</h3>
+          <p>
+            Text similarity means checking how close two pieces of text are.
+            The two texts may not be exactly the same, but they may still talk about
+            the same idea.
+          </p>
+
+          <div class="callout success">
+            <strong>Example:</strong><br />
+            “I like machine learning” and “I enjoy learning AI” are not identical,
+            but both are related to learning and AI.
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Why convert text into numbers?</h3>
+          <p>
+            A computer can store letters, but mathematical comparison is easier with numbers.
+            So NLP converts words and sentences into numerical representations.
+          </p>
+
+          <div class="callout info">
+            <strong>Simple rule:</strong><br />
+            Text → Words → Numbers → Comparison → Result
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>The NLP Pipeline</h2>
+        <span class="small">From sentence to similarity score</span>
+      </div>
+
+      <div class="card">
+        <div class="diagram">
+          <svg viewBox="0 0 1100 300" width="100%" height="auto" role="img" aria-label="NLP text similarity pipeline diagram">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0%" stop-color="#d97706"/>
+                <stop offset="100%" stop-color="#f59e0b"/>
+              </linearGradient>
+              <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#92400e" flood-opacity="0.18"/>
+              </filter>
+            </defs>
+
+            <rect x="20" y="50" width="190" height="110" rx="24" fill="#fff7ed" stroke="#f59e0b" filter="url(#shadow)"/>
+            <text x="115" y="92" text-anchor="middle" font-size="24" font-weight="800" fill="#7c2d12">Text</text>
+            <text x="115" y="126" text-anchor="middle" font-size="16" fill="#6b4f2a">Student sentence</text>
+
+            <path d="M220 105 H300" stroke="#d97706" stroke-width="8" stroke-linecap="round"/>
+            <polygon points="300,105 280,92 280,118" fill="#d97706"/>
+
+            <rect x="320" y="50" width="190" height="110" rx="24" fill="#fff7ed" stroke="#f59e0b" filter="url(#shadow)"/>
+            <text x="415" y="92" text-anchor="middle" font-size="24" font-weight="800" fill="#7c2d12">Words</text>
+            <text x="415" y="126" text-anchor="middle" font-size="16" fill="#6b4f2a">Token list</text>
+
+            <path d="M520 105 H600" stroke="#d97706" stroke-width="8" stroke-linecap="round"/>
+            <polygon points="600,105 580,92 580,118" fill="#d97706"/>
+
+            <rect x="620" y="50" width="190" height="110" rx="24" fill="#fff7ed" stroke="#f59e0b" filter="url(#shadow)"/>
+            <text x="715" y="92" text-anchor="middle" font-size="24" font-weight="800" fill="#7c2d12">Numbers</text>
+            <text x="715" y="126" text-anchor="middle" font-size="16" fill="#6b4f2a">Vector</text>
+
+            <path d="M820 105 H900" stroke="#d97706" stroke-width="8" stroke-linecap="round"/>
+            <polygon points="900,105 880,92 880,118" fill="#d97706"/>
+
+            <rect x="920" y="50" width="160" height="110" rx="24" fill="url(#g1)" filter="url(#shadow)"/>
+            <text x="1000" y="92" text-anchor="middle" font-size="24" font-weight="800" fill="#ffffff">Score</text>
+            <text x="1000" y="126" text-anchor="middle" font-size="16" fill="#fff7ed">Similarity</text>
+
+            <text x="550" y="230" text-anchor="middle" font-size="24" font-weight="900" fill="#7c2d12">
+              NLP comparison becomes possible after text becomes numerical.
+            </text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>Bag of Words</h2>
+        <span class="small">The first simple representation</span>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Idea</h3>
+          <p>
+            Bag of Words ignores grammar and word order. It simply counts which words appear.
+            This is not perfect, but it is a very important first step.
+          </p>
+
+          <pre><code>Sentence:
+I like machine learning
+
+Words:
+I, like, machine, learning
+
+Count:
+I = 1
+like = 1
+machine = 1
+learning = 1</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Example Table</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Word</th>
+                <th>Sentence 1</th>
+                <th>Sentence 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>machine</td>
+                <td>1</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>learning</td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>AI</td>
+                <td>0</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>enjoy</td>
+                <td>0</td>
+                <td>1</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout">
+            The more useful overlap two sentences have, the more related they may be.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cosine">
+      <div class="section-title">
+        <h2>Cosine Similarity</h2>
+        <span class="small">The main formula</span>
+      </div>
+
+      <div class="card">
+        <p>
+          Cosine similarity compares the direction of two vectors.
+          If two text vectors point in a similar direction, the similarity score is high.
+          If they point in very different directions, the score is low.
+        </p>
+
+        <pre><code>cosine similarity = 1      means very similar direction
+cosine similarity = 0      means no useful similarity
+cosine similarity near 0   means mostly different</code></pre>
+
+        <div class="callout success">
+          For beginner NLP, we can think of cosine similarity as:
+          <strong>How close are these two sentences after they become number lists?</strong>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="step-card">
+          <h3>Score near 1</h3>
+          <p>Very similar text.</p>
+          <pre><code>Python is useful
+Python is very useful</code></pre>
+        </div>
+
+        <div class="step-card">
+          <h3>Score medium</h3>
+          <p>Some relation, but not exactly the same.</p>
+          <pre><code>I like AI
+I study machine learning</code></pre>
+        </div>
+
+        <div class="step-card">
+          <h3>Score near 0</h3>
+          <p>Mostly unrelated text.</p>
+          <pre><code>Python programming
+The mango is sweet</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>Python Example 1</h2>
+        <span class="small">CountVectorizer and cosine similarity</span>
+      </div>
+
+      <div class="card">
+        <button class="copy-btn" onclick="copyCode('code1')">Copy Code</button>
+        <pre id="code1"><code>from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+sentences = [
+    "I like machine learning",
+    "I enjoy learning AI",
+    "The cat is sleeping"
+]
+
+vectorizer = CountVectorizer()
+vectors = vectorizer.fit_transform(sentences)
+
+similarity = cosine_similarity(vectors)
+
+print("Vocabulary:")
+print(vectorizer.get_feature_names_out())
+
+print("\nVectors:")
+print(vectors.toarray())
+
+print("\nSimilarity Matrix:")
+print(similarity)</code></pre>
+
+        <div class="callout info">
+          The output will show three things: vocabulary, vectors, and the similarity matrix.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>Understanding the Similarity Matrix</h2>
+        <span class="small">Reading the output</span>
+      </div>
+
+      <div class="card">
+        <p>
+          When we compare three sentences with each other, Python gives a matrix.
+          Each row and column represents one sentence.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Sentence 1</th>
+              <th>Sentence 2</th>
+              <th>Sentence 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Sentence 1</th>
+              <td>1.00</td>
+              <td>Some similarity</td>
+              <td>Low similarity</td>
+            </tr>
+            <tr>
+              <th>Sentence 2</th>
+              <td>Some similarity</td>
+              <td>1.00</td>
+              <td>Low similarity</td>
+            </tr>
+            <tr>
+              <th>Sentence 3</th>
+              <td>Low similarity</td>
+              <td>Low similarity</td>
+              <td>1.00</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          A sentence compared with itself gives 1.00 because it is exactly similar to itself.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>Python Example 2</h2>
+        <span class="small">Compare one question with lesson titles</span>
+      </div>
+
+      <div class="card">
+        <p>
+          This example is useful for Programmers Picnic AI-ML Classes.
+          A student asks a question. The program compares the question with stored lesson titles.
+        </p>
+
+        <button class="copy-btn" onclick="copyCode('code2')">Copy Code</button>
+        <pre id="code2"><code>from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+student_question = "What is Python used for?"
+
+lesson_titles = [
+    "Python for AI and Machine Learning",
+    "Introduction to HTML and CSS",
+    "Sorting algorithms in Python",
+    "How to deploy Angular on GitHub Pages",
+    "Natural Language Processing basics"
+]
+
+all_texts = [student_question] + lesson_titles
+
+vectorizer = CountVectorizer()
+vectors = vectorizer.fit_transform(all_texts)
+
+scores = cosine_similarity(vectors[0:1], vectors[1:]).flatten()
+
+best_index = scores.argmax()
+best_score = scores[best_index]
+best_lesson = lesson_titles[best_index]
+
+print("Student question:")
+print(student_question)
+
+print("\nBest matching lesson:")
+print(best_lesson)
+
+print("\nSimilarity score:")
+print(best_score)</code></pre>
+
+        <div class="callout success">
+          This is the basic idea behind search, recommendation, and doubt matching.
+        </div>
+      </div>
+    </section>
+
+    <section id="project">
+      <div class="section-title">
+        <h2>Mini Project</h2>
+        <span class="small">Similar Sentence Finder</span>
+      </div>
+
+      <div class="card">
+        <h3>Project Goal</h3>
+        <p>
+          The student enters one sentence.
+          The program compares it with a list of stored sentences.
+          Then it finds the most similar sentence.
+        </p>
+
+        <div class="grid-3">
+          <div class="step-card">
+            <strong>Step 1</strong>
+            <p>Create a list of stored sentences.</p>
+          </div>
+          <div class="step-card">
+            <strong>Step 2</strong>
+            <p>Take one input sentence from the user.</p>
+          </div>
+          <div class="step-card">
+            <strong>Step 3</strong>
+            <p>Use CountVectorizer and cosine similarity.</p>
+          </div>
+        </div>
+
+        <button class="copy-btn" onclick="copyCode('projectCode')">Copy Code</button>
+        <pre id="projectCode"><code>from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+stored_sentences = [
+    "Python is used for artificial intelligence",
+    "HTML is used to create web pages",
+    "CSS is used to style websites",
+    "Machine learning helps computers learn from data",
+    "Natural language processing works with human language",
+    "Sorting algorithms arrange data in order"
+]
+
+user_sentence = input("Enter your sentence: ")
+
+all_sentences = [user_sentence] + stored_sentences
+
+vectorizer = CountVectorizer()
+vectors = vectorizer.fit_transform(all_sentences)
+
+similarity_scores = cosine_similarity(vectors[0:1], vectors[1:]).flatten()
+
+best_index = similarity_scores.argmax()
+best_match = stored_sentences[best_index]
+best_score = similarity_scores[best_index]
+
+print("\nYour sentence:")
+print(user_sentence)
+
+print("\nMost similar stored sentence:")
+print(best_match)
+
+print("\nSimilarity score:")
+print(best_score)
+
+print("\nAll scores:")
+for sentence, score in zip(stored_sentences, similarity_scores):
+    print(round(score, 3), "->", sentence)</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>Real-Life Uses</h2>
+        <span class="small">Where text similarity appears</span>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Search</h3>
+          <p>
+            When a user searches for “Python AI”, a website can show pages related to
+            Python and artificial intelligence.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Recommendation</h3>
+          <p>
+            If a student reads a lesson on machine learning, the website can recommend
+            another related lesson.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Doubt Matching</h3>
+          <p>
+            If a student asks a doubt, the system can search old solved doubts and find
+            the closest one.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Chatbots</h3>
+          <p>
+            A chatbot can compare the user message with known questions and choose
+            the closest answer.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Duplicate Detection</h3>
+          <p>
+            Two similar articles, questions, or support tickets can be detected.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Lesson Finder</h3>
+          <p>
+            Programmers Picnic can use similarity to match a student question with
+            the best AI-ML lesson.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>Common Mistakes</h2>
+        <span class="small">Important warnings</span>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Mistake</th>
+              <th>Problem</th>
+              <th>Better thinking</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Thinking exact match and similarity are the same</td>
+              <td>Exact match needs the same words. Similarity can find related text.</td>
+              <td>Use similarity when wording may be different.</td>
+            </tr>
+            <tr>
+              <td>Thinking CountVectorizer understands deep meaning</td>
+              <td>CountVectorizer mainly counts words.</td>
+              <td>It is a beginner method, not a full human-like understanding system.</td>
+            </tr>
+            <tr>
+              <td>Ignoring text cleaning</td>
+              <td>Messy text can reduce result quality.</td>
+              <td>Clean text before comparison.</td>
+            </tr>
+            <tr>
+              <td>Expecting perfect results</td>
+              <td>Basic similarity can fail when words are different but meaning is same.</td>
+              <td>Later we learn better methods like TF-IDF and embeddings.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="editor">
+      <div class="section-title">
+        <h2>Practice in Python Editor</h2>
+        <span class="small">Run and modify the examples</span>
+      </div>
+
+      <div class="card">
+        <p>
+          Use the embedded editor below. Paste the code examples, run them, and change the sentences.
+          Try your own lesson titles from Programmers Picnic.
+        </p>
+
+        <div class="callout warning">
+          If the editor opens slowly, open it directly:
+          <a href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">
+            Python Editor Full Page
+          </a>
+        </div>
+
+        <div class="editor-frame">
+          <iframe
+            src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+            title="Programmers Picnic Python Editor"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>Classroom Assignment</h2>
+        <span class="small">Student work</span>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Assignment A</h3>
+          <ol>
+            <li>Create 5 sentences about Python.</li>
+            <li>Create 5 sentences about web development.</li>
+            <li>Compare one new sentence with all 10 sentences.</li>
+            <li>Print the most similar sentence.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h3>Assignment B</h3>
+          <ol>
+            <li>Create 8 lesson titles for AI-ML classes.</li>
+            <li>Ask the user to enter a doubt.</li>
+            <li>Find the closest lesson title.</li>
+            <li>Print the similarity score.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <div class="section-title">
+        <h2>Revision Test</h2>
+        <span class="small">Click each question to see the answer</span>
+      </div>
+
+      <div class="card quiz">
+        <details>
+          <summary>What is text similarity?</summary>
+          <p>Text similarity means checking how close or related two pieces of text are.</p>
+        </details>
+
+        <details>
+          <summary>Why do we convert text into numbers?</summary>
+          <p>Because mathematical comparison is easier when text is represented as numbers.</p>
+        </details>
+
+        <details>
+          <summary>What does CountVectorizer do?</summary>
+          <p>It converts text into word-count vectors.</p>
+        </details>
+
+        <details>
+          <summary>What is Bag of Words?</summary>
+          <p>It is a simple NLP representation that counts words and ignores grammar or word order.</p>
+        </details>
+
+        <details>
+          <summary>What is cosine similarity used for?</summary>
+          <p>It is used to compare the direction of two vectors and produce a similarity score.</p>
+        </details>
+
+        <details>
+          <summary>What score means two texts are very similar?</summary>
+          <p>A score close to 1 means the two texts are very similar.</p>
+        </details>
+
+        <details>
+          <summary>What score means two texts are mostly unrelated?</summary>
+          <p>A score close to 0 means they are mostly unrelated.</p>
+        </details>
+
+        <details>
+          <summary>Give one real use of text similarity.</summary>
+          <p>Search, recommendation, chatbot matching, doubt matching, or duplicate detection.</p>
+        </details>
+
+        <details>
+          <summary>What is the mini project in this lesson?</summary>
+          <p>Similar Sentence Finder.</p>
+        </details>
+
+        <details>
+          <summary>What is one limitation of CountVectorizer?</summary>
+          <p>It mostly counts words and does not deeply understand meaning like advanced NLP models.</p>
+        </details>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>40% Checkpoint</h2>
+        <span class="small">Before moving ahead</span>
+      </div>
+
+      <div class="card">
+        <h3>Students should now be able to explain:</h3>
+        <ul>
+          <li>What text similarity means.</li>
+          <li>Why text must be converted into numbers.</li>
+          <li>What Bag of Words means.</li>
+          <li>What CountVectorizer does.</li>
+          <li>What cosine similarity means.</li>
+          <li>How to compare one sentence with many stored sentences.</li>
+          <li>How search and recommendation systems use similarity.</li>
+        </ul>
+
+        <div class="callout success">
+          <strong>Next 41% to 50%:</strong><br />
+          Improve text comparison using TF-IDF, stop words, better ranking, and cleaner search results.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer page">
+    <strong>Programmers Picnic AI-ML Classes by Champak Roy</strong><br />
+    NLP 31% to 40% • Text Similarity • CountVectorizer • Cosine Similarity<br />
+    <a href="https://learnwithchampak.live" target="_blank">learnwithchampak.live</a>
+    |
+    <a href="https://aiml.learnwithchampak.live" target="_blank">aiml.learnwithchampak.live</a>
+  </footer>
+
+  <script>
+    function copyCode(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const text = el.innerText;
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Code copied.");
+      }).catch(() => {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("Code copied.");
+      });
+    }
+
+    function sharePage() {
+      const data = {
+        title: document.title,
+        text: "NLP 31% to 40% lesson by Programmers Picnic AI-ML Classes.",
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(data);
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert("Page link copied.");
+      }
+    }
+  </script>
+</body>
+</html>
