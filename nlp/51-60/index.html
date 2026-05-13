@@ -1,32 +1,39 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <title>NLP 51% to 60% | Synonyms, Antonyms and Meaning Matching</title>
-  <meta name="description" content="A complete 0 to infinity NLP lesson by Programmers Picnic AI-ML Classes by Champak Roy on synonyms, antonyms, word meaning, sentence meaning, and meaning matching with Python." />
-  <meta name="keywords" content="NLP lesson, synonyms, antonyms, meaning matching, sentence similarity, Python NLP, Programmers Picnic, Champak Roy, AI ML classes" />
+  <title>NLP 51% to 60% | Synonyms, Antonyms and Meaning with Built-in NLP Modules</title>
+  <meta name="description"
+    content="A complete 0 to infinity NLP lesson by Programmers Picnic AI-ML Classes by Champak Roy using built-in NLP modules like NLTK WordNet to find synonyms, antonyms, definitions, word meanings, and sentence meaning matches." />
+  <meta name="keywords"
+    content="NLP, NLTK, WordNet, synonyms, antonyms, word meaning, sentence meaning, Python NLP, built in NLP modules, Programmers Picnic, Champak Roy" />
   <meta name="author" content="Champak Roy" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#f59e0b" />
-  <link rel="canonical" href="https://aiml.learnwithchampak.live/nlp/51-60-meaning-matching/" />
+  <link rel="canonical" href="https://aiml.learnwithchampak.live/nlp/51-60-built-in-nlp-modules/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="NLP 51% to 60% | Synonyms, Antonyms and Meaning Matching" />
-  <meta property="og:description" content="Learn how NLP moves beyond spelling and starts matching meaning using synonyms, antonyms, word relationships, and sentence meaning." />
-  <meta property="og:image" content="https://aiml.learnwithchampak.live/nlp/51-60-meaning-matching/seo-picture.png" />
+  <meta property="og:title" content="NLP 51% to 60% | Built-in NLP Modules for Meaning" />
+  <meta property="og:description"
+    content="Learn synonyms, antonyms, word definitions, WordNet synsets, and sentence meaning matching using NLTK WordNet instead of manual dictionaries." />
+  <meta property="og:image"
+    content="https://aiml.learnwithchampak.live/nlp/51-60-built-in-nlp-modules/seo-picture.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:url" content="https://aiml.learnwithchampak.live/nlp/51-60-meaning-matching/" />
+  <meta property="og:url" content="https://aiml.learnwithchampak.live/nlp/51-60-built-in-nlp-modules/" />
   <meta property="og:site_name" content="Programmers Picnic AI-ML Classes" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="NLP 51% to 60% | Meaning Matching" />
-  <meta name="twitter:description" content="A 0 to infinity NLP lesson on synonyms, antonyms, word meaning, and sentence meaning matching with Python." />
-  <meta name="twitter:image" content="https://aiml.learnwithchampak.live/nlp/51-60-meaning-matching/seo-picture.png" />
+  <meta name="twitter:title" content="NLP 51% to 60% | Built-in NLP Meaning Modules" />
+  <meta name="twitter:description"
+    content="A 0 to infinity lesson using NLTK WordNet for synonyms, antonyms, word meanings, and sentence meaning matching." />
+  <meta name="twitter:image"
+    content="https://aiml.learnwithchampak.live/nlp/51-60-built-in-nlp-modules/seo-picture.png" />
 
   <!-- Google Ads -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
@@ -43,8 +50,8 @@
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "name": "NLP 51% to 60% | Synonyms, Antonyms and Meaning Matching",
-    "description": "A complete NLP lesson on synonyms, antonyms, word meaning, sentence meaning and meaning matching with Python.",
+    "name": "NLP 51% to 60% | Synonyms, Antonyms and Meaning with Built-in NLP Modules",
+    "description": "A complete NLP lesson using NLTK WordNet for synonyms, antonyms, definitions, synsets, lemmas, word similarity, and sentence meaning matching.",
     "learningResourceType": "Lesson",
     "educationalLevel": "Beginner to Advanced",
     "author": {
@@ -56,7 +63,7 @@
       "name": "Programmers Picnic AI-ML Classes"
     },
     "inLanguage": "en",
-    "url": "https://aiml.learnwithchampak.live/nlp/51-60-meaning-matching/"
+    "url": "https://aiml.learnwithchampak.live/nlp/51-60-built-in-nlp-modules/"
   }
   </script>
 </head>
@@ -74,12 +81,13 @@
 
       <nav class="nav" aria-label="Lesson navigation">
         <a href="#roadmap">Roadmap</a>
+        <a href="#wordnet">WordNet</a>
         <a href="#synonyms">Synonyms</a>
         <a href="#antonyms">Antonyms</a>
+        <a href="#meaning">Meaning</a>
         <a href="#sentences">Sentences</a>
         <a href="#projects">Projects</a>
         <a href="#editor">Editor</a>
-        <a href="#quiz">Quiz</a>
       </nav>
     </div>
   </header>
@@ -88,36 +96,41 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div class="hero-card">
-          <p class="eyebrow">NLP 51% to 60% • Meaning Matching</p>
-          <h1>Synonyms, Antonyms and Matching Meaning in Words and Sentences</h1>
+          <p class="eyebrow">NLP 51% to 60% • Built-in NLP Modules</p>
+          <h1>Synonyms, Antonyms and Meaning Matching using NLTK WordNet</h1>
           <p class="lead">
-            This 0 to infinity NLP lesson teaches students how language meaning works:
-            synonyms, antonyms, exact matching, meaning matching, opposite meaning, and
-            beginner Python programs for word and sentence meaning comparison.
+            This lesson is rebuilt completely. We will not depend on hand-written mini dictionaries.
+            Students will now use real NLP resources through Python modules, especially
+            <strong>NLTK WordNet</strong>, to find word meanings, synonyms, antonyms,
+            examples, word families, and simple sentence meaning matches.
           </p>
 
           <div class="hero-actions">
-            <a class="btn primary" href="#projects">Start Projects</a>
+            <a class="btn primary" href="#setup">Start Setup</a>
+            <a class="btn ghost" href="#projects">Mini Projects</a>
             <a class="btn ghost" href="#editor">Open Python Editor</a>
             <button class="btn ghost" type="button" id="printBtn">Print</button>
             <button class="btn ghost" type="button" id="shareBtn">Share</button>
           </div>
 
           <div class="quick-points">
-            <span>Word meaning</span>
-            <span>Synonyms</span>
-            <span>Antonyms</span>
-            <span>Sentence meaning</span>
-            <span>Python mini projects</span>
+            <span>NLTK</span>
+            <span>WordNet</span>
+            <span>Synsets</span>
+            <span>Lemmas</span>
+            <span>Definitions</span>
+            <span>Similarity</span>
           </div>
         </div>
 
         <aside class="progress-card">
           <h2>Current Progress</h2>
           <p>
-            We already learned CountVectorizer and TF-IDF.
-            Now we move from word matching to meaning matching.
+            31% to 40% used CountVectorizer.
+            41% to 50% used TF-IDF.
+            51% to 60% now uses NLP meaning resources.
           </p>
+
           <div class="progress-shell" aria-label="NLP progress 60%">
             <div class="progress-fill"></div>
           </div>
@@ -128,19 +141,15 @@
           </div>
 
           <div class="mini-note">
-            Real NLP begins when the computer moves beyond matching spelling and starts matching meaning.
+            Earlier we made our own dictionary. Now we use a real NLP lexical database.
           </div>
         </aside>
       </div>
     </section>
 
     <section class="wrap ad-section" aria-label="Advertisement">
-      <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-8321261883090494"
-        data-ad-slot="7782388330"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8321261883090494" data-ad-slot="7782388330"
+        data-ad-format="auto" data-full-width-responsive="true"></ins>
     </section>
 
     <section id="roadmap" class="wrap section">
@@ -150,515 +159,692 @@
       </div>
 
       <div class="roadmap">
-        <article><b>51%</b><span>What is word meaning?</span></article>
-        <article><b>52%</b><span>What are synonyms?</span></article>
-        <article><b>53%</b><span>What are antonyms?</span></article>
-        <article><b>54%</b><span>Why exact word matching is not enough</span></article>
-        <article><b>55%</b><span>Matching similar meanings in words</span></article>
-        <article><b>56%</b><span>Matching opposite meanings in words</span></article>
-        <article><b>57%</b><span>Matching similar meanings in sentences</span></article>
-        <article><b>58%</b><span>Problem with CountVectorizer and TF-IDF</span></article>
-        <article><b>59%</b><span>Mini project: synonym and antonym finder</span></article>
-        <article><b>60%</b><span>Mini project: meaning matcher for sentences</span></article>
+        <article><b>51%</b><span>Why use NLP modules instead of manual dictionaries?</span></article>
+        <article><b>52%</b><span>Install and import NLTK WordNet</span></article>
+        <article><b>53%</b><span>Understand synsets, lemmas, and definitions</span></article>
+        <article><b>54%</b><span>Find synonyms using WordNet</span></article>
+        <article><b>55%</b><span>Find antonyms using WordNet lemmas</span></article>
+        <article><b>56%</b><span>Find examples and multiple meanings of a word</span></article>
+        <article><b>57%</b><span>Compare word meanings using WordNet similarity</span></article>
+        <article><b>58%</b><span>Match sentence meaning using synonym expansion</span></article>
+        <article><b>59%</b><span>Mini project: Word Meaning Explorer</span></article>
+        <article><b>60%</b><span>Mini project: Sentence Meaning Matcher</span></article>
       </div>
     </section>
 
     <section class="wrap section">
       <div class="section-head">
-        <p class="eyebrow">Level 0 explanation</p>
-        <h2>A word is not only spelling</h2>
+        <p class="eyebrow">Lesson shift</p>
+        <h2>From hand-written dictionaries to NLP modules</h2>
       </div>
 
       <div class="two-col">
-        <article class="card">
-          <h3>Spelling matching</h3>
+        <article class="card danger-soft">
+          <h3>Old beginner approach</h3>
           <p>
-            Spelling matching checks whether two words look exactly the same.
-            For example, <code>happy</code> and <code>happy</code> match.
+            We manually wrote a dictionary like:
           </p>
-          <div class="example-box">
-            happy = happy
-          </div>
+          <pre><code>synonyms = {
+    "happy": ["glad", "joyful"],
+    "big": ["large", "huge"]
+}</code></pre>
+          <p>
+            This is good for understanding, but it is not scalable.
+            We cannot manually type thousands of words.
+          </p>
         </article>
 
-        <article class="card">
-          <h3>Meaning matching</h3>
+        <article class="card success-soft">
+          <h3>New NLP-module approach</h3>
           <p>
-            Meaning matching checks whether two words carry a similar idea.
-            For example, <code>happy</code> and <code>glad</code> are different spellings,
-            but their meanings are close.
+            We use a real NLP resource:
           </p>
-          <div class="example-box success">
-            happy ≈ glad
-          </div>
-        </article>
-      </div>
+          <pre><code>from nltk.corpus import wordnet as wn
 
-      <div class="callout">
-        <strong>Main idea:</strong> exact matching checks spelling, but NLP should also try to match meaning.
+synsets = wn.synsets("happy")</code></pre>
+          <p>
+            Now Python can search a large lexical database instead of relying only on our small manual list.
+          </p>
+        </article>
       </div>
     </section>
 
-    <section class="wrap section">
+    <section id="setup" class="wrap section">
       <div class="section-head">
-        <p class="eyebrow">51%</p>
-        <h2>What is word meaning?</h2>
+        <p class="eyebrow">52%</p>
+        <h2>Setup: Install and download WordNet</h2>
       </div>
 
-      <div class="card">
-        <p>A word can have spelling, sound, meaning, usage, and relationships with other words.</p>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Part</th>
-                <th>Example</th>
-                <th>NLP question</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Spelling</td>
-                <td>fast</td>
-                <td>Which letters are used?</td>
-              </tr>
-              <tr>
-                <td>Meaning</td>
-                <td>quick</td>
-                <td>What idea does the word carry?</td>
-              </tr>
-              <tr>
-                <td>Usage</td>
-                <td>The car is fast.</td>
-                <td>How is the word used in context?</td>
-              </tr>
-              <tr>
-                <td>Other meaning</td>
-                <td>He is on a fast.</td>
-                <td>Does the same spelling mean something else?</td>
-              </tr>
-            </tbody>
-          </table>
+      <article class="code-card">
+        <div class="code-head">
+          <h3>Step 1: Install NLTK</h3>
+          <button class="copy-btn" data-copy="codeInstall">Copy</button>
         </div>
+        <pre id="codeInstall"><code>pip install nltk</code></pre>
+      </article>
 
-        <p class="warning">
-          The word <strong>fast</strong> can mean quick, but it can also mean not eating food.
-          This is why NLP needs context.
-        </p>
+      <article class="code-card">
+        <div class="code-head">
+          <h3>Step 2: Download WordNet data once</h3>
+          <button class="copy-btn" data-copy="codeDownload">Copy</button>
+        </div>
+        <pre id="codeDownload"><code>import nltk
+
+nltk.download("wordnet")
+nltk.download("omw-1.4")</code></pre>
+      </article>
+
+      <div class="callout">
+        <strong>Teacher note:</strong> <code>wordnet</code> gives English word meanings and relationships.
+        <code>omw-1.4</code> provides Open Multilingual WordNet data used by NLTK.
+      </div>
+    </section>
+
+    <section id="wordnet" class="wrap section">
+      <div class="section-head">
+        <p class="eyebrow">53%</p>
+        <h2>WordNet basics: synsets, lemmas, definitions</h2>
+      </div>
+
+      <div class="three-col">
+        <article class="mini-card">
+          <h3>Synset</h3>
+          <p>
+            A synset is a set of words that share one meaning.
+          </p>
+        </article>
+        <article class="mini-card">
+          <h3>Lemma</h3>
+          <p>
+            A lemma is a word form inside a synset.
+          </p>
+        </article>
+        <article class="mini-card">
+          <h3>Definition</h3>
+          <p>
+            A definition explains the meaning of that synset.
+          </p>
+        </article>
+      </div>
+
+      <article class="code-card">
+        <div class="code-head">
+          <h3>Explore a word with WordNet</h3>
+          <button class="copy-btn" data-copy="codeExploreWord">Copy</button>
+        </div>
+        <pre id="codeExploreWord"><code>from nltk.corpus import wordnet as wn
+
+word = "happy"
+
+synsets = wn.synsets(word)
+
+print("Word:", word)
+print("Number of meanings found:", len(synsets))
+
+for s in synsets:
+    print("\nSynset:", s.name())
+    print("Definition:", s.definition())
+    print("Examples:", s.examples())
+    print("Lemma names:", s.lemma_names())</code></pre>
+      </article>
+
+      <div class="callout">
+        <strong>Important:</strong> one word may have many synsets because one spelling can have multiple meanings.
       </div>
     </section>
 
     <section id="synonyms" class="wrap section">
       <div class="section-head">
-        <p class="eyebrow">52% and 55%</p>
-        <h2>Synonyms: matching similar meanings</h2>
+        <p class="eyebrow">54%</p>
+        <h2>Find synonyms using NLTK WordNet</h2>
       </div>
 
-      <div class="two-col">
-        <article class="card">
-          <h3>What are synonyms?</h3>
-          <p>Synonyms are words with similar meanings.</p>
-          <ul class="chip-list">
-            <li>big = large</li>
-            <li>small = little</li>
-            <li>happy = glad</li>
-            <li>quick = fast</li>
-            <li>smart = intelligent</li>
-            <li>begin = start</li>
-            <li>end = finish</li>
-            <li>buy = purchase</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3>Context warning</h3>
-          <p>Synonyms are not always exactly equal in every sentence.</p>
-          <div class="compare">
-            <div>
-              <b>Good</b>
-              <span>big house ≈ large house</span>
-            </div>
-            <div>
-              <b>Awkward</b>
-              <span>big brother ≠ large brother</span>
-            </div>
-          </div>
-        </article>
+      <div class="card">
+        <p>
+          In WordNet, synonyms can be collected from lemma names inside synsets.
+          We do not have to manually write every synonym.
+        </p>
       </div>
 
       <article class="code-card">
         <div class="code-head">
-          <h3>Beginner Python: synonym finder</h3>
-          <button class="copy-btn" data-copy="codeSynonyms">Copy</button>
+          <h3>Synonym finder using WordNet</h3>
+          <button class="copy-btn" data-copy="codeSynonymFinder">Copy</button>
         </div>
-        <pre id="codeSynonyms"><code>synonyms = {
-    "happy": ["glad", "joyful", "pleased"],
-    "sad": ["unhappy", "sorrowful"],
-    "big": ["large", "huge"],
-    "small": ["little", "tiny"],
-    "fast": ["quick", "rapid"],
-    "start": ["begin", "commence"],
-    "end": ["finish", "complete"]
-}
+        <pre id="codeSynonymFinder"><code>from nltk.corpus import wordnet as wn
 
-word = input("Enter a word: ").lower()
+def get_synonyms(word):
+    synonyms = set()
 
-if word in synonyms:
-    print("Synonyms of", word, "are:")
-    for s in synonyms[word]:
-        print("-", s)
-else:
-    print("Sorry, word not found.")</code></pre>
+    for synset in wn.synsets(word):
+        for lemma in synset.lemmas():
+            name = lemma.name().replace("_", " ")
+            if name.lower() != word.lower():
+                synonyms.add(name)
+
+    return sorted(synonyms)
+
+word = input("Enter a word: ")
+
+print("\nSynonyms:")
+for item in get_synonyms(word):
+    print("-", item)</code></pre>
       </article>
+
+      <div class="teacher-box">
+        <h3>Try these words</h3>
+        <p><code>happy</code>, <code>big</code>, <code>small</code>, <code>fast</code>, <code>start</code>,
+          <code>smart</code>, <code>beautiful</code></p>
+      </div>
     </section>
 
     <section id="antonyms" class="wrap section">
       <div class="section-head">
-        <p class="eyebrow">53% and 56%</p>
-        <h2>Antonyms: matching opposite meanings</h2>
+        <p class="eyebrow">55%</p>
+        <h2>Find antonyms using WordNet lemmas</h2>
       </div>
 
-      <div class="two-col">
-        <article class="card">
-          <h3>What are antonyms?</h3>
-          <p>Antonyms are words with opposite meanings.</p>
-          <ul class="chip-list opposite">
-            <li>hot ↔ cold</li>
-            <li>big ↔ small</li>
-            <li>happy ↔ sad</li>
-            <li>fast ↔ slow</li>
-            <li>start ↔ stop</li>
-            <li>open ↔ close</li>
-            <li>true ↔ false</li>
-            <li>success ↔ failure</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h3>Meaning can depend on sentence</h3>
-          <div class="example-list">
-            <p><strong>light bag</strong> means not heavy.</p>
-            <p><strong>light room</strong> means bright room.</p>
-            <p><strong>Turn on the light</strong> means lamp or brightness.</p>
-          </div>
-          <p class="warning">The same word can change meaning depending on context.</p>
-        </article>
+      <div class="card">
+        <p>
+          In WordNet, antonyms are attached to lemmas.
+          We search all synsets, then all lemmas, then ask each lemma whether it has antonyms.
+        </p>
       </div>
 
       <article class="code-card">
         <div class="code-head">
-          <h3>Beginner Python: antonym finder</h3>
-          <button class="copy-btn" data-copy="codeAntonyms">Copy</button>
+          <h3>Antonym finder using WordNet</h3>
+          <button class="copy-btn" data-copy="codeAntonymFinder">Copy</button>
         </div>
-        <pre id="codeAntonyms"><code>antonyms = {
-    "happy": ["sad", "unhappy"],
-    "big": ["small", "little"],
-    "hot": ["cold"],
-    "fast": ["slow"],
-    "start": ["stop", "end"],
-    "open": ["close", "shut"],
-    "true": ["false"],
-    "success": ["failure"]
-}
+        <pre id="codeAntonymFinder"><code>from nltk.corpus import wordnet as wn
 
-word = input("Enter a word: ").lower()
+def get_antonyms(word):
+    antonyms = set()
 
-if word in antonyms:
-    print("Antonyms of", word, "are:")
-    for a in antonyms[word]:
-        print("-", a)
-else:
-    print("Sorry, word not found.")</code></pre>
+    for synset in wn.synsets(word):
+        for lemma in synset.lemmas():
+            for antonym in lemma.antonyms():
+                name = antonym.name().replace("_", " ")
+                antonyms.add(name)
+
+    return sorted(antonyms)
+
+word = input("Enter a word: ")
+
+print("\nAntonyms:")
+for item in get_antonyms(word):
+    print("-", item)</code></pre>
       </article>
+
+      <div class="callout warning">
+        Some words may return no antonyms because WordNet may not store a direct opposite for every word.
+      </div>
+    </section>
+
+    <section id="meaning" class="wrap section">
+      <div class="section-head">
+        <p class="eyebrow">56%</p>
+        <h2>Find multiple meanings, definitions and examples</h2>
+      </div>
+
+      <div class="card">
+        <p>
+          WordNet is useful because it does not only return synonyms.
+          It also returns definitions and example sentences.
+          This helps students see that a word can have more than one meaning.
+        </p>
+      </div>
+
+      <article class="code-card">
+        <div class="code-head">
+          <h3>Meaning explorer</h3>
+          <button class="copy-btn" data-copy="codeMeaningExplorer">Copy</button>
+        </div>
+        <pre id="codeMeaningExplorer"><code>from nltk.corpus import wordnet as wn
+
+def explain_word(word):
+    synsets = wn.synsets(word)
+
+    if not synsets:
+        print("No meaning found for:", word)
+        return
+
+    print("Word:", word)
+    print("Meanings found:", len(synsets))
+
+    for number, synset in enumerate(synsets, start=1):
+        print("\nMeaning", number)
+        print("Synset:", synset.name())
+        print("Part of speech:", synset.pos())
+        print("Definition:", synset.definition())
+
+        examples = synset.examples()
+        if examples:
+            print("Examples:")
+            for ex in examples:
+                print("-", ex)
+
+        print("Related words:", ", ".join(synset.lemma_names()))
+
+word = input("Enter a word: ")
+explain_word(word)</code></pre>
+      </article>
+
+      <div class="teacher-box">
+        <h3>Classroom demonstration</h3>
+        <p>
+          Try <code>light</code>, <code>bank</code>, <code>play</code>, <code>fast</code>, and <code>run</code>.
+          These words show why context matters in NLP.
+        </p>
+      </div>
     </section>
 
     <section class="wrap section">
       <div class="section-head">
-        <p class="eyebrow">54%</p>
-        <h2>Why exact matching is not enough</h2>
+        <p class="eyebrow">57%</p>
+        <h2>Compare word meanings using WordNet similarity</h2>
       </div>
 
       <div class="card">
-        <div class="meaning-flow">
-          <div>
-            <span>Student search</span>
-            <strong>How to begin Python?</strong>
-          </div>
-          <div class="arrow">→</div>
-          <div>
-            <span>Stored lesson</span>
-            <strong>Start Python from zero</strong>
-          </div>
-          <div class="arrow">→</div>
-          <div>
-            <span>Meaning match</span>
-            <strong>begin ≈ start</strong>
-          </div>
-        </div>
-
         <p>
-          An exact matching system may fail because <code>begin</code> and <code>start</code>
-          are different spellings. A meaning matching system should understand that they are close.
+          WordNet can compare some word meanings using path similarity.
+          The score is based on how close two synsets are in the WordNet hierarchy.
+        </p>
+        <p class="warning">
+          This is not perfect. It works better for nouns than for every kind of word.
+          It also depends on selecting the correct synset.
         </p>
       </div>
+
+      <article class="code-card">
+        <div class="code-head">
+          <h3>Word similarity using first synset</h3>
+          <button class="copy-btn" data-copy="codeWordSimilarity">Copy</button>
+        </div>
+        <pre id="codeWordSimilarity"><code>from nltk.corpus import wordnet as wn
+
+def word_similarity(word1, word2):
+    synsets1 = wn.synsets(word1)
+    synsets2 = wn.synsets(word2)
+
+    if not synsets1 or not synsets2:
+        return None
+
+    # Beginner version:
+    # take the first meaning of each word
+    s1 = synsets1[0]
+    s2 = synsets2[0]
+
+    return s1.path_similarity(s2)
+
+pairs = [
+    ("car", "automobile"),
+    ("dog", "cat"),
+    ("happy", "sad"),
+    ("big", "large"),
+    ("book", "table")
+]
+
+for w1, w2 in pairs:
+    score = word_similarity(w1, w2)
+    print(w1, "-", w2, "=", score)</code></pre>
+      </article>
     </section>
 
     <section id="sentences" class="wrap section">
       <div class="section-head">
-        <p class="eyebrow">57%</p>
-        <h2>Matching similar meanings in sentences</h2>
-      </div>
-
-      <div class="two-col">
-        <article class="card">
-          <h3>Similar meaning</h3>
-          <p><strong>Sentence 1:</strong> I am happy today.</p>
-          <p><strong>Sentence 2:</strong> I am glad today.</p>
-          <div class="example-box success">happy ≈ glad</div>
-        </article>
-
-        <article class="card">
-          <h3>Opposite meaning</h3>
-          <p><strong>Sentence 1:</strong> The box is big.</p>
-          <p><strong>Sentence 2:</strong> The box is small.</p>
-          <div class="example-box danger">big ↔ small</div>
-        </article>
-      </div>
-
-      <article class="code-card">
-        <div class="code-head">
-          <h3>Python: word-level similarity check</h3>
-          <button class="copy-btn" data-copy="codeWordSimilar">Copy</button>
-        </div>
-        <pre id="codeWordSimilar"><code>synonyms = {
-    "happy": ["glad", "joyful"],
-    "sad": ["unhappy", "sorrowful"],
-    "big": ["large", "huge"],
-    "small": ["little", "tiny"],
-    "fast": ["quick", "rapid"],
-    "start": ["begin"],
-    "end": ["finish"]
-}
-
-def are_words_similar(word1, word2):
-    word1 = word1.lower()
-    word2 = word2.lower()
-
-    if word1 == word2:
-        return True
-
-    if word1 in synonyms and word2 in synonyms[word1]:
-        return True
-
-    if word2 in synonyms and word1 in synonyms[word2]:
-        return True
-
-    return False
-
-print(are_words_similar("happy", "glad"))
-print(are_words_similar("big", "large"))
-print(are_words_similar("happy", "sad"))</code></pre>
-      </article>
-    </section>
-
-    <section class="wrap section">
-      <div class="section-head">
         <p class="eyebrow">58%</p>
-        <h2>Problem with CountVectorizer and TF-IDF</h2>
+        <h2>Sentence meaning using synonym expansion</h2>
       </div>
 
       <div class="card">
         <p>
-          CountVectorizer and TF-IDF are useful, but they mostly depend on visible words.
-          They may not understand that different words can have similar meanings.
+          CountVectorizer and TF-IDF may fail when two sentences use different words
+          with similar meaning. We can improve sentence matching by expanding each word
+          into its WordNet synonyms.
         </p>
 
-        <div class="three-col">
-          <div class="mini-card">
-            <h3>Sentence 1</h3>
-            <p>I am happy.</p>
+        <div class="meaning-flow">
+          <div>
+            <span>Sentence 1</span>
+            <strong>I begin Python today</strong>
           </div>
-          <div class="mini-card">
-            <h3>Sentence 2</h3>
-            <p>I am glad.</p>
+          <div class="arrow">→</div>
+          <div>
+            <span>WordNet says</span>
+            <strong>begin ≈ start</strong>
           </div>
-          <div class="mini-card">
-            <h3>Meaning</h3>
-            <p>happy ≈ glad</p>
+          <div class="arrow">→</div>
+          <div>
+            <span>Sentence 2</span>
+            <strong>I start Python today</strong>
           </div>
-        </div>
-
-        <div class="callout">
-          Better meaning knowledge may come from synonym dictionaries, antonym dictionaries, WordNet, word embeddings, sentence embeddings, and transformer models. In this lesson, we keep it beginner-friendly with dictionaries.
         </div>
       </div>
+
+      <article class="code-card">
+        <div class="code-head">
+          <h3>Sentence meaning score using WordNet synonyms</h3>
+          <button class="copy-btn" data-copy="codeSentenceSynonyms">Copy</button>
+        </div>
+        <pre id="codeSentenceSynonyms"><code>from nltk.corpus import wordnet as wn
+import re
+
+def clean_words(sentence):
+    sentence = sentence.lower()
+    return re.findall(r"[a-z]+", sentence)
+
+def synonyms_of(word):
+    words = {word}
+
+    for synset in wn.synsets(word):
+        for lemma in synset.lemmas():
+            words.add(lemma.name().lower().replace("_", " "))
+
+    return words
+
+def expanded_sentence_words(sentence):
+    result = set()
+
+    for word in clean_words(sentence):
+        result.update(synonyms_of(word))
+
+    return result
+
+def sentence_meaning_score(sentence1, sentence2):
+    words1 = expanded_sentence_words(sentence1)
+    words2 = expanded_sentence_words(sentence2)
+
+    common = words1.intersection(words2)
+    total = words1.union(words2)
+
+    if not total:
+        return 0, common
+
+    score = len(common) / len(total)
+    return score, common
+
+s1 = "I begin Python today"
+s2 = "I start Python today"
+
+score, common_words = sentence_meaning_score(s1, s2)
+
+print("Sentence 1:", s1)
+print("Sentence 2:", s2)
+print("Meaning score:", round(score, 3))
+print("Common meaning words:")
+for word in sorted(common_words):
+    print("-", word)</code></pre>
+      </article>
     </section>
 
     <section id="projects" class="wrap section">
       <div class="section-head">
         <p class="eyebrow">59% and 60%</p>
-        <h2>Mini Projects</h2>
+        <h2>Mini Projects using NLP modules</h2>
       </div>
 
       <article class="code-card">
         <div class="code-head">
-          <h3>Project 1: Synonym and Antonym Finder</h3>
+          <h3>Project 1: Word Meaning Explorer</h3>
           <button class="copy-btn" data-copy="codeProject1">Copy</button>
         </div>
-        <pre id="codeProject1"><code>word_data = {
-    "happy": {
-        "synonyms": ["glad", "joyful", "pleased"],
-        "antonyms": ["sad", "unhappy"]
-    },
-    "big": {
-        "synonyms": ["large", "huge", "giant"],
-        "antonyms": ["small", "little", "tiny"]
-    },
-    "fast": {
-        "synonyms": ["quick", "rapid", "speedy"],
-        "antonyms": ["slow"]
-    },
-    "start": {
-        "synonyms": ["begin", "commence"],
-        "antonyms": ["stop", "end", "finish"]
-    },
-    "open": {
-        "synonyms": ["unlock", "unclose"],
-        "antonyms": ["close", "shut"]
-    },
-    "success": {
-        "synonyms": ["victory", "achievement"],
-        "antonyms": ["failure", "defeat"]
-    }
-}
+        <pre id="codeProject1"><code>import nltk
+from nltk.corpus import wordnet as wn
+
+# Run these once if WordNet is not downloaded:
+# nltk.download("wordnet")
+# nltk.download("omw-1.4")
+
+def get_synonyms(word):
+    synonyms = set()
+
+    for synset in wn.synsets(word):
+        for lemma in synset.lemmas():
+            name = lemma.name().replace("_", " ")
+            if name.lower() != word.lower():
+                synonyms.add(name)
+
+    return sorted(synonyms)
+
+def get_antonyms(word):
+    antonyms = set()
+
+    for synset in wn.synsets(word):
+        for lemma in synset.lemmas():
+            for antonym in lemma.antonyms():
+                antonyms.add(antonym.name().replace("_", " "))
+
+    return sorted(antonyms)
+
+def show_meanings(word):
+    synsets = wn.synsets(word)
+
+    if not synsets:
+        print("No WordNet entry found.")
+        return
+
+    for i, synset in enumerate(synsets, start=1):
+        print("\nMeaning", i)
+        print("Name:", synset.name())
+        print("Part of speech:", synset.pos())
+        print("Definition:", synset.definition())
+
+        if synset.examples():
+            print("Examples:")
+            for ex in synset.examples():
+                print("-", ex)
 
 word = input("Enter a word: ").lower()
 
-if word in word_data:
-    print("\nWord:", word)
+print("\nWORD:", word)
 
-    print("\nSynonyms:")
-    for s in word_data[word]["synonyms"]:
-        print("-", s)
+print("\nSYNONYMS")
+for item in get_synonyms(word):
+    print("-", item)
 
-    print("\nAntonyms:")
-    for a in word_data[word]["antonyms"]:
-        print("-", a)
-else:
-    print("Word not found in mini dictionary.")</code></pre>
+print("\nANTONYMS")
+for item in get_antonyms(word):
+    print("-", item)
+
+print("\nMEANINGS")
+show_meanings(word)</code></pre>
       </article>
 
       <article class="code-card">
         <div class="code-head">
-          <h3>Project 2: Meaning Matcher for Sentences</h3>
+          <h3>Project 2: Sentence Meaning Matcher with WordNet</h3>
           <button class="copy-btn" data-copy="codeProject2">Copy</button>
         </div>
-        <pre id="codeProject2"><code>word_data = {
-    "happy": {
-        "synonyms": ["glad", "joyful", "pleased"],
-        "antonyms": ["sad", "unhappy"]
-    },
-    "sad": {
-        "synonyms": ["unhappy", "sorrowful"],
-        "antonyms": ["happy", "glad"]
-    },
-    "big": {
-        "synonyms": ["large", "huge", "giant"],
-        "antonyms": ["small", "little", "tiny"]
-    },
-    "small": {
-        "synonyms": ["little", "tiny"],
-        "antonyms": ["big", "large", "huge"]
-    },
-    "fast": {
-        "synonyms": ["quick", "rapid", "speedy"],
-        "antonyms": ["slow"]
-    },
-    "slow": {
-        "synonyms": ["lazy", "sluggish"],
-        "antonyms": ["fast", "quick", "rapid"]
-    },
-    "start": {
-        "synonyms": ["begin", "commence"],
-        "antonyms": ["stop", "end", "finish"]
-    },
-    "open": {
-        "synonyms": ["unlock"],
-        "antonyms": ["close", "shut"]
-    }
-}
+        <pre id="codeProject2"><code>import re
+from nltk.corpus import wordnet as wn
 
-def clean_sentence(sentence):
+def clean_words(sentence):
     sentence = sentence.lower()
-    marks = [".", ",", "!", "?", ";", ":"]
-    for mark in marks:
-        sentence = sentence.replace(mark, "")
-    return sentence.split()
+    return re.findall(r"[a-z]+", sentence)
 
-def are_synonyms(word1, word2):
-    if word1 == word2:
-        return True
+def synonyms_of(word):
+    result = {word}
 
-    if word1 in word_data and word2 in word_data[word1]["synonyms"]:
-        return True
+    for synset in wn.synsets(word):
+        for lemma in synset.lemmas():
+            name = lemma.name().lower().replace("_", " ")
+            result.add(name)
 
-    if word2 in word_data and word1 in word_data[word2]["synonyms"]:
-        return True
+    return result
 
-    return False
+def antonyms_of(word):
+    result = set()
 
-def are_antonyms(word1, word2):
-    if word1 in word_data and word2 in word_data[word1]["antonyms"]:
-        return True
+    for synset in wn.synsets(word):
+        for lemma in synset.lemmas():
+            for antonym in lemma.antonyms():
+                name = antonym.name().lower().replace("_", " ")
+                result.add(name)
 
-    if word2 in word_data and word1 in word_data[word2]["antonyms"]:
-        return True
+    return result
 
-    return False
+def expand_sentence(sentence):
+    expanded = set()
 
-def meaning_match(sentence1, sentence2):
-    words1 = clean_sentence(sentence1)
-    words2 = clean_sentence(sentence2)
+    for word in clean_words(sentence):
+        expanded.update(synonyms_of(word))
 
-    exact_matches = 0
-    synonym_matches = 0
-    antonym_conflicts = 0
+    return expanded
+
+def find_antonym_conflicts(sentence1, sentence2):
+    words1 = clean_words(sentence1)
+    words2 = clean_words(sentence2)
+
+    conflicts = []
 
     for w1 in words1:
+        antonyms = antonyms_of(w1)
         for w2 in words2:
-            if w1 == w2:
-                exact_matches += 1
-                break
-            elif are_synonyms(w1, w2):
-                synonym_matches += 1
-                break
-            elif are_antonyms(w1, w2):
-                antonym_conflicts += 1
-                break
+            if w2 in antonyms:
+                conflicts.append((w1, w2))
 
-    meaning_score = exact_matches + synonym_matches - antonym_conflicts
-    return exact_matches, synonym_matches, antonym_conflicts, meaning_score
+    return conflicts
+
+def meaning_match(sentence1, sentence2):
+    expanded1 = expand_sentence(sentence1)
+    expanded2 = expand_sentence(sentence2)
+
+    common = expanded1.intersection(expanded2)
+    total = expanded1.union(expanded2)
+
+    synonym_score = 0
+    if total:
+        synonym_score = len(common) / len(total)
+
+    conflicts = find_antonym_conflicts(sentence1, sentence2)
+
+    final_score = synonym_score - (0.15 * len(conflicts))
+
+    return synonym_score, conflicts, final_score, common
 
 s1 = input("Enter first sentence: ")
 s2 = input("Enter second sentence: ")
 
-exact, synonym, antonym, score = meaning_match(s1, s2)
+synonym_score, conflicts, final_score, common = meaning_match(s1, s2)
 
-print("\nExact matches:", exact)
-print("Synonym matches:", synonym)
-print("Antonym conflicts:", antonym)
-print("Final meaning score:", score)
+print("\nSentence 1:", s1)
+print("Sentence 2:", s2)
 
-if score > 2:
-    print("Result: Sentences are meaningfully similar.")
-elif score == 0:
-    print("Result: Sentences are weakly related or unclear.")
-elif score < 0:
-    print("Result: Sentences may have opposite meaning.")
+print("\nSynonym expansion score:", round(synonym_score, 3))
+
+print("\nCommon meaning words:")
+for word in sorted(common):
+    print("-", word)
+
+print("\nAntonym conflicts:")
+if conflicts:
+    for pair in conflicts:
+        print("-", pair[0], "opposes", pair[1])
 else:
-    print("Result: Sentences have some similarity.")</code></pre>
+    print("No direct antonym conflict found.")
+
+print("\nFinal meaning score:", round(final_score, 3))
+
+if final_score > 0.20:
+    print("Result: Sentences may be meaningfully related.")
+elif final_score < 0:
+    print("Result: Sentences may contain opposite meaning.")
+else:
+    print("Result: Weak or unclear relationship.")</code></pre>
       </article>
+
+      <article class="code-card">
+        <div class="code-head">
+          <h3>Project 3: Lesson Search with WordNet Expansion</h3>
+          <button class="copy-btn" data-copy="codeProject3">Copy</button>
+        </div>
+        <pre id="codeProject3"><code>import re
+from nltk.corpus import wordnet as wn
+
+lessons = [
+    "Start Python from zero",
+    "Begin machine learning with Python",
+    "Introduction to Natural Language Processing",
+    "HTML and CSS for beautiful web pages",
+    "Deploy Angular website on GitHub Pages",
+    "Text similarity using cosine similarity",
+    "TF IDF search ranking in NLP"
+]
+
+def clean_words(text):
+    return re.findall(r"[a-z]+", text.lower())
+
+def expand_word(word):
+    result = {word}
+
+    for synset in wn.synsets(word):
+        for lemma in synset.lemmas():
+            result.add(lemma.name().lower().replace("_", " "))
+
+    return result
+
+def expand_text(text):
+    expanded = set()
+
+    for word in clean_words(text):
+        expanded.update(expand_word(word))
+
+    return expanded
+
+def score(query, lesson):
+    q = expand_text(query)
+    l = expand_text(lesson)
+
+    if not q or not l:
+        return 0
+
+    return len(q.intersection(l)) / len(q.union(l))
+
+query = input("Search a lesson: ")
+
+ranked = []
+
+for lesson in lessons:
+    ranked.append((lesson, score(query, lesson)))
+
+ranked.sort(key=lambda item: item[1], reverse=True)
+
+print("\nSearch:", query)
+print("\nRanked lessons:")
+
+for lesson, sc in ranked:
+    print(round(sc, 3), "->", lesson)</code></pre>
+      </article>
+    </section>
+
+    <section class="wrap section">
+      <div class="section-head">
+        <p class="eyebrow">Critical thinking</p>
+        <h2>Limitations of WordNet-based meaning matching</h2>
+      </div>
+
+      <div class="two-col">
+        <article class="card">
+          <h3>Strengths</h3>
+          <ul>
+            <li>Good for definitions.</li>
+            <li>Good for synonyms and antonyms.</li>
+            <li>Good for showing multiple meanings.</li>
+            <li>Excellent for teaching word relationships.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3>Limitations</h3>
+          <ul>
+            <li>It may not understand modern slang.</li>
+            <li>It may not choose the correct meaning automatically.</li>
+            <li>Sentence meaning still needs context.</li>
+            <li>Advanced systems use embeddings and transformers later.</li>
+          </ul>
+        </article>
+      </div>
     </section>
 
     <section id="editor" class="wrap section">
@@ -669,16 +855,13 @@ else:
 
       <div class="card">
         <p>
-          Paste the project code below into the editor, run it, and then add your own words:
-          teach, learn, difficult, easy, correct, wrong, accept, reject.
+          Paste the code examples into the editor. If your editor environment does not have NLTK installed,
+          run locally on your computer or use a Python notebook environment that allows <code>pip install nltk</code>.
         </p>
 
         <div class="editor-frame">
-          <iframe
-            src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-            title="Programmers Picnic Python Editor"
-            loading="lazy"
-            allowfullscreen></iframe>
+          <iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+            title="Programmers Picnic Python Editor" loading="lazy" allowfullscreen></iframe>
         </div>
       </div>
     </section>
@@ -690,13 +873,50 @@ else:
       </div>
 
       <div class="quiz">
-        <details><summary>What is a synonym?</summary><p>A synonym is a word with similar meaning, such as happy and glad.</p></details>
-        <details><summary>What is an antonym?</summary><p>An antonym is a word with opposite meaning, such as hot and cold.</p></details>
-        <details><summary>Why is exact matching not enough?</summary><p>Because different words can express similar meanings, such as begin and start.</p></details>
-        <details><summary>Why can TF-IDF fail with synonyms?</summary><p>Because TF-IDF sees happy and glad as different terms unless extra meaning knowledge is added.</p></details>
-        <details><summary>What is an antonym conflict?</summary><p>An antonym conflict happens when one sentence contains a word and another sentence contains its opposite.</p></details>
-        <details><summary>Why is the word light confusing?</summary><p>It can mean not heavy, brightness, or a lamp depending on context.</p></details>
-        <details><summary>What should students understand by 60%?</summary><p>They should understand that NLP must move beyond spelling and start comparing meaning.</p></details>
+        <details>
+          <summary>Why did we replace manual dictionaries?</summary>
+          <p>Manual dictionaries are useful for beginners but too small. NLP modules like WordNet contain many word
+            meanings and relationships.</p>
+        </details>
+        <details>
+          <summary>What is NLTK?</summary>
+          <p>NLTK is a Python library used for natural language processing tasks and learning.</p>
+        </details>
+        <details>
+          <summary>What is WordNet?</summary>
+          <p>WordNet is a lexical database of English words, meanings, relationships, definitions, synonyms, and
+            antonyms.</p>
+        </details>
+        <details>
+          <summary>What is a synset?</summary>
+          <p>A synset is a group of words that share one meaning.</p>
+        </details>
+        <details>
+          <summary>What is a lemma?</summary>
+          <p>A lemma is a word form inside a synset.</p>
+        </details>
+        <details>
+          <summary>How do we find synonyms in WordNet?</summary>
+          <p>We collect lemma names from synsets of a word.</p>
+        </details>
+        <details>
+          <summary>How do we find antonyms in WordNet?</summary>
+          <p>We check antonyms attached to lemmas inside synsets.</p>
+        </details>
+        <details>
+          <summary>Why is context important?</summary>
+          <p>One word can have many meanings, such as light, bank, fast, and run.</p>
+        </details>
+        <details>
+          <summary>Why is WordNet not enough for all modern NLP?</summary>
+          <p>It is lexical and rule/resource-based. Modern systems often need embeddings and transformer models for
+            deeper context.</p>
+        </details>
+        <details>
+          <summary>What should students understand by 60%?</summary>
+          <p>They should understand how to use real NLP modules to explore meanings, synonyms, antonyms, and basic
+            sentence meaning.</p>
+        </details>
       </div>
     </section>
 
@@ -704,8 +924,8 @@ else:
       <div class="final-card">
         <h2>One-Line Summary</h2>
         <p>
-          In NLP, real intelligence begins when the computer moves beyond matching words
-          and starts matching meanings.
+          At 60%, NLP moves beyond counting words and starts using real meaning resources
+          such as NLTK WordNet to understand word relationships.
         </p>
         <a class="btn primary" href="#top">Back to top</a>
       </div>
@@ -715,7 +935,7 @@ else:
   <footer class="footer">
     <div class="wrap">
       <strong>Programmers Picnic AI-ML Classes by Champak Roy</strong>
-      <p>NLP 51% to 60% • Synonyms • Antonyms • Word Meaning • Sentence Meaning</p>
+      <p>NLP 51% to 60% • NLTK • WordNet • Synsets • Lemmas • Synonyms • Antonyms • Meaning Matching</p>
       <p>
         <a href="https://learnwithchampak.live" target="_blank" rel="noopener">learnwithchampak.live</a>
         |
@@ -726,4 +946,5 @@ else:
 
   <script src="app.js"></script>
 </body>
+
 </html>

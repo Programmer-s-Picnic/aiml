@@ -5,7 +5,7 @@
   --muted: #73552c;
   --deep: #7c2d12;
   --line: rgba(146, 64, 14, 0.18);
-  --card: rgba(255, 255, 255, 0.9);
+  --card: rgba(255, 255, 255, 0.91);
   --white: #ffffff;
   --saffron: #f59e0b;
   --saffron-2: #fb923c;
@@ -57,7 +57,7 @@ a:hover {
   top: 0;
   z-index: 30;
   backdrop-filter: blur(18px);
-  background: rgba(255, 247, 237, 0.88);
+  background: rgba(255, 247, 237, 0.9);
   border-bottom: 1px solid var(--line);
 }
 
@@ -160,7 +160,8 @@ a:hover {
 .progress-card,
 .card,
 .code-card,
-.final-card {
+.final-card,
+.teacher-box {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -186,7 +187,7 @@ a:hover {
 
 h1 {
   margin: 0 0 16px;
-  max-width: 900px;
+  max-width: 930px;
   font-size: clamp(34px, 5vw, 64px);
   line-height: 1.02;
   letter-spacing: -0.06em;
@@ -208,7 +209,7 @@ h3 {
 }
 
 .lead {
-  max-width: 790px;
+  max-width: 830px;
   margin: 0;
   font-size: clamp(17px, 2vw, 21px);
   color: var(--muted);
@@ -229,8 +230,7 @@ h3 {
   margin-top: 18px;
 }
 
-.quick-points span,
-.chip-list li {
+.quick-points span {
   display: inline-flex;
   width: fit-content;
   border-radius: 999px;
@@ -285,14 +285,24 @@ h3 {
   font-weight: 1000;
 }
 
-.mini-note {
-  margin-top: 18px;
+.mini-note,
+.callout,
+.warning {
   padding: 16px;
-  border-left: 6px solid var(--saffron-3);
   border-radius: 18px;
+}
+
+.mini-note,
+.callout {
+  margin: 14px 0;
+  border-left: 6px solid var(--saffron-3);
   background: rgba(245, 158, 11, 0.1);
   color: var(--deep);
-  font-weight: 900;
+}
+
+.warning {
+  border-left: 6px solid var(--red);
+  background: rgba(220, 38, 38, 0.08);
 }
 
 .ad-section {
@@ -354,52 +364,26 @@ h3 {
 
 .card,
 .code-card,
-.final-card {
+.final-card,
+.teacher-box,
+.mini-card {
   padding: 24px;
   margin-bottom: 16px;
 }
 
-.card p:first-child {
-  margin-top: 0;
-}
-
-.example-box {
-  display: grid;
-  place-items: center;
-  min-height: 92px;
+.mini-card {
+  border-radius: 22px;
   border: 1px solid var(--line);
-  border-radius: 20px;
-  background: rgba(245, 158, 11, 0.1);
-  color: var(--deep);
-  font-size: clamp(26px, 4vw, 42px);
-  font-weight: 1000;
+  background: var(--white);
+  box-shadow: 0 8px 30px rgba(146, 64, 14, 0.08);
 }
 
-.example-box.success {
-  color: var(--green);
-  background: rgba(21, 128, 61, 0.08);
+.success-soft {
+  background: rgba(22, 163, 74, 0.08);
 }
 
-.example-box.danger {
-  color: var(--red);
-  background: rgba(220, 38, 38, 0.08);
-}
-
-.callout,
-.warning {
-  padding: 16px;
-  border-radius: 18px;
-}
-
-.callout {
-  margin: 14px 0;
-  border-left: 6px solid var(--saffron-3);
-  background: rgba(245, 158, 11, 0.1);
-}
-
-.warning {
-  border-left: 6px solid var(--red);
-  background: rgba(220, 38, 38, 0.08);
+.danger-soft {
+  background: rgba(220, 38, 38, 0.07);
 }
 
 code,
@@ -433,71 +417,6 @@ pre code {
   font-weight: 500;
 }
 
-.table-wrap {
-  overflow-x: auto;
-  border-radius: 18px;
-  border: 1px solid var(--line);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--white);
-}
-
-th,
-td {
-  padding: 13px;
-  border-bottom: 1px solid var(--line);
-  text-align: left;
-  vertical-align: top;
-}
-
-th {
-  color: var(--deep);
-  background: rgba(245, 158, 11, 0.14);
-}
-
-tr:last-child td {
-  border-bottom: none;
-}
-
-.chip-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 0;
-  margin: 14px 0 0;
-  list-style: none;
-}
-
-.chip-list.opposite li {
-  background: rgba(220, 38, 38, 0.06);
-}
-
-.compare,
-.example-list {
-  display: grid;
-  gap: 12px;
-}
-
-.compare div,
-.mini-card {
-  padding: 15px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: var(--white);
-}
-
-.compare b,
-.compare span {
-  display: block;
-}
-
-.compare b {
-  color: var(--deep);
-}
-
 .code-card {
   overflow: hidden;
 }
@@ -529,7 +448,7 @@ tr:last-child td {
   grid-template-columns: 1fr auto 1fr auto 1fr;
   gap: 12px;
   align-items: center;
-  margin-bottom: 18px;
+  margin: 18px 0 0;
 }
 
 .meaning-flow div:not(.arrow) {
@@ -608,7 +527,7 @@ iframe {
 }
 
 .final-card p {
-  max-width: 760px;
+  max-width: 800px;
   margin: 14px auto 24px;
   font-size: 20px;
   color: var(--muted);
@@ -665,7 +584,9 @@ iframe {
   .progress-card,
   .card,
   .code-card,
-  .final-card {
+  .final-card,
+  .teacher-box,
+  .mini-card {
     box-shadow: none;
     break-inside: avoid;
   }

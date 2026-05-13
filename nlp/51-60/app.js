@@ -74,7 +74,7 @@
   function shareLesson() {
     const shareData = {
       title: document.title,
-      text: "NLP 51% to 60% lesson: Synonyms, antonyms and meaning matching.",
+      text: "NLP 51% to 60% lesson using NLTK WordNet for synonyms, antonyms and meaning matching.",
       url: window.location.href
     };
 
