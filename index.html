@@ -1,1576 +1,1758 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>AI-ML Classes | Learn With Champak</title>
 
-    <meta
-      name="description"
-      content="Join AI-ML classes by Champak Roy. Access live Zoom classes, videos, course roadmap, practice sessions, WhatsApp support, important links, and learning resources from one landing page."
-    />
-    <meta name="theme-color" content="#f59e0b" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Make Your Own Chatbot from 0 to Infinity | NLP Book by Champak Roy</title>
 
-    <script
-      async
-      crossorigin="anonymous"
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-    ></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+  <meta name="description"
+    content="Make your own chatbot from 0 to infinity. From NLP to Your Own Chatbot: Royal Programming by Champak Roy is available for pre-order on Amazon US and India. Learn NLP and build chatbots step by step." />
+  <meta name="keywords"
+    content="NLP book, chatbot book, Natural Language Processing, Python chatbot, Champak Roy, Royal Programming, Programmer's Picnic, AI ML classes, machine learning" />
+  <meta name="author" content="Champak Roy" />
+  <link rel="canonical" href="https://aiml.learnwithchampak.live/" />
 
-    <style>
-      :root {
-        --bg: #fffaf0;
-        --bg2: #fff4d6;
-        --card: #ffffff;
-        --soft: #fff7e6;
-        --text: #2b2112;
-        --muted: #6b5a3d;
-        --line: #ecd8a6;
-        --brand: #d97706;
-        --brand2: #f59e0b;
-        --brand3: #c2410c;
-        --ok: #166534;
-        --shadow: 0 18px 45px rgba(117, 77, 8, 0.1);
-        --radius: 22px;
-        --max: 1220px;
-      }
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Make Your Own Chatbot from 0 to Infinity" />
+  <meta property="og:description"
+    content="Make your own chatbot from 0 to infinity. From NLP to Your Own Chatbot: Royal Programming by Champak Roy is available for pre-order on Amazon US and India. Learn NLP and build chatbots step by step." />
+  <meta property="og:image"
+    content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoXACRNq33L6PVDvW_MI6ztTEC6G8YZ6gFLLoUU8VoMbhDvfT84HWagFvJy4wp3XU3Axw1AmsAKRxeeDxjfIuOvY5_FQIngY9g3PhlZmXiL4KAS8z4-YQrMoTfkbcgD6zl6KzVlDLgDyeO0vOYNW4UV4zSCRLnZg9Uxee7PH46mIlSaFYEAyHs_bBNmBk/s1600/ChatGPT%20Image%20May%2021,%202026,%2007_39_50%20AM.png" />
+  <meta property="og:url" content="https://aiml.learnwithchampak.live/" />
+  <meta property="og:site_name" content="Learn With Champak" />
 
-      * {
-        box-sizing: border-box;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        margin: 0;
-        font-family:
-          Inter,
-          DM Sans,
-          system-ui,
-          -apple-system,
-          Segoe UI,
-          Roboto,
-          Arial,
-          sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(
-            circle at top left,
-            rgba(245, 158, 11, 0.18),
-            transparent 24%
-          ),
-          radial-gradient(
-            circle at right center,
-            rgba(217, 119, 6, 0.1),
-            transparent 22%
-          ),
-          linear-gradient(180deg, var(--bg), #fffdf8 35%, var(--bg2) 100%);
-        line-height: 1.6;
-      }
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Make Your Own Chatbot from 0 to Infinity" />
+  <meta name="twitter:description"
+    content="Make your own chatbot from 0 to infinity. From NLP to Your Own Chatbot: Royal Programming by Champak Roy is available for pre-order on Amazon US and India. Learn NLP and build chatbots step by step." />
+  <meta name="twitter:image"
+    content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoXACRNq33L6PVDvW_MI6ztTEC6G8YZ6gFLLoUU8VoMbhDvfT84HWagFvJy4wp3XU3Axw1AmsAKRxeeDxjfIuOvY5_FQIngY9g3PhlZmXiL4KAS8z4-YQrMoTfkbcgD6zl6KzVlDLgDyeO0vOYNW4UV4zSCRLnZg9Uxee7PH46mIlSaFYEAyHs_bBNmBk/s1600/ChatGPT%20Image%20May%2021,%202026,%2007_39_50%20AM.png" />
 
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      img {
-        max-width: 100%;
-        display: block;
-      }
-      .container {
-        width: min(var(--max), calc(100% - 24px));
-        margin: auto;
-      }
-      .section {
-        padding: 28px 0;
-      }
-      .grid {
-        display: grid;
-        gap: 18px;
-      }
-      .card {
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-      }
+  <link rel="preload" as="image"
+    href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoXACRNq33L6PVDvW_MI6ztTEC6G8YZ6gFLLoUU8VoMbhDvfT84HWagFvJy4wp3XU3Axw1AmsAKRxeeDxjfIuOvY5_FQIngY9g3PhlZmXiL4KAS8z4-YQrMoTfkbcgD6zl6KzVlDLgDyeO0vOYNW4UV4zSCRLnZg9Uxee7PH46mIlSaFYEAyHs_bBNmBk/s1600/ChatGPT%20Image%20May%2021,%202026,%2007_39_50%20AM.png" />
+  <meta name="theme-color" content="#f59e0b" />
 
-      .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        backdrop-filter: blur(14px);
-        background: rgba(255, 250, 240, 0.85);
-        border-bottom: 1px solid rgba(217, 119, 6, 0.15);
-      }
 
-      .topbar-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 14px;
-        min-height: 72px;
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Book",
+        "name": "From NLP to Your Own Chatbot: Royal Programming",
+        "alternateName": "Make your own chatbot from 0 to infinity",
+        "author": {
+          "@type": "Person",
+          "name": "Champak Roy"
+        },
+        "bookFormat": "https://schema.org/EBook",
+        "inLanguage": "en",
+        "description": "Make your own chatbot from 0 to infinity. From NLP to Your Own Chatbot: Royal Programming by Champak Roy is available for pre-order on Amazon US and India. Learn NLP and build chatbots step by step.",
+        "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoXACRNq33L6PVDvW_MI6ztTEC6G8YZ6gFLLoUU8VoMbhDvfT84HWagFvJy4wp3XU3Axw1AmsAKRxeeDxjfIuOvY5_FQIngY9g3PhlZmXiL4KAS8z4-YQrMoTfkbcgD6zl6KzVlDLgDyeO0vOYNW4UV4zSCRLnZg9Uxee7PH46mIlSaFYEAyHs_bBNmBk/s1600/ChatGPT%20Image%20May%2021,%202026,%2007_39_50%20AM.png",
+        "url": "https://www.amazon.com/dp/B0H2FVLQ8R",
+        "offers": [
+          {
+            "@type": "Offer",
+            "availability": "https://schema.org/PreOrder",
+            "url": "https://www.amazon.com/dp/B0H2FVLQ8R",
+            "seller": {
+              "@type": "Organization",
+              "name": "Amazon US"
+            }
+          },
+          {
+            "@type": "Offer",
+            "availability": "https://schema.org/PreOrder",
+            "url": "https://www.amazon.in/dp/B0H2FVLQ8R",
+            "seller": {
+              "@type": "Organization",
+              "name": "Amazon India"
+            }
+          }
+        ],
+        "publisher": {
+          "@type": "Organization",
+          "name": "Royal Programming"
+        }
       }
+    </script>
 
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        min-width: 0;
-      }
+  <script async crossorigin="anonymous"
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
 
-      .brand-badge {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
-        background: linear-gradient(135deg, var(--brand), var(--brand2));
-        color: #fff;
-        display: grid;
-        place-items: center;
-        font-size: 22px;
-        box-shadow: 0 10px 24px rgba(217, 119, 6, 0.28);
-        flex: 0 0 auto;
-      }
+  <style>
+    :root {
+      --bg: #fffaf0;
+      --bg2: #fff4d6;
+      --card: #ffffff;
+      --soft: #fff7e6;
+      --text: #2b2112;
+      --muted: #6b5a3d;
+      --line: #ecd8a6;
+      --brand: #d97706;
+      --brand2: #f59e0b;
+      --brand3: #c2410c;
+      --ok: #166534;
+      --shadow: 0 18px 45px rgba(117, 77, 8, 0.1);
+      --radius: 22px;
+      --max: 1220px;
+    }
 
-      .brand-text {
-        min-width: 0;
-      }
-      .brand-text strong {
-        display: block;
-        font-size: 1rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .brand-text span {
-        display: block;
-        color: var(--muted);
-        font-size: 0.92rem;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      .nav {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-      }
+    html {
+      scroll-behavior: smooth;
+    }
 
-      .nav a {
-        padding: 10px 14px;
-        border-radius: 999px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.75);
-        font-weight: 700;
-        color: var(--muted);
-      }
-
-      .hero {
-        padding: 34px 0 20px;
-      }
-
-      .hero-wrap {
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 22px;
-        align-items: stretch;
-      }
-
-      .hero-main {
-        padding: 26px;
-        background:
-          radial-gradient(
-            circle at top right,
-            rgba(255, 255, 255, 0.35),
-            transparent 28%
-          ),
-          linear-gradient(135deg, #fff6db 0%, #fffdf7 45%, #fff3cf 100%);
-        overflow: hidden;
-        position: relative;
-      }
-
-      .hero-main::after {
-        content: "";
-        position: absolute;
-        inset: auto -60px -60px auto;
-        width: 220px;
-        height: 220px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle,
+    body {
+      margin: 0;
+      font-family:
+        Inter,
+        DM Sans,
+        system-ui,
+        -apple-system,
+        Segoe UI,
+        Roboto,
+        Arial,
+        sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left,
           rgba(245, 158, 11, 0.18),
-          transparent 65%
-        );
-        pointer-events: none;
+          transparent 24%),
+        radial-gradient(circle at right center,
+          rgba(217, 119, 6, 0.1),
+          transparent 22%),
+        linear-gradient(180deg, var(--bg), #fffdf8 35%, var(--bg2) 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 24px));
+      margin: auto;
+    }
+
+    .section {
+      padding: 28px 0;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 250, 240, 0.85);
+      border-bottom: 1px solid rgba(217, 119, 6, 0.15);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 72px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      box-shadow: 0 10px 24px rgba(217, 119, 6, 0.28);
+      flex: 0 0 auto;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-text span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.75);
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .hero {
+      padding: 34px 0 20px;
+    }
+
+    .hero-wrap {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .hero-main {
+      padding: 26px;
+      background:
+        radial-gradient(circle at top right,
+          rgba(255, 255, 255, 0.35),
+          transparent 28%),
+        linear-gradient(135deg, #fff6db 0%, #fffdf7 45%, #fff3cf 100%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-main::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -60px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+          rgba(245, 158, 11, 0.18),
+          transparent 65%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid #f4d08b;
+      background: #fff9eb;
+      color: var(--brand3);
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.15;
+      margin: 0 0 10px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.45rem);
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 62ch;
+      margin: 0 0 18px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0 22px;
+    }
+
+    .point {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid var(--line);
+    }
+
+    .point .icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      transition:
+        0.2s transform ease,
+        0.2s box-shadow ease,
+        0.2s background ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand3), var(--brand2));
+    }
+
+    .btn-secondary {
+      color: var(--brand3);
+      background: #fff;
+      border-color: var(--line);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .mini-panel {
+      padding: 20px;
+    }
+
+    .mini-panel .label {
+      color: var(--brand3);
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--soft);
+    }
+
+    .stat b {
+      display: block;
+      font-size: 1.45rem;
+      color: var(--brand3);
+      margin-bottom: 4px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+
+    .quick-links {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .quick-link {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 180px;
+      transition:
+        0.2s transform ease,
+        0.2s box-shadow ease;
+    }
+
+    .quick-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 30px rgba(117, 77, 8, 0.12);
+    }
+
+    .ql-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      font-size: 24px;
+      box-shadow: 0 10px 24px rgba(217, 119, 6, 0.25);
+    }
+
+    .quick-link p,
+    .schedule-card p,
+    .video-card p,
+    .faq p,
+    .cta-box p,
+    .feature p,
+    .road-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .schedule-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .schedule-card,
+    .video-card,
+    .feature,
+    .road-card,
+    .faq {
+      padding: 20px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #fff7e2;
+      border: 1px solid #f3d799;
+      color: var(--brand3);
+      font-size: 0.86rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .time-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0 0;
+      margin-top: 12px;
+      border-top: 1px dashed var(--line);
+      font-weight: 700;
+    }
+
+    .video-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .thumb {
+      aspect-ratio: 16/9;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg,
+          rgba(217, 119, 6, 0.18),
+          rgba(245, 158, 11, 0.08)),
+        linear-gradient(180deg, #fffaf0, #fff2cd);
+      display: grid;
+      place-items: center;
+      font-size: 3rem;
+      margin-bottom: 14px;
+    }
+
+    .feature-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .feature {
+      background: linear-gradient(180deg, #fffefb, #fff8e8);
+    }
+
+    .roadmap {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .road-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .road-step {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--brand3), var(--brand2));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      margin-bottom: 12px;
+      box-shadow: 0 10px 24px rgba(217, 119, 6, 0.25);
+    }
+
+    .connect-wrap {
+      display: grid;
+      grid-template-columns: 1fr 0.95fr;
+      gap: 18px;
+    }
+
+    .cta-box {
+      padding: 24px;
+      background:
+        radial-gradient(circle at top right,
+          rgba(255, 255, 255, 0.28),
+          transparent 28%),
+        linear-gradient(135deg, #ffefbf, #fff7de 48%, #fffefb 100%);
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      font-weight: 900;
+    }
+
+    .faq-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer {
+      padding: 26px 0 36px;
+      color: var(--muted);
+    }
+
+    .footer-box {
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .tiny {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .marquee {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      text-align: center;
+      font-weight: 800;
+      color: var(--brand3);
+    }
+
+
+    .book-announcement {
+      padding: 28px 0 12px;
+    }
+
+    .book-announcement-card {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 22px;
+      align-items: center;
+      padding: 24px;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at 84% 18%, rgba(220, 38, 38, 0.13), transparent 25%),
+        linear-gradient(135deg, #fff7ed 0%, #ffffff 45%, #fff1f2 100%);
+    }
+
+    .book-announcement-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-top: 6px solid #dc2626;
+      pointer-events: none;
+    }
+
+    .book-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid #fecaca;
+      background: #fff1f2;
+      color: #b91c1c;
+      font-weight: 900;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+
+    .book-announcement-card h1 {
+      font-size: clamp(2.1rem, 4.6vw, 4rem);
+      max-width: 760px;
+    }
+
+    .book-announcement-card h1 span {
+      color: #dc2626;
+    }
+
+    .book-announcement-card .lead {
+      font-size: 1.08rem;
+      max-width: 70ch;
+    }
+
+    .book-cover-wrap {
+      background: #ffffff;
+      border: 1px solid #fecaca;
+      border-radius: 22px;
+      padding: 12px;
+      box-shadow: 0 22px 50px rgba(127, 29, 29, 0.14);
+    }
+
+    .book-cover-wrap img {
+      border-radius: 16px;
+      width: 100%;
+    }
+
+    .book-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0 4px;
+    }
+
+    .book-point {
+      background: #ffffff;
+      border: 1px solid #fed7aa;
+      border-radius: 16px;
+      padding: 13px;
+      font-weight: 800;
+      color: #7c2d12;
+    }
+
+    .book-quote {
+      margin: 18px 0 0;
+      padding: 14px 16px;
+      border-left: 5px solid #dc2626;
+      border-radius: 14px;
+      background: #fff7ed;
+      color: #5f4632;
+      font-style: italic;
+    }
+
+    @media (max-width: 1100px) {
+      .book-announcement-card {
+        grid-template-columns: 1fr;
       }
 
-      .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 14px;
-        border-radius: 999px;
-        border: 1px solid #f4d08b;
-        background: #fff9eb;
-        color: var(--brand3);
-        font-weight: 800;
-        font-size: 0.9rem;
-        margin-bottom: 14px;
+      .book-points {
+        grid-template-columns: 1fr;
       }
 
-      h1,
-      h2,
-      h3 {
-        line-height: 1.15;
-        margin: 0 0 10px;
-      }
-      h1 {
-        font-size: clamp(2rem, 4vw, 3.45rem);
-      }
-      h2 {
-        font-size: clamp(1.4rem, 2.4vw, 2rem);
-      }
-      h3 {
-        font-size: 1.1rem;
-      }
-
-      .lead {
-        font-size: 1.05rem;
-        color: var(--muted);
-        max-width: 62ch;
-        margin: 0 0 18px;
-      }
-
-      .hero-points {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-        margin: 18px 0 22px;
-      }
-
-      .point {
-        display: flex;
-        gap: 10px;
-        align-items: flex-start;
-        padding: 14px;
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.76);
-        border: 1px solid var(--line);
-      }
-
-      .point .icon {
-        width: 34px;
-        height: 34px;
-        border-radius: 12px;
-        display: grid;
-        place-items: center;
-        background: linear-gradient(135deg, var(--brand), var(--brand2));
-        color: #fff;
-        font-weight: 800;
-        flex: 0 0 auto;
-      }
-
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 14px;
-      }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        min-height: 48px;
-        padding: 0 18px;
-        border-radius: 14px;
-        font-weight: 800;
-        border: 1px solid transparent;
-        transition:
-          0.2s transform ease,
-          0.2s box-shadow ease,
-          0.2s background ease;
-      }
-
-      .btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 12px 22px rgba(0, 0, 0, 0.08);
-      }
-
-      .btn-primary {
-        color: #fff;
-        background: linear-gradient(135deg, var(--brand3), var(--brand2));
-      }
-
-      .btn-secondary {
-        color: var(--brand3);
-        background: #fff;
-        border-color: var(--line);
-      }
-
-      .hero-side {
-        display: grid;
-        gap: 18px;
-      }
-
-      .mini-panel {
-        padding: 20px;
-      }
-
-      .mini-panel .label {
-        color: var(--brand3);
-        font-size: 0.85rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        margin-bottom: 8px;
-      }
-
-      .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-        margin-top: 10px;
-      }
-
-      .stat {
-        padding: 16px;
-        border-radius: 18px;
-        border: 1px solid var(--line);
-        background: var(--soft);
-      }
-
-      .stat b {
-        display: block;
-        font-size: 1.45rem;
-        color: var(--brand3);
-        margin-bottom: 4px;
-      }
-
-      .section-head {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-
-      .section-head p {
-        margin: 0;
-        color: var(--muted);
-        max-width: 70ch;
+      .hero-wrap,
+      .connect-wrap {
+        grid-template-columns: 1fr;
       }
 
       .quick-links {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .quick-link {
-        padding: 18px;
-        display: flex;
+      .schedule-grid,
+      .video-grid,
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .roadmap {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
         flex-direction: column;
-        gap: 10px;
-        min-height: 180px;
-        transition:
-          0.2s transform ease,
-          0.2s box-shadow ease;
+        align-items: stretch;
+        padding: 10px 0;
       }
 
-      .quick-link:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 18px 30px rgba(117, 77, 8, 0.12);
+      .nav {
+        justify-content: flex-start;
       }
 
-      .ql-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 16px;
-        display: grid;
-        place-items: center;
-        background: linear-gradient(135deg, var(--brand), var(--brand2));
-        color: #fff;
-        font-size: 24px;
-        box-shadow: 0 10px 24px rgba(217, 119, 6, 0.25);
+      .hero-points,
+      .quick-links,
+      .schedule-grid,
+      .video-grid,
+      .feature-grid,
+      .roadmap,
+      .faq-grid,
+      .marquee,
+      .stat-grid {
+        grid-template-columns: 1fr;
       }
 
-      .quick-link p,
-      .schedule-card p,
-      .video-card p,
-      .faq p,
-      .cta-box p,
-      .feature p,
-      .road-card p {
-        margin: 0;
-        color: var(--muted);
-      }
-
-      .schedule-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
+      .hero-main,
+      .mini-panel,
       .schedule-card,
       .video-card,
       .feature,
       .road-card,
+      .cta-box,
       .faq {
-        padding: 20px;
+        padding: 18px;
       }
 
-      .tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 7px 12px;
-        border-radius: 999px;
-        background: #fff7e2;
-        border: 1px solid #f3d799;
-        color: var(--brand3);
-        font-size: 0.86rem;
-        font-weight: 800;
-        margin-bottom: 12px;
+      h1 {
+        font-size: 2rem;
       }
 
-      .time-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        padding: 10px 0 0;
-        margin-top: 12px;
-        border-top: 1px dashed var(--line);
-        font-weight: 700;
+      .actions .btn {
+        width: 100%;
       }
+    }
+  </style>
+  <style>
+    /* Programmer's Picnic JSON Navigation */
+    #pp-json-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-      .video-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+    .pp-nav-shell {
+      border-bottom: 1px solid rgba(217, 119, 6, 0.18);
+      background: rgba(255, 250, 240, 0.92);
+      backdrop-filter: blur(16px);
+    }
 
-      .thumb {
-        aspect-ratio: 16/9;
-        border-radius: 18px;
-        border: 1px solid var(--line);
-        background:
-          linear-gradient(
-            135deg,
-            rgba(217, 119, 6, 0.18),
-            rgba(245, 158, 11, 0.08)
-          ),
-          linear-gradient(180deg, #fffaf0, #fff2cd);
-        display: grid;
-        place-items: center;
-        font-size: 3rem;
-        margin-bottom: 14px;
-      }
+    .pp-nav-inner {
+      width: min(1220px, calc(100% - 24px));
+      min-height: 76px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-      .feature-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+    .pp-nav-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 235px;
+      color: #2b2112;
+      text-decoration: none;
+    }
 
-      .feature {
-        background: linear-gradient(180deg, #fffefb, #fff8e8);
-      }
+    .pp-nav-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      box-shadow: 0 10px 24px rgba(217, 119, 6, 0.28);
+    }
 
-      .roadmap {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
+    .pp-nav-brand strong,
+    .pp-nav-brand small {
+      display: block;
+    }
 
-      .road-card {
-        position: relative;
-        overflow: hidden;
-      }
+    .pp-nav-brand small {
+      color: #6b5a3d;
+      font-size: 0.86rem;
+    }
 
-      .road-step {
-        width: 46px;
-        height: 46px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, var(--brand3), var(--brand2));
-        color: #fff;
-        display: grid;
-        place-items: center;
-        font-weight: 900;
-        margin-bottom: 12px;
-        box-shadow: 0 10px 24px rgba(217, 119, 6, 0.25);
-      }
+    .pp-nav-search-wrap {
+      position: relative;
+      flex: 1 1 260px;
+      max-width: 330px;
+    }
 
-      .connect-wrap {
-        display: grid;
-        grid-template-columns: 1fr 0.95fr;
-        gap: 18px;
-      }
+    .pp-nav-search {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid #ecd8a6;
+      border-radius: 999px;
+      padding: 0 16px;
+      background: #fff;
+      color: #2b2112;
+      outline: none;
+      font-weight: 700;
+    }
 
-      .cta-box {
-        padding: 24px;
-        background:
-          radial-gradient(
-            circle at top right,
-            rgba(255, 255, 255, 0.28),
-            transparent 28%
-          ),
-          linear-gradient(135deg, #ffefbf, #fff7de 48%, #fffefb 100%);
-      }
+    .pp-nav-search:focus {
+      border-color: #d97706;
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.16);
+    }
 
-      .contact-list {
-        display: grid;
-        gap: 12px;
-        margin-top: 14px;
-      }
+    .pp-nav-results {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      right: 0;
+      max-height: 340px;
+      overflow: auto;
+      padding: 8px;
+      border: 1px solid #ecd8a6;
+      border-radius: 18px;
+      background: #fffefb;
+      box-shadow: 0 20px 40px rgba(117, 77, 8, 0.18);
+    }
 
-      .contact-item {
-        display: flex;
-        gap: 12px;
-        align-items: flex-start;
-        padding: 14px;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.82);
-      }
+    .pp-nav-result {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #2b2112;
+    }
 
-      .contact-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--brand), var(--brand2));
-        color: #fff;
-        display: grid;
-        place-items: center;
-        flex: 0 0 auto;
-        font-weight: 900;
-      }
+    .pp-nav-result:hover {
+      background: #fff4d6;
+    }
 
-      .faq-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    .pp-nav-result small {
+      display: block;
+      color: #6b5a3d;
+    }
 
-      .footer {
-        padding: 26px 0 36px;
-        color: var(--muted);
-      }
+    .pp-nav-no-result {
+      padding: 12px;
+      color: #6b5a3d;
+      font-weight: 800;
+    }
 
-      .footer-box {
-        padding: 18px 20px;
-        display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        flex-wrap: wrap;
-        align-items: center;
-      }
+    .pp-nav-menu {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-left: auto;
+    }
 
-      .tiny {
-        font-size: 0.92rem;
-        color: var(--muted);
-      }
+    .pp-nav-item {
+      position: relative;
+    }
 
-      .marquee {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 14px;
-        margin-top: 18px;
-      }
+    .pp-nav-link {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 13px;
+      border: 1px solid #ecd8a6;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      color: #6b5a3d;
+      font-weight: 900;
+      white-space: nowrap;
+      text-decoration: none;
+    }
 
-      .pill {
-        padding: 14px 16px;
-        border-radius: 16px;
-        border: 1px solid var(--line);
-        background: #fff;
-        text-align: center;
-        font-weight: 800;
-        color: var(--brand3);
-      }
+    .pp-nav-link:hover,
+    .pp-nav-item:focus-within>.pp-nav-link,
+    .pp-nav-item:hover>.pp-nav-link {
+      background: #fff4d6;
+      color: #c2410c;
+    }
 
-      @media (max-width: 1100px) {
-        .hero-wrap,
-        .connect-wrap {
-          grid-template-columns: 1fr;
-        }
-        .quick-links {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-        .schedule-grid,
-        .video-grid,
-        .feature-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-        .roadmap {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
+    .pp-caret {
+      font-size: 0.9rem;
+    }
 
-      @media (max-width: 760px) {
-        .topbar-inner {
-          flex-direction: column;
-          align-items: stretch;
-          padding: 10px 0;
-        }
-        .nav {
-          justify-content: flex-start;
-        }
-        .hero-points,
-        .quick-links,
-        .schedule-grid,
-        .video-grid,
-        .feature-grid,
-        .roadmap,
-        .faq-grid,
-        .marquee,
-        .stat-grid {
-          grid-template-columns: 1fr;
-        }
-        .hero-main,
-        .mini-panel,
-        .schedule-card,
-        .video-card,
-        .feature,
-        .road-card,
-        .cta-box,
-        .faq {
-          padding: 18px;
-        }
-        h1 {
-          font-size: 2rem;
-        }
-        .actions .btn {
-          width: 100%;
-        }
-      }
-    </style>
-    <style>
-      /* Programmer's Picnic JSON Navigation */
-      #pp-json-nav {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-      }
+    .pp-submenu {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 0;
+      min-width: 245px;
+      padding: 10px;
+      border: 1px solid #ecd8a6;
+      border-radius: 18px;
+      background: #fffefb;
+      box-shadow: 0 20px 40px rgba(117, 77, 8, 0.18);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: 0.18s ease;
+    }
 
-      .pp-nav-shell {
-        border-bottom: 1px solid rgba(217, 119, 6, 0.18);
-        background: rgba(255, 250, 240, 0.92);
-        backdrop-filter: blur(16px);
-      }
+    .pp-nav-item:hover .pp-submenu,
+    .pp-nav-item:focus-within .pp-submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
 
+    .pp-submenu-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: #2b2112;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .pp-submenu-link:hover {
+      background: #fff4d6;
+      color: #c2410c;
+    }
+
+    .pp-sub-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #fff4d6;
+      color: #c2410c;
+      font-weight: 900;
+    }
+
+    .pp-nav-toggle {
+      display: none;
+      min-height: 44px;
+      border: 1px solid #ecd8a6;
+      border-radius: 999px;
+      padding: 0 14px;
+      background: #fff;
+      color: #c2410c;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .pp-nav-toast {
+      position: fixed;
+      left: 50%;
+      top: 96px;
+      transform: translateX(-50%) translateY(-12px);
+      z-index: 9999;
+      max-width: min(92vw, 520px);
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: #2b2112;
+      color: #fff;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.22s ease;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .pp-nav-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .pp-nav-error {
+      padding: 14px;
+      text-align: center;
+      background: #fff4d6;
+      color: #9a3412;
+      border-bottom: 1px solid #ecd8a6;
+      font-weight: 900;
+    }
+
+    @media (max-width: 1120px) {
       .pp-nav-inner {
-        width: min(1220px, calc(100% - 24px));
-        min-height: 76px;
-        margin: auto;
-        display: flex;
-        align-items: center;
-        gap: 14px;
+        flex-wrap: wrap;
+        padding: 10px 0;
       }
 
       .pp-nav-brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        min-width: 235px;
-        color: #2b2112;
-        text-decoration: none;
-      }
-
-      .pp-nav-badge {
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
-        display: grid;
-        place-items: center;
-        color: #fff;
-        font-weight: 900;
-        background: linear-gradient(135deg, #d97706, #f59e0b);
-        box-shadow: 0 10px 24px rgba(217, 119, 6, 0.28);
-      }
-
-      .pp-nav-brand strong,
-      .pp-nav-brand small {
-        display: block;
-      }
-
-      .pp-nav-brand small {
-        color: #6b5a3d;
-        font-size: 0.86rem;
-      }
-
-      .pp-nav-search-wrap {
-        position: relative;
-        flex: 1 1 260px;
-        max-width: 330px;
-      }
-
-      .pp-nav-search {
-        width: 100%;
-        min-height: 44px;
-        border: 1px solid #ecd8a6;
-        border-radius: 999px;
-        padding: 0 16px;
-        background: #fff;
-        color: #2b2112;
-        outline: none;
-        font-weight: 700;
-      }
-
-      .pp-nav-search:focus {
-        border-color: #d97706;
-        box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.16);
-      }
-
-      .pp-nav-results {
-        position: absolute;
-        top: calc(100% + 10px);
-        left: 0;
-        right: 0;
-        max-height: 340px;
-        overflow: auto;
-        padding: 8px;
-        border: 1px solid #ecd8a6;
-        border-radius: 18px;
-        background: #fffefb;
-        box-shadow: 0 20px 40px rgba(117, 77, 8, 0.18);
-      }
-
-      .pp-nav-result {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 12px;
-        border-radius: 14px;
-        text-decoration: none;
-        color: #2b2112;
-      }
-
-      .pp-nav-result:hover {
-        background: #fff4d6;
-      }
-
-      .pp-nav-result small {
-        display: block;
-        color: #6b5a3d;
-      }
-
-      .pp-nav-no-result {
-        padding: 12px;
-        color: #6b5a3d;
-        font-weight: 800;
-      }
-
-      .pp-nav-menu {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 8px;
-        margin-left: auto;
-      }
-
-      .pp-nav-item {
-        position: relative;
-      }
-
-      .pp-nav-link {
-        min-height: 44px;
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        padding: 0 13px;
-        border: 1px solid #ecd8a6;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.78);
-        color: #6b5a3d;
-        font-weight: 900;
-        white-space: nowrap;
-        text-decoration: none;
-      }
-
-      .pp-nav-link:hover,
-      .pp-nav-item:focus-within > .pp-nav-link,
-      .pp-nav-item:hover > .pp-nav-link {
-        background: #fff4d6;
-        color: #c2410c;
-      }
-
-      .pp-caret {
-        font-size: 0.9rem;
-      }
-
-      .pp-submenu {
-        position: absolute;
-        top: calc(100% + 12px);
-        left: 0;
-        min-width: 245px;
-        padding: 10px;
-        border: 1px solid #ecd8a6;
-        border-radius: 18px;
-        background: #fffefb;
-        box-shadow: 0 20px 40px rgba(117, 77, 8, 0.18);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(8px);
-        transition: 0.18s ease;
-      }
-
-      .pp-nav-item:hover .pp-submenu,
-      .pp-nav-item:focus-within .pp-submenu {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-
-      .pp-submenu-link {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 12px;
-        border-radius: 14px;
-        color: #2b2112;
-        font-weight: 800;
-        text-decoration: none;
-      }
-
-      .pp-submenu-link:hover {
-        background: #fff4d6;
-        color: #c2410c;
-      }
-
-      .pp-sub-icon {
-        width: 28px;
-        height: 28px;
-        border-radius: 10px;
-        display: grid;
-        place-items: center;
-        background: #fff4d6;
-        color: #c2410c;
-        font-weight: 900;
+        flex: 1 1 auto;
       }
 
       .pp-nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pp-nav-search-wrap {
+        order: 3;
+        flex: 1 1 100%;
+        max-width: none;
+      }
+
+      .pp-nav-menu {
+        order: 4;
         display: none;
-        min-height: 44px;
+        width: 100%;
+        margin: 0;
+        padding: 10px;
         border: 1px solid #ecd8a6;
-        border-radius: 999px;
-        padding: 0 14px;
-        background: #fff;
-        color: #c2410c;
-        font-weight: 900;
-        cursor: pointer;
+        border-radius: 20px;
+        background: #fffefb;
+        align-items: stretch;
+        flex-direction: column;
       }
 
-      .pp-nav-toast {
-        position: fixed;
-        left: 50%;
-        top: 96px;
-        transform: translateX(-50%) translateY(-12px);
-        z-index: 9999;
-        max-width: min(92vw, 520px);
-        padding: 14px 18px;
+      .pp-nav-menu.open {
+        display: flex;
+      }
+
+      .pp-nav-link {
+        width: 100%;
+        justify-content: space-between;
         border-radius: 16px;
-        background: #2b2112;
-        color: #fff;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
-        opacity: 0;
-        pointer-events: none;
-        transition: 0.22s ease;
-        text-align: center;
-        font-weight: 800;
       }
 
-      .pp-nav-toast.show {
+      .pp-submenu {
+        position: static;
+        min-width: 0;
+        margin: 8px 0 0 18px;
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        background: #fff8e8;
+        display: block;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .pp-nav-inner {
+        width: min(100% - 18px, 1220px);
       }
 
-      .pp-nav-error {
-        padding: 14px;
-        text-align: center;
-        background: #fff4d6;
-        color: #9a3412;
-        border-bottom: 1px solid #ecd8a6;
-        font-weight: 900;
+      .pp-nav-brand {
+        min-width: 0;
       }
 
-      @media (max-width: 1120px) {
-        .pp-nav-inner {
-          flex-wrap: wrap;
-          padding: 10px 0;
-        }
-
-        .pp-nav-brand {
-          flex: 1 1 auto;
-        }
-
-        .pp-nav-toggle {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .pp-nav-search-wrap {
-          order: 3;
-          flex: 1 1 100%;
-          max-width: none;
-        }
-
-        .pp-nav-menu {
-          order: 4;
-          display: none;
-          width: 100%;
-          margin: 0;
-          padding: 10px;
-          border: 1px solid #ecd8a6;
-          border-radius: 20px;
-          background: #fffefb;
-          align-items: stretch;
-          flex-direction: column;
-        }
-
-        .pp-nav-menu.open {
-          display: flex;
-        }
-
-        .pp-nav-link {
-          width: 100%;
-          justify-content: space-between;
-          border-radius: 16px;
-        }
-
-        .pp-submenu {
-          position: static;
-          min-width: 0;
-          margin: 8px 0 0 18px;
-          opacity: 1;
-          visibility: visible;
-          transform: none;
-          box-shadow: none;
-          background: #fff8e8;
-          display: block;
-        }
+      .pp-nav-brand-text small {
+        display: none;
       }
 
-      @media (max-width: 560px) {
-        .pp-nav-inner {
-          width: min(100% - 18px, 1220px);
-        }
-
-        .pp-nav-brand {
-          min-width: 0;
-        }
-
-        .pp-nav-brand-text small {
-          display: none;
-        }
-
-        .pp-nav-badge {
-          width: 42px;
-          height: 42px;
-          border-radius: 14px;
-        }
-
-        .pp-nav-toggle {
-          padding: 0 12px;
-        }
-
-        .pp-nav-search {
-          min-height: 42px;
-        }
+      .pp-nav-badge {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
       }
-    </style>
-    <script defer src="nav.js"></script>
-  </head>
-  <body id="top">
-    <div id="pp-json-nav" data-menu="menu.json"></div>
-    <main>
-      <section class="hero">
-        <div class="container hero-wrap">
-          <div class="hero-main card">
-            <div class="eyebrow" id="speak0">
-              🚀 Start AI-ML from the ground level and grow step by step.
-            </div>
 
-            <h1 id="speak1">
-              A single landing page for your complete
-              <span style="color: #c2410c">AI-ML learning journey</span>
+      .pp-nav-toggle {
+        padding: 0 12px;
+      }
+
+      .pp-nav-search {
+        min-height: 42px;
+      }
+    }
+  </style>
+  <script defer src="nav.js"></script>
+</head>
+
+<body id="top">
+  <div id="pp-json-nav" data-menu="menu.json"></div>
+  <main>
+
+    <section id="nlp-book" class="book-announcement">
+      <div class="container">
+        <div class="book-announcement-card card">
+          <div>
+            <div class="book-kicker" id="speak-book-0">📕 New book available for pre-order</div>
+
+            <h1 id="speak-book-1">
+              Make your own <span>chatbot</span> from 0 to infinity.
             </h1>
 
-            <p class="lead" id="speak2">
-              Join live classes, watch videos, access notes, attend Zoom
-              sessions, connect on WhatsApp, follow the roadmap, and move from
-              beginner to project builder — all from one place.
+            <p class="lead" id="speak-book-2">
+              <strong>From NLP to Your Own Chatbot: Royal Programming</strong> by
+              <strong>Champak Roy</strong> is now available for pre-order on Amazon.
+              Learn Natural Language Processing step by step, from text processing
+              and meaning matching to intent-based chatbot design.
             </p>
 
-            <div class="hero-points">
-              <div class="point">
-                <div class="icon">📘</div>
-                <div>
-                  <strong id="speak3">Structured learning</strong>
-                  <div class="tiny">
-                    Python, statistics, machine learning, projects, and
-                    interview preparation.
-                  </div>
-                </div>
-              </div>
+            <div class="book-points">
+              <div class="book-point">Natural Language Processing</div>
+              <div class="book-point">Python Chatbot Examples</div>
+              <div class="book-point">JSON, CSV, SQLite and Logic</div>
+            </div>
 
-              <div class="point">
-                <div class="icon">🧠</div>
-                <div>
-                  <strong id="speak4">Concept clarity</strong>
-                  <div class="tiny">
-                    Simple explanations, examples, practice, and real use cases.
-                  </div>
-                </div>
-              </div>
-
-              <div class="point">
-                <div class="icon">💻</div>
-                <div>
-                  <strong id="speak5">Project-based approach</strong>
-                  <div class="tiny">
-                    Learn by building mini projects and useful tools.
-                  </div>
-                </div>
-              </div>
-
-              <div class="point">
-                <div class="icon">🤝</div>
-                <div>
-                  <strong id="speak6">Direct support</strong>
-                  <div class="tiny">
-                    Stay connected through WhatsApp, class updates, and learning
-                    resources.
-                  </div>
-                </div>
-              </div>
+            <div class="book-quote">
+              Programming is not just typing instructions. Programming is learning how to see
+              structure, meaning, movement, and response.
             </div>
 
             <div class="actions">
-              <a
-                class="btn btn-primary"
-                href="https://wa.me/919335874326?text=Hello%20Champak%20Roy%2C%20I%20want%20to%20join%20the%20AI-ML%20classes."
-                >Join on WhatsApp</a
-              >
-              <a class="btn btn-secondary" href="#schedule"
-                >View Zoom Schedule</a
-              >
-              <a class="btn btn-secondary" href="#links"
-                >Open Important Links</a
-              >
+              <a class="btn btn-primary" href="https://www.amazon.com/dp/B0H2FVLQ8R" target="_blank" rel="noopener">
+                Pre-order on Amazon US
+              </a>
+              <a class="btn btn-secondary" href="https://www.amazon.in/dp/B0H2FVLQ8R" target="_blank" rel="noopener">
+                Pre-order on Amazon India
+              </a>
             </div>
           </div>
 
-          <div class="hero-side">
-            <div class="mini-panel card">
-              <div class="label">What you get</div>
-              <h3 id="speak7">Everything important, organized on one page</h3>
-              <div class="stat-grid">
-                <div class="stat">
-                  <b>Live</b>
-                  <span>Zoom classes and doubt sessions</span>
-                </div>
-                <div class="stat">
-                  <b>Video</b>
-                  <span>Recorded lessons and guided learning</span>
-                </div>
-                <div class="stat">
-                  <b>Notes</b>
-                  <span>Important pages, resources, and links</span>
-                </div>
-                <div class="stat">
-                  <b>Connect</b>
-                  <span>WhatsApp support and updates</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="mini-panel card">
-              <div class="label">Ideal for</div>
-              <h3 id="speak8">
-                Students, beginners, working learners, and curious builders
-              </h3>
-              <p id="speak9">
-                Whether you are starting from zero or trying to enter AI-ML
-                seriously, this page helps you find the right class, link,
-                video, and contact point quickly.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="links" class="section">
-        <div class="container">
-          <div class="section-head">
-            <div>
-              <h2 id="speak10">Important Links</h2>
-              <p>
-                Keep your most important class pages together so learners never
-                get lost.
-              </p>
-            </div>
-          </div>
-
-          <div class="grid quick-links">
-            <a
-              class="quick-link card"
-              href="https://aiml.learnwithchampak.live/course/course-map.html"
-            >
-              <div class="ql-icon">🗺️</div>
-              <h3 id="speak11">Course Map</h3>
-              <p>
-                Open the complete roadmap of your AI-ML journey from basics to
-                advanced topics.
-              </p>
-            </a>
-
-            <a
-              class="quick-link card"
-              href="https://www.learnwithchampak.live/"
-            >
-              <div class="ql-icon">🌐</div>
-              <h3 id="speak12">Main Website</h3>
-              <p>
-                Access lessons, blog posts, learning pages, and class resources.
-              </p>
-            </a>
-
-            <a
-              class="quick-link card"
-              href="https://videos.learnwithchampak.live/"
-            >
-              <div class="ql-icon">🎥</div>
-              <h3 id="speak13">Videos Portal</h3>
-              <p>
-                Go to the video hub for recorded lessons, topic playlists, and
-                guided study.
-              </p>
-            </a>
-
-            <a
-              class="quick-link card"
-              href="https://editor.learnwithchampak.live/"
-            >
-              <div class="ql-icon">🧪</div>
-              <h3 id="speak14">Practice Editor</h3>
-              <p>
-                Use the editor to experiment with code, examples, and practice
-                exercises.
-              </p>
-            </a>
-
-            <a class="quick-link card" href="YOUR_NOTES_PAGE_LINK_HERE">
-              <div class="ql-icon">📝</div>
-              <h3 id="speak15">Class Notes</h3>
-              <p>
-                Keep handwritten notes, PDF notes, or topic summaries in one
-                easy-to-open place.
-              </p>
-            </a>
-
-            <a class="quick-link card" href="YOUR_ASSIGNMENTS_PAGE_LINK_HERE">
-              <div class="ql-icon">📚</div>
-              <h3 id="speak16">Assignments</h3>
-              <p>
-                Open practice tasks, homework, quizzes, and project
-                instructions.
-              </p>
-            </a>
-
-            <a class="quick-link card" href="YOUR_REGISTRATION_LINK_HERE">
-              <div class="ql-icon">✅</div>
-              <h3 id="speak17">Registration</h3>
-              <p>
-                New students can register here to join your classes and receive
-                updates.
-              </p>
-            </a>
-
-            <a class="quick-link card" href="YOUR_PAYMENT_LINK_HERE">
-              <div class="ql-icon">💳</div>
-              <h3 id="speak18">Fees / Payment</h3>
-              <p>
-                Add your payment link or fee details page here for easy student
-                access.
-              </p>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section id="schedule" class="section">
-        <div class="container">
-          <div class="section-head">
-            <div>
-              <h2 id="speak19">Zoom Schedule</h2>
-              <p>
-                Show the class routine clearly so students know when to join and
-                what each session covers.
-              </p>
-            </div>
-          </div>
-
-          <div class="grid schedule-grid">
-            <div class="schedule-card card">
-              <div class="tag">📅 Batch A</div>
-              <h3 id="speak20">Beginner Foundation</h3>
-              <p>
-                Perfect for learners starting from zero: Python basics, logic,
-                data, and simple statistics.
-              </p>
-              <div class="time-row">
-                <span>Mon / Wed / Fri</span>
-                <span>7:00 PM</span>
-              </div>
-              <div class="actions" style="margin-top: 14px">
-                <a class="btn btn-secondary" href="YOUR_ZOOM_LINK_1_HERE"
-                  >Join Zoom</a
-                >
-              </div>
-            </div>
-
-            <div class="schedule-card card">
-              <div class="tag">📅 Batch B</div>
-              <h3 id="speak21">AI-ML Core Concepts</h3>
-              <p>
-                Machine learning ideas, data preparation, supervised learning,
-                evaluation, and model thinking.
-              </p>
-              <div class="time-row">
-                <span>Tue / Thu / Sat</span>
-                <span>7:30 PM</span>
-              </div>
-              <div class="actions" style="margin-top: 14px">
-                <a class="btn btn-secondary" href="YOUR_ZOOM_LINK_2_HERE"
-                  >Join Zoom</a
-                >
-              </div>
-            </div>
-
-            <div class="schedule-card card">
-              <div class="tag">📅 Special</div>
-              <h3 id="speak22">Doubt + Project Session</h3>
-              <p>
-                Weekly live help for doubts, coding practice, mini projects, and
-                revision support.
-              </p>
-              <div class="time-row">
-                <span>Sunday</span>
-                <span>10:00 AM</span>
-              </div>
-              <div class="actions" style="margin-top: 14px">
-                <a class="btn btn-secondary" href="YOUR_ZOOM_LINK_3_HERE"
-                  >Join Zoom</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="marquee">
-            <div class="pill">Zoom links in one place</div>
-            <div class="pill">Routine becomes easier to follow</div>
-            <div class="pill">Good for mobile users</div>
-            <div class="pill">Useful for class announcements</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="videos" class="section">
-        <div class="container">
-          <div class="section-head">
-            <div>
-              <h2 id="speak23">Featured Videos</h2>
-              <p>
-                Highlight your best learning videos so students can revise,
-                catch up, and practice anytime.
-              </p>
-            </div>
-          </div>
-
-          <div class="grid video-grid">
-            <a class="video-card card" href="https://youtu.be/Rh4OWmt4ngE">
-              <div class="thumb">▶</div>
-              <h3 id="speak24">Python for AI-ML</h3>
-              <p>
-                Start with variables, loops, functions, lists, dictionaries, and
-                coding confidence.
-              </p>
-            </a>
-
-            <a class="video-card card" href="https://youtu.be/0bHvVjCzZvA">
-              <div class="thumb">📊</div>
-              <h3 id="speak25">Statistics for Machine Learning</h3>
-              <p>
-                Understand mean, median, mode, variance, standard deviation, and
-                real interpretation.
-              </p>
-            </a>
-
-            <a class="video-card card" href="YOUR_VIDEO_LINK_3_HERE">
-              <div class="thumb">🤖</div>
-              <h3 id="speak26">Machine Learning Basics</h3>
-              <p>
-                Learn what training, testing, features, labels, models, and
-                predictions really mean.
-              </p>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <div class="section-head">
-            <div>
-              <h2 id="speak27">What students can expect</h2>
-              <p>
-                This page can work as the main entry point for your complete
-                AI-ML teaching platform.
-              </p>
-            </div>
-          </div>
-
-          <div class="grid feature-grid">
-            <div class="feature card">
-              <h3 id="speak28">Step-by-step learning</h3>
-              <p>
-                Every learner should be able to enter at the right stage and
-                move forward without confusion.
-              </p>
-            </div>
-
-            <div class="feature card">
-              <h3 id="speak29">Direct class access</h3>
-              <p>
-                Students should be able to reach Zoom classes, notes, videos,
-                and contact details in seconds.
-              </p>
-            </div>
-
-            <div class="feature card">
-              <h3 id="speak30">Focused revision</h3>
-              <p>
-                Video links, notes, and assignments help students revise after
-                class instead of forgetting topics.
-              </p>
-            </div>
-
-            <div class="feature card">
-              <h3 id="speak31">Practice support</h3>
-              <p>
-                Link your coding editor, assignments page, and mini project
-                pages to make learning active.
-              </p>
-            </div>
-
-            <div class="feature card">
-              <h3 id="speak32">Community feel</h3>
-              <p>
-                WhatsApp and regular updates create momentum and help students
-                stay connected to the journey.
-              </p>
-            </div>
-
-            <div class="feature card">
-              <h3 id="speak33">Professional presentation</h3>
-              <p>
-                A strong landing page immediately makes the class look
-                organized, trusted, and serious.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <div class="section-head">
-            <div>
-              <h2 id="speak34">Suggested learning roadmap</h2>
-              <p>
-                You can use this section to show students the larger journey,
-                not just the next class link.
-              </p>
-            </div>
-          </div>
-
-          <div class="grid roadmap">
-            <div class="road-card card">
-              <div class="road-step">1</div>
-              <h3 id="speak35">Programming Basics</h3>
-              <p>
-                Python syntax, problem solving, data types, conditions, loops,
-                functions, and clean thinking.
-              </p>
-            </div>
-
-            <div class="road-card card">
-              <div class="road-step">2</div>
-              <h3 id="speak36">Math + Statistics</h3>
-              <p>
-                Core ideas such as averages, distributions, probability,
-                matrices, and interpreting data.
-              </p>
-            </div>
-
-            <div class="road-card card">
-              <div class="road-step">3</div>
-              <h3 id="speak37">Machine Learning</h3>
-              <p>
-                Learn data preparation, supervised learning, overfitting,
-                testing, accuracy, and improvement.
-              </p>
-            </div>
-
-            <div class="road-card card">
-              <div class="road-step">4</div>
-              <h3 id="speak38">Projects + Direction</h3>
-              <p>
-                Mini projects, deployment basics, portfolio building, revision,
-                and future specialization.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="connect" class="section">
-        <div class="container connect-wrap">
-          <div class="cta-box card">
-            <div class="tag">💬 Connect quickly</div>
-            <h2 id="speak39">Stay connected through WhatsApp and updates</h2>
-            <p id="speak40">
-              Let students ask questions, get reminders, receive Zoom links, and
-              stay updated about classes and recordings.
-            </p>
-
-            <div class="contact-list">
-              <div class="contact-item">
-                <div class="contact-icon">W</div>
-                <div>
-                  <strong id="speak41">WhatsApp Direct</strong>
-                  <div class="tiny">
-                    Fastest way to ask about joining, fees, timing, and doubts.
-                  </div>
-                  <div class="actions" style="margin-top: 10px">
-                    <a
-                      class="btn btn-primary"
-                      href="https://wa.me/919335874326?text=Hello%20Champak%20Roy%2C%20I%20want%20to%20know%20more%20about%20the%20AI-ML%20classes."
-                      >Open WhatsApp</a
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon">G</div>
-                <div>
-                  <strong id="speak42">WhatsApp Group</strong>
-                  <div class="tiny">
-                    Share announcements, reminders, practice work, and important
-                    class messages.
-                  </div>
-                  <div class="actions" style="margin-top: 10px">
-                    <a
-                      class="btn btn-secondary"
-                      href="YOUR_WHATSAPP_GROUP_LINK_HERE"
-                      >Join Group</a
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <div class="contact-icon">Y</div>
-                <div>
-                  <strong id="speak43">YouTube / Video Channel</strong>
-                  <div class="tiny">
-                    Good for revision, topic rewatch, and learning at your own
-                    pace.
-                  </div>
-                  <div class="actions" style="margin-top: 10px">
-                    <a
-                      class="btn btn-secondary"
-                      href="https://www.youtube.com/@champaksworld"
-                      >Open Channel</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid faq-grid">
-            <div class="faq card">
-              <h3 id="speak44">Who are these classes for?</h3>
-              <p>
-                Beginners, students, professionals switching fields, and anyone
-                serious about understanding AI-ML properly.
-              </p>
-            </div>
-
-            <div class="faq card">
-              <h3 id="speak45">Do I need prior coding knowledge?</h3>
-              <p>
-                No. You can start from zero and move upward step by step using
-                the beginner track.
-              </p>
-            </div>
-
-            <div class="faq card">
-              <h3 id="speak46">Will there be live sessions?</h3>
-              <p>
-                Yes. This page is designed to prominently show your Zoom
-                schedule and joining links.
-              </p>
-            </div>
-
-            <div class="faq card">
-              <h3 id="speak47">Can I learn from recordings too?</h3>
-              <p>
-                Yes. Add all your important video pages here so students can
-                revise or catch up anytime.
-              </p>
-            </div>
-
-            <div class="faq card">
-              <h3 id="speak48">Can I ask doubts directly?</h3>
-              <p>
-                Yes. WhatsApp support can be one of the strongest features of
-                this landing page.
-              </p>
-            </div>
-
-            <div class="faq card">
-              <h3 id="speak49">Can this page be expanded later?</h3>
-              <p>
-                Yes. You can add testimonials, payment plans, student projects,
-                certificates, and batch filters later.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-box card">
-          <div>
-            <strong id="speak50">AI-ML Classes | Learn With Champak</strong>
-            <div class="tiny">
-              A clean launch page for classes, videos, schedules, and student
-              connection.
-            </div>
-          </div>
-          <div class="actions">
-            <a
-              class="btn btn-primary"
-              href="https://wa.me/919335874326?text=Hello%20Champak%20Roy%2C%20I%20want%20to%20join%20the%20AI-ML%20classes."
-              >Join Now</a
-            >
-            <a
-              class="btn btn-secondary"
-              href="#top"
-              onclick="
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return false;
-              "
-              >Back to Top</a
-            >
+          <div class="book-cover-wrap">
+            <img
+              src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoXACRNq33L6PVDvW_MI6ztTEC6G8YZ6gFLLoUU8VoMbhDvfT84HWagFvJy4wp3XU3Axw1AmsAKRxeeDxjfIuOvY5_FQIngY9g3PhlZmXiL4KAS8z4-YQrMoTfkbcgD6zl6KzVlDLgDyeO0vOYNW4UV4zSCRLnZg9Uxee7PH46mIlSaFYEAyHs_bBNmBk/s1600/ChatGPT%20Image%20May%2021,%202026,%2007_39_50%20AM.png"
+              alt="From NLP to Your Own Chatbot Royal Programming by Champak Roy available for pre-order"
+              loading="eager" />
           </div>
         </div>
       </div>
-    </footer>
-  </body>
+    </section>
+
+    <section class="hero">
+      <div class="container hero-wrap">
+        <div class="hero-main card">
+          <div class="eyebrow" id="speak0">
+            🚀 Start AI-ML from the ground level and grow step by step.
+          </div>
+
+          <h1 id="speak1">
+            A single landing page for your complete
+            <span style="color: #c2410c">AI-ML learning journey</span>
+          </h1>
+
+          <p class="lead" id="speak2">
+            Join live classes, watch videos, access notes, attend Zoom
+            sessions, connect on WhatsApp, follow the roadmap, and move from
+            beginner to project builder — all from one place.
+          </p>
+
+          <div class="hero-points">
+            <div class="point">
+              <div class="icon">📘</div>
+              <div>
+                <strong id="speak3">Structured learning</strong>
+                <div class="tiny">
+                  Python, statistics, machine learning, projects, and
+                  interview preparation.
+                </div>
+              </div>
+            </div>
+
+            <div class="point">
+              <div class="icon">🧠</div>
+              <div>
+                <strong id="speak4">Concept clarity</strong>
+                <div class="tiny">
+                  Simple explanations, examples, practice, and real use cases.
+                </div>
+              </div>
+            </div>
+
+            <div class="point">
+              <div class="icon">💻</div>
+              <div>
+                <strong id="speak5">Project-based approach</strong>
+                <div class="tiny">
+                  Learn by building mini projects and useful tools.
+                </div>
+              </div>
+            </div>
+
+            <div class="point">
+              <div class="icon">🤝</div>
+              <div>
+                <strong id="speak6">Direct support</strong>
+                <div class="tiny">
+                  Stay connected through WhatsApp, class updates, and learning
+                  resources.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a class="btn btn-primary"
+              href="https://wa.me/919335874326?text=Hello%20Champak%20Roy%2C%20I%20want%20to%20join%20the%20AI-ML%20classes.">Join
+              on WhatsApp</a>
+            <a class="btn btn-secondary" href="#schedule">View Zoom Schedule</a>
+            <a class="btn btn-secondary" href="#links">Open Important Links</a>
+            <a class="btn btn-secondary" href="#nlp-book">NLP Book Pre-order</a>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="mini-panel card">
+            <div class="label">What you get</div>
+            <h3 id="speak7">Everything important, organized on one page</h3>
+            <div class="stat-grid">
+              <div class="stat">
+                <b>Live</b>
+                <span>Zoom classes and doubt sessions</span>
+              </div>
+              <div class="stat">
+                <b>Video</b>
+                <span>Recorded lessons and guided learning</span>
+              </div>
+              <div class="stat">
+                <b>Notes</b>
+                <span>Important pages, resources, and links</span>
+              </div>
+              <div class="stat">
+                <b>Connect</b>
+                <span>WhatsApp support and updates</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini-panel card">
+            <div class="label">Ideal for</div>
+            <h3 id="speak8">
+              Students, beginners, working learners, and curious builders
+            </h3>
+            <p id="speak9">
+              Whether you are starting from zero or trying to enter AI-ML
+              seriously, this page helps you find the right class, link,
+              video, and contact point quickly.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="links" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="speak10">Important Links</h2>
+            <p>
+              Keep your most important class pages together so learners never
+              get lost.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid quick-links">
+          <a class="quick-link card" href="https://aiml.learnwithchampak.live/course/course-map.html">
+            <div class="ql-icon">🗺️</div>
+            <h3 id="speak11">Course Map</h3>
+            <p>
+              Open the complete roadmap of your AI-ML journey from basics to
+              advanced topics.
+            </p>
+          </a>
+
+          <a class="quick-link card" href="https://www.learnwithchampak.live/">
+            <div class="ql-icon">🌐</div>
+            <h3 id="speak12">Main Website</h3>
+            <p>
+              Access lessons, blog posts, learning pages, and class resources.
+            </p>
+          </a>
+
+          <a class="quick-link card" href="https://videos.learnwithchampak.live/">
+            <div class="ql-icon">🎥</div>
+            <h3 id="speak13">Videos Portal</h3>
+            <p>
+              Go to the video hub for recorded lessons, topic playlists, and
+              guided study.
+            </p>
+          </a>
+
+          <a class="quick-link card" href="https://editor.learnwithchampak.live/">
+            <div class="ql-icon">🧪</div>
+            <h3 id="speak14">Practice Editor</h3>
+            <p>
+              Use the editor to experiment with code, examples, and practice
+              exercises.
+            </p>
+          </a>
+
+          <a class="quick-link card" href="YOUR_NOTES_PAGE_LINK_HERE">
+            <div class="ql-icon">📝</div>
+            <h3 id="speak15">Class Notes</h3>
+            <p>
+              Keep handwritten notes, PDF notes, or topic summaries in one
+              easy-to-open place.
+            </p>
+          </a>
+
+          <a class="quick-link card" href="YOUR_ASSIGNMENTS_PAGE_LINK_HERE">
+            <div class="ql-icon">📚</div>
+            <h3 id="speak16">Assignments</h3>
+            <p>
+              Open practice tasks, homework, quizzes, and project
+              instructions.
+            </p>
+          </a>
+
+          <a class="quick-link card" href="YOUR_REGISTRATION_LINK_HERE">
+            <div class="ql-icon">✅</div>
+            <h3 id="speak17">Registration</h3>
+            <p>
+              New students can register here to join your classes and receive
+              updates.
+            </p>
+          </a>
+
+          <a class="quick-link card" href="YOUR_PAYMENT_LINK_HERE">
+            <div class="ql-icon">💳</div>
+            <h3 id="speak18">Fees / Payment</h3>
+            <p>
+              Add your payment link or fee details page here for easy student
+              access.
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="schedule" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="speak19">Zoom Schedule</h2>
+            <p>
+              Show the class routine clearly so students know when to join and
+              what each session covers.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid schedule-grid">
+          <div class="schedule-card card">
+            <div class="tag">📅 Batch A</div>
+            <h3 id="speak20">Beginner Foundation</h3>
+            <p>
+              Perfect for learners starting from zero: Python basics, logic,
+              data, and simple statistics.
+            </p>
+            <div class="time-row">
+              <span>Mon / Wed / Fri</span>
+              <span>7:00 PM</span>
+            </div>
+            <div class="actions" style="margin-top: 14px">
+              <a class="btn btn-secondary" href="YOUR_ZOOM_LINK_1_HERE">Join Zoom</a>
+            </div>
+          </div>
+
+          <div class="schedule-card card">
+            <div class="tag">📅 Batch B</div>
+            <h3 id="speak21">AI-ML Core Concepts</h3>
+            <p>
+              Machine learning ideas, data preparation, supervised learning,
+              evaluation, and model thinking.
+            </p>
+            <div class="time-row">
+              <span>Tue / Thu / Sat</span>
+              <span>7:30 PM</span>
+            </div>
+            <div class="actions" style="margin-top: 14px">
+              <a class="btn btn-secondary" href="YOUR_ZOOM_LINK_2_HERE">Join Zoom</a>
+            </div>
+          </div>
+
+          <div class="schedule-card card">
+            <div class="tag">📅 Special</div>
+            <h3 id="speak22">Doubt + Project Session</h3>
+            <p>
+              Weekly live help for doubts, coding practice, mini projects, and
+              revision support.
+            </p>
+            <div class="time-row">
+              <span>Sunday</span>
+              <span>10:00 AM</span>
+            </div>
+            <div class="actions" style="margin-top: 14px">
+              <a class="btn btn-secondary" href="YOUR_ZOOM_LINK_3_HERE">Join Zoom</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="marquee">
+          <div class="pill">Zoom links in one place</div>
+          <div class="pill">Routine becomes easier to follow</div>
+          <div class="pill">Good for mobile users</div>
+          <div class="pill">Useful for class announcements</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="videos" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="speak23">Featured Videos</h2>
+            <p>
+              Highlight your best learning videos so students can revise,
+              catch up, and practice anytime.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid video-grid">
+          <a class="video-card card" href="https://youtu.be/Rh4OWmt4ngE">
+            <div class="thumb">▶</div>
+            <h3 id="speak24">Python for AI-ML</h3>
+            <p>
+              Start with variables, loops, functions, lists, dictionaries, and
+              coding confidence.
+            </p>
+          </a>
+
+          <a class="video-card card" href="https://youtu.be/0bHvVjCzZvA">
+            <div class="thumb">📊</div>
+            <h3 id="speak25">Statistics for Machine Learning</h3>
+            <p>
+              Understand mean, median, mode, variance, standard deviation, and
+              real interpretation.
+            </p>
+          </a>
+
+          <a class="video-card card" href="YOUR_VIDEO_LINK_3_HERE">
+            <div class="thumb">🤖</div>
+            <h3 id="speak26">Machine Learning Basics</h3>
+            <p>
+              Learn what training, testing, features, labels, models, and
+              predictions really mean.
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="speak27">What students can expect</h2>
+            <p>
+              This page can work as the main entry point for your complete
+              AI-ML teaching platform.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid feature-grid">
+          <div class="feature card">
+            <h3 id="speak28">Step-by-step learning</h3>
+            <p>
+              Every learner should be able to enter at the right stage and
+              move forward without confusion.
+            </p>
+          </div>
+
+          <div class="feature card">
+            <h3 id="speak29">Direct class access</h3>
+            <p>
+              Students should be able to reach Zoom classes, notes, videos,
+              and contact details in seconds.
+            </p>
+          </div>
+
+          <div class="feature card">
+            <h3 id="speak30">Focused revision</h3>
+            <p>
+              Video links, notes, and assignments help students revise after
+              class instead of forgetting topics.
+            </p>
+          </div>
+
+          <div class="feature card">
+            <h3 id="speak31">Practice support</h3>
+            <p>
+              Link your coding editor, assignments page, and mini project
+              pages to make learning active.
+            </p>
+          </div>
+
+          <div class="feature card">
+            <h3 id="speak32">Community feel</h3>
+            <p>
+              WhatsApp and regular updates create momentum and help students
+              stay connected to the journey.
+            </p>
+          </div>
+
+          <div class="feature card">
+            <h3 id="speak33">Professional presentation</h3>
+            <p>
+              A strong landing page immediately makes the class look
+              organized, trusted, and serious.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="speak34">Suggested learning roadmap</h2>
+            <p>
+              You can use this section to show students the larger journey,
+              not just the next class link.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid roadmap">
+          <div class="road-card card">
+            <div class="road-step">1</div>
+            <h3 id="speak35">Programming Basics</h3>
+            <p>
+              Python syntax, problem solving, data types, conditions, loops,
+              functions, and clean thinking.
+            </p>
+          </div>
+
+          <div class="road-card card">
+            <div class="road-step">2</div>
+            <h3 id="speak36">Math + Statistics</h3>
+            <p>
+              Core ideas such as averages, distributions, probability,
+              matrices, and interpreting data.
+            </p>
+          </div>
+
+          <div class="road-card card">
+            <div class="road-step">3</div>
+            <h3 id="speak37">Machine Learning</h3>
+            <p>
+              Learn data preparation, supervised learning, overfitting,
+              testing, accuracy, and improvement.
+            </p>
+          </div>
+
+          <div class="road-card card">
+            <div class="road-step">4</div>
+            <h3 id="speak38">Projects + Direction</h3>
+            <p>
+              Mini projects, deployment basics, portfolio building, revision,
+              and future specialization.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="connect" class="section">
+      <div class="container connect-wrap">
+        <div class="cta-box card">
+          <div class="tag">💬 Connect quickly</div>
+          <h2 id="speak39">Stay connected through WhatsApp and updates</h2>
+          <p id="speak40">
+            Let students ask questions, get reminders, receive Zoom links, and
+            stay updated about classes and recordings.
+          </p>
+
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="contact-icon">W</div>
+              <div>
+                <strong id="speak41">WhatsApp Direct</strong>
+                <div class="tiny">
+                  Fastest way to ask about joining, fees, timing, and doubts.
+                </div>
+                <div class="actions" style="margin-top: 10px">
+                  <a class="btn btn-primary"
+                    href="https://wa.me/919335874326?text=Hello%20Champak%20Roy%2C%20I%20want%20to%20know%20more%20about%20the%20AI-ML%20classes.">Open
+                    WhatsApp</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">G</div>
+              <div>
+                <strong id="speak42">WhatsApp Group</strong>
+                <div class="tiny">
+                  Share announcements, reminders, practice work, and important
+                  class messages.
+                </div>
+                <div class="actions" style="margin-top: 10px">
+                  <a class="btn btn-secondary" href="YOUR_WHATSAPP_GROUP_LINK_HERE">Join Group</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">Y</div>
+              <div>
+                <strong id="speak43">YouTube / Video Channel</strong>
+                <div class="tiny">
+                  Good for revision, topic rewatch, and learning at your own
+                  pace.
+                </div>
+                <div class="actions" style="margin-top: 10px">
+                  <a class="btn btn-secondary" href="https://www.youtube.com/@champaksworld">Open Channel</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid faq-grid">
+          <div class="faq card">
+            <h3 id="speak44">Who are these classes for?</h3>
+            <p>
+              Beginners, students, professionals switching fields, and anyone
+              serious about understanding AI-ML properly.
+            </p>
+          </div>
+
+          <div class="faq card">
+            <h3 id="speak45">Do I need prior coding knowledge?</h3>
+            <p>
+              No. You can start from zero and move upward step by step using
+              the beginner track.
+            </p>
+          </div>
+
+          <div class="faq card">
+            <h3 id="speak46">Will there be live sessions?</h3>
+            <p>
+              Yes. This page is designed to prominently show your Zoom
+              schedule and joining links.
+            </p>
+          </div>
+
+          <div class="faq card">
+            <h3 id="speak47">Can I learn from recordings too?</h3>
+            <p>
+              Yes. Add all your important video pages here so students can
+              revise or catch up anytime.
+            </p>
+          </div>
+
+          <div class="faq card">
+            <h3 id="speak48">Can I ask doubts directly?</h3>
+            <p>
+              Yes. WhatsApp support can be one of the strongest features of
+              this landing page.
+            </p>
+          </div>
+
+          <div class="faq card">
+            <h3 id="speak49">Can this page be expanded later?</h3>
+            <p>
+              Yes. You can add testimonials, payment plans, student projects,
+              certificates, and batch filters later.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-box card">
+        <div>
+          <strong id="speak50">AI-ML Classes | Learn With Champak</strong>
+          <div class="tiny">
+            A clean launch page for classes, videos, schedules, and student
+            connection.
+          </div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary"
+            href="https://wa.me/919335874326?text=Hello%20Champak%20Roy%2C%20I%20want%20to%20join%20the%20AI-ML%20classes.">Join
+            Now</a>
+          <a class="btn btn-secondary" href="#top" onclick="
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return false;
+              ">Back to Top</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
 </html>

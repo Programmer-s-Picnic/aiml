@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Grid Point Highlighter Using X and Y Conditions</title>
+
+    <meta name="description"
+        content="Create a grid by entering length and width, then highlight points using mathematical conditions on x and y with and, or, and not. Numbering starts from 1." />
+
+    <meta property="og:title" content="Grid Point Highlighter" />
+    <meta property="og:description"
+        content="Enter length, width, and an x-y condition using and, or, and not to highlight grid points." />
+    <meta property="og:type" content="website" />
+
+    <!-- Google AdSense: Programmer's Picnic / Champak Roy -->
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494&host=ca-host-pub-1556223355139109"
+        crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --saffron: #ff9800;
+            --deep-saffron: #e65100;
+            --light-saffron: #fff3e0;
+            --cream: #fffaf2;
+            --dark: #2b2118;
+            --muted: #6d4c41;
+            --green: #2e7d32;
+            --red: #c62828;
+            --border: #e5c48b;
+            --cell-size: 54px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fffaf2, #fff3e0);
+            color: var(--dark);
+        }
+
+        header {
+            padding: 32px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--saffron), #ffc107);
+            color: #2b2118;
+            border-bottom: 4px solid var(--deep-saffron);
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.7rem, 4vw, 2.6rem);
+        }
+
+        header p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        main {
+            max-width: 1120px;
+            margin: 24px auto;
+            padding: 16px;
+        }
+
+        .panel,
+        .cta-card,
+        .ad-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(128, 72, 0, 0.12);
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            align-items: end;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #d7a951;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--deep-saffron);
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.18);
+        }
+
+        .condition-box {
+            grid-column: span 2;
+        }
+
+        .examples {
+            margin-top: 15px;
+            padding: 12px;
+            background: var(--light-saffron);
+            border-radius: 12px;
+            border: 1px dashed var(--saffron);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        code {
+            background: #2b2118;
+            color: #fff8e1;
+            padding: 3px 7px;
+            border-radius: 6px;
+            font-family: Consolas, monospace;
+            white-space: nowrap;
+        }
+
+        .status {
+            margin-top: 14px;
+            font-weight: bold;
+        }
+
+        .error {
+            color: var(--red);
+        }
+
+        .success {
+            color: var(--green);
+        }
+
+        .ad-card {
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff, #fff8ed);
+        }
+
+        .ad-label {
+            margin: 0 0 10px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .cta-card {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 18px;
+            align-items: center;
+            background:
+                radial-gradient(circle at top left, rgba(255, 193, 7, 0.30), transparent 34%),
+                linear-gradient(135deg, #fffaf2, #ffffff);
+        }
+
+        .cta-card h2 {
+            margin: 0 0 8px;
+            font-size: 1.45rem;
+        }
+
+        .cta-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .cta-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 11px 15px;
+            border-radius: 999px;
+            background: var(--deep-saffron);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 8px 18px rgba(230, 81, 0, 0.20);
+        }
+
+        .cta-button.secondary {
+            background: #2b2118;
+        }
+
+        .grid-wrapper {
+            overflow: auto;
+            padding: 16px;
+            background: #fff;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(128, 72, 0, 0.10);
+        }
+
+        .grid {
+            display: grid;
+            gap: 5px;
+            width: max-content;
+            margin: auto;
+        }
+
+        .cell {
+            width: var(--cell-size);
+            height: var(--cell-size);
+            border: 1px solid #d8b26a;
+            background: #fffdf8;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: 0.25s;
+            position: relative;
+        }
+
+        .cell.highlight {
+            background: linear-gradient(135deg, #ff9800, #ffcc80);
+            color: #2b2118;
+            border-color: #e65100;
+            transform: scale(1.04);
+            box-shadow: 0 4px 14px rgba(230, 81, 0, 0.35);
+        }
+
+        .cell.start-point {
+            outline: 3px solid #2e7d32;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        @media (max-width: 800px) {
+            :root {
+                --cell-size: 44px;
+            }
+
+            .controls,
+            .cta-card {
+                grid-template-columns: 1fr;
+            }
+
+            .condition-box {
+                grid-column: span 1;
+            }
+
+            .cta-actions {
+                justify-content: flex-start;
+            }
+
+            .cell {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Grid Point Highlighter</h1>
+        <p>Enter length, width, and a condition using <strong>x</strong>, <strong>y</strong>, <strong>and</strong>,
+            <strong>or</strong>, and <strong>not</strong>. Numbering starts from <strong>1</strong>.</p>
+    </header>
+
+    <main>
+        <section class="ad-card" aria-label="Advertisement">
+            <p class="ad-label">Advertisement</p>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8321261883090494"
+                data-ad-slot="7782388330" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </section>
+
+        <section class="cta-card">
+            <div>
+                <h2>Learn coding visually with Programmer's Picnic</h2>
+                <p>
+                    Practice coordinates, logic, conditions, loops, and problem solving with beginner-friendly lessons
+                    by Champak Roy.
+                </p>
+            </div>
+
+            <div class="cta-actions">
+                <a class="cta-button" href="https://www.learnwithchampak.live/" target="_blank" rel="noopener">
+                    Explore Lessons
+                </a>
+                <a class="cta-button secondary" href="https://www.youtube.com/@champaksworld/featured" target="_blank"
+                    rel="noopener">
+                    Watch on YouTube
+                </a>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="controls">
+                <div>
+                    <label for="lengthInput">Length</label>
+                    <input onchange="makeGrid()" onkeyup="makeGrid()" type="number" id="lengthInput" min="1" max="50"
+                        value="10" />
+                </div>
+
+                <div>
+                    <label for="widthInput">Width</label>
+                    <input onchange="makeGrid()" onkeyup="makeGrid()" type="number" id="widthInput" min="1" max="50"
+                        value="8" />
+                </div>
+
+                <div class="condition-box">
+                    <label for="conditionInput">Condition using x and y, with and / or / not</label>
+                    <input onchange="makeGrid()" onkeyup="makeGrid()" type="text" id="conditionInput" value="x == y" />
+                </div>
+            </div>
+
+            <div class="examples">
+                Try:
+                <code>x == y</code>
+                <code>x + y == 6</code>
+                <code>x &gt; 3 and y &lt; 5</code>
+                <code>x % 2 == 0 or y % 2 == 0</code>
+                <code>not (x == y)</code>
+                <code>x*x + y*y &lt; 25</code>
+                <br />
+                Since numbering starts from 1, the first point is <code>(1,1)</code>, not <code>(0,0)</code>.
+            </div>
+
+            <div id="status" class="status"></div>
+        </section>
+
+        <section class="grid-wrapper">
+            <div id="grid" class="grid"></div>
+        </section>
+
+        <section class="ad-card" aria-label="Advertisement">
+            <p class="ad-label">Advertisement</p>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8321261883090494"
+                data-ad-slot="7782388330" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </section>
+    </main>
+
+    <footer>
+        Grid points are shown as <strong>(x, y)</strong>. The bottom-left point is treated as <strong>(1, 1)</strong>.
+    </footer>
+
+    <script>
+        function normalizeCondition(condition) {
+            let expression = condition.trim();
+
+            if (expression.includes("&&") || expression.includes("||")) {
+                throw new Error("Please use words: and, or. Example: x > 3 and y < 5");
+            }
+
+            if (/!(?!=)/.test(expression)) {
+                throw new Error("Please use the word not instead of !. Example: not (x == y)");
+            }
+
+            expression = expression
+                .replace(/\band\b/gi, "&&")
+                .replace(/\bor\b/gi, "||")
+                .replace(/\bnot\s*\(/gi, "!(")
+                .replace(/\bnot\b/gi, "!");
+
+            const allowedCharacters = /^[xyXY0-9\s+\-*/%<>=!&|().]+$/;
+
+            if (!allowedCharacters.test(expression)) {
+                throw new Error("Use only x, y, numbers, brackets, comparison symbols, and the words and, or, not.");
+            }
+
+            return expression;
+        }
+
+        function makeGrid() {
+            const length = Number(document.getElementById("lengthInput").value);
+            const width = Number(document.getElementById("widthInput").value);
+            const condition = document.getElementById("conditionInput").value.trim();
+
+            const grid = document.getElementById("grid");
+            const status = document.getElementById("status");
+
+            grid.innerHTML = "";
+            status.textContent = "";
+            status.className = "status";
+
+            if (!Number.isInteger(length) || !Number.isInteger(width) || length <= 0 || width <= 0) {
+                status.textContent = "Please enter positive whole numbers for length and width.";
+                status.classList.add("error");
+                return;
+            }
+
+            if (length > 50 || width > 50) {
+                status.textContent = "Please keep length and width up to 50 for smooth display.";
+                status.classList.add("error");
+                return;
+            }
+
+            if (!condition) {
+                status.textContent = "Please enter a condition using x and y.";
+                status.classList.add("error");
+                return;
+            }
+
+            let conditionFunction;
+            let jsCondition;
+
+            try {
+                jsCondition = normalizeCondition(condition);
+                conditionFunction = new Function("x", "y", `"use strict"; return (${jsCondition});`);
+            } catch (error) {
+                status.textContent = error.message || "Invalid condition. Please check your expression.";
+                status.classList.add("error");
+                return;
+            }
+
+            grid.style.gridTemplateColumns = `repeat(${length}, var(--cell-size))`;
+
+            let highlightedCount = 0;
+
+            for (let row = width; row >= 1; row--) {
+                for (let col = 1; col <= length; col++) {
+                    const x = col;
+                    const y = row;
+
+                    const cell = document.createElement("div");
+                    cell.className = "cell";
+                    cell.textContent = `(${x},${y})`;
+
+                    if (x === 1 && y === 1) {
+                        cell.classList.add("start-point");
+                        cell.title = "Start point (1,1)";
+                    }
+
+                    try {
+                        const result = Boolean(conditionFunction(x, y));
+
+                        if (result) {
+                            cell.classList.add("highlight");
+                            highlightedCount++;
+                        }
+                    } catch (error) {
+                        status.textContent = "The condition caused an error while checking points.";
+                        status.classList.add("error");
+                        grid.innerHTML = "";
+                        return;
+                    }
+
+                    grid.appendChild(cell);
+                }
+            }
+
+            status.textContent = `${highlightedCount} point(s) highlighted using condition: ${condition}`;
+            status.classList.add("success");
+        }
+
+        function loadGoogleAds() {
+            const ads = document.querySelectorAll(".adsbygoogle");
+            ads.forEach(function () {
+                try {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                } catch (error) {
+                    console.warn("AdSense could not be loaded yet.", error);
+                }
+            });
+        }
+
+        makeGrid();
+        window.addEventListener("load", loadGoogleAds);
+    </script>
+
+</body>
+
+</html>
