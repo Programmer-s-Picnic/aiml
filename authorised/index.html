@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Google Login on GitHub Pages</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff7ed;
+            color: #1f2937;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .card {
+            max-width: 520px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-top: 6px solid #f97316;
+        }
+
+        #protectedContent {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: #fffbeb;
+            border-radius: 14px;
+            border: 1px solid #fed7aa;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 10px;
+            background: #ea580c;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h1>Programmers Picnic Login</h1>
+        <p>Sign in with Google to continue.</p>
+
+        <div id="g_id_onload" data-client_id="704346946203-m69uok3l8htbtgdsee0vtoul5b8v7clv.apps.googleusercontent.com"
+            data-callback="handleCredentialResponse">
+        </div>
+
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="signin_with"
+            data-shape="pill" data-logo_alignment="left">
+        </div>
+
+        <div id="protectedContent">
+            <h2 id="welcomeText"></h2>
+            <p>You are now logged in.</p>
+            <p>This content is visible only after Google login.</p>
+
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        function parseJwt(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(
+                atob(base64)
+                    .split('')
+                    .map(function (c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    })
+                    .join('')
+            );
+
+            return JSON.parse(jsonPayload);
+        }
+
+        function handleCredentialResponse(response) {
+            const user = parseJwt(response.credential);
+
+            console.log(user);
+
+            const allowedEmails = [
+                "champaksworld@gmail.com"
+            ];
+
+            if (!allowedEmails.includes(user.email)) {
+                alert("Sorry, this email is not allowed.");
+                return;
+            }
+
+            localStorage.setItem("google_user", JSON.stringify(user));
+
+            showUser(user);
+        }
+
+        function showUser(user) {
+            document.getElementById("protectedContent").style.display = "block";
+            document.getElementById("welcomeText").innerText =
+                "Welcome, " + (user.name || user.email);
+        }
+
+        function logout() {
+            localStorage.removeItem("google_user");
+            location.reload();
+        }
+
+        window.onload = function () {
+            const savedUser = localStorage.getItem("google_user");
+
+            if (savedUser) {
+                showUser(JSON.parse(savedUser));
+            }
+        };
+    </script>
+
+</body>
+
+</html>
