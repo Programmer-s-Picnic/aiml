@@ -10,7 +10,7 @@ Static course site for Programmer's Picnic AI-ML Classes by Champak Roy.
 - student-friendly homepage
 - lessons, datasets, assignments, projects, teacher and student sections
 - `sitemap.xml`, `robots.txt`, `404.html`, and `CNAME`
-- warm saffron theme in `assets/css/site.css`
+- warm light blue theme in `assets/css/site.css`
 
 ## Editing navigation
 

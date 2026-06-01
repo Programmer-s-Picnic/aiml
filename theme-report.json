@@ -1,0 +1,16 @@
+{
+  "theme": "Professional Light Blue",
+  "primary": "#2563eb",
+  "secondary": "#0ea5e9",
+  "background": "#f7fbff",
+  "updated_files": [
+    "assets/css/site.css",
+    "course/assets/css/theme.css",
+    "HTML theme-color metadata",
+    "footer/lesson theme wording where present"
+  ],
+  "notes": [
+    "Compatibility variables named saffron are intentionally retained in CSS so older pages using existing class names continue to work.",
+    "The output ZIP excludes .git and other development/cache artifacts."
+  ]
+}

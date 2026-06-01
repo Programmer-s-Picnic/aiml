@@ -6,7 +6,7 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>NLP 41% to 50% | TF-IDF and Better Text Search</title>
 <meta content="Programmers Picnic AI-ML Classes by Champak Roy. NLP 41% to 50% lesson on stop words, TF, IDF, TF-IDF, TfidfVectorizer, cosine similarity, and better lesson search." name="description"/>
-<meta content="#f59e0b" name="theme-color"/>
+<meta content="#2563eb" name="theme-color"/>
 <!-- Google Ads -->
 <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
 <!-- Usual JS Libraries -->
@@ -15,23 +15,23 @@
 <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
 <style>
     :root {
-      --bg: #fff7ed;
+      --bg: #eff6ff;
       --bg2: #fffbeb;
       --card: rgba(255, 255, 255, 0.9);
       --card2: #ffffff;
       --ink: #241407;
       --muted: #6b4f2a;
       --line: rgba(146, 64, 14, 0.18);
-      --saffron: #f59e0b;
-      --saffron2: #fb923c;
-      --saffron3: #d97706;
+      --light blue: #2563eb;
+      --light blue2: #fb923c;
+      --light blue3: #d97706;
       --deep: #7c2d12;
       --green: #15803d;
       --blue: #2563eb;
       --red: #dc2626;
       --purple: #7c3aed;
       --codebg: #15120c;
-      --code: #fff7ed;
+      --code: #eff6ff;
       --shadow: 0 20px 60px rgba(146, 64, 14, 0.16);
       --radius: 24px;
     }
@@ -103,7 +103,7 @@
       border-radius: 16px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, var(--saffron), var(--saffron2));
+      background: linear-gradient(135deg, var(--light blue), var(--light blue2));
       color: white;
       box-shadow: 0 10px 24px rgba(217, 119, 6, 0.25);
       font-weight: 1000;
@@ -197,7 +197,7 @@
     }
 
     .primary {
-      background: linear-gradient(135deg, var(--saffron3), var(--saffron));
+      background: linear-gradient(135deg, var(--light blue3), var(--light blue));
       color: white;
       border: none;
     }
@@ -226,7 +226,7 @@
     .meter-fill {
       width: 50%;
       height: 100%;
-      background: linear-gradient(90deg, var(--saffron3), var(--saffron), #facc15);
+      background: linear-gradient(90deg, var(--light blue3), var(--light blue), #facc15);
       border-radius: 999px;
     }
 
@@ -335,7 +335,7 @@
     }
 
     .callout {
-      border-left: 6px solid var(--saffron3);
+      border-left: 6px solid var(--light blue3);
       background: rgba(245, 158, 11, 0.10);
       padding: 16px;
       border-radius: 18px;
@@ -499,7 +499,7 @@
       float: right;
       margin-bottom: 8px;
       border: 0;
-      background: linear-gradient(135deg, var(--saffron3), var(--saffron));
+      background: linear-gradient(135deg, var(--light blue3), var(--light blue));
       color: white;
       border-radius: 999px;
       padding: 8px 12px;
@@ -560,7 +560,7 @@
       display: block;
       height: 100%;
       border-radius: 999px;
-      background: linear-gradient(90deg, var(--saffron3), var(--saffron));
+      background: linear-gradient(90deg, var(--light blue3), var(--light blue));
     }
 
     @media (max-width: 900px) {
@@ -908,23 +908,23 @@ Common word = less important</code></pre>
 <defs>
 <lineargradient id="g1" x1="0" x2="1">
 <stop offset="0%" stop-color="#d97706"></stop>
-<stop offset="100%" stop-color="#f59e0b"></stop>
+<stop offset="100%" stop-color="#2563eb"></stop>
 </lineargradient>
 <filter height="140%" id="shadow" width="140%" x="-20%" y="-20%">
 <fedropshadow dx="0" dy="10" flood-color="#92400e" flood-opacity="0.18" stddeviation="10"></fedropshadow>
 </filter>
 </defs>
-<rect fill="#fff7ed" filter="url(#shadow)" height="110" rx="24" stroke="#f59e0b" width="170" x="20" y="70"></rect>
+<rect fill="#eff6ff" filter="url(#shadow)" height="110" rx="24" stroke="#2563eb" width="170" x="20" y="70"></rect>
 <text fill="#7c2d12" font-size="23" font-weight="900" text-anchor="middle" x="105" y="112">Query</text>
 <text fill="#6b4f2a" font-size="15" text-anchor="middle" x="105" y="145">User search</text>
 <path d="M200 125 H270" stroke="#d97706" stroke-linecap="round" stroke-width="8"></path>
 <polygon fill="#d97706" points="270,125 250,112 250,138"></polygon>
-<rect fill="#fff7ed" filter="url(#shadow)" height="110" rx="24" stroke="#f59e0b" width="190" x="290" y="70"></rect>
+<rect fill="#eff6ff" filter="url(#shadow)" height="110" rx="24" stroke="#2563eb" width="190" x="290" y="70"></rect>
 <text fill="#7c2d12" font-size="23" font-weight="900" text-anchor="middle" x="385" y="112">Clean</text>
 <text fill="#6b4f2a" font-size="15" text-anchor="middle" x="385" y="145">Remove weak words</text>
 <path d="M490 125 H560" stroke="#d97706" stroke-linecap="round" stroke-width="8"></path>
 <polygon fill="#d97706" points="560,125 540,112 540,138"></polygon>
-<rect fill="#fff7ed" filter="url(#shadow)" height="110" rx="24" stroke="#f59e0b" width="190" x="580" y="70"></rect>
+<rect fill="#eff6ff" filter="url(#shadow)" height="110" rx="24" stroke="#2563eb" width="190" x="580" y="70"></rect>
 <text fill="#7c2d12" font-size="23" font-weight="900" text-anchor="middle" x="675" y="112">TF-IDF</text>
 <text fill="#6b4f2a" font-size="15" text-anchor="middle" x="675" y="145">Weighted vector</text>
 <path d="M780 125 H850" stroke="#d97706" stroke-linecap="round" stroke-width="8"></path>
@@ -932,7 +932,7 @@ Common word = less important</code></pre>
 <rect fill="url(#g1)" filter="url(#shadow)" height="110" rx="24" width="220" x="870" y="70"></rect>
 <text fill="#ffffff" font-size="23" font-weight="900" text-anchor="middle" x="980" y="112">Rank
               Results</text>
-<text fill="#fff7ed" font-size="15" text-anchor="middle" x="980" y="145">Best lesson first</text>
+<text fill="#eff6ff" font-size="15" text-anchor="middle" x="980" y="145">Best lesson first</text>
 <text fill="#7c2d12" font-size="24" font-weight="900" text-anchor="middle" x="560" y="250">
               TF-IDF makes search smarter by giving stronger words more weight.
             </text>

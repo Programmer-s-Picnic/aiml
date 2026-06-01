@@ -6,7 +6,7 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>NLP 31% to 40% | Text Similarity and Cosine Similarity</title>
 <meta content="Programmers Picnic AI-ML Classes by Champak Roy. NLP 31% to 40% lesson on text similarity, vectors, CountVectorizer, cosine similarity, sentence comparison, and a mini project." name="description"/>
-<meta content="#f59e0b" name="theme-color"/>
+<meta content="#2563eb" name="theme-color"/>
 <!-- Google Ads -->
 <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
 <!-- Usual JS Libraries -->
@@ -15,22 +15,22 @@
 <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
 <style>
     :root {
-      --bg: #fff7ed;
+      --bg: #eff6ff;
       --bg2: #fffbeb;
       --card: rgba(255,255,255,0.88);
       --card2: #ffffff;
       --ink: #231407;
       --muted: #6b4f2a;
       --line: rgba(146, 64, 14, 0.18);
-      --saffron: #f59e0b;
-      --saffron2: #fb923c;
-      --saffron3: #d97706;
+      --light blue: #2563eb;
+      --light blue2: #fb923c;
+      --light blue3: #d97706;
       --deep: #7c2d12;
       --green: #15803d;
       --blue: #2563eb;
       --red: #dc2626;
       --codebg: #15120c;
-      --code: #fff7ed;
+      --code: #eff6ff;
       --shadow: 0 20px 60px rgba(146, 64, 14, 0.16);
       --radius: 24px;
     }
@@ -102,7 +102,7 @@
       border-radius: 16px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, var(--saffron), var(--saffron2));
+      background: linear-gradient(135deg, var(--light blue), var(--light blue2));
       color: white;
       box-shadow: 0 10px 24px rgba(217, 119, 6, 0.25);
       font-weight: 1000;
@@ -196,7 +196,7 @@
     }
 
     .primary {
-      background: linear-gradient(135deg, var(--saffron3), var(--saffron));
+      background: linear-gradient(135deg, var(--light blue3), var(--light blue));
       color: white;
       border: none;
     }
@@ -225,7 +225,7 @@
     .meter-fill {
       width: 40%;
       height: 100%;
-      background: linear-gradient(90deg, var(--saffron3), var(--saffron), #facc15);
+      background: linear-gradient(90deg, var(--light blue3), var(--light blue), #facc15);
       border-radius: 999px;
     }
 
@@ -334,7 +334,7 @@
     }
 
     .callout {
-      border-left: 6px solid var(--saffron3);
+      border-left: 6px solid var(--light blue3);
       background: rgba(245, 158, 11, 0.10);
       padding: 16px;
       border-radius: 18px;
@@ -493,7 +493,7 @@
       float: right;
       margin-bottom: 8px;
       border: 0;
-      background: linear-gradient(135deg, var(--saffron3), var(--saffron));
+      background: linear-gradient(135deg, var(--light blue3), var(--light blue));
       color: white;
       border-radius: 999px;
       padding: 8px 12px;
@@ -702,30 +702,30 @@
 <defs>
 <lineargradient id="g1" x1="0" x2="1">
 <stop offset="0%" stop-color="#d97706"></stop>
-<stop offset="100%" stop-color="#f59e0b"></stop>
+<stop offset="100%" stop-color="#2563eb"></stop>
 </lineargradient>
 <filter height="140%" id="shadow" width="140%" x="-20%" y="-20%">
 <fedropshadow dx="0" dy="10" flood-color="#92400e" flood-opacity="0.18" stddeviation="10"></fedropshadow>
 </filter>
 </defs>
-<rect fill="#fff7ed" filter="url(#shadow)" height="110" rx="24" stroke="#f59e0b" width="190" x="20" y="50"></rect>
+<rect fill="#eff6ff" filter="url(#shadow)" height="110" rx="24" stroke="#2563eb" width="190" x="20" y="50"></rect>
 <text fill="#7c2d12" font-size="24" font-weight="800" text-anchor="middle" x="115" y="92">Text</text>
 <text fill="#6b4f2a" font-size="16" text-anchor="middle" x="115" y="126">Student sentence</text>
 <path d="M220 105 H300" stroke="#d97706" stroke-linecap="round" stroke-width="8"></path>
 <polygon fill="#d97706" points="300,105 280,92 280,118"></polygon>
-<rect fill="#fff7ed" filter="url(#shadow)" height="110" rx="24" stroke="#f59e0b" width="190" x="320" y="50"></rect>
+<rect fill="#eff6ff" filter="url(#shadow)" height="110" rx="24" stroke="#2563eb" width="190" x="320" y="50"></rect>
 <text fill="#7c2d12" font-size="24" font-weight="800" text-anchor="middle" x="415" y="92">Words</text>
 <text fill="#6b4f2a" font-size="16" text-anchor="middle" x="415" y="126">Token list</text>
 <path d="M520 105 H600" stroke="#d97706" stroke-linecap="round" stroke-width="8"></path>
 <polygon fill="#d97706" points="600,105 580,92 580,118"></polygon>
-<rect fill="#fff7ed" filter="url(#shadow)" height="110" rx="24" stroke="#f59e0b" width="190" x="620" y="50"></rect>
+<rect fill="#eff6ff" filter="url(#shadow)" height="110" rx="24" stroke="#2563eb" width="190" x="620" y="50"></rect>
 <text fill="#7c2d12" font-size="24" font-weight="800" text-anchor="middle" x="715" y="92">Numbers</text>
 <text fill="#6b4f2a" font-size="16" text-anchor="middle" x="715" y="126">Vector</text>
 <path d="M820 105 H900" stroke="#d97706" stroke-linecap="round" stroke-width="8"></path>
 <polygon fill="#d97706" points="900,105 880,92 880,118"></polygon>
 <rect fill="url(#g1)" filter="url(#shadow)" height="110" rx="24" width="160" x="920" y="50"></rect>
 <text fill="#ffffff" font-size="24" font-weight="800" text-anchor="middle" x="1000" y="92">Score</text>
-<text fill="#fff7ed" font-size="16" text-anchor="middle" x="1000" y="126">Similarity</text>
+<text fill="#eff6ff" font-size="16" text-anchor="middle" x="1000" y="126">Similarity</text>
 <text fill="#7c2d12" font-size="24" font-weight="900" text-anchor="middle" x="550" y="230">
               NLP comparison becomes possible after text becomes numerical.
             </text>
