@@ -1,0 +1,95 @@
+{
+  "brand": {
+    "title": "AI-ML Classes",
+    "subtitle": "Programmer's Picnic by Champak Roy",
+    "badge": "AI"
+  },
+  "items": [
+    {
+      "label": "Home",
+      "href": "index.html"
+    },
+    {
+      "label": "Course Map",
+      "href": "coursemap/index.html"
+    },
+    {
+      "label": "Lessons",
+      "href": "lessons/index.html",
+      "children": [
+        {
+          "label": "Statistics",
+          "href": "lessons/stats/index.html"
+        },
+        {
+          "label": "Terms",
+          "href": "lessons/terms/index.html"
+        },
+        {
+          "label": "Regression",
+          "href": "regression/index.html"
+        },
+        {
+          "label": "Classification",
+          "href": "classification/index.html"
+        },
+        {
+          "label": "NLP",
+          "href": "nlp/index.html"
+        },
+        {
+          "label": "Matplotlib 3D",
+          "href": "matplotlib/3d/0/index.html"
+        }
+      ]
+    },
+    {
+      "label": "Practice",
+      "href": "assignments/week1.txt",
+      "children": [
+        {
+          "label": "Assignments",
+          "href": "assignments/week1.txt"
+        },
+        {
+          "label": "Projects",
+          "href": "projects/index.html"
+        },
+        {
+          "label": "Datasets",
+          "href": "datasets/index.html"
+        }
+      ]
+    },
+    {
+      "label": "Tools",
+      "href": "tools/index.html",
+      "children": [
+        {
+          "label": "Python Editor",
+          "href": "https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
+        },
+        {
+          "label": "SQL Editor",
+          "href": "https://editor.learnwithchampak.live/sql/premium/"
+        },
+        {
+          "label": "Whiteboard",
+          "href": "https://editor.learnwithchampak.live/whiteboard/"
+        }
+      ]
+    },
+    {
+      "label": "Student",
+      "href": "student/index.html"
+    },
+    {
+      "label": "Teacher",
+      "href": "teacher/index.html"
+    },
+    {
+      "label": "Contact",
+      "href": "https://www.learnwithchampak.live/p/champak.html"
+    }
+  ]
+}

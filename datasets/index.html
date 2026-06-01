@@ -1,17 +1,13 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Week Lesson: Hollywood Film Dataset Analysis</title>
-    <script src="https://programmer-s-picnic.github.io/json-images/pwd.js"></script>
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-      crossorigin="anonymous"
-    ></script>
+<!DOCTYPE html>
 
-    <style>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Week Lesson: Hollywood Film Dataset Analysis</title>
+<script src="https://programmer-s-picnic.github.io/json-images/pwd.js"></script>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+<style>
       :root {
         --saffron: #ff9933;
         --deep-saffron: #e87500;
@@ -167,382 +163,8 @@
         padding: 15px;
       }
     </style>
-  </head>
-  <body>
-    <header>
-      <h1>🎬 Week Lesson: Hollywood Film Dataset Analysis</h1>
-      <p>Programmers Picnic AI-ML Classes by Champak Roy</p>
-      <p>learnwithchampak.live | aiml.learnwithchampak.live</p>
-    </header>
-
-    <div class="container">
-      <section class="card">
-        <h2>🎯 Lesson Objective</h2>
-        <p>
-          In this lesson, students will learn how to use a Hollywood-style movie
-          dataset to analyze film success using Python, Pandas, visualization,
-          and basic machine learning.
-        </p>
-        <span class="tag">Python</span>
-        <span class="tag">Pandas</span>
-        <span class="tag">Data Analysis</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Film Success Prediction</span>
-      </section>
-
-      <section class="card">
-        <h2>📥 Dataset Download</h2>
-        <p>
-          Click below to download the sample Hollywood movie dataset as a CSV
-          file. Students can open it in Excel, Google Sheets, or Python.
-        </p>
-
-        <button class="btn" onclick="downloadCSV()">
-          ⬇ Download Sample CSV
-        </button>
-        <button class="btn" onclick="copyCSV()">📋 Copy CSV Data</button>
-
-        <h3>Sample Dataset Preview</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>title</th>
-              <th>genre</th>
-              <th>budget_million</th>
-              <th>revenue_million</th>
-              <th>rating</th>
-              <th>year</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Sky Warriors</td>
-              <td>Action</td>
-              <td>120</td>
-              <td>520</td>
-              <td>8.1</td>
-              <td>2019</td>
-            </tr>
-            <tr>
-              <td>Love in Paris</td>
-              <td>Romance</td>
-              <td>35</td>
-              <td>150</td>
-              <td>7.2</td>
-              <td>2020</td>
-            </tr>
-            <tr>
-              <td>Dark Planet</td>
-              <td>Sci-Fi</td>
-              <td>180</td>
-              <td>760</td>
-              <td>8.5</td>
-              <td>2021</td>
-            </tr>
-            <tr>
-              <td>Silent Tears</td>
-              <td>Drama</td>
-              <td>20</td>
-              <td>65</td>
-              <td>7.8</td>
-              <td>2018</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <section class="card">
-        <h2>🌍 Real Hollywood Datasets (Download Links)</h2>
-        <p>
-          Use these real-world datasets to practice advanced analysis and
-          machine learning. These datasets are widely used in data science
-          projects.
-        </p>
-
-        <div class="grid">
-          <div class="mini-card">
-            <h3>🎬 TMDb 5000 Movie Dataset</h3>
-            <p>
-              Contains 5000 movies with metadata like budget, revenue, cast, and
-              genres.
-            </p>
-            <a
-              class="btn"
-              href="https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata"
-              target="_blank"
-            >
-              ⬇ Download from Kaggle
-            </a>
-          </div>
-
-          <div class="mini-card">
-            <h3>⭐ IMDb Movie Dataset</h3>
-            <p>
-              Large dataset including ratings, votes, titles, and crew
-              information.
-            </p>
-            <a class="btn" href="https://datasets.imdbws.com/" target="_blank">
-              ⬇ Official IMDb Dataset
-            </a>
-          </div>
-
-          <div class="mini-card">
-            <h3>💰 Box Office Mojo Dataset</h3>
-            <p>
-              Focused on box office revenue, domestic and international
-              earnings.
-            </p>
-            <a
-              class="btn"
-              href="https://www.boxofficemojo.com/"
-              target="_blank"
-            >
-              🌐 Visit Website
-            </a>
-          </div>
-
-          <div class="mini-card">
-            <h3>📊 MovieLens Dataset</h3>
-            <p>
-              Useful for recommendation systems (user ratings and preferences).
-            </p>
-            <a
-              class="btn"
-              href="https://grouplens.org/datasets/movielens/"
-              target="_blank"
-            >
-              ⬇ Download MovieLens
-            </a>
-          </div>
-        </div>
-
-        <h3>💡 Pro Tip</h3>
-        <p>
-          Start with the small sample dataset, then move to these real datasets
-          for:
-        </p>
-        <ul>
-          <li>More features (cast, crew, keywords)</li>
-          <li>Bigger data (better ML models)</li>
-          <li>Real-world complexity</li>
-        </ul>
-      </section>
-      <section class="card">
-        <h2>🧠 What is a Hollywood Dataset?</h2>
-        <p>
-          A Hollywood film dataset contains information about movies such as
-          title, genre, budget, revenue, rating, release year, director, and
-          cast.
-        </p>
-
-        <div class="grid">
-          <div class="mini-card">
-            <strong>Budget:</strong> Money spent to make the film.
-          </div>
-          <div class="mini-card">
-            <strong>Revenue:</strong> Money earned by the film.
-          </div>
-          <div class="mini-card">
-            <strong>Profit:</strong> Revenue minus budget.
-          </div>
-          <div class="mini-card">
-            <strong>Rating:</strong> Audience or critic score.
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>🛠 Step 1: Load the Dataset</h2>
-        <pre><code>import pandas as pd
-
-df = pd.read_csv("hollywood_movies_sample.csv")
-
-print(df.head())
-print(df.info())</code></pre>
-      </section>
-
-      <section class="card">
-        <h2>🔍 Step 2: Explore the Dataset</h2>
-        <pre><code># Basic statistics
-print(df.describe())
-
-# Check missing values
-print(df.isnull().sum())
-
-# List all genres
-print(df["genre"].unique())</code></pre>
-      </section>
-
-      <section class="card">
-        <h2>📊 Step 3: Add Profit and Success Columns</h2>
-        <p>
-          We create a new column called <strong>profit_million</strong>. Then we
-          create a success label:
-        </p>
-
-        <ul>
-          <li><span class="success">1 = Successful film</span></li>
-          <li><span class="danger">0 = Not successful film</span></li>
-        </ul>
-
-        <pre><code>df["profit_million"] = df["revenue_million"] - df["budget_million"]
-
-df["success"] = df["profit_million"].apply(
-    lambda x: 1 if x > 0 else 0
-)
-
-print(df[["title", "profit_million", "success"]])</code></pre>
-      </section>
-
-      <section class="card">
-        <h2>📈 Step 4: Visualize Budget vs Revenue</h2>
-        <pre><code>import matplotlib.pyplot as plt
-
-plt.scatter(df["budget_million"], df["revenue_million"])
-plt.xlabel("Budget in Million Dollars")
-plt.ylabel("Revenue in Million Dollars")
-plt.title("Budget vs Revenue")
-plt.show()</code></pre>
-      </section>
-      <section class="card">
-        <h2>💻 Practice Python Online</h2>
-        <p>
-          Use the embedded Python editor below to run the Hollywood dataset code
-          directly.
-        </p>
-
-        <div
-          style="
-            border: 3px solid var(--saffron);
-            border-radius: 18px;
-            overflow: hidden;
-            height: 720px;
-            background: #fff;
-          "
-        >
-          <iframe
-            src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-            title="Programmers Picnic Python Editor"
-            style="width: 100%; height: 100%; border: 0"
-            allow="clipboard-read; clipboard-write; fullscreen"
-            loading="lazy"
-          >
-          </iframe>
-        </div>
-
-        <p style="margin-top: 10px">
-          <a
-            class="btn"
-            href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-            target="_blank"
-          >
-            🚀 Open Editor in New Tab
-          </a>
-        </p>
-      </section>
-      <section class="card">
-        <h2>🎭 Step 5: Genre-Based Analysis</h2>
-        <pre><code>genre_profit = df.groupby("genre")["profit_million"].mean()
-
-print(genre_profit)
-
-genre_profit.plot(kind="bar")
-plt.xlabel("Genre")
-plt.ylabel("Average Profit")
-plt.title("Average Profit by Genre")
-plt.show()</code></pre>
-      </section>
-
-      <section class="card">
-        <h2>🤖 Step 6: Build a Simple ML Model</h2>
-        <p>
-          Goal: Predict whether a film will be successful using budget and
-          rating.
-        </p>
-
-        <pre><code>from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-
-X = df[["budget_million", "rating"]]
-y = df["success"]
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
-
-model = LogisticRegression()
-model.fit(X_train, y_train)
-
-print("Accuracy:", model.score(X_test, y_test))</code></pre>
-      </section>
-
-      <section class="card">
-        <h2>🧪 Student Assignments</h2>
-
-        <h3>Beginner</h3>
-        <ul>
-          <li>Find the top 5 highest revenue films.</li>
-          <li>Find the average rating of all films.</li>
-          <li>Find the total number of genres.</li>
-        </ul>
-
-        <h3>Intermediate</h3>
-        <ul>
-          <li>Create a profit column.</li>
-          <li>Find the most profitable genre.</li>
-          <li>Plot budget vs revenue.</li>
-        </ul>
-
-        <h3>Advanced</h3>
-        <ul>
-          <li>Build a hit/flop prediction model.</li>
-          <li>Try using genre as an input feature.</li>
-          <li>Create a Streamlit app for prediction.</li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <h2>❓ MCQs</h2>
-
-        <p><strong>1. Profit is calculated as:</strong></p>
-        <p>
-          a) Budget + Revenue<br />
-          b) Revenue - Budget ✅<br />
-          c) Rating - Budget<br />
-          d) Year + Revenue
-        </p>
-
-        <p><strong>2. Which library is used for data analysis?</strong></p>
-        <p>
-          a) Pandas ✅<br />
-          b) Flask<br />
-          c) HTML<br />
-          d) CSS
-        </p>
-
-        <p><strong>3. What does success = 1 mean?</strong></p>
-        <p>
-          a) Film failed<br />
-          b) Film has no rating<br />
-          c) Film is profitable ✅<br />
-          d) Film has no budget
-        </p>
-      </section>
-
-      <section class="card">
-        <h2>🏁 Final Project</h2>
-        <p>Create a <strong>Hollywood Hit Movie Predictor</strong>.</p>
-
-        <ul>
-          <li>Input: Budget, rating, genre</li>
-          <li>Output: Hit or Flop</li>
-          <li>Tools: Python, Pandas, Scikit-learn, Streamlit</li>
-        </ul>
-      </section>
-    </div>
-
-    <footer>© Programmers Picnic AI-ML Classes by Champak Roy</footer>
-
-    <script>
+<meta content="Week Lesson: Hollywood Film Dataset Analysis - AI-ML learning resource by Programmer's Picnic." name="description"/><link href="../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../assets/js/site.js"></script><script defer="defer" src="../assets/js/include.js"></script></head>
+<body><div data-include="header"></div><script>
       const csvData = `title,genre,budget_million,revenue_million,rating,year
 Sky Warriors,Action,120,520,8.1,2019
 Love in Paris,Romance,35,150,7.2,2020
@@ -579,13 +201,327 @@ Golden Heart,Romance,28,110,7.1,2022`;
           alert("CSV data copied!");
         });
       }
-    </script>
+    </script><script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script><script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script><script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script><main class="pp-content" id="main-content">
+<header>
+<h1>🎬 Week Lesson: Hollywood Film Dataset Analysis</h1>
+<p>Programmers Picnic AI-ML Classes by Champak Roy</p>
+<p>learnwithchampak.live | aiml.learnwithchampak.live</p>
+</header>
+<div class="container">
+<section class="card">
+<h2>🎯 Lesson Objective</h2>
+<p>
+          In this lesson, students will learn how to use a Hollywood-style movie
+          dataset to analyze film success using Python, Pandas, visualization,
+          and basic machine learning.
+        </p>
+<span class="tag">Python</span>
+<span class="tag">Pandas</span>
+<span class="tag">Data Analysis</span>
+<span class="tag">Machine Learning</span>
+<span class="tag">Film Success Prediction</span>
+</section>
+<section class="card">
+<h2>📥 Dataset Download</h2>
+<p>
+          Click below to download the sample Hollywood movie dataset as a CSV
+          file. Students can open it in Excel, Google Sheets, or Python.
+        </p>
+<button class="btn" onclick="downloadCSV()">
+          ⬇ Download Sample CSV
+        </button>
+<button class="btn" onclick="copyCSV()">📋 Copy CSV Data</button>
+<h3>Sample Dataset Preview</h3>
+<table>
+<thead>
+<tr>
+<th>title</th>
+<th>genre</th>
+<th>budget_million</th>
+<th>revenue_million</th>
+<th>rating</th>
+<th>year</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sky Warriors</td>
+<td>Action</td>
+<td>120</td>
+<td>520</td>
+<td>8.1</td>
+<td>2019</td>
+</tr>
+<tr>
+<td>Love in Paris</td>
+<td>Romance</td>
+<td>35</td>
+<td>150</td>
+<td>7.2</td>
+<td>2020</td>
+</tr>
+<tr>
+<td>Dark Planet</td>
+<td>Sci-Fi</td>
+<td>180</td>
+<td>760</td>
+<td>8.5</td>
+<td>2021</td>
+</tr>
+<tr>
+<td>Silent Tears</td>
+<td>Drama</td>
+<td>20</td>
+<td>65</td>
+<td>7.8</td>
+<td>2018</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="card">
+<h2>🌍 Real Hollywood Datasets (Download Links)</h2>
+<p>
+          Use these real-world datasets to practice advanced analysis and
+          machine learning. These datasets are widely used in data science
+          projects.
+        </p>
+<div class="grid">
+<div class="mini-card">
+<h3>🎬 TMDb 5000 Movie Dataset</h3>
+<p>
+              Contains 5000 movies with metadata like budget, revenue, cast, and
+              genres.
+            </p>
+<a class="btn" href="https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata" target="_blank">
+              ⬇ Download from Kaggle
+            </a>
+</div>
+<div class="mini-card">
+<h3>⭐ IMDb Movie Dataset</h3>
+<p>
+              Large dataset including ratings, votes, titles, and crew
+              information.
+            </p>
+<a class="btn" href="https://datasets.imdbws.com/" target="_blank">
+              ⬇ Official IMDb Dataset
+            </a>
+</div>
+<div class="mini-card">
+<h3>💰 Box Office Mojo Dataset</h3>
+<p>
+              Focused on box office revenue, domestic and international
+              earnings.
+            </p>
+<a class="btn" href="https://www.boxofficemojo.com/" target="_blank">
+              🌐 Visit Website
+            </a>
+</div>
+<div class="mini-card">
+<h3>📊 MovieLens Dataset</h3>
+<p>
+              Useful for recommendation systems (user ratings and preferences).
+            </p>
+<a class="btn" href="https://grouplens.org/datasets/movielens/" target="_blank">
+              ⬇ Download MovieLens
+            </a>
+</div>
+</div>
+<h3>💡 Pro Tip</h3>
+<p>
+          Start with the small sample dataset, then move to these real datasets
+          for:
+        </p>
+<ul>
+<li>More features (cast, crew, keywords)</li>
+<li>Bigger data (better ML models)</li>
+<li>Real-world complexity</li>
+</ul>
+</section>
+<section class="card">
+<h2>🧠 What is a Hollywood Dataset?</h2>
+<p>
+          A Hollywood film dataset contains information about movies such as
+          title, genre, budget, revenue, rating, release year, director, and
+          cast.
+        </p>
+<div class="grid">
+<div class="mini-card">
+<strong>Budget:</strong> Money spent to make the film.
+          </div>
+<div class="mini-card">
+<strong>Revenue:</strong> Money earned by the film.
+          </div>
+<div class="mini-card">
+<strong>Profit:</strong> Revenue minus budget.
+          </div>
+<div class="mini-card">
+<strong>Rating:</strong> Audience or critic score.
+          </div>
+</div>
+</section>
+<section class="card">
+<h2>🛠 Step 1: Load the Dataset</h2>
+<pre><code>import pandas as pd
 
-  
-    <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+df = pd.read_csv("hollywood_movies_sample.csv")
 
-      
-  </body>
+print(df.head())
+print(df.info())</code></pre>
+</section>
+<section class="card">
+<h2>🔍 Step 2: Explore the Dataset</h2>
+<pre><code># Basic statistics
+print(df.describe())
+
+# Check missing values
+print(df.isnull().sum())
+
+# List all genres
+print(df["genre"].unique())</code></pre>
+</section>
+<section class="card">
+<h2>📊 Step 3: Add Profit and Success Columns</h2>
+<p>
+          We create a new column called <strong>profit_million</strong>. Then we
+          create a success label:
+        </p>
+<ul>
+<li><span class="success">1 = Successful film</span></li>
+<li><span class="danger">0 = Not successful film</span></li>
+</ul>
+<pre><code>df["profit_million"] = df["revenue_million"] - df["budget_million"]
+
+df["success"] = df["profit_million"].apply(
+    lambda x: 1 if x &gt; 0 else 0
+)
+
+print(df[["title", "profit_million", "success"]])</code></pre>
+</section>
+<section class="card">
+<h2>📈 Step 4: Visualize Budget vs Revenue</h2>
+<pre><code>import matplotlib.pyplot as plt
+
+plt.scatter(df["budget_million"], df["revenue_million"])
+plt.xlabel("Budget in Million Dollars")
+plt.ylabel("Revenue in Million Dollars")
+plt.title("Budget vs Revenue")
+plt.show()</code></pre>
+</section>
+<section class="card">
+<h2>💻 Practice Python Online</h2>
+<p>
+          Use the embedded Python editor below to run the Hollywood dataset code
+          directly.
+        </p>
+<div style="
+            border: 3px solid var(--saffron);
+            border-radius: 18px;
+            overflow: hidden;
+            height: 720px;
+            background: #fff;
+          ">
+<iframe allow="clipboard-read; clipboard-write; fullscreen" loading="lazy" src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" style="width: 100%; height: 100%; border: 0" title="Programmers Picnic Python Editor">
+</iframe>
+</div>
+<p style="margin-top: 10px">
+<a class="btn" href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">
+            🚀 Open Editor in New Tab
+          </a>
+</p>
+</section>
+<section class="card">
+<h2>🎭 Step 5: Genre-Based Analysis</h2>
+<pre><code>genre_profit = df.groupby("genre")["profit_million"].mean()
+
+print(genre_profit)
+
+genre_profit.plot(kind="bar")
+plt.xlabel("Genre")
+plt.ylabel("Average Profit")
+plt.title("Average Profit by Genre")
+plt.show()</code></pre>
+</section>
+<section class="card">
+<h2>🤖 Step 6: Build a Simple ML Model</h2>
+<p>
+          Goal: Predict whether a film will be successful using budget and
+          rating.
+        </p>
+<pre><code>from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+X = df[["budget_million", "rating"]]
+y = df["success"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+print("Accuracy:", model.score(X_test, y_test))</code></pre>
+</section>
+<section class="card">
+<h2>🧪 Student Assignments</h2>
+<h3>Beginner</h3>
+<ul>
+<li>Find the top 5 highest revenue films.</li>
+<li>Find the average rating of all films.</li>
+<li>Find the total number of genres.</li>
+</ul>
+<h3>Intermediate</h3>
+<ul>
+<li>Create a profit column.</li>
+<li>Find the most profitable genre.</li>
+<li>Plot budget vs revenue.</li>
+</ul>
+<h3>Advanced</h3>
+<ul>
+<li>Build a hit/flop prediction model.</li>
+<li>Try using genre as an input feature.</li>
+<li>Create a Streamlit app for prediction.</li>
+</ul>
+</section>
+<section class="card">
+<h2>❓ MCQs</h2>
+<p><strong>1. Profit is calculated as:</strong></p>
+<p>
+          a) Budget + Revenue<br/>
+          b) Revenue - Budget ✅<br/>
+          c) Rating - Budget<br/>
+          d) Year + Revenue
+        </p>
+<p><strong>2. Which library is used for data analysis?</strong></p>
+<p>
+          a) Pandas ✅<br/>
+          b) Flask<br/>
+          c) HTML<br/>
+          d) CSS
+        </p>
+<p><strong>3. What does success = 1 mean?</strong></p>
+<p>
+          a) Film failed<br/>
+          b) Film has no rating<br/>
+          c) Film is profitable ✅<br/>
+          d) Film has no budget
+        </p>
+</section>
+<section class="card">
+<h2>🏁 Final Project</h2>
+<p>Create a <strong>Hollywood Hit Movie Predictor</strong>.</p>
+<ul>
+<li>Input: Budget, rating, genre</li>
+<li>Output: Hit or Flop</li>
+<li>Tools: Python, Pandas, Scikit-learn, Streamlit</li>
+</ul>
+</section>
+</div>
+<footer>© Programmers Picnic AI-ML Classes by Champak Roy</footer>
+
+
+
+
+</main><div data-include="footer"></div></body>
 </html>

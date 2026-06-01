@@ -1,71 +1,67 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Easy Project — Expense Tracker Analytics</title>
-  <meta name="theme-color" content="#d97706"/>
-  <link rel="stylesheet" href="assets/style.css"/>
-</head>
-<body>
-  <div class="wrap">
-    <header class="hero" id="top">
-      <span class="badge">🍊 Programmer’s Picnic • Pandas Projects</span>
-      <h1>Easy Project — Expense Tracker Analytics</h1>
-      <p>Data entry from CSV + JSON → Pandas processing → Matplotlib chart → export CSV/JSON/PNG.</p>
-      <div class="meta">
-        <span class="pill">Pandas • Matplotlib</span>
-        <span class="pill">CSV • JSON • MySQL • MongoDB</span>
-        <span class="pill">Exports: CSV • JSON • MySQL • MongoDB • PNG</span>
-      </div>
-      <div class="btnrow" style="margin-top:12px">
-        <a class="btn secondary" href="index.html">← Back to index</a>
-        <a class="btn" href="#run">▶ Run Steps</a>
-      </div>
-    </header>
-
-    <div class="grid">
-      <nav class="toc" aria-label="Table of contents">
-        <h2>Contents</h2>
-        <input id="tocSearch" type="search" placeholder="Search in page…"/>
-        <ul id="tocList">
-          <li><a href="#goal" data-text="goal easy">Goal<small>What you will build</small></a></li>
-<li><a href="#inputs" data-text="csv json">Data Entry<small>CSV + JSON</small></a></li>
-<li><a href="#processing" data-text="pandas groupby">Processing<small>Clean + groupby</small></a></li>
-<li><a href="#charts" data-text="matplotlib png">Charts<small>Matplotlib + PNG</small></a></li>
-<li><a href="#exports" data-text="export">Exports<small>CSV + JSON</small></a></li>
-<li><a href="#run" data-text="run">Run Steps<small>How to run</small></a></li>
-        </ul>
-        <div class="note" style="margin-top:10px">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Easy Project — Expense Tracker Analytics</title>
+<meta content="#d97706" name="theme-color"/>
+<link href="assets/style.css" rel="stylesheet"/>
+<meta content="Easy Project — Expense Tracker Analytics - AI-ML learning resource by Programmer's Picnic." name="description"/><link href="../../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../../assets/js/site.js"></script><script defer="defer" src="../../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<div class="wrap">
+<header class="hero" id="top">
+<span class="badge">🍊 Programmer’s Picnic • Pandas Projects</span>
+<h1>Easy Project — Expense Tracker Analytics</h1>
+<p>Data entry from CSV + JSON → Pandas processing → Matplotlib chart → export CSV/JSON/PNG.</p>
+<div class="meta">
+<span class="pill">Pandas • Matplotlib</span>
+<span class="pill">CSV • JSON • MySQL • MongoDB</span>
+<span class="pill">Exports: CSV • JSON • MySQL • MongoDB • PNG</span>
+</div>
+<div class="btnrow" style="margin-top:12px">
+<a class="btn secondary" href="index.html">← Back to index</a>
+<a class="btn" href="#run">▶ Run Steps</a>
+</div>
+</header>
+<div class="grid">
+<nav aria-label="Table of contents" class="toc">
+<h2>Contents</h2>
+<input id="tocSearch" placeholder="Search in page…" type="search"/>
+<ul id="tocList">
+<li><a data-text="goal easy" href="#goal">Goal<small>What you will build</small></a></li>
+<li><a data-text="csv json" href="#inputs">Data Entry<small>CSV + JSON</small></a></li>
+<li><a data-text="pandas groupby" href="#processing">Processing<small>Clean + groupby</small></a></li>
+<li><a data-text="matplotlib png" href="#charts">Charts<small>Matplotlib + PNG</small></a></li>
+<li><a data-text="export" href="#exports">Exports<small>CSV + JSON</small></a></li>
+<li><a data-text="run" href="#run">Run Steps<small>How to run</small></a></li>
+</ul>
+<div class="note" style="margin-top:10px">
           Tip: Use <span class="kbd">Copy</span> / <span class="kbd">Download .py</span> on code blocks.
         </div>
-      </nav>
-
-      <main>
-        
+</nav>
+<main id="main-content">
 <section id="goal">
-  <h2>Goal</h2>
-  <p>
+<h2>Goal</h2>
+<p>
     Build a personal <b>Expense Tracker Analytics</b> mini-system.
-    Import expenses from <b>CSV</b> (and optionally JSON), clean them, calculate monthly & category summaries,
+    Import expenses from <b>CSV</b> (and optionally JSON), clean them, calculate monthly &amp; category summaries,
     create a bar chart, and export results to <b>CSV + JSON + PNG</b>.
   </p>
-  <div class="note"><strong>Difficulty:</strong> Easy • Perfect for your first Pandas project.</div>
+<div class="note"><strong>Difficulty:</strong> Easy • Perfect for your first Pandas project.</div>
 </section>
-
 <section id="inputs">
-  <h2>Data entry sources</h2>
-  <p>Start with CSV and JSON. (MySQL/Mongo can be added as an upgrade later.)</p>
-
-  <div class="codeCard" data-filename="read_inputs_easy.py">
-    <div class="codeTop">
-      <div class="label">📥 Read CSV + JSON</div>
-      <div class="actions">
-        <button class="mini" data-copy>Copy</button>
-        <button class="mini" data-download>Download .py</button>
-      </div>
-    </div>
-    <pre><code>import pandas as pd
+<h2>Data entry sources</h2>
+<p>Start with CSV and JSON. (MySQL/Mongo can be added as an upgrade later.)</p>
+<div class="codeCard" data-filename="read_inputs_easy.py">
+<div class="codeTop">
+<div class="label">📥 Read CSV + JSON</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 
 df_csv = pd.read_csv("../data/expenses.csv", parse_dates=["date"])
 df_json = pd.read_json("../data/expenses_sample.json")
@@ -74,22 +70,20 @@ df_json["date"] = pd.to_datetime(df_json["date"], errors="coerce")
 df = pd.concat([df_csv, df_json], ignore_index=True)
 print(df.head())
 print(df.info())</code></pre>
-  </div>
+</div>
 </section>
-
 <section id="processing">
-  <h2>Pandas processing</h2>
-  <p>Clean numeric values, create a month column, and compute totals.</p>
-
-  <div class="codeCard" data-filename="processing_easy.py">
-    <div class="codeTop">
-      <div class="label">🧠 Clean + groupby</div>
-      <div class="actions">
-        <button class="mini" data-copy>Copy</button>
-        <button class="mini" data-download>Download .py</button>
-      </div>
-    </div>
-    <pre><code>import pandas as pd
+<h2>Pandas processing</h2>
+<p>Clean numeric values, create a month column, and compute totals.</p>
+<div class="codeCard" data-filename="processing_easy.py">
+<div class="codeTop">
+<div class="label">🧠 Clean + groupby</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 
 df = pd.read_csv("../data/expenses.csv", parse_dates=["date"])
 df.columns = [c.strip().lower().replace(" ", "_") for c in df.columns]
@@ -102,22 +96,20 @@ by_month = df.groupby("month")["amount"].sum().reset_index()
 
 print(by_category)
 print(by_month.head())</code></pre>
-  </div>
+</div>
 </section>
-
 <section id="charts">
-  <h2>Charts (Matplotlib) → PNG</h2>
-  <p>Create a bar chart and save to PNG using <span class="kbd">plt.savefig()</span>.</p>
-
-  <div class="codeCard" data-filename="chart_easy.py">
-    <div class="codeTop">
-      <div class="label">📊 Bar chart + save PNG</div>
-      <div class="actions">
-        <button class="mini" data-copy>Copy</button>
-        <button class="mini" data-download>Download .py</button>
-      </div>
-    </div>
-    <pre><code>import pandas as pd
+<h2>Charts (Matplotlib) → PNG</h2>
+<p>Create a bar chart and save to PNG using <span class="kbd">plt.savefig()</span>.</p>
+<div class="codeCard" data-filename="chart_easy.py">
+<div class="codeTop">
+<div class="label">📊 Bar chart + save PNG</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
@@ -136,22 +128,20 @@ plt.xticks(rotation=25, ha="right")
 plt.tight_layout()
 plt.savefig("../output/easy_spend_by_category.png", dpi=200)
 plt.show()</code></pre>
-  </div>
+</div>
 </section>
-
 <section id="exports">
-  <h2>Exports</h2>
-  <p>Export summaries to CSV and JSON.</p>
-
-  <div class="codeCard" data-filename="export_easy.py">
-    <div class="codeTop">
-      <div class="label">💾 Export CSV + JSON</div>
-      <div class="actions">
-        <button class="mini" data-copy>Copy</button>
-        <button class="mini" data-download>Download .py</button>
-      </div>
-    </div>
-    <pre><code>import pandas as pd
+<h2>Exports</h2>
+<p>Export summaries to CSV and JSON.</p>
+<div class="codeCard" data-filename="export_easy.py">
+<div class="codeTop">
+<div class="label">💾 Export CSV + JSON</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 import os
 
 os.makedirs("../output", exist_ok=True)
@@ -165,24 +155,21 @@ by_month = df.groupby("month")["amount"].sum().reset_index().rename(columns={"am
 
 by_category.to_csv("../output/easy_category_summary.csv")
 by_month.to_json("../output/easy_monthly_summary.json", orient="records", indent=2)</code></pre>
-  </div>
+</div>
 </section>
-
 <section id="run">
-  <h2>Run steps</h2>
-  <ol style="line-height:1.7;color:#253041;margin:8px 0 0;padding-left:18px">
-    <li>Install deps: <span class="kbd">pip install -r requirements.txt</span></li>
-    <li>Open terminal in <span class="kbd">scripts/</span></li>
-    <li>Run: <span class="kbd">python easy_expense_analytics.py</span></li>
-    <li>Check outputs in <span class="kbd">output/</span> (CSV/JSON/PNG)</li>
-  </ol>
+<h2>Run steps</h2>
+<ol style="line-height:1.7;color:#253041;margin:8px 0 0;padding-left:18px">
+<li>Install deps: <span class="kbd">pip install -r requirements.txt</span></li>
+<li>Open terminal in <span class="kbd">scripts/</span></li>
+<li>Run: <span class="kbd">python easy_expense_analytics.py</span></li>
+<li>Check outputs in <span class="kbd">output/</span> (CSV/JSON/PNG)</li>
+</ol>
 </section>
-
-        <div class="footer">Programmer’s Picnic • Build → Analyze → Visualize → Export • <a href="#top">Back to top ↑</a></div>
-      </main>
-    </div>
-  </div>
-
-  <script src="assets/app.js"></script>
-</body>
+<div class="footer">Programmer’s Picnic • Build → Analyze → Visualize → Export • <a href="#top">Back to top ↑</a></div>
+</main>
+</div>
+</div>
+<script src="assets/app.js"></script>
+<div data-include="footer"></div></body>
 </html>

@@ -1,26 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Grid Point Highlighter Using X and Y Conditions</title>
-
-    <meta name="description"
-        content="Create a grid by entering length and width, then highlight points using mathematical conditions on x and y with and, or, and not. Numbering starts from 1." />
-
-    <meta property="og:title" content="Grid Point Highlighter" />
-    <meta property="og:description"
-        content="Enter length, width, and an x-y condition using and, or, and not to highlight grid points." />
-    <meta property="og:type" content="website" />
-
-    <!-- Google AdSense: Programmer's Picnic / Champak Roy -->
-    <script async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494&host=ca-host-pub-1556223355139109"
-        crossorigin="anonymous"></script>
-
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Grid Point Highlighter Using X and Y Conditions</title>
+<meta content="Create a grid by entering length and width, then highlight points using mathematical conditions on x and y with and, or, and not. Numbering starts from 1." name="description"/>
+<meta content="Grid Point Highlighter" property="og:title"/>
+<meta content="Enter length, width, and an x-y condition using and, or, and not to highlight grid points." property="og:description"/>
+<meta content="website" property="og:type"/>
+<!-- Google AdSense: Programmer's Picnic / Champak Roy -->
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494&amp;host=ca-host-pub-1556223355139109"></script>
+<style>
         :root {
             --saffron: #ff9800;
             --deep-saffron: #e65100;
@@ -275,94 +266,75 @@
             }
         }
     </style>
-</head>
-
-<body>
-
-    <header>
-        <h1>Grid Point Highlighter</h1>
-        <p>Enter length, width, and a condition using <strong>x</strong>, <strong>y</strong>, <strong>and</strong>,
+<link href="../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../assets/js/site.js"></script><script defer="defer" src="../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<header>
+<h1>Grid Point Highlighter</h1>
+<p>Enter length, width, and a condition using <strong>x</strong>, <strong>y</strong>, <strong>and</strong>,
             <strong>or</strong>, and <strong>not</strong>. Numbering starts from <strong>1</strong>.</p>
-    </header>
-
-    <main>
-        <section class="ad-card" aria-label="Advertisement">
-            <p class="ad-label">Advertisement</p>
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8321261883090494"
-                data-ad-slot="7782388330" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        </section>
-
-        <section class="cta-card">
-            <div>
-                <h2>Learn coding visually with Programmer's Picnic</h2>
-                <p>
+</header>
+<main id="main-content">
+<section aria-label="Advertisement" class="ad-card">
+<p class="ad-label">Advertisement</p>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
+</section>
+<section class="cta-card">
+<div>
+<h2>Learn coding visually with Programmer's Picnic</h2>
+<p>
                     Practice coordinates, logic, conditions, loops, and problem solving with beginner-friendly lessons
                     by Champak Roy.
                 </p>
-            </div>
-
-            <div class="cta-actions">
-                <a class="cta-button" href="https://www.learnwithchampak.live/" target="_blank" rel="noopener">
+</div>
+<div class="cta-actions">
+<a class="cta-button" href="https://www.learnwithchampak.live/" rel="noopener" target="_blank">
                     Explore Lessons
                 </a>
-                <a class="cta-button secondary" href="https://www.youtube.com/@champaksworld/featured" target="_blank"
-                    rel="noopener">
+<a class="cta-button secondary" href="https://www.youtube.com/@champaksworld/featured" rel="noopener" target="_blank">
                     Watch on YouTube
                 </a>
-            </div>
-        </section>
-
-        <section class="panel">
-            <div class="controls">
-                <div>
-                    <label for="lengthInput">Length</label>
-                    <input onchange="makeGrid()" onkeyup="makeGrid()" type="number" id="lengthInput" min="1" max="50"
-                        value="10" />
-                </div>
-
-                <div>
-                    <label for="widthInput">Width</label>
-                    <input onchange="makeGrid()" onkeyup="makeGrid()" type="number" id="widthInput" min="1" max="50"
-                        value="8" />
-                </div>
-
-                <div class="condition-box">
-                    <label for="conditionInput">Condition using x and y, with and / or / not</label>
-                    <input onchange="makeGrid()" onkeyup="makeGrid()" type="text" id="conditionInput" value="x == y" />
-                </div>
-            </div>
-
-            <div class="examples">
+</div>
+</section>
+<section class="panel">
+<div class="controls">
+<div>
+<label for="lengthInput">Length</label>
+<input id="lengthInput" max="50" min="1" onchange="makeGrid()" onkeyup="makeGrid()" type="number" value="10"/>
+</div>
+<div>
+<label for="widthInput">Width</label>
+<input id="widthInput" max="50" min="1" onchange="makeGrid()" onkeyup="makeGrid()" type="number" value="8"/>
+</div>
+<div class="condition-box">
+<label for="conditionInput">Condition using x and y, with and / or / not</label>
+<input id="conditionInput" onchange="makeGrid()" onkeyup="makeGrid()" type="text" value="x == y"/>
+</div>
+</div>
+<div class="examples">
                 Try:
                 <code>x == y</code>
-                <code>x + y == 6</code>
-                <code>x &gt; 3 and y &lt; 5</code>
-                <code>x % 2 == 0 or y % 2 == 0</code>
-                <code>not (x == y)</code>
-                <code>x*x + y*y &lt; 25</code>
-                <br />
+<code>x + y == 6</code>
+<code>x &gt; 3 and y &lt; 5</code>
+<code>x % 2 == 0 or y % 2 == 0</code>
+<code>not (x == y)</code>
+<code>x*x + y*y &lt; 25</code>
+<br/>
                 Since numbering starts from 1, the first point is <code>(1,1)</code>, not <code>(0,0)</code>.
             </div>
-
-            <div id="status" class="status"></div>
-        </section>
-
-        <section class="grid-wrapper">
-            <div id="grid" class="grid"></div>
-        </section>
-
-        <section class="ad-card" aria-label="Advertisement">
-            <p class="ad-label">Advertisement</p>
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8321261883090494"
-                data-ad-slot="7782388330" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        </section>
-    </main>
-
-    <footer>
+<div class="status" id="status"></div>
+</section>
+<section class="grid-wrapper">
+<div class="grid" id="grid"></div>
+</section>
+<section aria-label="Advertisement" class="ad-card">
+<p class="ad-label">Advertisement</p>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
+</section>
+</main>
+<footer>
         Grid points are shown as <strong>(x, y)</strong>. The bottom-left point is treated as <strong>(1, 1)</strong>.
     </footer>
-
-    <script>
+<script>
         function normalizeCondition(condition) {
             let expression = condition.trim();
 
@@ -485,7 +457,5 @@
         makeGrid();
         window.addEventListener("load", loadGoogleAds);
     </script>
-
-</body>
-
+<div data-include="footer"></div></body>
 </html>

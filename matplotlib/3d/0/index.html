@@ -1,13 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>3D Drawing in Matplotlib | Line, Diagonal, Plane, Cube, Cone, Sphere, Emoji</title>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>3D Drawing in Matplotlib | Line, Diagonal, Plane, Cube, Cone, Sphere, Emoji</title>
+<style>
     :root {
       --bg: #fff7ed;
       --card: #ffffff;
@@ -346,132 +344,106 @@
       }
     }
   </style>
-</head>
-
-<body>
-  <header>
-    <div class="wrap hero">
-      <div>
-        <span class="badge">Programmers Picnic AI-ML Classes by Champak Roy</span>
-
-        <h1>3D Drawing in Matplotlib</h1>
-
-        <p class="subtitle">
+<meta content="3D Drawing in Matplotlib | Line, Diagonal, Plane, Cube, Cone, Sphere, Emoji - AI-ML learning resource by Programmer's Picnic." name="description"/><link href="../../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../../assets/js/site.js"></script><script defer="defer" src="../../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<header>
+<div class="wrap hero">
+<div>
+<span class="badge">Programmers Picnic AI-ML Classes by Champak Roy</span>
+<h1>3D Drawing in Matplotlib</h1>
+<p class="subtitle">
           Draw a line, diagonal line, diagonal on a plane, plane, cube, cone, sphere,
           and a fun emoji-style face using Python, NumPy, and Matplotlib 3D.
         </p>
-
-        <div class="btn-row">
-          <a class="btn btn-primary" href="#editor">Open Embedded Python Editor</a>
-
-          <a class="btn btn-light" href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-            target="_blank">
+<div class="btn-row">
+<a class="btn btn-primary" href="#editor">Open Embedded Python Editor</a>
+<a class="btn btn-light" href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">
             Open Editor in New Tab
           </a>
-
-          <button class="btn btn-light" onclick="window.print()">Print Lesson</button>
-        </div>
-      </div>
-
-      <div class="hero-card">
-        <h2>Today we draw</h2>
-        <ul>
-          <li>A 3D line</li>
-          <li>A diagonal line</li>
-          <li>A diagonal across a plane</li>
-          <li>A flat plane</li>
-          <li>A cube using edges</li>
-          <li>A cone using a surface</li>
-          <li>A sphere using parametric equations</li>
-          <li>A simple 3D emoji face</li>
-        </ul>
-      </div>
-    </div>
-  </header>
-
-  <main class="wrap">
-
-    <section class="section">
-      <h2>0. Visual Goal</h2>
-
-      <p>
+<button class="btn btn-light" onclick="window.print()">Print Lesson</button>
+</div>
+</div>
+<div class="hero-card">
+<h2>Today we draw</h2>
+<ul>
+<li>A 3D line</li>
+<li>A diagonal line</li>
+<li>A diagonal across a plane</li>
+<li>A flat plane</li>
+<li>A cube using edges</li>
+<li>A cone using a surface</li>
+<li>A sphere using parametric equations</li>
+<li>A simple 3D emoji face</li>
+</ul>
+</div>
+</div>
+</header>
+<main class="wrap" id="main-content">
+<section class="section">
+<h2>0. Visual Goal</h2>
+<p>
         In the previous lesson, we learned how to create basic 3D plots.
         In this lesson, we start drawing recognizable 3D objects.
       </p>
-
-      <div class="grid">
-        <div class="mini-card">
-          <h3>Line</h3>
-          <p>A path joining points in 3D space.</p>
-        </div>
-
-        <div class="mini-card">
-          <h3>Diagonal</h3>
-          <p>A line that moves through multiple axes together.</p>
-        </div>
-
-        <div class="mini-card">
-          <h3>Plane</h3>
-          <p>A flat sheet in 3D space.</p>
-        </div>
-
-        <div class="mini-card">
-          <h3>Cube</h3>
-          <p>A box made from 8 corners and 12 edges.</p>
-        </div>
-
-        <div class="mini-card">
-          <h3>Cone</h3>
-          <p>A circular base rising to one top point.</p>
-        </div>
-
-        <div class="mini-card">
-          <h3>Sphere and Emoji</h3>
-          <p>A ball, then a face made by combining shapes.</p>
-        </div>
-      </div>
-
-      <div class="svg-box">
-        <svg width="100%" height="320" viewBox="0 0 950 320" xmlns="http://www.w3.org/2000/svg">
-          <rect width="950" height="320" rx="24" fill="#fff7ed" />
-
-          <line x1="60" y1="245" x2="190" y2="115" stroke="#d97706" stroke-width="8" stroke-linecap="round" />
-          <text x="82" y="286" font-size="22" fill="#92400e" font-weight="800">Line</text>
-
-          <line x1="250" y1="250" x2="390" y2="90" stroke="#92400e" stroke-width="8" stroke-linecap="round" />
-          <circle cx="250" cy="250" r="9" fill="#d97706" />
-          <circle cx="390" cy="90" r="9" fill="#d97706" />
-          <text x="280" y="286" font-size="22" fill="#92400e" font-weight="800">Diagonal</text>
-
-          <polygon points="455,225 570,195 640,245 520,275" fill="#fed7aa" stroke="#92400e" stroke-width="4" />
-          <line x1="455" y1="225" x2="640" y2="245" stroke="#d97706" stroke-width="5" stroke-linecap="round" />
-          <text x="520" y="302" font-size="22" fill="#92400e" font-weight="800">Plane</text>
-
-          <rect x="690" y="135" width="85" height="85" fill="none" stroke="#d97706" stroke-width="5" />
-          <rect x="725" y="100" width="85" height="85" fill="none" stroke="#92400e" stroke-width="5" />
-          <line x1="690" y1="135" x2="725" y2="100" stroke="#92400e" stroke-width="4" />
-          <line x1="775" y1="135" x2="810" y2="100" stroke="#92400e" stroke-width="4" />
-          <line x1="775" y1="220" x2="810" y2="185" stroke="#92400e" stroke-width="4" />
-          <line x1="690" y1="220" x2="725" y2="185" stroke="#92400e" stroke-width="4" />
-          <text x="720" y="270" font-size="22" fill="#92400e" font-weight="800">Cube</text>
-
-          <ellipse cx="860" cy="225" rx="48" ry="18" fill="#fed7aa" stroke="#92400e" stroke-width="4" />
-          <line x1="812" y1="225" x2="860" y2="115" stroke="#d97706" stroke-width="5" />
-          <line x1="908" y1="225" x2="860" y2="115" stroke="#d97706" stroke-width="5" />
-          <circle cx="860" cy="115" r="6" fill="#92400e" />
-          <text x="832" y="270" font-size="22" fill="#92400e" font-weight="800">Cone</text>
-        </svg>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>1. Common Setup for 3D Drawing</h2>
-
-      <p>
+<div class="grid">
+<div class="mini-card">
+<h3>Line</h3>
+<p>A path joining points in 3D space.</p>
+</div>
+<div class="mini-card">
+<h3>Diagonal</h3>
+<p>A line that moves through multiple axes together.</p>
+</div>
+<div class="mini-card">
+<h3>Plane</h3>
+<p>A flat sheet in 3D space.</p>
+</div>
+<div class="mini-card">
+<h3>Cube</h3>
+<p>A box made from 8 corners and 12 edges.</p>
+</div>
+<div class="mini-card">
+<h3>Cone</h3>
+<p>A circular base rising to one top point.</p>
+</div>
+<div class="mini-card">
+<h3>Sphere and Emoji</h3>
+<p>A ball, then a face made by combining shapes.</p>
+</div>
+</div>
+<div class="svg-box">
+<svg height="320" viewbox="0 0 950 320" width="100%" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#fff7ed" height="320" rx="24" width="950"></rect>
+<line stroke="#d97706" stroke-linecap="round" stroke-width="8" x1="60" x2="190" y1="245" y2="115"></line>
+<text fill="#92400e" font-size="22" font-weight="800" x="82" y="286">Line</text>
+<line stroke="#92400e" stroke-linecap="round" stroke-width="8" x1="250" x2="390" y1="250" y2="90"></line>
+<circle cx="250" cy="250" fill="#d97706" r="9"></circle>
+<circle cx="390" cy="90" fill="#d97706" r="9"></circle>
+<text fill="#92400e" font-size="22" font-weight="800" x="280" y="286">Diagonal</text>
+<polygon fill="#fed7aa" points="455,225 570,195 640,245 520,275" stroke="#92400e" stroke-width="4"></polygon>
+<line stroke="#d97706" stroke-linecap="round" stroke-width="5" x1="455" x2="640" y1="225" y2="245"></line>
+<text fill="#92400e" font-size="22" font-weight="800" x="520" y="302">Plane</text>
+<rect fill="none" height="85" stroke="#d97706" stroke-width="5" width="85" x="690" y="135"></rect>
+<rect fill="none" height="85" stroke="#92400e" stroke-width="5" width="85" x="725" y="100"></rect>
+<line stroke="#92400e" stroke-width="4" x1="690" x2="725" y1="135" y2="100"></line>
+<line stroke="#92400e" stroke-width="4" x1="775" x2="810" y1="135" y2="100"></line>
+<line stroke="#92400e" stroke-width="4" x1="775" x2="810" y1="220" y2="185"></line>
+<line stroke="#92400e" stroke-width="4" x1="690" x2="725" y1="220" y2="185"></line>
+<text fill="#92400e" font-size="22" font-weight="800" x="720" y="270">Cube</text>
+<ellipse cx="860" cy="225" fill="#fed7aa" rx="48" ry="18" stroke="#92400e" stroke-width="4"></ellipse>
+<line stroke="#d97706" stroke-width="5" x1="812" x2="860" y1="225" y2="115"></line>
+<line stroke="#d97706" stroke-width="5" x1="908" x2="860" y1="225" y2="115"></line>
+<circle cx="860" cy="115" fill="#92400e" r="6"></circle>
+<text fill="#92400e" font-size="22" font-weight="800" x="832" y="270">Cone</text>
+</svg>
+</div>
+</section>
+<section class="section">
+<h2>1. Common Setup for 3D Drawing</h2>
+<p>
         Most programs in this lesson begin with the same setup.
       </p>
-
-      <pre><code>import numpy as np
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
 fig = plt.figure(figsize=(8, 7))
@@ -482,21 +454,17 @@ ax.set_ylabel("Y")
 ax.set_zlabel("Z")
 
 plt.show()</code></pre>
-
-      <div class="note">
+<div class="note">
         In Matplotlib 3D, we do not draw objects directly like a game engine.
         We build shapes from points, lines, surfaces, and mathematical equations.
       </div>
-    </section>
-
-    <section class="section">
-      <h2>2. Draw a 3D Line</h2>
-
-      <p>
+</section>
+<section class="section">
+<h2>2. Draw a 3D Line</h2>
+<p>
         A line is a collection of points connected together.
       </p>
-
-      <pre><code>import numpy as np
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
 t = np.linspace(0, 10, 100)
@@ -516,27 +484,21 @@ ax.set_ylabel("Y")
 ax.set_zlabel("Z")
 
 plt.show()</code></pre>
-
-      <h3>Try this</h3>
-
-      <pre><code>x = t
+<h3>Try this</h3>
+<pre><code>x = t
 y = t**2
 z = t**3</code></pre>
-
-      <p>
+<p>
         This creates a curved path instead of a straight line.
       </p>
-    </section>
-
-    <section class="section">
-      <h2>2A. Draw a Diagonal Line</h2>
-
-      <p>
+</section>
+<section class="section">
+<h2>2A. Draw a Diagonal Line</h2>
+<p>
         A diagonal line moves in more than one direction at the same time.
         In 3D, a diagonal can move along X, Y, and Z together.
       </p>
-
-      <pre><code>import numpy as np
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
 t = np.linspace(0, 5, 100)
@@ -567,19 +529,15 @@ ax.set_zlim(0, 5)
 ax.set_box_aspect([1, 1, 1])
 
 plt.show()</code></pre>
-
-      <div class="note">
+<div class="note">
         This diagonal starts at <strong>(0, 0, 0)</strong> and ends at <strong>(5, 5, 5)</strong>.
         It moves equally in X, Y, and Z directions.
       </div>
-
-      <h3>Diagonal on a Plane</h3>
-
-      <p>
+<h3>Diagonal on a Plane</h3>
+<p>
         We can also draw a diagonal across a flat square plane.
       </p>
-
-      <pre><code>import numpy as np
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
 fig = plt.figure(figsize=(8, 7))
@@ -616,20 +574,16 @@ ax.set_zlim(0, 5)
 ax.set_box_aspect([1, 1, 1])
 
 plt.show()</code></pre>
-
-      <div class="note">
+<div class="note">
         Here the diagonal lies flat on the plane because all z values are 0.
       </div>
-    </section>
-
-    <section class="section">
-      <h2>3. Draw a Plane</h2>
-
-      <p>
+</section>
+<section class="section">
+<h2>3. Draw a Plane</h2>
+<p>
         A plane is a flat surface. We create many x and y points, then calculate z.
       </p>
-
-      <pre><code>import numpy as np
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
 x = np.linspace(-5, 5, 20)
@@ -650,21 +604,17 @@ ax.set_ylabel("Y")
 ax.set_zlabel("Z")
 
 plt.show()</code></pre>
-
-      <div class="note">
+<div class="note">
         The equation <strong>z = 2x + y</strong> creates a slanted plane.
       </div>
-    </section>
-
-    <section class="section">
-      <h2>4. Draw a Cube</h2>
-
-      <p>
+</section>
+<section class="section">
+<h2>4. Draw a Cube</h2>
+<p>
         A cube has 8 corners and 12 edges.
         We can draw it using line segments.
       </p>
-
-      <pre><code>import matplotlib.pyplot as plt
+<pre><code>import matplotlib.pyplot as plt
 
 fig = plt.figure(figsize=(8, 7))
 ax = fig.add_subplot(projection="3d")
@@ -710,14 +660,11 @@ ax.set_zlabel("Z")
 ax.set_box_aspect([1, 1, 1])
 
 plt.show()</code></pre>
-
-      <h3>Cube with Body Diagonal</h3>
-
-      <p>
+<h3>Cube with Body Diagonal</h3>
+<p>
         A cube diagonal joins one corner of the cube to the opposite corner.
       </p>
-
-      <pre><code>import matplotlib.pyplot as plt
+<pre><code>import matplotlib.pyplot as plt
 
 fig = plt.figure(figsize=(8, 7))
 ax = fig.add_subplot(projection="3d")
@@ -765,21 +712,17 @@ ax.set_zlabel("Z")
 ax.set_box_aspect([1, 1, 1])
 
 plt.show()</code></pre>
-
-      <div class="note">
+<div class="note">
         The cube is not one single command here.
         It is built from points and edges.
       </div>
-    </section>
-
-    <section class="section">
-      <h2>5. Draw a Cone</h2>
-
-      <p>
+</section>
+<section class="section">
+<h2>5. Draw a Cone</h2>
+<p>
         A cone has a circular base and one top point.
       </p>
-
-      <pre><code>import numpy as np
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
 theta = np.linspace(0, 2 * np.pi, 80)
@@ -803,49 +746,44 @@ ax.set_zlabel("Z")
 ax.set_box_aspect([1, 1, 1])
 
 plt.show()</code></pre>
-
-      <h3>How it works</h3>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Part</th>
-            <th>Meaning</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>theta</code></td>
-            <td>Angle around the circle</td>
-          </tr>
-          <tr>
-            <td><code>r</code></td>
-            <td>Radius from center</td>
-          </tr>
-          <tr>
-            <td><code>X = R * cos(Theta)</code></td>
-            <td>Horizontal circular position</td>
-          </tr>
-          <tr>
-            <td><code>Y = R * sin(Theta)</code></td>
-            <td>Depth circular position</td>
-          </tr>
-          <tr>
-            <td><code>Z = 1 - R</code></td>
-            <td>Height decreases as radius increases</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="section">
-      <h2>6. Draw a Sphere</h2>
-
-      <p>
+<h3>How it works</h3>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>theta</code></td>
+<td>Angle around the circle</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>Radius from center</td>
+</tr>
+<tr>
+<td><code>X = R * cos(Theta)</code></td>
+<td>Horizontal circular position</td>
+</tr>
+<tr>
+<td><code>Y = R * sin(Theta)</code></td>
+<td>Depth circular position</td>
+</tr>
+<tr>
+<td><code>Z = 1 - R</code></td>
+<td>Height decreases as radius increases</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section">
+<h2>6. Draw a Sphere</h2>
+<p>
         A sphere is created using two angles.
       </p>
-
-      <pre><code>import numpy as np
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
 u = np.linspace(0, 2 * np.pi, 80)
@@ -867,26 +805,21 @@ ax.set_zlabel("Z")
 ax.set_box_aspect([1, 1, 1])
 
 plt.show()</code></pre>
-
-      <div class="note">
-        <strong>set_box_aspect([1, 1, 1])</strong> helps the sphere look like a real sphere, not a stretched egg.
+<div class="note">
+<strong>set_box_aspect([1, 1, 1])</strong> helps the sphere look like a real sphere, not a stretched egg.
       </div>
-    </section>
-
-    <section class="section">
-      <h2>7. Example: 3D Emoji Face</h2>
-
-      <p>
+</section>
+<section class="section">
+<h2>7. Example: 3D Emoji Face</h2>
+<p>
         Now let us combine shapes. We will make a simple emoji-style face.
       </p>
-
-      <ul>
-        <li>Sphere for the head</li>
-        <li>Two black points for eyes</li>
-        <li>A curved smile line</li>
-      </ul>
-
-      <pre><code>import numpy as np
+<ul>
+<li>Sphere for the head</li>
+<li>Two black points for eyes</li>
+<li>A curved smile line</li>
+</ul>
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
 fig = plt.figure(figsize=(8, 7))
@@ -922,21 +855,17 @@ ax.set_zlabel("Z")
 ax.set_box_aspect([1, 1, 1])
 
 plt.show()</code></pre>
-
-      <div class="note">
+<div class="note">
         This is not a real emoji image.
         It is a 3D drawing made from a sphere, points, and a curve.
       </div>
-    </section>
-
-    <section class="section">
-      <h2>8. Master Demo: All Shapes in One Program</h2>
-
-      <p>
+</section>
+<section class="section">
+<h2>8. Master Demo: All Shapes in One Program</h2>
+<p>
         This program shows a menu. Students can choose what they want to draw.
       </p>
-
-      <pre><code>import numpy as np
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -1210,140 +1139,121 @@ elif choice == "9":
     draw_emoji()
 else:
     print("Invalid choice")</code></pre>
-    </section>
-
-    <section class="section">
-      <h2>9. Shape Formula Cheat Sheet</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Shape</th>
-            <th>Main Idea</th>
-            <th>Matplotlib Tool</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Line</td>
-            <td>Connect many points</td>
-            <td><code>ax.plot(x, y, z)</code></td>
-          </tr>
-          <tr>
-            <td>Diagonal Line</td>
-            <td>Move through X, Y, and Z together</td>
-            <td><code>ax.plot(t, t, t)</code></td>
-          </tr>
-          <tr>
-            <td>Diagonal on Plane</td>
-            <td>Move through X and Y while Z stays fixed</td>
-            <td><code>ax.plot(d, d, zeros)</code></td>
-          </tr>
-          <tr>
-            <td>Plane</td>
-            <td>Use <code>z = ax + by + c</code></td>
-            <td><code>ax.plot_surface(X, Y, Z)</code></td>
-          </tr>
-          <tr>
-            <td>Cube</td>
-            <td>Draw corners and edges</td>
-            <td><code>ax.plot()</code> repeatedly</td>
-          </tr>
-          <tr>
-            <td>Cube Diagonal</td>
-            <td>Join one corner to the opposite corner</td>
-            <td><code>ax.plot([0, 1], [0, 1], [0, 1])</code></td>
-          </tr>
-          <tr>
-            <td>Cone</td>
-            <td>Use radius and angle</td>
-            <td><code>ax.plot_surface()</code></td>
-          </tr>
-          <tr>
-            <td>Sphere</td>
-            <td>Use two angles</td>
-            <td><code>ax.plot_surface()</code></td>
-          </tr>
-          <tr>
-            <td>Emoji</td>
-            <td>Combine sphere, points, and curves</td>
-            <td><code>plot_surface</code>, <code>scatter</code>, <code>plot</code></td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="section" id="editor">
-      <h2>10. Embedded Python Editor</h2>
-
-      <p>
+</section>
+<section class="section">
+<h2>9. Shape Formula Cheat Sheet</h2>
+<table>
+<thead>
+<tr>
+<th>Shape</th>
+<th>Main Idea</th>
+<th>Matplotlib Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Line</td>
+<td>Connect many points</td>
+<td><code>ax.plot(x, y, z)</code></td>
+</tr>
+<tr>
+<td>Diagonal Line</td>
+<td>Move through X, Y, and Z together</td>
+<td><code>ax.plot(t, t, t)</code></td>
+</tr>
+<tr>
+<td>Diagonal on Plane</td>
+<td>Move through X and Y while Z stays fixed</td>
+<td><code>ax.plot(d, d, zeros)</code></td>
+</tr>
+<tr>
+<td>Plane</td>
+<td>Use <code>z = ax + by + c</code></td>
+<td><code>ax.plot_surface(X, Y, Z)</code></td>
+</tr>
+<tr>
+<td>Cube</td>
+<td>Draw corners and edges</td>
+<td><code>ax.plot()</code> repeatedly</td>
+</tr>
+<tr>
+<td>Cube Diagonal</td>
+<td>Join one corner to the opposite corner</td>
+<td><code>ax.plot([0, 1], [0, 1], [0, 1])</code></td>
+</tr>
+<tr>
+<td>Cone</td>
+<td>Use radius and angle</td>
+<td><code>ax.plot_surface()</code></td>
+</tr>
+<tr>
+<td>Sphere</td>
+<td>Use two angles</td>
+<td><code>ax.plot_surface()</code></td>
+</tr>
+<tr>
+<td>Emoji</td>
+<td>Combine sphere, points, and curves</td>
+<td><code>plot_surface</code>, <code>scatter</code>, <code>plot</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" id="editor">
+<h2>10. Embedded Python Editor</h2>
+<p>
         Copy any code from this lesson and run it inside the editor.
       </p>
-
-      <div class="editor-shell">
-        <div class="editor-topbar">
-          <div>Python Starter Editor | Matplotlib 3D Drawing Practice</div>
-
-          <div class="editor-actions">
-            <button class="small-btn" onclick="reloadEditor()">Reload</button>
-            <button class="small-btn" onclick="openEditorNewTab()">Open New Tab</button>
-            <button class="small-btn" onclick="toggleEditorFullscreen()">Fullscreen</button>
-          </div>
-        </div>
-
-        <iframe id="pythonEditor" src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-          title="Programmers Picnic Python Editor" allow="clipboard-read; clipboard-write; fullscreen" loading="lazy">
-        </iframe>
-      </div>
-
-      <div class="note">
+<div class="editor-shell">
+<div class="editor-topbar">
+<div>Python Starter Editor | Matplotlib 3D Drawing Practice</div>
+<div class="editor-actions">
+<button class="small-btn" onclick="reloadEditor()">Reload</button>
+<button class="small-btn" onclick="openEditorNewTab()">Open New Tab</button>
+<button class="small-btn" onclick="toggleEditorFullscreen()">Fullscreen</button>
+</div>
+</div>
+<iframe allow="clipboard-read; clipboard-write; fullscreen" id="pythonEditor" loading="lazy" src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" title="Programmers Picnic Python Editor">
+</iframe>
+</div>
+<div class="note">
         If the editor does not load inside the page because of browser security settings,
         use the <strong>Open New Tab</strong> button.
       </div>
-    </section>
-
-    <section class="section">
-      <h2>11. Student Practice Checklist</h2>
-
-      <div class="checklist">
-        <label><input type="checkbox"> I drew a 3D line.</label>
-        <label><input type="checkbox"> I changed the line equation.</label>
-        <label><input type="checkbox"> I drew a 3D diagonal line.</label>
-        <label><input type="checkbox"> I drew a diagonal across a plane.</label>
-        <label><input type="checkbox"> I drew a plane.</label>
-        <label><input type="checkbox"> I understood meshgrid.</label>
-        <label><input type="checkbox"> I drew a cube using edges.</label>
-        <label><input type="checkbox"> I drew a cube body diagonal.</label>
-        <label><input type="checkbox"> I drew a cone using radius and angle.</label>
-        <label><input type="checkbox"> I drew a sphere using two angles.</label>
-        <label><input type="checkbox"> I created a simple 3D emoji face.</label>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>12. Homework</h2>
-
-      <h3>Easy</h3>
-      <p>Draw a line from point <code>(0, 0, 0)</code> to <code>(5, 5, 5)</code>.</p>
-
-      <h3>Medium</h3>
-      <p>Draw a diagonal across a square plane with side length 10.</p>
-
-      <h3>Hard</h3>
-      <p>Draw a cube with side length 2 and then draw a diagonal from one corner to the opposite corner.</p>
-
-      <h3>Infinity</h3>
-      <p>Create a 3D emoji with eyebrows, nose, mouth, ears, and a diagonal party hat.</p>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <strong>Programmers Picnic AI-ML Classes by Champak Roy</strong><br />
+</section>
+<section class="section">
+<h2>11. Student Practice Checklist</h2>
+<div class="checklist">
+<label><input type="checkbox"/> I drew a 3D line.</label>
+<label><input type="checkbox"/> I changed the line equation.</label>
+<label><input type="checkbox"/> I drew a 3D diagonal line.</label>
+<label><input type="checkbox"/> I drew a diagonal across a plane.</label>
+<label><input type="checkbox"/> I drew a plane.</label>
+<label><input type="checkbox"/> I understood meshgrid.</label>
+<label><input type="checkbox"/> I drew a cube using edges.</label>
+<label><input type="checkbox"/> I drew a cube body diagonal.</label>
+<label><input type="checkbox"/> I drew a cone using radius and angle.</label>
+<label><input type="checkbox"/> I drew a sphere using two angles.</label>
+<label><input type="checkbox"/> I created a simple 3D emoji face.</label>
+</div>
+</section>
+<section class="section">
+<h2>12. Homework</h2>
+<h3>Easy</h3>
+<p>Draw a line from point <code>(0, 0, 0)</code> to <code>(5, 5, 5)</code>.</p>
+<h3>Medium</h3>
+<p>Draw a diagonal across a square plane with side length 10.</p>
+<h3>Hard</h3>
+<p>Draw a cube with side length 2 and then draw a diagonal from one corner to the opposite corner.</p>
+<h3>Infinity</h3>
+<p>Create a 3D emoji with eyebrows, nose, mouth, ears, and a diagonal party hat.</p>
+</section>
+</main>
+<footer class="footer">
+<strong>Programmers Picnic AI-ML Classes by Champak Roy</strong><br/>
     learnwithchampak.live | editor.learnwithchampak.live
   </footer>
-
-  <script>
+<script>
     const EDITOR_URL = "https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1";
 
     function reloadEditor() {
@@ -1367,6 +1277,5 @@ else:
       }
     }
   </script>
-</body>
-
+<div data-include="footer"></div></body>
 </html>

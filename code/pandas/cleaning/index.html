@@ -1,24 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>
       Dataset Cleaning to Linear Regression — Champak Roy | Programmer's Picnic
     </title>
-    <script
-      async=""
-      crossorigin="anonymous"
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-    ></script>
-
-    <meta
-      name="description"
-      content="Ground-zero to expert lesson on cleaning messy datasets and applying linear regression using numpy.polynomial.fit."
-    />
-    <meta name="theme-color" content="#f59e0b" />
-
-    <style>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+<meta content="Ground-zero to expert lesson on cleaning messy datasets and applying linear regression using numpy.polynomial.fit." name="description"/>
+<meta content="#f59e0b" name="theme-color"/>
+<style>
       :root {
         --bg: #fff7e6;
         --bg2: #fff1c7;
@@ -276,67 +268,54 @@
         padding-top: 30px;
       }
     </style>
-  </head>
-
-  <body>
-    <header>
-      <h1 id="speak1">Dataset Cleaning to Linear Regression — Champak Roy</h1>
-      <p id="speak2">
+<link href="../../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../../assets/js/site.js"></script><script defer="defer" src="../../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<header>
+<h1 id="speak1">Dataset Cleaning to Linear Regression — Champak Roy</h1>
+<p id="speak2">
         Learn from level zero to expert level: messy data, missing values,
         duplicates, bad values, outliers, cleaning pipelines, and linear
         regression using numpy.polynomial.fit.
       </p>
-    </header>
-
-    <nav class="topbar">
-      <div class="topbar-inner">
-        <strong>Programmer's Picnic | Data Cleaning Lesson</strong>
-        <div>
-          <button class="btn" onclick="startSpeaking()">▶ Speak Lesson</button>
-          <button class="btn secondary" onclick="stopSpeaking()">■ Stop</button>
-          <a
-            class="btn secondary"
-            target="_blank"
-            href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-            >Open Python Editor</a
-          >
-        </div>
-      </div>
-    </nav>
-
-    <main class="wrap">
-      <section class="card">
-        <span class="badge">Level 0</span>
-        <h2 id="speak3">What is Data Cleaning?</h2>
-        <p id="speak4">
+</header>
+<nav class="topbar">
+<div class="topbar-inner">
+<strong>Programmer's Picnic | Data Cleaning Lesson</strong>
+<div>
+<button class="btn" onclick="startSpeaking()">▶ Speak Lesson</button>
+<button class="btn secondary" onclick="stopSpeaking()">■ Stop</button>
+<a class="btn secondary" href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">Open Python Editor</a>
+</div>
+</div>
+</nav>
+<main class="wrap" id="main-content">
+<section class="card">
+<span class="badge">Level 0</span>
+<h2 id="speak3">What is Data Cleaning?</h2>
+<p id="speak4">
           Data cleaning means preparing raw data so that it becomes useful for
           analysis and machine learning. Real-world data often contains missing
           values, duplicate rows, spelling mistakes, impossible values, wrong
           data types, and outliers.
         </p>
-
-        <div class="flow">
-          <div class="step">Raw Data</div>
-          <div class="step">Inspect</div>
-          <div class="step">Clean</div>
-          <div class="step">Transform</div>
-          <div class="step">Model</div>
-          <div class="step">Evaluate</div>
-        </div>
-      </section>
-
-      <section class="card">
-        <span class="badge">Level 1 — Basic Python First</span>
-        <h2 id="speak25">Cleaning Data Using Basic Python Only</h2>
-
-        <p id="speak26">
+<div class="flow">
+<div class="step">Raw Data</div>
+<div class="step">Inspect</div>
+<div class="step">Clean</div>
+<div class="step">Transform</div>
+<div class="step">Model</div>
+<div class="step">Evaluate</div>
+</div>
+</section>
+<section class="card">
+<span class="badge">Level 1 — Basic Python First</span>
+<h2 id="speak25">Cleaning Data Using Basic Python Only</h2>
+<p id="speak26">
           Before using pandas, understand cleaning with normal Python lists and
           dictionaries. This helps you understand what pandas does internally.
         </p>
-
-        <h3>Messy Dataset</h3>
-
-        <pre><code>students = [
+<h3>Messy Dataset</h3>
+<pre><code>students = [
     {"hours": 1, "score": 50},
     {"hours": 2, "score": 55},
     {"hours": 2, "score": 55},      # duplicate
@@ -344,10 +323,8 @@
     {"hours": 4, "score": "bad"},   # bad score
     {"hours": 5, "score": 70},
 ]</code></pre>
-
-        <h3>Step 1: Remove Duplicates</h3>
-
-        <pre><code>unique_students = []
+<h3>Step 1: Remove Duplicates</h3>
+<pre><code>unique_students = []
 seen = set()
 
 for row in students:
@@ -358,10 +335,8 @@ for row in students:
         seen.add(key)
 
 print(unique_students)</code></pre>
-
-        <h3>Step 2: Remove Missing and Bad Values</h3>
-
-        <pre><code>clean_students = []
+<h3>Step 2: Remove Missing and Bad Values</h3>
+<pre><code>clean_students = []
 
 for row in unique_students:
     hours = row["hours"]
@@ -379,10 +354,8 @@ for row in unique_students:
     clean_students.append(row)
 
 print(clean_students)</code></pre>
-
-        <h3>Step 3: Separate x and y</h3>
-
-        <pre><code>x = []
+<h3>Step 3: Separate x and y</h3>
+<pre><code>x = []
 y = []
 
 for row in clean_students:
@@ -391,10 +364,8 @@ for row in clean_students:
 
 print("x values:", x)
 print("y values:", y)</code></pre>
-
-        <h3>Step 4: Basic Linear Regression Logic</h3>
-
-        <pre><code>n = len(x)
+<h3>Step 4: Basic Linear Regression Logic</h3>
+<pre><code>n = len(x)
 
 mean_x = sum(x) / n
 mean_y = sum(y) / n
@@ -414,29 +385,25 @@ print("Intercept:", intercept)
 
 prediction = intercept + slope * 7
 print("Prediction for 7 hours:", prediction)</code></pre>
-
-        <p id="speak27">
+<p id="speak27">
           This is the ground-zero idea. We removed duplicates, removed missing
           values, removed bad values, separated input and output, and calculated
           a regression line manually.
         </p>
-
-        <div class="note" id="speak28">
+<div class="note" id="speak28">
           Pandas makes this easier, but basic Python shows the real logic. First
           learn the logic, then use pandas for speed and professional work.
         </div>
-      </section>
-
-      <section class="grid">
-        <div class="card">
-          <span class="badge">Level 10</span>
-          <h2 id="speak5">Basic Cleaning Mindset</h2>
-          <p id="speak6">
+</section>
+<section class="grid">
+<div class="card">
+<span class="badge">Level 10</span>
+<h2 id="speak5">Basic Cleaning Mindset</h2>
+<p id="speak6">
             Before cleaning, always inspect the dataset. Do not blindly delete
             rows. First understand what is wrong.
           </p>
-
-          <pre><code>import pandas as pd
+<pre><code>import pandas as pd
 import numpy as np
 from numpy.polynomial import Polynomial
 
@@ -444,28 +411,24 @@ df.info()
 df.describe()
 df.isnull().sum()
 df.duplicated().sum()</code></pre>
-        </div>
-
-        <div class="card">
-          <span class="badge">Formula</span>
-          <h2 id="speak7">Linear Regression Idea</h2>
-          <p id="speak8">
+</div>
+<div class="card">
+<span class="badge">Formula</span>
+<h2 id="speak7">Linear Regression Idea</h2>
+<p id="speak8">
             Linear regression tries to find a straight-line relationship between
             input x and output y.
           </p>
-
-          <pre><code># y = c + mx
+<pre><code># y = c + mx
 model = Polynomial.fit(x, y, deg=1)
 normal_model = model.convert()
 print(normal_model.coef)</code></pre>
-        </div>
-      </section>
-
-      <section class="card">
-        <span class="badge">Dataset 1</span>
-        <h2 id="speak9">Incomplete Data + Duplicate Rows</h2>
-
-        <pre><code>df1 = pd.DataFrame({
+</div>
+</section>
+<section class="card">
+<span class="badge">Dataset 1</span>
+<h2 id="speak9">Incomplete Data + Duplicate Rows</h2>
+<pre><code>df1 = pd.DataFrame({
     "hours": [1, 2, 2, 3, None, 5],
     "score": [50, 55, 55, None, 65, 70]
 })
@@ -478,18 +441,15 @@ y = df1["score"]
 
 model = Polynomial.fit(x, y, deg=1)
 print(model.convert().coef)</code></pre>
-
-        <p id="speak10">
+<p id="speak10">
           Here we remove duplicate rows and then remove rows where hours or
           score is missing.
         </p>
-      </section>
-
-      <section class="card">
-        <span class="badge">Dataset 2</span>
-        <h2 id="speak11">Bad Text Values Inside Numeric Columns</h2>
-
-        <pre><code>df2 = pd.DataFrame({
+</section>
+<section class="card">
+<span class="badge">Dataset 2</span>
+<h2 id="speak11">Bad Text Values Inside Numeric Columns</h2>
+<pre><code>df2 = pd.DataFrame({
     "hours": [1, "two", 3, 4, 5],
     "score": [50, 55, "??", 65, 70]
 })
@@ -504,18 +464,15 @@ y = df2["score"]
 
 model = Polynomial.fit(x, y, deg=1)
 print(model.convert().coef)</code></pre>
-
-        <p id="speak12">
+<p id="speak12">
           The function pandas.to_numeric converts valid numbers and changes bad
           values into NaN. Then we clean those NaN rows.
         </p>
-      </section>
-
-      <section class="card">
-        <span class="badge">Dataset 3</span>
-        <h2 id="speak13">Outliers</h2>
-
-        <pre><code>df3 = pd.DataFrame({
+</section>
+<section class="card">
+<span class="badge">Dataset 3</span>
+<h2 id="speak13">Outliers</h2>
+<pre><code>df3 = pd.DataFrame({
     "hours": [1, 2, 3, 4, 5, 100],
     "score": [50, 55, 60, 65, 70, 10]
 })
@@ -527,19 +484,16 @@ y = df3["score"]
 
 model = Polynomial.fit(x, y, deg=1)
 print(model.convert().coef)</code></pre>
-
-        <p id="speak14">
+<p id="speak14">
           Outliers are extreme values. Sometimes they are mistakes. Sometimes
           they are important signals. Expert cleaning means checking before
           removing.
         </p>
-      </section>
-
-      <section class="card">
-        <span class="badge">Dataset 4</span>
-        <h2 id="speak15">Mixed Problems</h2>
-
-        <pre><code>df4 = pd.DataFrame({
+</section>
+<section class="card">
+<span class="badge">Dataset 4</span>
+<h2 id="speak15">Mixed Problems</h2>
+<pre><code>df4 = pd.DataFrame({
     "hours": [1, 2, 2, "three", None, 5],
     "score": [50, 55, 55, 60, "N/A", 70]
 })
@@ -555,18 +509,15 @@ y = df4["score"]
 
 model = Polynomial.fit(x, y, deg=1)
 print(model.convert().coef)</code></pre>
-
-        <p id="speak16">
+<p id="speak16">
           This dataset contains duplicates, missing values, and text inside
           number columns. We use a complete cleaning sequence.
         </p>
-      </section>
-
-      <section class="card">
-        <span class="badge">Dataset 5</span>
-        <h2 id="speak17">Reusable Expert Cleaning Function</h2>
-
-        <pre><code>def clean_dataset(df):
+</section>
+<section class="card">
+<span class="badge">Dataset 5</span>
+<h2 id="speak17">Reusable Expert Cleaning Function</h2>
+<pre><code>def clean_dataset(df):
     df = df.copy()
 
     # Remove duplicate rows
@@ -594,33 +545,26 @@ y = df5["score"]
 
 model = Polynomial.fit(x, y, deg=1)
 print(model.convert().coef)</code></pre>
-
-        <p id="speak18">
+<p id="speak18">
           At expert level, we do not repeat cleaning code again and again. We
           create a reusable cleaning function.
         </p>
-      </section>
-
-      <section class="card">
-        <span class="badge">Embedded Editor</span>
-        <h2 id="speak19">Practice in the Live Python Editor</h2>
-        <p id="speak20">
+</section>
+<section class="card">
+<span class="badge">Embedded Editor</span>
+<h2 id="speak19">Practice in the Live Python Editor</h2>
+<p id="speak20">
           Use the editor below to paste the examples, modify the datasets, add
           your own bad data, and test the cleaning pipeline.
         </p>
-
-        <div class="editor-frame">
-          <iframe
-            src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-          ></iframe>
-        </div>
-      </section>
-
-      <section class="card">
-        <span class="badge">Complete Practice Code</span>
-        <h2 id="speak21">One Full Program</h2>
-
-        <pre><code>import pandas as pd
+<div class="editor-frame">
+<iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"></iframe>
+</div>
+</section>
+<section class="card">
+<span class="badge">Complete Practice Code</span>
+<h2 id="speak21">One Full Program</h2>
+<pre><code>import pandas as pd
 import numpy as np
 from numpy.polynomial import Polynomial
 
@@ -688,64 +632,44 @@ for i, df in enumerate(datasets, start=1):
 
     print("Prediction for 7 hours:")
     print(converted(7))</code></pre>
-      </section>
-
-      <section class="card">
-        <span class="badge">MCQ Engine</span>
-        <h2 id="speak22">Quiz: Test Your Understanding</h2>
-        <div id="quiz"></div>
-        <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
-        <button class="btn secondary" onclick="resetQuiz()">Reset</button>
-        <div id="quizResult" class="result"></div>
-      </section>
-
-      <section class="card">
-        <span class="badge">Expert Summary</span>
-        <h2 id="speak23">Final Expert Rules</h2>
-        <div class="note" id="speak24">
+</section>
+<section class="card">
+<span class="badge">MCQ Engine</span>
+<h2 id="speak22">Quiz: Test Your Understanding</h2>
+<div id="quiz"></div>
+<button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+<button class="btn secondary" onclick="resetQuiz()">Reset</button>
+<div class="result" id="quizResult"></div>
+</section>
+<section class="card">
+<span class="badge">Expert Summary</span>
+<h2 id="speak23">Final Expert Rules</h2>
+<div class="note" id="speak24">
           Clean data carefully. Do not delete blindly. Convert data types.
           Handle missing values. Remove duplicates. Investigate outliers. Then
           apply regression and evaluate the result.
         </div>
-      </section>
-
-      <div class="footer">
-        <p>Made for Programmer's Picnic | Champak Roy</p>
-      </div>
-    </main>
-
-
+</section>
+<div class="footer">
+<p>Made for Programmer's Picnic | Champak Roy</p>
+</div>
+</main>
 <section class="card">
-  <span class="badge">Course Map</span>
-  <h2 id="speak29">AI-ML Full Course Map</h2>
-  <p id="speak30">
+<span class="badge">Course Map</span>
+<h2 id="speak29">AI-ML Full Course Map</h2>
+<p id="speak30">
     Continue your learning journey through the complete AI-ML course roadmap.
   </p>
-
-  <div class="editor-frame">
-    <iframe
-      src="https://aiml.learnwithchampak.live/coursemap/"
-      title="AI-ML Course Map | Learn With Champak"
-      loading="lazy"
-    ></iframe>
-  </div>
-
-  <p>
-    <a
-      class="btn secondary"
-      href="https://aiml.learnwithchampak.live/coursemap/"
-      target="_blank"
-      rel="noopener"
-    >
+<div class="editor-frame">
+<iframe loading="lazy" src="https://aiml.learnwithchampak.live/coursemap/" title="AI-ML Course Map | Learn With Champak"></iframe>
+</div>
+<p>
+<a class="btn secondary" href="https://aiml.learnwithchampak.live/coursemap/" rel="noopener" target="_blank">
       Open Course Map in New Tab
     </a>
-  </p>
+</p>
 </section>
-
-
-
-
-    <script>
+<script>
       const quizData = [
         {
           q: "What is the first step before cleaning a dataset?",
@@ -933,5 +857,5 @@ for i, df in enumerate(datasets, start=1):
         });
       }
     </script>
-  </body>
+<div data-include="footer"></div></body>
 </html>

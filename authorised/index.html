@@ -1,14 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Google Login on GitHub Pages</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <style>
+<meta charset="utf-8"/>
+<title>Google Login on GitHub Pages</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script async="" defer="" src="https://accounts.google.com/gsi/client"></script>
+<style>
         body {
             font-family: Arial, sans-serif;
             background: #fff7ed;
@@ -64,38 +62,8 @@
             font-weight: bold;
         }
     </style>
-</head>
-
-<body>
-
-    <div class="card">
-        <h1>Programmers Picnic Login</h1>
-        <p>Sign in with Google to continue.</p>
-
-        <div id="g_id_onload" data-client_id="704346946203-m69uok3l8htbtgdsee0vtoul5b8v7clv.apps.googleusercontent.com"
-            data-callback="handleCredentialResponse">
-        </div>
-
-        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="signin_with"
-            data-shape="pill" data-logo_alignment="left">
-        </div>
-
-        <div id="loginStatus"></div>
-
-        <p class="small-note">
-            Access is checked from the hosted users.json file.
-        </p>
-
-        <div id="protectedContent">
-            <h2 id="welcomeText"></h2>
-            <p>You are now logged in.</p>
-            <p>This content is visible only after Google login.</p>
-
-            <button onclick="logout()">Logout</button>
-        </div>
-    </div>
-
-    <script>
+<meta content="Google Login on GitHub Pages - AI-ML learning resource by Programmer's Picnic." name="description"/><link href="../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../assets/js/site.js"></script><script defer="defer" src="../assets/js/include.js"></script></head>
+<body><div data-include="header"></div><script>
         const USERS_JSON_URL = "https://programmer-s-picnic.github.io/json-images/links/users.json";
 
         function setStatus(message, type = "info") {
@@ -221,8 +189,25 @@
                 setStatus("Could not verify saved login. Please sign in again.", "error");
             }
         };
-    </script>
+    </script><main class="pp-content" id="main-content">
+<div class="card">
+<h1>Programmers Picnic Login</h1>
+<p>Sign in with Google to continue.</p>
+<div data-callback="handleCredentialResponse" data-client_id="704346946203-m69uok3l8htbtgdsee0vtoul5b8v7clv.apps.googleusercontent.com" id="g_id_onload">
+</div>
+<div class="g_id_signin" data-logo_alignment="left" data-shape="pill" data-size="large" data-text="signin_with" data-theme="outline" data-type="standard">
+</div>
+<div id="loginStatus"></div>
+<p class="small-note">
+            Access is checked from the hosted users.json file.
+        </p>
+<div id="protectedContent">
+<h2 id="welcomeText"></h2>
+<p>You are now logged in.</p>
+<p>This content is visible only after Google login.</p>
+<button onclick="logout()">Logout</button>
+</div>
+</div>
 
-</body>
-
+</main><div data-include="footer"></div></body>
 </html>

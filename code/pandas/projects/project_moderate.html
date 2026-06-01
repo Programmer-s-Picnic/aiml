@@ -1,91 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Moderate Project — Sales & Customers Dashboard</title>
-  <meta name="theme-color" content="#d97706"/>
-  <link rel="stylesheet" href="assets/style.css"/>
-</head>
-<body>
-  <div class="wrap">
-    <header class="hero" id="top">
-      <span class="badge">🍊 Programmer’s Picnic • Pandas Projects</span>
-      <h1>Moderate Project — Sales & Customers Dashboard</h1>
-      <p>Orders CSV + Customers JSON (+ optional MySQL) → Pandas KPIs → Matplotlib chart → export CSV/JSON/MySQL/PNG.</p>
-      <div class="meta">
-        <span class="pill">Pandas • Matplotlib</span>
-        <span class="pill">CSV • JSON • MySQL • MongoDB</span>
-        <span class="pill">Exports: CSV • JSON • MySQL • MongoDB • PNG</span>
-      </div>
-      <div class="btnrow" style="margin-top:12px">
-        <a class="btn secondary" href="index.html">← Back to index</a>
-        <a class="btn" href="#run">▶ Run Steps</a>
-      </div>
-    </header>
-
-    <div class="grid">
-      <nav class="toc" aria-label="Table of contents">
-        <h2>Contents</h2>
-        <input id="tocSearch" type="search" placeholder="Search in page…"/>
-        <ul id="tocList">
-          <li><a href="#goal" data-text="goal moderate">Goal<small>What you will build</small></a></li>
-<li><a href="#inputs" data-text="csv json mysql">Data Entry<small>CSV + JSON (+ MySQL)</small></a></li>
-<li><a href="#processing" data-text="merge join groupby">Processing<small>Join + KPIs</small></a></li>
-<li><a href="#charts" data-text="matplotlib png">Charts<small>Matplotlib + PNG</small></a></li>
-<li><a href="#exports" data-text="export to_sql">Exports<small>CSV/JSON/MySQL</small></a></li>
-<li><a href="#run" data-text="run">Run Steps<small>How to run</small></a></li>
-        </ul>
-        <div class="note" style="margin-top:10px">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Moderate Project — Sales &amp; Customers Dashboard</title>
+<meta content="#d97706" name="theme-color"/>
+<link href="assets/style.css" rel="stylesheet"/>
+<meta content="Moderate Project — Sales &amp; Customers Dashboard - AI-ML learning resource by Programmer's Picnic." name="description"/><link href="../../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../../assets/js/site.js"></script><script defer="defer" src="../../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<div class="wrap">
+<header class="hero" id="top">
+<span class="badge">🍊 Programmer’s Picnic • Pandas Projects</span>
+<h1>Moderate Project — Sales &amp; Customers Dashboard</h1>
+<p>Orders CSV + Customers JSON (+ optional MySQL) → Pandas KPIs → Matplotlib chart → export CSV/JSON/MySQL/PNG.</p>
+<div class="meta">
+<span class="pill">Pandas • Matplotlib</span>
+<span class="pill">CSV • JSON • MySQL • MongoDB</span>
+<span class="pill">Exports: CSV • JSON • MySQL • MongoDB • PNG</span>
+</div>
+<div class="btnrow" style="margin-top:12px">
+<a class="btn secondary" href="index.html">← Back to index</a>
+<a class="btn" href="#run">▶ Run Steps</a>
+</div>
+</header>
+<div class="grid">
+<nav aria-label="Table of contents" class="toc">
+<h2>Contents</h2>
+<input id="tocSearch" placeholder="Search in page…" type="search"/>
+<ul id="tocList">
+<li><a data-text="goal moderate" href="#goal">Goal<small>What you will build</small></a></li>
+<li><a data-text="csv json mysql" href="#inputs">Data Entry<small>CSV + JSON (+ MySQL)</small></a></li>
+<li><a data-text="merge join groupby" href="#processing">Processing<small>Join + KPIs</small></a></li>
+<li><a data-text="matplotlib png" href="#charts">Charts<small>Matplotlib + PNG</small></a></li>
+<li><a data-text="export to_sql" href="#exports">Exports<small>CSV/JSON/MySQL</small></a></li>
+<li><a data-text="run" href="#run">Run Steps<small>How to run</small></a></li>
+</ul>
+<div class="note" style="margin-top:10px">
           Tip: Use <span class="kbd">Copy</span> / <span class="kbd">Download .py</span> on code blocks.
         </div>
-      </nav>
-
-      <main>
-        
+</nav>
+<main id="main-content">
 <section id="goal">
-  <h2>Goal</h2>
-  <p>
-    Build a <b>Sales & Customers Dashboard</b> combining:
+<h2>Goal</h2>
+<p>
+    Build a <b>Sales &amp; Customers Dashboard</b> combining:
     <b>Orders CSV</b> + <b>Customers JSON</b> + (optional) <b>MySQL</b>.
     Join datasets, compute revenue KPIs, visualize revenue by city, and export to CSV/JSON/PNG/MySQL.
   </p>
-  <div class="note"><strong>Difficulty:</strong> Moderate • Learn joins + KPIs + database export.</div>
+<div class="note"><strong>Difficulty:</strong> Moderate • Learn joins + KPIs + database export.</div>
 </section>
-
 <section id="inputs">
-  <h2>Data entry sources</h2>
-  <div class="codeCard" data-filename="read_inputs_moderate.py">
-    <div class="codeTop">
-      <div class="label">📥 Read orders (CSV) + customers (JSON)</div>
-      <div class="actions">
-        <button class="mini" data-copy>Copy</button>
-        <button class="mini" data-download>Download .py</button>
-      </div>
-    </div>
-    <pre><code>import pandas as pd
+<h2>Data entry sources</h2>
+<div class="codeCard" data-filename="read_inputs_moderate.py">
+<div class="codeTop">
+<div class="label">📥 Read orders (CSV) + customers (JSON)</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 
 orders = pd.read_csv("../data/orders.csv", parse_dates=["order_date"])
 customers = pd.read_json("../data/customers.json")
 
 print(orders.head())
 print(customers.head())</code></pre>
-  </div>
+</div>
 </section>
-
 <section id="processing">
-  <h2>Pandas processing</h2>
-  <p>Compute revenue, join customers, filter paid+shipped, then summarize.</p>
-
-  <div class="codeCard" data-filename="processing_moderate.py">
-    <div class="codeTop">
-      <div class="label">🧠 Join + KPIs</div>
-      <div class="actions">
-        <button class="mini" data-copy>Copy</button>
-        <button class="mini" data-download>Download .py</button>
-      </div>
-    </div>
-    <pre><code>import pandas as pd
+<h2>Pandas processing</h2>
+<p>Compute revenue, join customers, filter paid+shipped, then summarize.</p>
+<div class="codeCard" data-filename="processing_moderate.py">
+<div class="codeTop">
+<div class="label">🧠 Join + KPIs</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 
 orders = pd.read_csv("../data/orders.csv", parse_dates=["order_date"])
 customers = pd.read_json("../data/customers.json")
@@ -99,20 +94,19 @@ top_products = df.groupby("product")["revenue"].sum().sort_values(ascending=Fals
 
 print(revenue_by_city)
 print(top_products)</code></pre>
-  </div>
+</div>
 </section>
-
 <section id="charts">
-  <h2>Charts (Matplotlib) → PNG</h2>
-  <div class="codeCard" data-filename="chart_moderate.py">
-    <div class="codeTop">
-      <div class="label">📊 Revenue by city</div>
-      <div class="actions">
-        <button class="mini" data-copy>Copy</button>
-        <button class="mini" data-download>Download .py</button>
-      </div>
-    </div>
-    <pre><code>import pandas as pd
+<h2>Charts (Matplotlib) → PNG</h2>
+<div class="codeCard" data-filename="chart_moderate.py">
+<div class="codeTop">
+<div class="label">📊 Revenue by city</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
@@ -135,22 +129,20 @@ plt.ylabel("Revenue")
 plt.tight_layout()
 plt.savefig("../output/moderate_revenue_by_city.png", dpi=200)
 plt.show()</code></pre>
-  </div>
+</div>
 </section>
-
 <section id="exports">
-  <h2>Exports to CSV/JSON/MySQL</h2>
-  <p>Use SQLAlchemy to push a DataFrame into MySQL.</p>
-
-  <div class="codeCard" data-filename="export_moderate_mysql.py">
-    <div class="codeTop">
-      <div class="label">🗄 Export to MySQL</div>
-      <div class="actions">
-        <button class="mini" data-copy>Copy</button>
-        <button class="mini" data-download>Download .py</button>
-      </div>
-    </div>
-    <pre><code>import pandas as pd
+<h2>Exports to CSV/JSON/MySQL</h2>
+<p>Use SQLAlchemy to push a DataFrame into MySQL.</p>
+<div class="codeCard" data-filename="export_moderate_mysql.py">
+<div class="codeTop">
+<div class="label">🗄 Export to MySQL</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 from sqlalchemy import create_engine
 
 MYSQL_URL = "mysql+pymysql://USER:PASSWORD@localhost:3306/DBNAME"
@@ -168,17 +160,16 @@ engine = create_engine(MYSQL_URL, pool_pre_ping=True)
 revenue_by_city.to_sql("pp_city_revenue", con=engine, if_exists="replace", index=False)
 
 print("MySQL export done ✅")</code></pre>
-  </div>
-
-  <div class="codeCard" data-filename="export_moderate_files.py">
-    <div class="codeTop">
-      <div class="label">💾 Export CSV + JSON</div>
-      <div class="actions">
-        <button class="mini" data-copy>Copy</button>
-        <button class="mini" data-download>Download .py</button>
-      </div>
-    </div>
-    <pre><code>import pandas as pd
+</div>
+<div class="codeCard" data-filename="export_moderate_files.py">
+<div class="codeTop">
+<div class="label">💾 Export CSV + JSON</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 import os
 
 os.makedirs("../output", exist_ok=True)
@@ -195,24 +186,21 @@ top_products = df.groupby("product")["revenue"].sum().sort_values(ascending=Fals
 
 revenue_by_city.to_csv("../output/moderate_city_revenue.csv")
 top_products.reset_index().to_json("../output/moderate_top_products.json", orient="records", indent=2)</code></pre>
-  </div>
+</div>
 </section>
-
 <section id="run">
-  <h2>Run steps</h2>
-  <ol style="line-height:1.7;color:#253041;margin:8px 0 0;padding-left:18px">
-    <li>Install deps: <span class="kbd">pip install -r requirements.txt</span></li>
-    <li>Run: <span class="kbd">python moderate_sales_customers_dashboard.py</span></li>
-    <li>(Optional) Edit MySQL URL in script and rerun for DB export</li>
-    <li>Check <span class="kbd">output/</span> for CSV/JSON/PNG</li>
-  </ol>
+<h2>Run steps</h2>
+<ol style="line-height:1.7;color:#253041;margin:8px 0 0;padding-left:18px">
+<li>Install deps: <span class="kbd">pip install -r requirements.txt</span></li>
+<li>Run: <span class="kbd">python moderate_sales_customers_dashboard.py</span></li>
+<li>(Optional) Edit MySQL URL in script and rerun for DB export</li>
+<li>Check <span class="kbd">output/</span> for CSV/JSON/PNG</li>
+</ol>
 </section>
-
-        <div class="footer">Programmer’s Picnic • Build → Analyze → Visualize → Export • <a href="#top">Back to top ↑</a></div>
-      </main>
-    </div>
-  </div>
-
-  <script src="assets/app.js"></script>
-</body>
+<div class="footer">Programmer’s Picnic • Build → Analyze → Visualize → Export • <a href="#top">Back to top ↑</a></div>
+</main>
+</div>
+</div>
+<script src="assets/app.js"></script>
+<div data-include="footer"></div></body>
 </html>

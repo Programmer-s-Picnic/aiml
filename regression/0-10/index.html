@@ -1,53 +1,33 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Power 0, Linear and Higher Degree Curve Fitting | Linear Regression 0–10%</title>
-
-    <meta name="description"
-        content="A beginner-friendly 0 to infinity lesson on power 0 fitting, linear regression, higher-degree polynomial curve fitting, derivation, Python implementation, and live practice editor." />
-    <meta name="keywords"
-        content="linear regression, polynomial regression, curve fitting, power 0 model, least squares, Python regression, NumPy, Matplotlib, machine learning, data science" />
-    <meta name="author" content="Champak Roy, Programmer's Picnic AI-ML Classes" />
-    <meta name="robots" content="index, follow" />
-
-    <link rel="canonical"
-        href="https://learnwithchampak.live/linear-regression/power-0-linear-higher-degree-curve-fitting.html" />
-
-    <meta property="og:title" content="Power 0, Linear and Higher Degree Curve Fitting" />
-    <meta property="og:description"
-        content="Linear Regression Book 0–10% lesson: derivation, Python implementation, and live editor practice for constant, linear and polynomial curve fitting." />
-    <meta property="og:type" content="article" />
-    <meta property="og:url"
-        content="https://learnwithchampak.live/linear-regression/power-0-linear-higher-degree-curve-fitting.html" />
-    <meta property="og:image"
-        content="https://programmer-s-picnic.github.io/json-images/linear-regression-curve-fitting-og.png" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Power 0, Linear and Higher Degree Curve Fitting" />
-    <meta name="twitter:description"
-        content="A 0 to infinity lesson on curve fitting, derivation, Python implementation, and live coding practice." />
-    <meta name="twitter:image"
-        content="https://programmer-s-picnic.github.io/json-images/linear-regression-curve-fitting-og.png" />
-
-    <link rel="preload" as="image"
-        href="https://programmer-s-picnic.github.io/json-images/linear-regression-curve-fitting-og.png" />
-
-    <!-- Google AdSense -->
-    <script async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494&host=ca-host-pub-1556223355139109"
-        crossorigin="anonymous"></script>
-
-    <!-- Programmer's Picnic Standard JS Files -->
-    <script src="https://varanasi-software-junction.github.io/search/branding/branding.js" defer></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js" defer></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js" defer></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/pwd.js" defer></script>
-
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Power 0, Linear and Higher Degree Curve Fitting | Linear Regression 0–10%</title>
+<meta content="A beginner-friendly 0 to infinity lesson on power 0 fitting, linear regression, higher-degree polynomial curve fitting, derivation, Python implementation, and live practice editor." name="description"/>
+<meta content="linear regression, polynomial regression, curve fitting, power 0 model, least squares, Python regression, NumPy, Matplotlib, machine learning, data science" name="keywords"/>
+<meta content="Champak Roy, Programmer's Picnic AI-ML Classes" name="author"/>
+<meta content="index, follow" name="robots"/>
+<link href="https://learnwithchampak.live/linear-regression/power-0-linear-higher-degree-curve-fitting.html" rel="canonical"/>
+<meta content="Power 0, Linear and Higher Degree Curve Fitting" property="og:title"/>
+<meta content="Linear Regression Book 0–10% lesson: derivation, Python implementation, and live editor practice for constant, linear and polynomial curve fitting." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://learnwithchampak.live/linear-regression/power-0-linear-higher-degree-curve-fitting.html" property="og:url"/>
+<meta content="https://programmer-s-picnic.github.io/json-images/linear-regression-curve-fitting-og.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Power 0, Linear and Higher Degree Curve Fitting" name="twitter:title"/>
+<meta content="A 0 to infinity lesson on curve fitting, derivation, Python implementation, and live coding practice." name="twitter:description"/>
+<meta content="https://programmer-s-picnic.github.io/json-images/linear-regression-curve-fitting-og.png" name="twitter:image"/>
+<link as="image" href="https://programmer-s-picnic.github.io/json-images/linear-regression-curve-fitting-og.png" rel="preload"/>
+<!-- Google AdSense -->
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494&amp;host=ca-host-pub-1556223355139109"></script>
+<!-- Programmer's Picnic Standard JS Files -->
+<script defer="" src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+<script defer="" src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+<script defer="" src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+<script defer="" src="https://programmer-s-picnic.github.io/json-images/pwd.js"></script>
+<style>
         :root {
             --saffron: #ff9800;
             --saffron-dark: #d97706;
@@ -571,8 +551,7 @@
             }
         }
     </style>
-
-    <script type="application/ld+json">
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
@@ -591,616 +570,486 @@
     "programmingLanguage": "Python"
   }
   </script>
-</head>
-
-<body>
-    <header class="topbar">
-        <nav class="nav">
-            <div class="brand">
-                <div class="brand-badge">PP</div>
-                <div>
-                    Programmer's Picnic<br />
-                    <small>AI-ML Classes by Champak Roy</small>
-                </div>
-            </div>
-
-            <div class="nav-links">
-                <a href="#idea">Idea</a>
-                <a href="#power0">Power 0</a>
-                <a href="#linear">Linear</a>
-                <a href="#higher">Higher Degree</a>
-                <a href="#python">Python</a>
-                <a href="#python-editor">Python Editor</a>
-                <a href="#exercises">Exercises</a>
-            </div>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <div class="hero-card">
-            <span class="eyebrow">Linear Regression Book · 0–10%</span>
-            <h1>Power 0, Linear and Higher-Degree Curve Fitting</h1>
-            <p class="subtitle">
+<link href="../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../assets/js/site.js"></script><script defer="defer" src="../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<header class="topbar">
+<nav class="nav">
+<div class="brand">
+<div class="brand-badge">PP</div>
+<div>
+                    Programmer's Picnic<br/>
+<small>AI-ML Classes by Champak Roy</small>
+</div>
+</div>
+<div class="nav-links">
+<a href="#idea">Idea</a>
+<a href="#power0">Power 0</a>
+<a href="#linear">Linear</a>
+<a href="#higher">Higher Degree</a>
+<a href="#python">Python</a>
+<a href="#python-editor">Python Editor</a>
+<a href="#exercises">Exercises</a>
+</div>
+</nav>
+</header>
+<section class="hero">
+<div class="hero-card">
+<span class="eyebrow">Linear Regression Book · 0–10%</span>
+<h1>Power 0, Linear and Higher-Degree Curve Fitting</h1>
+<p class="subtitle">
                 A beginner-friendly 0 to infinity lesson on constant fitting, straight-line fitting,
                 polynomial curve fitting, least squares derivation, Python implementation, and live practice.
             </p>
-
-            <div class="hero-actions">
-                <a class="btn" href="#python">Start Coding</a>
-                <a class="btn secondary" href="#python-editor">Open Live Editor</a>
-                <a class="btn secondary" href="#derivation">Read Derivation</a>
-                <button class="btn secondary" onclick="window.print()">Print Lesson</button>
-            </div>
-        </div>
-    </section>
-
-    <div class="layout">
-        <aside>
-            <h2>Lesson Contents</h2>
-            <div class="toc">
-                <a href="#idea">0. What are we trying to do?</a>
-                <a href="#data">1. Data points</a>
-                <a href="#power0">2. Power 0 model</a>
-                <a href="#linear">3. Linear model</a>
-                <a href="#derivation">4. Derivation of best linear fit</a>
-                <a href="#higher">5. Higher-degree curve fitting</a>
-                <a href="#matrix">6. Matrix form</a>
-                <a href="#python">7. Python implementation</a>
-                <a href="#python-editor">8. Live Python Editor</a>
-                <a href="#visualization">9. Visualization</a>
-                <a href="#warning">10. Overfitting warning</a>
-                <a href="#summary">11. Summary</a>
-                <a href="#exercises">12. Exercises</a>
-            </div>
-        </aside>
-
-        <main>
-            <div class="ad-card">
-                <div class="ad-label">Advertisement</div>
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8321261883090494"
-                    data-ad-slot="7782388330" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
+<div class="hero-actions">
+<a class="btn" href="#python">Start Coding</a>
+<a class="btn secondary" href="#python-editor">Open Live Editor</a>
+<a class="btn secondary" href="#derivation">Read Derivation</a>
+<button class="btn secondary" onclick="window.print()">Print Lesson</button>
+</div>
+</div>
+</section>
+<div class="layout">
+<aside>
+<h2>Lesson Contents</h2>
+<div class="toc">
+<a href="#idea">0. What are we trying to do?</a>
+<a href="#data">1. Data points</a>
+<a href="#power0">2. Power 0 model</a>
+<a href="#linear">3. Linear model</a>
+<a href="#derivation">4. Derivation of best linear fit</a>
+<a href="#higher">5. Higher-degree curve fitting</a>
+<a href="#matrix">6. Matrix form</a>
+<a href="#python">7. Python implementation</a>
+<a href="#python-editor">8. Live Python Editor</a>
+<a href="#visualization">9. Visualization</a>
+<a href="#warning">10. Overfitting warning</a>
+<a href="#summary">11. Summary</a>
+<a href="#exercises">12. Exercises</a>
+</div>
+</aside>
+<main id="main-content">
+<div class="ad-card">
+<div class="ad-label">Advertisement</div>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
+<script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
-            </div>
-
-            <section id="idea">
-                <h2>0. What Are We Trying to Do?</h2>
-
-                <p>
+</div>
+<section id="idea">
+<h2>0. What Are We Trying to Do?</h2>
+<p>
                     In real life, data rarely comes as a perfect formula. We may have values like this:
                 </p>
-
-                <pre><code>x: 1, 2, 3, 4, 5
+<pre><code>x: 1, 2, 3, 4, 5
 y: 2, 4, 5, 4, 5</code></pre>
-
-                <p>
+<p>
                     We want to ask:
                 </p>
-
-                <div class="callout">
+<div class="callout">
                     Can we find a mathematical pattern that approximately explains <strong>y</strong> using
                     <strong>x</strong>?
                 </div>
-
-                <p>
+<p>
                     This is called <strong>curve fitting</strong>.
                 </p>
-
-                <div class="grid-two">
-                    <div class="mini-card">
-                        <strong>Possible model 1:</strong>
-                        <p>A constant line.</p>
-                    </div>
-                    <div class="mini-card">
-                        <strong>Possible model 2:</strong>
-                        <p>A straight line.</p>
-                    </div>
-                    <div class="mini-card">
-                        <strong>Possible model 3:</strong>
-                        <p>A parabola.</p>
-                    </div>
-                    <div class="mini-card">
-                        <strong>Possible model 4:</strong>
-                        <p>A higher-degree polynomial curve.</p>
-                    </div>
-                </div>
-
-                <p>
+<div class="grid-two">
+<div class="mini-card">
+<strong>Possible model 1:</strong>
+<p>A constant line.</p>
+</div>
+<div class="mini-card">
+<strong>Possible model 2:</strong>
+<p>A straight line.</p>
+</div>
+<div class="mini-card">
+<strong>Possible model 3:</strong>
+<p>A parabola.</p>
+</div>
+<div class="mini-card">
+<strong>Possible model 4:</strong>
+<p>A higher-degree polynomial curve.</p>
+</div>
+</div>
+<p>
                     The goal is not always to pass exactly through every point.
                     The goal is usually to find the <strong>best approximate curve</strong>.
                 </p>
-            </section>
-
-            <section id="data">
-                <h2>1. Data Points</h2>
-
-                <p>
+</section>
+<section id="data">
+<h2>1. Data Points</h2>
+<p>
                     Suppose we have data points:
                 </p>
-
-                <pre><code>(x1, y1), (x2, y2), (x3, y3), ..., (xn, yn)</code></pre>
-
-                <p>Example:</p>
-
-                <pre><code>(1, 2), (2, 4), (3, 5), (4, 4), (5, 5)</code></pre>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Symbol</th>
-                            <th>Meaning</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>x</td>
-                            <td>Input</td>
-                        </tr>
-                        <tr>
-                            <td>y</td>
-                            <td>Actual output</td>
-                        </tr>
-                        <tr>
-                            <td>ŷ</td>
-                            <td>Predicted output, read as y hat</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section id="power0">
-                <h2>2. Power 0 Model: Constant Fitting</h2>
-
-                <p>
+<pre><code>(x1, y1), (x2, y2), (x3, y3), ..., (xn, yn)</code></pre>
+<p>Example:</p>
+<pre><code>(1, 2), (2, 4), (3, 5), (4, 4), (5, 5)</code></pre>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x</td>
+<td>Input</td>
+</tr>
+<tr>
+<td>y</td>
+<td>Actual output</td>
+</tr>
+<tr>
+<td>ŷ</td>
+<td>Predicted output, read as y hat</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="power0">
+<h2>2. Power 0 Model: Constant Fitting</h2>
+<p>
                     The simplest possible model ignores x completely.
                 </p>
-
-                <div class="callout">
+<div class="callout">
                     No matter what x is, I will always predict the same value.
                 </div>
-
-                <p>
+<p>
                     This is called a <strong>degree 0 polynomial</strong> or <strong>power 0 model</strong>.
                 </p>
-
-                <div class="formula">ŷ = a<sub>0</sub></div>
-
-                <p>
+<div class="formula">ŷ = a<sub>0</sub></div>
+<p>
                     Here, <code>a0</code> is the constant prediction.
                 </p>
-
-                <h3>Why Is It Called Power 0?</h3>
-
-                <p>
+<h3>Why Is It Called Power 0?</h3>
+<p>
                     Because:
                 </p>
-
-                <div class="formula">x<sup>0</sup> = 1</div>
-
-                <p>
+<div class="formula">x<sup>0</sup> = 1</div>
+<p>
                     So we can write:
                 </p>
-
-                <pre><code>a0 = a0 × 1
+<pre><code>a0 = a0 × 1
 a0 = a0 × x⁰</code></pre>
-
-                <p>
+<p>
                     Therefore:
                 </p>
-
-                <div class="formula">ŷ = a<sub>0</sub>x<sup>0</sup></div>
-
-                <p>
+<div class="formula">ŷ = a<sub>0</sub>x<sup>0</sup></div>
+<p>
                     Since <code>x⁰</code> is always 1, this model is constant.
                 </p>
-
-                <h3>Best Constant Model</h3>
-
-                <p>
+<h3>Best Constant Model</h3>
+<p>
                     Suppose actual values are:
                 </p>
-
-                <pre><code>y = 2, 4, 5, 4, 5</code></pre>
-
-                <p>
+<pre><code>y = 2, 4, 5, 4, 5</code></pre>
+<p>
                     The best constant, under squared error, is the <strong>mean</strong> of y.
                 </p>
-
-                <div class="formula">
+<div class="formula">
                     a<sub>0</sub> = ȳ = (1 / n) Σy<sub>i</sub>
-                </div>
-
-                <pre><code>y = 2, 4, 5, 4, 5
+</div>
+<pre><code>y = 2, 4, 5, 4, 5
 sum = 20
 n = 5
 
 mean = 20 / 5 = 4</code></pre>
-
-                <p>
+<p>
                     So the best constant model is:
                 </p>
-
-                <div class="formula">ŷ = 4</div>
-
-                <h3>Error in Power 0 Model</h3>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>x</th>
-                            <th>Actual y</th>
-                            <th>Predicted y</th>
-                            <th>Error</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>4</td>
-                            <td>-2</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>4</td>
-                            <td>4</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>5</td>
-                            <td>4</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>4</td>
-                            <td>4</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>5</td>
-                            <td>4</td>
-                            <td>1</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <pre><code>Squared errors = 4, 0, 1, 0, 1
+<div class="formula">ŷ = 4</div>
+<h3>Error in Power 0 Model</h3>
+<table>
+<thead>
+<tr>
+<th>x</th>
+<th>Actual y</th>
+<th>Predicted y</th>
+<th>Error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>-2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<pre><code>Squared errors = 4, 0, 1, 0, 1
 
 MSE = (4 + 0 + 1 + 0 + 1) / 5
 MSE = 6 / 5
 MSE = 1.2</code></pre>
-            </section>
-
-            <section id="linear">
-                <h2>3. Linear Model: Degree 1 Fitting</h2>
-
-                <p>
+</section>
+<section id="linear">
+<h2>3. Linear Model: Degree 1 Fitting</h2>
+<p>
                     Now we allow the prediction to depend on x.
                 </p>
-
-                <div class="formula">ŷ = a<sub>0</sub> + a<sub>1</sub>x</div>
-
-                <p>
+<div class="formula">ŷ = a<sub>0</sub> + a<sub>1</sub>x</div>
+<p>
                     This is the same as:
                 </p>
-
-                <pre><code>ŷ = intercept + slope × x</code></pre>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Coefficient</th>
-                            <th>Meaning</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>a<sub>0</sub></td>
-                            <td>Intercept</td>
-                        </tr>
-                        <tr>
-                            <td>a<sub>1</sub></td>
-                            <td>Slope</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3>Meaning of Slope</h3>
-
-                <p>
+<pre><code>ŷ = intercept + slope × x</code></pre>
+<table>
+<thead>
+<tr>
+<th>Coefficient</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a<sub>0</sub></td>
+<td>Intercept</td>
+</tr>
+<tr>
+<td>a<sub>1</sub></td>
+<td>Slope</td>
+</tr>
+</tbody>
+</table>
+<h3>Meaning of Slope</h3>
+<p>
                     Suppose:
                 </p>
-
-                <pre><code>ŷ = 2 + 3x</code></pre>
-
-                <p>
+<pre><code>ŷ = 2 + 3x</code></pre>
+<p>
                     Then:
                 </p>
-
-                <pre><code>a0 = 2
+<pre><code>a0 = 2
 a1 = 3</code></pre>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>x</th>
-                            <th>Prediction</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>0</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>8</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>11</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <p>
+<table>
+<thead>
+<tr>
+<th>x</th>
+<th>Prediction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>8</td>
+</tr>
+<tr>
+<td>3</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p>
                     Every time x increases by 1, prediction increases by 3.
                 </p>
-
-                <div class="formula">slope = change in y / change in x</div>
-
-                <h3>Error in Linear Regression</h3>
-
-                <p>
+<div class="formula">slope = change in y / change in x</div>
+<h3>Error in Linear Regression</h3>
+<p>
                     For each point:
                 </p>
-
-                <pre><code>actual y = yi
+<pre><code>actual y = yi
 predicted y = ŷi</code></pre>
-
-                <p>The error is:</p>
-
-                <div class="formula">e<sub>i</sub> = y<sub>i</sub> - ŷ<sub>i</sub></div>
-
-                <p>Since:</p>
-
-                <div class="formula">ŷ<sub>i</sub> = a<sub>0</sub> + a<sub>1</sub>x<sub>i</sub></div>
-
-                <p>The squared error is:</p>
-
-                <div class="formula">
+<p>The error is:</p>
+<div class="formula">e<sub>i</sub> = y<sub>i</sub> - ŷ<sub>i</sub></div>
+<p>Since:</p>
+<div class="formula">ŷ<sub>i</sub> = a<sub>0</sub> + a<sub>1</sub>x<sub>i</sub></div>
+<p>The squared error is:</p>
+<div class="formula">
                     e<sub>i</sub><sup>2</sup> = [y<sub>i</sub> - (a<sub>0</sub> +
                     a<sub>1</sub>x<sub>i</sub>)]<sup>2</sup>
-                </div>
-
-                <p>The total squared error is:</p>
-
-                <div class="formula">
+</div>
+<p>The total squared error is:</p>
+<div class="formula">
                     SSE = Σ [y<sub>i</sub> - (a<sub>0</sub> + a<sub>1</sub>x<sub>i</sub>)]<sup>2</sup>
-                </div>
-
-                <p>
+</div>
+<p>
                     SSE means <strong>Sum of Squared Errors</strong>. The best line is the line that minimizes this
                     quantity.
                 </p>
-            </section>
-
-            <div class="ad-card">
-                <div class="ad-label">Advertisement</div>
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8321261883090494"
-                    data-ad-slot="7782388330" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
+</section>
+<div class="ad-card">
+<div class="ad-label">Advertisement</div>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
+<script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
-            </div>
-
-            <section id="derivation">
-                <h2>4. Derivation of Best Linear Fit</h2>
-
-                <p>We want to minimize:</p>
-
-                <div class="formula">
+</div>
+<section id="derivation">
+<h2>4. Derivation of Best Linear Fit</h2>
+<p>We want to minimize:</p>
+<div class="formula">
                     SSE = Σ(y<sub>i</sub> - a<sub>0</sub> - a<sub>1</sub>x<sub>i</sub>)<sup>2</sup>
-                </div>
-
-                <p>
+</div>
+<p>
                     The unknowns are <code>a0</code> and <code>a1</code>.
                 </p>
-
-                <h3>Derivative with Respect to a<sub>0</sub></h3>
-
-                <pre><code>SSE = Σ(yi - a0 - a1xi)²
+<h3>Derivative with Respect to a<sub>0</sub></h3>
+<pre><code>SSE = Σ(yi - a0 - a1xi)²
 
 ∂SSE/∂a0 = -2Σ(yi - a0 - a1xi)</code></pre>
-
-                <p>Set it equal to zero:</p>
-
-                <pre><code>-2Σ(yi - a0 - a1xi) = 0
+<p>Set it equal to zero:</p>
+<pre><code>-2Σ(yi - a0 - a1xi) = 0
 
 Σ(yi - a0 - a1xi) = 0
 
 Σyi - na0 - a1Σxi = 0
 
 na0 + a1Σxi = Σyi</code></pre>
-
-                <div class="formula">
+<div class="formula">
                     na<sub>0</sub> + a<sub>1</sub>Σx<sub>i</sub> = Σy<sub>i</sub>
-                </div>
-
-                <p>This is the first normal equation.</p>
-
-                <h3>Derivative with Respect to a<sub>1</sub></h3>
-
-                <pre><code>SSE = Σ(yi - a0 - a1xi)²
+</div>
+<p>This is the first normal equation.</p>
+<h3>Derivative with Respect to a<sub>1</sub></h3>
+<pre><code>SSE = Σ(yi - a0 - a1xi)²
 
 ∂SSE/∂a1 = -2Σxi(yi - a0 - a1xi)</code></pre>
-
-                <p>Set it equal to zero:</p>
-
-                <pre><code>-2Σxi(yi - a0 - a1xi) = 0
+<p>Set it equal to zero:</p>
+<pre><code>-2Σxi(yi - a0 - a1xi) = 0
 
 Σxi(yi - a0 - a1xi) = 0
 
 Σxiyi - a0Σxi - a1Σxi² = 0
 
 a0Σxi + a1Σxi² = Σxiyi</code></pre>
-
-                <div class="formula">
+<div class="formula">
                     a<sub>0</sub>Σx<sub>i</sub> + a<sub>1</sub>Σx<sub>i</sub><sup>2</sup> = Σx<sub>i</sub>y<sub>i</sub>
-                </div>
-
-                <p>This is the second normal equation.</p>
-
-                <h3>The Standard Formulas</h3>
-
-                <p>Solving the two normal equations gives:</p>
-
-                <div class="formula">
+</div>
+<p>This is the second normal equation.</p>
+<h3>The Standard Formulas</h3>
+<p>Solving the two normal equations gives:</p>
+<div class="formula">
                     a<sub>1</sub> =
                     Σ(x<sub>i</sub> - x̄)(y<sub>i</sub> - ȳ)
                     /
                     Σ(x<sub>i</sub> - x̄)<sup>2</sup>
-                </div>
-
-                <div class="formula">
+</div>
+<div class="formula">
                     a<sub>0</sub> = ȳ - a<sub>1</sub>x̄
                 </div>
-            </section>
-
-            <section id="higher">
-                <h2>5. Higher-Degree Curve Fitting</h2>
-
-                <p>Linear regression is degree 1:</p>
-
-                <div class="formula">ŷ = a<sub>0</sub> + a<sub>1</sub>x</div>
-
-                <p>But sometimes data is curved.</p>
-
-                <pre><code>x: 1, 2, 3, 4, 5
+</section>
+<section id="higher">
+<h2>5. Higher-Degree Curve Fitting</h2>
+<p>Linear regression is degree 1:</p>
+<div class="formula">ŷ = a<sub>0</sub> + a<sub>1</sub>x</div>
+<p>But sometimes data is curved.</p>
+<pre><code>x: 1, 2, 3, 4, 5
 y: 1, 4, 9, 16, 25</code></pre>
-
-                <p>This is not linear. It follows:</p>
-
-                <div class="formula">y = x<sup>2</sup></div>
-
-                <h3>Degree 2 Polynomial</h3>
-
-                <div class="formula">ŷ = a<sub>0</sub> + a<sub>1</sub>x + a<sub>2</sub>x<sup>2</sup></div>
-
-                <p>This is a parabola. It can bend once.</p>
-
-                <h3>Degree 3 Polynomial</h3>
-
-                <div class="formula">ŷ = a<sub>0</sub> + a<sub>1</sub>x + a<sub>2</sub>x<sup>2</sup> +
+<p>This is not linear. It follows:</p>
+<div class="formula">y = x<sup>2</sup></div>
+<h3>Degree 2 Polynomial</h3>
+<div class="formula">ŷ = a<sub>0</sub> + a<sub>1</sub>x + a<sub>2</sub>x<sup>2</sup></div>
+<p>This is a parabola. It can bend once.</p>
+<h3>Degree 3 Polynomial</h3>
+<div class="formula">ŷ = a<sub>0</sub> + a<sub>1</sub>x + a<sub>2</sub>x<sup>2</sup> +
                     a<sub>3</sub>x<sup>3</sup></div>
-
-                <p>A cubic curve can bend more than a quadratic curve.</p>
-
-                <h3>Degree d Polynomial</h3>
-
-                <div class="formula">
+<p>A cubic curve can bend more than a quadratic curve.</p>
+<h3>Degree d Polynomial</h3>
+<div class="formula">
                     ŷ = a<sub>0</sub> + a<sub>1</sub>x + a<sub>2</sub>x<sup>2</sup> + ... + a<sub>d</sub>x<sup>d</sup>
-                </div>
-
-                <div class="callout">
+</div>
+<div class="callout">
                     Polynomial regression is still linear in the coefficients
                     <strong>a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, ..., a<sub>d</sub></strong>.
                     That is why it can be solved using linear regression methods.
                 </div>
-            </section>
-
-            <section id="matrix">
-                <h2>6. Polynomial Regression as a Matrix Problem</h2>
-
-                <p>Suppose degree is 2:</p>
-
-                <div class="formula">ŷ = a<sub>0</sub> + a<sub>1</sub>x + a<sub>2</sub>x<sup>2</sup></div>
-
-                <p>For data points <code>x1, x2, x3, ..., xn</code>, we create a matrix:</p>
-
-                <pre><code>X = [
+</section>
+<section id="matrix">
+<h2>6. Polynomial Regression as a Matrix Problem</h2>
+<p>Suppose degree is 2:</p>
+<div class="formula">ŷ = a<sub>0</sub> + a<sub>1</sub>x + a<sub>2</sub>x<sup>2</sup></div>
+<p>For data points <code>x1, x2, x3, ..., xn</code>, we create a matrix:</p>
+<pre><code>X = [
   [1, x1, x1²],
   [1, x2, x2²],
   [1, x3, x3²],
   ...
   [1, xn, xn²]
 ]</code></pre>
-
-                <p>The coefficient vector is:</p>
-
-                <pre><code>a = [
+<p>The coefficient vector is:</p>
+<pre><code>a = [
   a0,
   a1,
   a2
 ]</code></pre>
-
-                <p>The prediction is:</p>
-
-                <div class="formula">ŷ = Xa</div>
-
-                <p>For degree d:</p>
-
-                <pre><code>X = [
+<p>The prediction is:</p>
+<div class="formula">ŷ = Xa</div>
+<p>For degree d:</p>
+<pre><code>X = [
   [1, x1, x1², ..., x1ᵈ],
   [1, x2, x2², ..., x2ᵈ],
   [1, x3, x3², ..., x3ᵈ],
   ...
   [1, xn, xn², ..., xnᵈ]
 ]</code></pre>
-
-                <p>This matrix is called the <strong>design matrix</strong>.</p>
-
-                <h3>Normal Equation</h3>
-
-                <div class="formula">a = (X<sup>T</sup>X)<sup>-1</sup>X<sup>T</sup>y</div>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Symbol</th>
-                            <th>Meaning</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>X</td>
-                            <td>Design matrix</td>
-                        </tr>
-                        <tr>
-                            <td>X<sup>T</sup></td>
-                            <td>Transpose of X</td>
-                        </tr>
-                        <tr>
-                            <td>y</td>
-                            <td>Actual output vector</td>
-                        </tr>
-                        <tr>
-                            <td>a</td>
-                            <td>Coefficient vector</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section id="python">
-                <h2>7. Python Implementation</h2>
-
-                <h3>Dataset</h3>
-
-                <pre><code class="language-python">x = [1, 2, 3, 4, 5]
+<p>This matrix is called the <strong>design matrix</strong>.</p>
+<h3>Normal Equation</h3>
+<div class="formula">a = (X<sup>T</sup>X)<sup>-1</sup>X<sup>T</sup>y</div>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>Design matrix</td>
+</tr>
+<tr>
+<td>X<sup>T</sup></td>
+<td>Transpose of X</td>
+</tr>
+<tr>
+<td>y</td>
+<td>Actual output vector</td>
+</tr>
+<tr>
+<td>a</td>
+<td>Coefficient vector</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="python">
+<h2>7. Python Implementation</h2>
+<h3>Dataset</h3>
+<pre><code class="language-python">x = [1, 2, 3, 4, 5]
 y = [2, 4, 5, 4, 5]</code></pre>
-
-                <h3>Power 0 Fitting in Python</h3>
-
-                <pre><code class="language-python">x = [1, 2, 3, 4, 5]
+<h3>Power 0 Fitting in Python</h3>
+<pre><code class="language-python">x = [1, 2, 3, 4, 5]
 y = [2, 4, 5, 4, 5]
 
 a0 = sum(y) / len(y)
@@ -1217,17 +1066,13 @@ mse = sum(squared_errors) / len(squared_errors)
 
 print("Errors:", errors)
 print("Mean Squared Error:", mse)</code></pre>
-
-                <p>Expected output:</p>
-
-                <pre><code>Best constant a0: 4.0
+<p>Expected output:</p>
+<pre><code>Best constant a0: 4.0
 Predictions: [4.0, 4.0, 4.0, 4.0, 4.0]
 Errors: [-2.0, 0.0, 1.0, 0.0, 1.0]
 Mean Squared Error: 1.2</code></pre>
-
-                <h3>Linear Fitting from Scratch</h3>
-
-                <pre><code class="language-python">x = [1, 2, 3, 4, 5]
+<h3>Linear Fitting from Scratch</h3>
+<pre><code class="language-python">x = [1, 2, 3, 4, 5]
 y = [2, 4, 5, 4, 5]
 
 n = len(x)
@@ -1261,28 +1106,21 @@ mse = sum(e ** 2 for e in errors) / n
 
 print("Errors:", errors)
 print("Mean Squared Error:", mse)</code></pre>
-
-                <p>Expected output:</p>
-
-                <pre><code>Intercept a0: 2.8
+<p>Expected output:</p>
+<pre><code>Intercept a0: 2.8
 Slope a1: 0.4
 Predictions: [3.2, 3.6, 4.0, 4.4, 4.8]
 Errors: [-1.2, 0.4, 1.0, -0.4, 0.2]
 Mean Squared Error: 0.72</code></pre>
-
-                <div class="callout">
+<div class="callout">
                     The power 0 model had MSE = 1.2.
                     The linear model has MSE = 0.72.
                     So the line fits this data better than the constant model.
                 </div>
-
-                <h3>Install NumPy and Matplotlib</h3>
-
-                <pre><code class="language-bash">pip install numpy matplotlib</code></pre>
-
-                <h3>Create Design Matrix</h3>
-
-                <pre><code class="language-python">def create_design_matrix(x, degree):
+<h3>Install NumPy and Matplotlib</h3>
+<pre><code class="language-bash">pip install numpy matplotlib</code></pre>
+<h3>Create Design Matrix</h3>
+<pre><code class="language-python">def create_design_matrix(x, degree):
     X = []
 
     for xi in x:
@@ -1300,18 +1138,14 @@ X = create_design_matrix(x, 2)
 
 for row in X:
     print(row)</code></pre>
-
-                <p>Output:</p>
-
-                <pre><code>[1, 1, 1]
+<p>Output:</p>
+<pre><code>[1, 1, 1]
 [1, 2, 4]
 [1, 3, 9]
 [1, 4, 16]
 [1, 5, 25]</code></pre>
-
-                <h3>Polynomial Fit Using Normal Equation</h3>
-
-                <pre><code class="language-python">import numpy as np
+<h3>Polynomial Fit Using Normal Equation</h3>
+<pre><code class="language-python">import numpy as np
 
 def create_design_matrix(x, degree):
     X = []
@@ -1343,18 +1177,12 @@ degree = 2
 coefficients = polynomial_fit(x, y, degree)
 
 print("Coefficients:", coefficients)</code></pre>
-
-                <p>Possible output:</p>
-
-                <pre><code>Coefficients: [-0.8  3.02857143 -0.42857143]</code></pre>
-
-                <p>So the fitted quadratic is approximately:</p>
-
-                <div class="formula">ŷ = -0.8 + 3.02857143x - 0.42857143x<sup>2</sup></div>
-
-                <h3>Prediction Function</h3>
-
-                <pre><code class="language-python">def polynomial_predict(x, coefficients):
+<p>Possible output:</p>
+<pre><code>Coefficients: [-0.8  3.02857143 -0.42857143]</code></pre>
+<p>So the fitted quadratic is approximately:</p>
+<div class="formula">ŷ = -0.8 + 3.02857143x - 0.42857143x<sup>2</sup></div>
+<h3>Prediction Function</h3>
+<pre><code class="language-python">def polynomial_predict(x, coefficients):
     predictions = []
 
     for xi in x:
@@ -1364,10 +1192,8 @@ print("Coefficients:", coefficients)</code></pre>
         predictions.append(y_hat)
 
     return predictions</code></pre>
-
-                <h3>Full Example for Degree 0, 1, 2 and 3</h3>
-
-                <pre><code class="language-python">import numpy as np
+<h3>Full Example for Degree 0, 1, 2 and 3</h3>
+<pre><code class="language-python">import numpy as np
 
 def create_design_matrix(x, degree):
     X = []
@@ -1426,16 +1252,11 @@ for degree in [0, 1, 2, 3]:
     print("Predictions:", predictions)
     print("MSE:", mse)
     print()</code></pre>
-
-                <h3>Safer NumPy Version</h3>
-
-                <p>Using inverse directly can sometimes be numerically unstable:</p>
-
-                <pre><code class="language-python">np.linalg.inv(XT @ X) @ XT @ y</code></pre>
-
-                <p>A safer method is <code>np.linalg.lstsq()</code>.</p>
-
-                <pre><code class="language-python">import numpy as np
+<h3>Safer NumPy Version</h3>
+<p>Using inverse directly can sometimes be numerically unstable:</p>
+<pre><code class="language-python">np.linalg.inv(XT @ X) @ XT @ y</code></pre>
+<p>A safer method is <code>np.linalg.lstsq()</code>.</p>
+<pre><code class="language-python">import numpy as np
 
 def create_design_matrix(x, degree):
     X = []
@@ -1466,34 +1287,25 @@ for degree in [0, 1, 2, 3]:
     print("Degree:", degree)
     print("Coefficients:", coefficients)
     print()</code></pre>
-            </section>
-
-            <section id="python-editor">
-                <h2>8. Live Python Editor</h2>
-
-                <p>
+</section>
+<section id="python-editor">
+<h2>8. Live Python Editor</h2>
+<p>
                     Practice the code from this lesson directly in the embedded Python editor.
                     Copy any example from above and run it here.
                 </p>
-
-                <div class="editor-wrap">
-                    <iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-                        title="Programmer's Picnic Python Editor" loading="lazy"
-                        allow="clipboard-read; clipboard-write; fullscreen; camera; microphone"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-
-                <div class="callout">
+<div class="editor-wrap">
+<iframe allow="clipboard-read; clipboard-write; fullscreen; camera; microphone" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" title="Programmer's Picnic Python Editor">
+</iframe>
+</div>
+<div class="callout">
                     Suggested practice: first run the power 0 model, then the linear model, then the polynomial
                     regression program.
                 </div>
-            </section>
-
-            <section id="visualization">
-                <h2>9. Visualization with Matplotlib</h2>
-
-                <pre><code class="language-python">import numpy as np
+</section>
+<section id="visualization">
+<h2>9. Visualization with Matplotlib</h2>
+<pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 
 def create_design_matrix(x, degree):
@@ -1548,74 +1360,66 @@ plt.title("Power 0, Linear, and Higher-Degree Curve Fitting")
 plt.legend()
 plt.grid(True)
 plt.show()</code></pre>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Degree</th>
-                            <th>Shape</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>0</td>
-                            <td>Horizontal line</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Straight line</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Curved parabola</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>More flexible curve</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section id="warning">
-                <h2>10. Important Warning: Higher Degree Is Not Always Better</h2>
-
-                <p>
+<table>
+<thead>
+<tr>
+<th>Degree</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Horizontal line</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Straight line</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Curved parabola</td>
+</tr>
+<tr>
+<td>3</td>
+<td>More flexible curve</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="warning">
+<h2>10. Important Warning: Higher Degree Is Not Always Better</h2>
+<p>
                     A higher-degree polynomial can fit training data better.
                     But that does not always mean it predicts future data better.
                 </p>
-
-                <div class="grid-two">
-                    <div class="mini-card">
-                        <strong>Degree 0</strong>
-                        <p>Usually too simple.</p>
-                    </div>
-                    <div class="mini-card">
-                        <strong>Degree 1</strong>
-                        <p>Simple trend.</p>
-                    </div>
-                    <div class="mini-card">
-                        <strong>Degree 2</strong>
-                        <p>Curved trend.</p>
-                    </div>
-                    <div class="mini-card">
-                        <strong>Degree 10</strong>
-                        <p>May twist wildly and memorize data.</p>
-                    </div>
-                </div>
-
-                <div class="callout">
+<div class="grid-two">
+<div class="mini-card">
+<strong>Degree 0</strong>
+<p>Usually too simple.</p>
+</div>
+<div class="mini-card">
+<strong>Degree 1</strong>
+<p>Simple trend.</p>
+</div>
+<div class="mini-card">
+<strong>Degree 2</strong>
+<p>Curved trend.</p>
+</div>
+<div class="mini-card">
+<strong>Degree 10</strong>
+<p>May twist wildly and memorize data.</p>
+</div>
+</div>
+<div class="callout">
                     This problem is called <strong>overfitting</strong>.
                     Overfitting means the model memorizes the training data instead of learning the real pattern.
                 </div>
-
-                <p>A good model should perform well on new data, not only old data.</p>
-            </section>
-
-            <section id="full-program">
-                <h2>11. Full Combined Program</h2>
-
-                <pre><code class="language-python">import numpy as np
+<p>A good model should perform well on new data, not only old data.</p>
+</section>
+<section id="full-program">
+<h2>11. Full Combined Program</h2>
+<pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -1727,119 +1531,91 @@ plt.title("Polynomial Curve Fitting")
 plt.legend()
 plt.grid(True)
 plt.show()</code></pre>
-            </section>
-
-            <section id="summary">
-                <h2>12. What We Learned in This 0–10% Lesson</h2>
-
-                <ol>
-                    <li>Curve fitting means finding a mathematical pattern in data.</li>
-                    <li>Power 0 fitting gives a constant model: <code>ŷ = a0</code>.</li>
-                    <li>The best constant under squared error is the mean of y.</li>
-                    <li>Linear fitting gives: <code>ŷ = a0 + a1x</code>.</li>
-                    <li>The best line minimizes the sum of squared errors.</li>
-                    <li>The slope and intercept can be derived using calculus.</li>
-                    <li>Higher-degree polynomial fitting gives: <code>ŷ = a0 + a1x + a2x² + ... + adxᵈ</code>.</li>
-                    <li>Polynomial regression is still linear in coefficients.</li>
-                    <li>The design matrix stores powers of x.</li>
-                    <li>The normal equation is: <code>a = (XT X)^(-1) XT y</code>.</li>
-                    <li>In real Python work, <code>np.linalg.lstsq()</code> is safer than directly using inverse.</li>
-                    <li>Higher-degree models can overfit.</li>
-                    <li>The embedded Python editor lets learners practice directly inside the lesson page.</li>
-                </ol>
-            </section>
-
-            <div class="ad-card">
-                <div class="ad-label">Advertisement</div>
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8321261883090494"
-                    data-ad-slot="7782388330" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
+</section>
+<section id="summary">
+<h2>12. What We Learned in This 0–10% Lesson</h2>
+<ol>
+<li>Curve fitting means finding a mathematical pattern in data.</li>
+<li>Power 0 fitting gives a constant model: <code>ŷ = a0</code>.</li>
+<li>The best constant under squared error is the mean of y.</li>
+<li>Linear fitting gives: <code>ŷ = a0 + a1x</code>.</li>
+<li>The best line minimizes the sum of squared errors.</li>
+<li>The slope and intercept can be derived using calculus.</li>
+<li>Higher-degree polynomial fitting gives: <code>ŷ = a0 + a1x + a2x² + ... + adxᵈ</code>.</li>
+<li>Polynomial regression is still linear in coefficients.</li>
+<li>The design matrix stores powers of x.</li>
+<li>The normal equation is: <code>a = (XT X)^(-1) XT y</code>.</li>
+<li>In real Python work, <code>np.linalg.lstsq()</code> is safer than directly using inverse.</li>
+<li>Higher-degree models can overfit.</li>
+<li>The embedded Python editor lets learners practice directly inside the lesson page.</li>
+</ol>
+</section>
+<div class="ad-card">
+<div class="ad-label">Advertisement</div>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
+<script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
-            </div>
-
-            <section id="exercises" class="exercise-card">
-                <h2>13. Exercises</h2>
-
-                <h3>Exercise 1</h3>
-                <p>Given:</p>
-
-                <pre><code class="language-python">y = [10, 20, 30, 40]</code></pre>
-
-                <p>Find the best power 0 model.</p>
-
-                <h3>Exercise 2</h3>
-                <p>Given:</p>
-
-                <pre><code class="language-python">x = [1, 2, 3, 4]
+</div>
+<section class="exercise-card" id="exercises">
+<h2>13. Exercises</h2>
+<h3>Exercise 1</h3>
+<p>Given:</p>
+<pre><code class="language-python">y = [10, 20, 30, 40]</code></pre>
+<p>Find the best power 0 model.</p>
+<h3>Exercise 2</h3>
+<p>Given:</p>
+<pre><code class="language-python">x = [1, 2, 3, 4]
 y = [2, 4, 6, 8]</code></pre>
-
-                <p>Find the best linear model manually.</p>
-
-                <h3>Exercise 3</h3>
-                <p>Create the design matrix for:</p>
-
-                <pre><code class="language-python">x = [2, 3, 4]
+<p>Find the best linear model manually.</p>
+<h3>Exercise 3</h3>
+<p>Create the design matrix for:</p>
+<pre><code class="language-python">x = [2, 3, 4]
 degree = 3</code></pre>
-
-                <p>Expected row form:</p>
-
-                <pre><code>[1, x, x², x³]</code></pre>
-
-                <h3>Exercise 4</h3>
-                <p>Modify the full program and try:</p>
-
-                <pre><code class="language-python">x = [1, 2, 3, 4, 5, 6]
+<p>Expected row form:</p>
+<pre><code>[1, x, x², x³]</code></pre>
+<h3>Exercise 4</h3>
+<p>Modify the full program and try:</p>
+<pre><code class="language-python">x = [1, 2, 3, 4, 5, 6]
 y = [1, 4, 9, 16, 25, 36]</code></pre>
-
-                <p>Fit degrees 0, 1, 2 and 3. Which degree fits best?</p>
-
-                <h3>Exercise 5</h3>
-                <p>Try a high degree such as:</p>
-
-                <pre><code class="language-python">degree = 10</code></pre>
-
-                <p>
+<p>Fit degrees 0, 1, 2 and 3. Which degree fits best?</p>
+<h3>Exercise 5</h3>
+<p>Try a high degree such as:</p>
+<pre><code class="language-python">degree = 10</code></pre>
+<p>
                     Observe the curve. Is it learning the pattern, or is it memorizing the data?
                 </p>
-            </section>
-
-            <section id="next">
-                <h2>14. Bridge to the Next Lesson</h2>
-
-                <p>
+</section>
+<section id="next">
+<h2>14. Bridge to the Next Lesson</h2>
+<p>
                     In the next 10–20% lesson, we should go deeper into:
                 </p>
-
-                <div class="grid-two">
-                    <div class="mini-card">Mean</div>
-                    <div class="mini-card">Variance</div>
-                    <div class="mini-card">Covariance</div>
-                    <div class="mini-card">Correlation</div>
-                    <div class="mini-card">Residuals</div>
-                    <div class="mini-card">Least squares</div>
-                </div>
-
-                <div class="callout">
+<div class="grid-two">
+<div class="mini-card">Mean</div>
+<div class="mini-card">Variance</div>
+<div class="mini-card">Covariance</div>
+<div class="mini-card">Correlation</div>
+<div class="mini-card">Residuals</div>
+<div class="mini-card">Least squares</div>
+</div>
+<div class="callout">
                     This lesson introduced curve fitting as a practical idea.
                     The next lesson will make the statistical foundation stronger.
                 </div>
-            </section>
-        </main>
-    </div>
-
-    <div class="progress-box" id="progressBox">0%</div>
-
-    <footer class="footer">
-        <p>
-            <strong>Programmer's Picnic AI-ML Classes by Champak Roy</strong>
-        </p>
-        <p>
+</section>
+</main>
+</div>
+<div class="progress-box" id="progressBox">0%</div>
+<footer class="footer">
+<p>
+<strong>Programmer's Picnic AI-ML Classes by Champak Roy</strong>
+</p>
+<p>
             Linear Regression Book · Lesson 0–10% · Power 0, Linear and Higher-Degree Curve Fitting
         </p>
-    </footer>
-
-    <script>
+</footer>
+<script>
         const progressBox = document.getElementById("progressBox");
 
         function updateProgress() {
@@ -1875,6 +1651,5 @@ y = [1, 4, 9, 16, 25, 36]</code></pre>
             pre.appendChild(button);
         });
     </script>
-</body>
-
+<div data-include="footer"></div></body>
 </html>

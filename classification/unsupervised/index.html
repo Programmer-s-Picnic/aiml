@@ -1,13 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>K-Means Clustering — V3 Premium | Programmer’s Picnic</title>
-
-<meta name="theme-color" content="#f59e0b" />
-
+<meta content="#f59e0b" name="theme-color"/>
 <style>
 :root{
   --bg:#fffaf0;
@@ -87,19 +85,37 @@ button{
 .correct{background:#16a34a;color:#fff;}
 .wrong{background:#dc2626;color:#fff;}
 </style>
-</head>
+<meta content="K-Means Clustering — V3 Premium | Programmer’s Picnic - AI-ML learning resource by Programmer's Picnic." name="description"/><link href="../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../assets/js/site.js"></script><script defer="defer" src="../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div><script>
+function check(el,correct){
+  el.classList.add(correct ? "correct":"wrong");
+}
 
-<body>
+function generateCode(){
+  let data = document.getElementById("datasetInput").value;
+  let k = document.getElementById("kInput").value;
+
+  let code = `
+import numpy as np
+
+X = np.array(${data})
+
+centroids, labels = kmeans(X, ${k})
+
+print(centroids)
+print(labels)
+`;
+
+  document.getElementById("generatedCode").textContent = code;
+}
+</script><main class="pp-content" id="main-content">
 <div class="wrap">
-
 <h1 id="speak1">K-Means Clustering — From Zero to Expert</h1>
-
 <div class="card">
 <h2 id="speak2">What is K-Means?</h2>
 <p id="speak3">K-Means groups similar data points automatically.</p>
 <p id="speak4">It is an unsupervised learning algorithm.</p>
 </div>
-
 <div class="card">
 <h2 id="speak5">Real Life Examples</h2>
 <ul>
@@ -109,7 +125,6 @@ button{
 <li>Market research</li>
 </ul>
 </div>
-
 <div class="card">
 <h2 id="speak6">Steps</h2>
 <ol>
@@ -120,10 +135,8 @@ button{
 <li>Repeat</li>
 </ol>
 </div>
-
 <div class="card">
 <h2 id="speak7">Core Code</h2>
-
 <pre>
 import numpy as np
 
@@ -152,51 +165,32 @@ def kmeans(X, k, max_iterations=100):
 
     return centroids, labels
 </pre>
-
 </div>
-
 <!-- LIVE DATA PANEL -->
-
 <div class="card">
 <h2 id="speak8">Live Dataset Panel</h2>
-
 <textarea id="datasetInput">
 [[1,2],[3,4],[5,6],[7,8]]
 </textarea>
-
-<br><br>
-
+<br/><br/>
 <label>K value:</label>
-<input id="kInput" type="number" value="3">
-
-<br><br>
-
+<input id="kInput" type="number" value="3"/>
+<br/><br/>
 <button onclick="generateCode()">Generate Code</button>
-
 <pre id="generatedCode"></pre>
 </div>
-
 <!-- EDITOR -->
-
 <div class="card">
 <h2 id="speak9">Run in Live Editor</h2>
-
 <a href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">
 <button>Open Editor</button>
 </a>
-
-<br><br>
-
-<iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-style="width:100%;height:500px;border-radius:15px;border:2px solid #f3c76f;"></iframe>
-
+<br/><br/>
+<iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" style="width:100%;height:500px;border-radius:15px;border:2px solid #f3c76f;"></iframe>
 </div>
-
 <!-- MINI PROJECT -->
-
 <div class="card">
 <h2 id="speak10">Mini Project: Customer Segmentation</h2>
-
 <pre>
 X = [
 [1000,2],
@@ -207,55 +201,22 @@ X = [
 [4200,7]
 ]
 </pre>
-
 <pre>
 centroids, labels = kmeans(X,3)
 </pre>
-
 <p id="speak11">Clusters: Low, Medium, High value customers</p>
-
 </div>
-
 <!-- QUIZ -->
-
 <div class="card">
 <h2 id="speak12">Quiz</h2>
-
 <p>What is K?</p>
 <div class="quiz-option" onclick="check(this,true)">Number of clusters</div>
 <div class="quiz-option" onclick="check(this,false)">Iterations</div>
-
 <p>K-Means is?</p>
 <div class="quiz-option" onclick="check(this,true)">Unsupervised</div>
 <div class="quiz-option" onclick="check(this,false)">Supervised</div>
-
+</div>
 </div>
 
-</div>
-
-<script>
-function check(el,correct){
-  el.classList.add(correct ? "correct":"wrong");
-}
-
-function generateCode(){
-  let data = document.getElementById("datasetInput").value;
-  let k = document.getElementById("kInput").value;
-
-  let code = `
-import numpy as np
-
-X = np.array(${data})
-
-centroids, labels = kmeans(X, ${k})
-
-print(centroids)
-print(labels)
-`;
-
-  document.getElementById("generatedCode").textContent = code;
-}
-</script>
-
-</body>
+</main><div data-include="footer"></div></body>
 </html>

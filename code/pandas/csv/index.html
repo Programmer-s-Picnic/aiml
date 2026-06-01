@@ -1,24 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>
       Pandas + CSV + Matplotlib — Complete Lesson | Programmer’s Picnic
     </title>
-    <meta
-      name="description"
-      content="A comprehensive beginner-to-confident lesson on using Pandas to read CSV files and visualize data using Matplotlib, with copy buttons, downloadable Python scripts, and an embedded Programmer’s Picnic Python editor."
-    />
-    <meta
-      name="keywords"
-      content="pandas, csv, matplotlib, python, data analysis, dataframe, groupby, plotting, programmer's picnic"
-    />
-    <meta name="author" content="Programmer’s Picnic (Champak Roy)" />
-    <meta name="theme-color" content="#d97706" />
-    <meta name="robots" content="index,follow" />
-
-    <style>
+<meta content="A comprehensive beginner-to-confident lesson on using Pandas to read CSV files and visualize data using Matplotlib, with copy buttons, downloadable Python scripts, and an embedded Programmer’s Picnic Python editor." name="description"/>
+<meta content="pandas, csv, matplotlib, python, data analysis, dataframe, groupby, plotting, programmer's picnic" name="keywords"/>
+<meta content="Programmer’s Picnic (Champak Roy)" name="author"/>
+<meta content="#d97706" name="theme-color"/>
+<meta content="index,follow" name="robots"/>
+<style>
       :root {
         --bg: #fff7e6;
         --bg2: #fff1d6;
@@ -378,200 +372,146 @@
         text-align: center;
       }
     </style>
-  </head>
-
-  <body>
-    <div class="wrap">
-      <header class="hero" id="top">
-        <span class="badge">🍊 Programmer’s Picnic • Data Lesson</span>
-        <h1>Pandas + CSV + Matplotlib — Comprehensive Lesson</h1>
-        <p>
+<link href="../../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../../assets/js/site.js"></script><script defer="defer" src="../../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<div class="wrap">
+<header class="hero" id="top">
+<span class="badge">🍊 Programmer’s Picnic • Data Lesson</span>
+<h1>Pandas + CSV + Matplotlib — Comprehensive Lesson</h1>
+<p>
           Learn how to read CSV files using <b>Pandas</b>, clean and analyze
           data, then visualize insights using <b>Matplotlib</b>. Includes
           copy-ready code, downloadable scripts, and an embedded Python editor.
         </p>
-
-        <div class="meta">
-          <span class="pill">Level: Beginner → Confident</span>
-          <span class="pill">Works in VS Code</span>
-          <span class="pill">Offline HTML</span>
-          <span class="pill">Embedded Python Editor</span>
-        </div>
-      </header>
-
-      <div class="grid">
-        <nav class="toc" aria-label="Table of contents">
-          <h2>Table of Contents</h2>
-          <div class="toc .search search">
-            <input
-              id="tocSearch"
-              type="search"
-              placeholder="Search topics… (example: groupby, dates, bar)"
-            />
-          </div>
-          <ul id="tocList">
-            <li>
-              <a
-                href="#editor"
-                data-text="python editor embedded pyodide programmers picnic"
-                >⭐ Python Editor <small>Run code here</small></a
-              >
-            </li>
-            <li>
-              <a href="#setup" data-text="setup install verify"
-                >0) Setup <small>Install + verify</small></a
-              >
-            </li>
-            <li>
-              <a
-                href="#read-csv"
-                data-text="read csv delimiter encoding parse_dates na_values"
-                >2) Read CSV Properly <small>Real-world CSV handling</small></a
-              >
-            </li>
-            <li>
-              <a href="#charts" data-text="line bar histogram scatter examples"
-                >9) Chart Examples <small>4 common plot types</small></a
-              >
-            </li>
-            <li>
-              <a href="#workflow" data-text="full workflow script end-to-end"
-                >10) Full Workflow Script
-                <small>CSV → clean → analyze → plot</small></a
-              >
-            </li>
-          </ul>
-
-          <div class="row" style="margin-top: 10px">
-            <button class="btn secondary" id="expandAll">
+<div class="meta">
+<span class="pill">Level: Beginner → Confident</span>
+<span class="pill">Works in VS Code</span>
+<span class="pill">Offline HTML</span>
+<span class="pill">Embedded Python Editor</span>
+</div>
+</header>
+<div class="grid">
+<nav aria-label="Table of contents" class="toc">
+<h2>Table of Contents</h2>
+<div class="toc .search search">
+<input id="tocSearch" placeholder="Search topics… (example: groupby, dates, bar)" type="search"/>
+</div>
+<ul id="tocList">
+<li>
+<a data-text="python editor embedded pyodide programmers picnic" href="#editor">⭐ Python Editor <small>Run code here</small></a>
+</li>
+<li>
+<a data-text="setup install verify" href="#setup">0) Setup <small>Install + verify</small></a>
+</li>
+<li>
+<a data-text="read csv delimiter encoding parse_dates na_values" href="#read-csv">2) Read CSV Properly <small>Real-world CSV handling</small></a>
+</li>
+<li>
+<a data-text="line bar histogram scatter examples" href="#charts">9) Chart Examples <small>4 common plot types</small></a>
+</li>
+<li>
+<a data-text="full workflow script end-to-end" href="#workflow">10) Full Workflow Script
+                <small>CSV → clean → analyze → plot</small></a>
+</li>
+</ul>
+<div class="row" style="margin-top: 10px">
+<button class="btn secondary" id="expandAll">
               Expand all code
             </button>
-            <button class="btn secondary" id="collapseAll">
+<button class="btn secondary" id="collapseAll">
               Collapse code
             </button>
-          </div>
-          <p style="margin-top: 10px; color: var(--muted); font-size: 12px">
+</div>
+<p style="margin-top: 10px; color: var(--muted); font-size: 12px">
             Tip: Use <span class="kbd">Ctrl</span> +
             <span class="kbd">F</span> too.
           </p>
-        </nav>
-
-        <main>
-          <!-- ⭐ Embedded Python Editor -->
-          <section id="editor">
-            <h2>⭐ Embedded Python Editor (Programmer’s Picnic)</h2>
-            <p>
+</nav>
+<main id="main-content">
+<!-- ⭐ Embedded Python Editor -->
+<section id="editor">
+<h2>⭐ Embedded Python Editor (Programmer’s Picnic)</h2>
+<p>
               Use this editor to test small Python snippets. For Pandas +
               Matplotlib, your local VS Code setup is best, but you can still
               practice syntax and logic here.
             </p>
-
-            <div class="editorWrap">
-              <div class="editorTop">
-                <div class="left">
-                  <span class="tag">🧪 Live Python Editor</span>
-                  <span class="pill" style="padding: 6px 10px"
-                    >Tip: Run small snippets here</span
-                  >
-                </div>
-                <div class="row">
-                  <button
-                    class="btn secondary"
-                    id="openEditorTab"
-                    type="button"
-                  >
+<div class="editorWrap">
+<div class="editorTop">
+<div class="left">
+<span class="tag">🧪 Live Python Editor</span>
+<span class="pill" style="padding: 6px 10px">Tip: Run small snippets here</span>
+</div>
+<div class="row">
+<button class="btn secondary" id="openEditorTab" type="button">
                     Open in new tab
                   </button>
-                </div>
-              </div>
-
-              <!-- Your Programmer’s Picnic Python Editor -->
-              <iframe
-                id="ppPythonEditor"
-                class="editorFrame"
-                title="Programmer’s Picnic Python Editor"
-                loading="lazy"
-                referrerpolicy="no-referrer"
-                allow="clipboard-read; clipboard-write; fullscreen"
-                sandbox="allow-scripts allow-forms allow-same-origin allow-downloads allow-popups allow-modals allow-pointer-lock"
-                src="https://www.learnwithchampak.live/2026/01/programmers-picnic-python-editor.html"
-              >
-              </iframe>
-            </div>
-
-            <div class="note">
-              <strong>If you embed this page on Blogger:</strong> you may need
+</div>
+</div>
+<!-- Your Programmer’s Picnic Python Editor -->
+<iframe allow="clipboard-read; clipboard-write; fullscreen" class="editorFrame" id="ppPythonEditor" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-forms allow-same-origin allow-downloads allow-popups allow-modals allow-pointer-lock" src="https://www.learnwithchampak.live/2026/01/programmers-picnic-python-editor.html" title="Programmer’s Picnic Python Editor">
+</iframe>
+</div>
+<div class="note">
+<strong>If you embed this page on Blogger:</strong> you may need
               to allow iframes in your template and keep
               <span class="kbd">sandbox</span> permissive enough for the editor
               to run.
             </div>
-          </section>
-
-          <!-- 0) Setup -->
-          <section id="setup">
-            <h2>0) Setup (install + verify)</h2>
-            <div class="codeCard" data-collapsible="1">
-              <div class="codeTop">
-                <div class="label">📦 Install</div>
-                <div class="actions">
-                  <button class="mini" data-copy>Copy</button>
-                </div>
-              </div>
-              <pre><code>pip install pandas matplotlib</code></pre>
-            </div>
-
-            <div class="codeCard" data-collapsible="1">
-              <div class="codeTop">
-                <div class="label">✅ Verify</div>
-                <div class="actions">
-                  <button class="mini" data-copy>Copy</button>
-                </div>
-              </div>
-              <pre><code>import pandas as pd
+</section>
+<!-- 0) Setup -->
+<section id="setup">
+<h2>0) Setup (install + verify)</h2>
+<div class="codeCard" data-collapsible="1">
+<div class="codeTop">
+<div class="label">📦 Install</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+</div>
+</div>
+<pre><code>pip install pandas matplotlib</code></pre>
+</div>
+<div class="codeCard" data-collapsible="1">
+<div class="codeTop">
+<div class="label">✅ Verify</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 import matplotlib.pyplot as plt
 
 print("pandas:", pd.__version__)
 print("matplotlib OK")</code></pre>
-            </div>
-          </section>
-
-          <!-- 2) Read CSV -->
-          <section id="read-csv">
-            <h2>2) Read CSV properly (real-world CSV handling)</h2>
-
-            <div
-              class="codeCard"
-              data-collapsible="1"
-              data-filename="read_csv_basic.py"
-            >
-              <div class="codeTop">
-                <div class="label">📄 Basic read</div>
-                <div class="actions">
-                  <button class="mini" data-copy>Copy</button>
-                  <button class="mini" data-download>Download .py</button>
-                </div>
-              </div>
-              <pre><code>import pandas as pd
+</div>
+</section>
+<!-- 2) Read CSV -->
+<section id="read-csv">
+<h2>2) Read CSV properly (real-world CSV handling)</h2>
+<div class="codeCard" data-collapsible="1" data-filename="read_csv_basic.py">
+<div class="codeTop">
+<div class="label">📄 Basic read</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 
 df = pd.read_csv("sales.csv")
 print(df.head())
 print(df.shape)
 print(df.columns)</code></pre>
-            </div>
-
-            <div
-              class="codeCard"
-              data-collapsible="1"
-              data-filename="read_csv_robust.py"
-            >
-              <div class="codeTop">
-                <div class="label">🛠 Robust read (dates + missing)</div>
-                <div class="actions">
-                  <button class="mini" data-copy>Copy</button>
-                  <button class="mini" data-download>Download .py</button>
-                </div>
-              </div>
-              <pre><code>import pandas as pd
+</div>
+<div class="codeCard" data-collapsible="1" data-filename="read_csv_robust.py">
+<div class="codeTop">
+<div class="label">🛠 Robust read (dates + missing)</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 
 df = pd.read_csv(
     "sales.csv",
@@ -581,42 +521,35 @@ df = pd.read_csv(
 )
 
 print(df.info())</code></pre>
-            </div>
-          </section>
-
-          <!-- 9) Charts -->
-          <section id="charts">
-            <h2>9) Chart examples</h2>
-
-            <div class="codeCard" data-collapsible="1">
-              <div class="codeTop">
-                <div class="label">sales.csv (sample)</div>
-                <div class="actions">
-                  <button class="mini" data-copy>Copy</button>
-                </div>
-              </div>
-              <pre><code>date,city,amount
+</div>
+</section>
+<!-- 9) Charts -->
+<section id="charts">
+<h2>9) Chart examples</h2>
+<div class="codeCard" data-collapsible="1">
+<div class="codeTop">
+<div class="label">sales.csv (sample)</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+</div>
+</div>
+<pre><code>date,city,amount
 2026-01-01,Varanasi,1200
 2026-01-01,Delhi,800
 2026-01-02,Varanasi,600
 2026-01-02,Lucknow,500
 2026-01-03,Delhi,1200
 2026-01-03,Varanasi,900</code></pre>
-            </div>
-
-            <div
-              class="codeCard"
-              data-collapsible="1"
-              data-filename="city_bar.py"
-            >
-              <div class="codeTop">
-                <div class="label">📊 city_bar.py</div>
-                <div class="actions">
-                  <button class="mini" data-copy>Copy</button>
-                  <button class="mini" data-download>Download .py</button>
-                </div>
-              </div>
-              <pre><code>import pandas as pd
+</div>
+<div class="codeCard" data-collapsible="1" data-filename="city_bar.py">
+<div class="codeTop">
+<div class="label">📊 city_bar.py</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 import matplotlib.pyplot as plt
 
 df = pd.read_csv("sales.csv")
@@ -629,21 +562,16 @@ plt.xlabel("City")
 plt.ylabel("Total Amount")
 plt.tight_layout()
 plt.show()</code></pre>
-            </div>
-
-            <div
-              class="codeCard"
-              data-collapsible="1"
-              data-filename="daily_line.py"
-            >
-              <div class="codeTop">
-                <div class="label">📈 daily_line.py</div>
-                <div class="actions">
-                  <button class="mini" data-copy>Copy</button>
-                  <button class="mini" data-download>Download .py</button>
-                </div>
-              </div>
-              <pre><code>import pandas as pd
+</div>
+<div class="codeCard" data-collapsible="1" data-filename="daily_line.py">
+<div class="codeTop">
+<div class="label">📈 daily_line.py</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 import matplotlib.pyplot as plt
 
 df = pd.read_csv("sales.csv", parse_dates=["date"])
@@ -657,26 +585,20 @@ plt.ylabel("Amount")
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()</code></pre>
-            </div>
-          </section>
-
-          <!-- 10) Workflow -->
-          <section id="workflow">
-            <h2>10) Full workflow script (end-to-end)</h2>
-
-            <div
-              class="codeCard"
-              data-collapsible="1"
-              data-filename="pandas_csv_matplotlib_workflow.py"
-            >
-              <div class="codeTop">
-                <div class="label">⭐ pandas_csv_matplotlib_workflow.py</div>
-                <div class="actions">
-                  <button class="mini" data-copy>Copy</button>
-                  <button class="mini" data-download>Download .py</button>
-                </div>
-              </div>
-              <pre><code>import pandas as pd
+</div>
+</section>
+<!-- 10) Workflow -->
+<section id="workflow">
+<h2>10) Full workflow script (end-to-end)</h2>
+<div class="codeCard" data-collapsible="1" data-filename="pandas_csv_matplotlib_workflow.py">
+<div class="codeTop">
+<div class="label">⭐ pandas_csv_matplotlib_workflow.py</div>
+<div class="actions">
+<button class="mini" data-copy="">Copy</button>
+<button class="mini" data-download="">Download .py</button>
+</div>
+</div>
+<pre><code>import pandas as pd
 import matplotlib.pyplot as plt
 
 CSV_FILE = "sales.csv"
@@ -712,18 +634,16 @@ def main():
 
 if __name__ == "__main__":
     main()</code></pre>
-            </div>
-          </section>
-
-          <footer>
+</div>
+</section>
+<footer>
             Programmer’s Picnic • Pandas + Matplotlib •
             <a href="#top">Back to top ↑</a>
-          </footer>
-        </main>
-      </div>
-    </div>
-
-    <script>
+</footer>
+</main>
+</div>
+</div>
+<script>
       (function () {
         "use strict";
 
@@ -837,5 +757,5 @@ if __name__ == "__main__":
         });
       })();
     </script>
-  </body>
+<div data-include="footer"></div></body>
 </html>

@@ -1,25 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NLP 41% to 50% | TF-IDF and Better Text Search</title>
-
-  <meta name="description"
-    content="Programmers Picnic AI-ML Classes by Champak Roy. NLP 41% to 50% lesson on stop words, TF, IDF, TF-IDF, TfidfVectorizer, cosine similarity, and better lesson search." />
-  <meta name="theme-color" content="#f59e0b" />
-
-  <!-- Google Ads -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-    crossorigin="anonymous"></script>
-
-  <!-- Usual JS Libraries -->
-  <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
-  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
-  <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>NLP 41% to 50% | TF-IDF and Better Text Search</title>
+<meta content="Programmers Picnic AI-ML Classes by Champak Roy. NLP 41% to 50% lesson on stop words, TF, IDF, TF-IDF, TfidfVectorizer, cosine similarity, and better lesson search." name="description"/>
+<meta content="#f59e0b" name="theme-color"/>
+<!-- Google Ads -->
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+<!-- Usual JS Libraries -->
+<script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+<script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+<script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+<style>
     :root {
       --bg: #fff7ed;
       --bg2: #fffbeb;
@@ -629,141 +623,125 @@
       }
     }
   </style>
-</head>
-
-<body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="logo">PP</div>
-        <div>
-          Programmers Picnic<br />
-          <span class="small">AI-ML Classes by Champak Roy</span>
-        </div>
-      </div>
-
-      <nav class="nav">
-        <a href="#roadmap">Roadmap</a>
-        <a href="#problem">Problem</a>
-        <a href="#tfidf">TF-IDF</a>
-        <a href="#python">Python</a>
-        <a href="#project">Project</a>
-        <a href="#editor">Editor</a>
-        <a href="#quiz">Quiz</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="page">
-    <section class="hero">
-      <div class="hero-grid">
-        <div class="hero-card">
-          <span class="badge">NLP 41% to 50% • TF-IDF Search</span>
-
-          <h1>Better Text Search with TF-IDF</h1>
-
-          <p class="lead">
+<link href="../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../assets/js/site.js"></script><script defer="defer" src="../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<header class="topbar">
+<div class="topbar-inner">
+<div class="brand">
+<div class="logo">PP</div>
+<div>
+          Programmers Picnic<br/>
+<span class="small">AI-ML Classes by Champak Roy</span>
+</div>
+</div>
+<nav class="nav">
+<a href="#roadmap">Roadmap</a>
+<a href="#problem">Problem</a>
+<a href="#tfidf">TF-IDF</a>
+<a href="#python">Python</a>
+<a href="#project">Project</a>
+<a href="#editor">Editor</a>
+<a href="#quiz">Quiz</a>
+</nav>
+</div>
+</header>
+<main class="page" id="main-content">
+<section class="hero">
+<div class="hero-grid">
+<div class="hero-card">
+<span class="badge">NLP 41% to 50% • TF-IDF Search</span>
+<h1>Better Text Search with TF-IDF</h1>
+<p class="lead">
             In the previous lesson, we compared text using simple word counts.
             Now we improve the search system by learning stop words, TF, IDF,
             TF-IDF, TfidfVectorizer, and better ranking with cosine similarity.
           </p>
-
-          <div class="hero-actions">
-            <a class="btn primary" href="#editor">Open Embedded Python Editor</a>
-            <button class="btn secondary" onclick="window.print()">Print Lesson</button>
-            <button class="btn secondary" onclick="sharePage()">Share</button>
-          </div>
-
-          <div class="mini-nav">
-            <a href="https://learnwithchampak.live" target="_blank">learnwithchampak.live</a>
-            <a href="https://aiml.learnwithchampak.live" target="_blank">AI-ML Site</a>
-            <a href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">Python
+<div class="hero-actions">
+<a class="btn primary" href="#editor">Open Embedded Python Editor</a>
+<button class="btn secondary" onclick="window.print()">Print Lesson</button>
+<button class="btn secondary" onclick="sharePage()">Share</button>
+</div>
+<div class="mini-nav">
+<a href="https://learnwithchampak.live" target="_blank">learnwithchampak.live</a>
+<a href="https://aiml.learnwithchampak.live" target="_blank">AI-ML Site</a>
+<a href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">Python
               Editor</a>
-          </div>
-        </div>
-
-        <aside class="progress-card card">
-          <div>
-            <h3>Current Course Progress</h3>
-            <p>
+</div>
+</div>
+<aside class="progress-card card">
+<div>
+<h3>Current Course Progress</h3>
+<p>
               We are now at 50% of the NLP module.
               Students are moving from simple counting to smarter search ranking.
             </p>
-
-            <div class="meter">
-              <div class="meter-fill"></div>
-            </div>
-
-            <div class="percent-row">
-              <span class="done">41%</span>
-              <span class="done">42%</span>
-              <span class="done">43%</span>
-              <span class="done">44%</span>
-              <span class="done">45%</span>
-              <span class="done">46%</span>
-              <span class="done">47%</span>
-              <span class="done">48%</span>
-              <span class="done">49%</span>
-              <span class="done">50%</span>
-            </div>
-          </div>
-
-          <div class="callout">
-            <strong>Main idea:</strong><br />
+<div class="meter">
+<div class="meter-fill"></div>
+</div>
+<div class="percent-row">
+<span class="done">41%</span>
+<span class="done">42%</span>
+<span class="done">43%</span>
+<span class="done">44%</span>
+<span class="done">45%</span>
+<span class="done">46%</span>
+<span class="done">47%</span>
+<span class="done">48%</span>
+<span class="done">49%</span>
+<span class="done">50%</span>
+</div>
+</div>
+<div class="callout">
+<strong>Main idea:</strong><br/>
             CountVectorizer counts words. TF-IDF understands which words are more important.
           </div>
-        </aside>
-      </div>
-    </section>
-
-    <section id="roadmap">
-      <div class="section-title">
-        <h2>41% to 50% Roadmap</h2>
-        <span class="small">10 focused steps</span>
-      </div>
-
-      <div class="card">
-        <ul class="lesson-list">
-          <li><span class="num">41%</span><span><strong>Problem with simple word counting</strong><br />Every word gets
+</aside>
+</div>
+</section>
+<section id="roadmap">
+<div class="section-title">
+<h2>41% to 50% Roadmap</h2>
+<span class="small">10 focused steps</span>
+</div>
+<div class="card">
+<ul class="lesson-list">
+<li><span class="num">41%</span><span><strong>Problem with simple word counting</strong><br/>Every word gets
               equal treatment, even weak words.</span></li>
-          <li><span class="num">42%</span><span><strong>What are common words?</strong><br />Words that appear
+<li><span class="num">42%</span><span><strong>What are common words?</strong><br/>Words that appear
               everywhere and do not add strong meaning.</span></li>
-          <li><span class="num">43%</span><span><strong>Stop words</strong><br />Words like is, am, are, the, a, an, of,
+<li><span class="num">43%</span><span><strong>Stop words</strong><br/>Words like is, am, are, the, a, an, of,
               to.</span></li>
-          <li><span class="num">44%</span><span><strong>Why all words are not equally important</strong><br />Some words
+<li><span class="num">44%</span><span><strong>Why all words are not equally important</strong><br/>Some words
               carry meaning. Some words only support grammar.</span></li>
-          <li><span class="num">45%</span><span><strong>What is TF?</strong><br />Term Frequency means how often a word
+<li><span class="num">45%</span><span><strong>What is TF?</strong><br/>Term Frequency means how often a word
               appears in a document.</span></li>
-          <li><span class="num">46%</span><span><strong>What is IDF?</strong><br />Inverse Document Frequency means how
+<li><span class="num">46%</span><span><strong>What is IDF?</strong><br/>Inverse Document Frequency means how
               rare or special a word is.</span></li>
-          <li><span class="num">47%</span><span><strong>What is TF-IDF?</strong><br />TF-IDF gives higher importance to
+<li><span class="num">47%</span><span><strong>What is TF-IDF?</strong><br/>TF-IDF gives higher importance to
               useful and meaningful words.</span></li>
-          <li><span class="num">48%</span><span><strong>TF-IDF Vectorizer in Python</strong><br />Use TfidfVectorizer
+<li><span class="num">48%</span><span><strong>TF-IDF Vectorizer in Python</strong><br/>Use TfidfVectorizer
               from scikit-learn.</span></li>
-          <li><span class="num">49%</span><span><strong>Better search using TF-IDF + Cosine
-                Similarity</strong><br />Rank documents by meaning-heavy words.</span></li>
-          <li><span class="num">50%</span><span><strong>Revision and mini test</strong><br />Check whether students can
+<li><span class="num">49%</span><span><strong>Better search using TF-IDF + Cosine
+                Similarity</strong><br/>Rank documents by meaning-heavy words.</span></li>
+<li><span class="num">50%</span><span><strong>Revision and mini test</strong><br/>Check whether students can
               explain and code the idea.</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="problem">
-      <div class="section-title">
-        <h2>The Problem with Simple Word Counting</h2>
-        <span class="small">Why CountVectorizer is not enough</span>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>CountVectorizer counts all words</h3>
-          <p>
+</ul>
+</div>
+</section>
+<section id="problem">
+<div class="section-title">
+<h2>The Problem with Simple Word Counting</h2>
+<span class="small">Why CountVectorizer is not enough</span>
+</div>
+<div class="grid-2">
+<div class="card">
+<h3>CountVectorizer counts all words</h3>
+<p>
             In CountVectorizer, every word is counted. This is simple and useful,
             but it has a weakness. Common words can appear many times even when
             they are not important.
           </p>
-
-          <pre><code>Sentence 1:
+<pre><code>Sentence 1:
 Python is used for machine learning
 
 Sentence 2:
@@ -771,287 +749,243 @@ The book is on the table
 
 Common word:
 is</code></pre>
-
-          <div class="callout warning">
+<div class="callout warning">
             The word <code class="inline">is</code> appears in both sentences, but it does not tell us the main topic.
           </div>
-        </div>
-
-        <div class="card">
-          <h3>Important words carry meaning</h3>
-          <p>
+</div>
+<div class="card">
+<h3>Important words carry meaning</h3>
+<p>
             Words like Python, machine, learning, NLP, cosine, vector, and similarity
             carry stronger meaning than words like is, the, a, and of.
           </p>
-
-          <div>
-            <span class="tag">Python</span>
-            <span class="tag">machine</span>
-            <span class="tag">learning</span>
-            <span class="tag">NLP</span>
-            <span class="tag">cosine</span>
-            <span class="tag">similarity</span>
-          </div>
-
-          <div class="callout success">
+<div>
+<span class="tag">Python</span>
+<span class="tag">machine</span>
+<span class="tag">learning</span>
+<span class="tag">NLP</span>
+<span class="tag">cosine</span>
+<span class="tag">similarity</span>
+</div>
+<div class="callout success">
             TF-IDF helps us give more importance to meaningful words and less importance to very common words.
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">
-        <h2>Common Words and Stop Words</h2>
-        <span class="small">42% and 43%</span>
-      </div>
-
-      <div class="card">
-        <p>
+</div>
+</div>
+</section>
+<section>
+<div class="section-title">
+<h2>Common Words and Stop Words</h2>
+<span class="small">42% and 43%</span>
+</div>
+<div class="card">
+<p>
           Stop words are very common words that usually do not carry strong topic meaning.
           They are important for grammar, but often weak for search ranking.
         </p>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Examples</th>
-              <th>Meaning Strength for Search</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Stop words</td>
-              <td>is, am, are, the, a, an, of, to, in, on</td>
-              <td>Usually weak</td>
-            </tr>
-            <tr>
-              <td>Topic words</td>
-              <td>Python, AI, machine, learning, NLP, vector</td>
-              <td>Usually strong</td>
-            </tr>
-            <tr>
-              <td>Action words</td>
-              <td>search, compare, classify, predict, recommend</td>
-              <td>Often useful</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="callout info">
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Examples</th>
+<th>Meaning Strength for Search</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stop words</td>
+<td>is, am, are, the, a, an, of, to, in, on</td>
+<td>Usually weak</td>
+</tr>
+<tr>
+<td>Topic words</td>
+<td>Python, AI, machine, learning, NLP, vector</td>
+<td>Usually strong</td>
+</tr>
+<tr>
+<td>Action words</td>
+<td>search, compare, classify, predict, recommend</td>
+<td>Often useful</td>
+</tr>
+</tbody>
+</table>
+<div class="callout info">
           We do not always remove every common word. But for beginner search examples,
           removing English stop words often improves results.
         </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">
-        <h2>Visual Idea: Word Importance</h2>
-        <span class="small">All words are not equal</span>
-      </div>
-
-      <div class="card">
-        <p>
+</div>
+</section>
+<section>
+<div class="section-title">
+<h2>Visual Idea: Word Importance</h2>
+<span class="small">All words are not equal</span>
+</div>
+<div class="card">
+<p>
           In search ranking, some words should have more importance than others.
           Below is a beginner-friendly visualization.
         </p>
-
-        <div class="word-weight">
-          <div class="bar-row">
-            <strong>is</strong>
-            <div class="bar"><span style="width:18%"></span></div>
-            <span>low</span>
-          </div>
-
-          <div class="bar-row">
-            <strong>the</strong>
-            <div class="bar"><span style="width:15%"></span></div>
-            <span>low</span>
-          </div>
-
-          <div class="bar-row">
-            <strong>Python</strong>
-            <div class="bar"><span style="width:84%"></span></div>
-            <span>high</span>
-          </div>
-
-          <div class="bar-row">
-            <strong>learning</strong>
-            <div class="bar"><span style="width:78%"></span></div>
-            <span>high</span>
-          </div>
-
-          <div class="bar-row">
-            <strong>NLP</strong>
-            <div class="bar"><span style="width:92%"></span></div>
-            <span>high</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="tfidf">
-      <div class="section-title">
-        <h2>TF, IDF, and TF-IDF</h2>
-        <span class="small">45% to 47%</span>
-      </div>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3>TF</h3>
-          <p>
+<div class="word-weight">
+<div class="bar-row">
+<strong>is</strong>
+<div class="bar"><span style="width:18%"></span></div>
+<span>low</span>
+</div>
+<div class="bar-row">
+<strong>the</strong>
+<div class="bar"><span style="width:15%"></span></div>
+<span>low</span>
+</div>
+<div class="bar-row">
+<strong>Python</strong>
+<div class="bar"><span style="width:84%"></span></div>
+<span>high</span>
+</div>
+<div class="bar-row">
+<strong>learning</strong>
+<div class="bar"><span style="width:78%"></span></div>
+<span>high</span>
+</div>
+<div class="bar-row">
+<strong>NLP</strong>
+<div class="bar"><span style="width:92%"></span></div>
+<span>high</span>
+</div>
+</div>
+</div>
+</section>
+<section id="tfidf">
+<div class="section-title">
+<h2>TF, IDF, and TF-IDF</h2>
+<span class="small">45% to 47%</span>
+</div>
+<div class="grid-3">
+<div class="card">
+<h3>TF</h3>
+<p>
             TF means <strong>Term Frequency</strong>.
             It asks: how often does this word appear in this document?
           </p>
-
-          <pre><code>TF = word count in current document</code></pre>
-
-          <div class="callout">
+<pre><code>TF = word count in current document</code></pre>
+<div class="callout">
             If "Python" appears many times in one lesson, that lesson is probably related to Python.
           </div>
-        </div>
-
-        <div class="card">
-          <h3>IDF</h3>
-          <p>
+</div>
+<div class="card">
+<h3>IDF</h3>
+<p>
             IDF means <strong>Inverse Document Frequency</strong>.
             It asks: how rare or special is this word across all documents?
           </p>
-
-          <pre><code>Rare word = more important
+<pre><code>Rare word = more important
 Common word = less important</code></pre>
-
-          <div class="callout info">
+<div class="callout info">
             A word appearing everywhere becomes less powerful for ranking.
           </div>
-        </div>
-
-        <div class="card">
-          <h3>TF-IDF</h3>
-          <p>
+</div>
+<div class="card">
+<h3>TF-IDF</h3>
+<p>
             TF-IDF combines both ideas.
             A word gets a high score when it appears in the current document
             and is not too common everywhere.
           </p>
-
-          <pre><code>TF-IDF = TF × IDF</code></pre>
-
-          <div class="callout success">
+<pre><code>TF-IDF = TF × IDF</code></pre>
+<div class="callout success">
             This is better than simple word counting for search systems.
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">
-        <h2>TF-IDF Pipeline</h2>
-        <span class="small">From query to ranked results</span>
-      </div>
-
-      <div class="card">
-        <div class="diagram">
-          <svg viewBox="0 0 1120 320" width="100%" height="auto" role="img" aria-label="TF-IDF search pipeline">
-            <defs>
-              <linearGradient id="g1" x1="0" x2="1">
-                <stop offset="0%" stop-color="#d97706" />
-                <stop offset="100%" stop-color="#f59e0b" />
-              </linearGradient>
-              <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#92400e" flood-opacity="0.18" />
-              </filter>
-            </defs>
-
-            <rect x="20" y="70" width="170" height="110" rx="24" fill="#fff7ed" stroke="#f59e0b"
-              filter="url(#shadow)" />
-            <text x="105" y="112" text-anchor="middle" font-size="23" font-weight="900" fill="#7c2d12">Query</text>
-            <text x="105" y="145" text-anchor="middle" font-size="15" fill="#6b4f2a">User search</text>
-
-            <path d="M200 125 H270" stroke="#d97706" stroke-width="8" stroke-linecap="round" />
-            <polygon points="270,125 250,112 250,138" fill="#d97706" />
-
-            <rect x="290" y="70" width="190" height="110" rx="24" fill="#fff7ed" stroke="#f59e0b"
-              filter="url(#shadow)" />
-            <text x="385" y="112" text-anchor="middle" font-size="23" font-weight="900" fill="#7c2d12">Clean</text>
-            <text x="385" y="145" text-anchor="middle" font-size="15" fill="#6b4f2a">Remove weak words</text>
-
-            <path d="M490 125 H560" stroke="#d97706" stroke-width="8" stroke-linecap="round" />
-            <polygon points="560,125 540,112 540,138" fill="#d97706" />
-
-            <rect x="580" y="70" width="190" height="110" rx="24" fill="#fff7ed" stroke="#f59e0b"
-              filter="url(#shadow)" />
-            <text x="675" y="112" text-anchor="middle" font-size="23" font-weight="900" fill="#7c2d12">TF-IDF</text>
-            <text x="675" y="145" text-anchor="middle" font-size="15" fill="#6b4f2a">Weighted vector</text>
-
-            <path d="M780 125 H850" stroke="#d97706" stroke-width="8" stroke-linecap="round" />
-            <polygon points="850,125 830,112 830,138" fill="#d97706" />
-
-            <rect x="870" y="70" width="220" height="110" rx="24" fill="url(#g1)" filter="url(#shadow)" />
-            <text x="980" y="112" text-anchor="middle" font-size="23" font-weight="900" fill="#ffffff">Rank
+</div>
+</div>
+</section>
+<section>
+<div class="section-title">
+<h2>TF-IDF Pipeline</h2>
+<span class="small">From query to ranked results</span>
+</div>
+<div class="card">
+<div class="diagram">
+<svg aria-label="TF-IDF search pipeline" height="auto" role="img" viewbox="0 0 1120 320" width="100%">
+<defs>
+<lineargradient id="g1" x1="0" x2="1">
+<stop offset="0%" stop-color="#d97706"></stop>
+<stop offset="100%" stop-color="#f59e0b"></stop>
+</lineargradient>
+<filter height="140%" id="shadow" width="140%" x="-20%" y="-20%">
+<fedropshadow dx="0" dy="10" flood-color="#92400e" flood-opacity="0.18" stddeviation="10"></fedropshadow>
+</filter>
+</defs>
+<rect fill="#fff7ed" filter="url(#shadow)" height="110" rx="24" stroke="#f59e0b" width="170" x="20" y="70"></rect>
+<text fill="#7c2d12" font-size="23" font-weight="900" text-anchor="middle" x="105" y="112">Query</text>
+<text fill="#6b4f2a" font-size="15" text-anchor="middle" x="105" y="145">User search</text>
+<path d="M200 125 H270" stroke="#d97706" stroke-linecap="round" stroke-width="8"></path>
+<polygon fill="#d97706" points="270,125 250,112 250,138"></polygon>
+<rect fill="#fff7ed" filter="url(#shadow)" height="110" rx="24" stroke="#f59e0b" width="190" x="290" y="70"></rect>
+<text fill="#7c2d12" font-size="23" font-weight="900" text-anchor="middle" x="385" y="112">Clean</text>
+<text fill="#6b4f2a" font-size="15" text-anchor="middle" x="385" y="145">Remove weak words</text>
+<path d="M490 125 H560" stroke="#d97706" stroke-linecap="round" stroke-width="8"></path>
+<polygon fill="#d97706" points="560,125 540,112 540,138"></polygon>
+<rect fill="#fff7ed" filter="url(#shadow)" height="110" rx="24" stroke="#f59e0b" width="190" x="580" y="70"></rect>
+<text fill="#7c2d12" font-size="23" font-weight="900" text-anchor="middle" x="675" y="112">TF-IDF</text>
+<text fill="#6b4f2a" font-size="15" text-anchor="middle" x="675" y="145">Weighted vector</text>
+<path d="M780 125 H850" stroke="#d97706" stroke-linecap="round" stroke-width="8"></path>
+<polygon fill="#d97706" points="850,125 830,112 830,138"></polygon>
+<rect fill="url(#g1)" filter="url(#shadow)" height="110" rx="24" width="220" x="870" y="70"></rect>
+<text fill="#ffffff" font-size="23" font-weight="900" text-anchor="middle" x="980" y="112">Rank
               Results</text>
-            <text x="980" y="145" text-anchor="middle" font-size="15" fill="#fff7ed">Best lesson first</text>
-
-            <text x="560" y="250" text-anchor="middle" font-size="24" font-weight="900" fill="#7c2d12">
+<text fill="#fff7ed" font-size="15" text-anchor="middle" x="980" y="145">Best lesson first</text>
+<text fill="#7c2d12" font-size="24" font-weight="900" text-anchor="middle" x="560" y="250">
               TF-IDF makes search smarter by giving stronger words more weight.
             </text>
-          </svg>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">
-        <h2>CountVectorizer vs TF-IDF</h2>
-        <span class="small">Important comparison</span>
-      </div>
-
-      <div class="card">
-        <div class="compare-box">
-          <div class="left">
-            <h3>CountVectorizer</h3>
-            <p>Counts how many times each word appears.</p>
-            <pre><code>Python = 1
+</svg>
+</div>
+</div>
+</section>
+<section>
+<div class="section-title">
+<h2>CountVectorizer vs TF-IDF</h2>
+<span class="small">Important comparison</span>
+</div>
+<div class="card">
+<div class="compare-box">
+<div class="left">
+<h3>CountVectorizer</h3>
+<p>Counts how many times each word appears.</p>
+<pre><code>Python = 1
 is = 1
 used = 1
 for = 1
 machine = 1
 learning = 1</code></pre>
-            <div class="callout warning">
+<div class="callout warning">
               It may give unnecessary importance to common words.
             </div>
-          </div>
-
-          <div class="right">
-            <h3>TF-IDF</h3>
-            <p>Gives weight based on usefulness and rarity.</p>
-            <pre><code>Python = high
+</div>
+<div class="right">
+<h3>TF-IDF</h3>
+<p>Gives weight based on usefulness and rarity.</p>
+<pre><code>Python = high
 machine = high
 learning = high
 is = low
 for = low</code></pre>
-            <div class="callout success">
+<div class="callout success">
               It is usually better for search and ranking.
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="python">
-      <div class="section-title">
-        <h2>Python Example 1</h2>
-        <span class="small">TfidfVectorizer basics</span>
-      </div>
-
-      <div class="card">
-        <p>
+</div>
+</div>
+</div>
+</section>
+<section id="python">
+<div class="section-title">
+<h2>Python Example 1</h2>
+<span class="small">TfidfVectorizer basics</span>
+</div>
+<div class="card">
+<p>
           This example compares a search query with different documents and finds the best match.
         </p>
-
-        <button class="copy-btn" onclick="copyCode('code1')">Copy Code</button>
-        <pre id="code1"><code>from sklearn.feature_extraction.text import TfidfVectorizer
+<button class="copy-btn" onclick="copyCode('code1')">Copy Code</button>
+<pre id="code1"><code>from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 documents = [
@@ -1083,28 +1017,24 @@ print(scores[best_index])
 
 print("\nAll scores:")
 for document, score in zip(documents, scores):
-    print(round(score, 3), "->", document)</code></pre>
-
-        <div class="callout info">
-          <code class="inline">stop_words="english"</code> tells the vectorizer to reduce the effect of common English
+    print(round(score, 3), "-&gt;", document)</code></pre>
+<div class="callout info">
+<code class="inline">stop_words="english"</code> tells the vectorizer to reduce the effect of common English
           stop words.
         </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">
-        <h2>Python Example 2</h2>
-        <span class="small">Programmers Picnic lesson search</span>
-      </div>
-
-      <div class="card">
-        <p>
+</div>
+</section>
+<section>
+<div class="section-title">
+<h2>Python Example 2</h2>
+<span class="small">Programmers Picnic lesson search</span>
+</div>
+<div class="card">
+<p>
           This example searches through lesson titles from Programmers Picnic AI-ML Classes.
         </p>
-
-        <button class="copy-btn" onclick="copyCode('code2')">Copy Code</button>
-        <pre id="code2"><code>from sklearn.feature_extraction.text import TfidfVectorizer
+<button class="copy-btn" onclick="copyCode('code2')">Copy Code</button>
+<pre id="code2"><code>from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 lesson_titles = [
@@ -1149,93 +1079,84 @@ ranked = sorted(
 )
 
 for title, score in ranked:
-    print(round(score, 3), "->", title)</code></pre>
-
-        <div class="callout success">
+    print(round(score, 3), "-&gt;", title)</code></pre>
+<div class="callout success">
           This is the beginning of a real search engine for your own lesson website.
         </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">
-        <h2>Understanding Ranked Results</h2>
-        <span class="small">Why ranking matters</span>
-      </div>
-
-      <div class="card">
-        <p>
+</div>
+</section>
+<section>
+<div class="section-title">
+<h2>Understanding Ranked Results</h2>
+<span class="small">Why ranking matters</span>
+</div>
+<div class="card">
+<p>
           A search system should not only find one result. It should rank all results from
           most useful to least useful.
         </p>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Lesson</th>
-              <th>Possible Score</th>
-              <th>Meaning</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Machine Learning with Python</td>
-              <td>0.74</td>
-              <td>Strong match</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>NumPy arrays for AI and ML</td>
-              <td>0.31</td>
-              <td>Some relation</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>HTML and CSS introduction</td>
-              <td>0.00</td>
-              <td>Not related</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="callout">
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Lesson</th>
+<th>Possible Score</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Machine Learning with Python</td>
+<td>0.74</td>
+<td>Strong match</td>
+</tr>
+<tr>
+<td>2</td>
+<td>NumPy arrays for AI and ML</td>
+<td>0.31</td>
+<td>Some relation</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HTML and CSS introduction</td>
+<td>0.00</td>
+<td>Not related</td>
+</tr>
+</tbody>
+</table>
+<div class="callout">
           In a real website, we can show the highest ranking lessons first.
         </div>
-      </div>
-    </section>
-
-    <section id="project">
-      <div class="section-title">
-        <h2>Mini Project</h2>
-        <span class="small">Better Lesson Search using TF-IDF</span>
-      </div>
-
-      <div class="card">
-        <h3>Project Goal</h3>
-        <p>
+</div>
+</section>
+<section id="project">
+<div class="section-title">
+<h2>Mini Project</h2>
+<span class="small">Better Lesson Search using TF-IDF</span>
+</div>
+<div class="card">
+<h3>Project Goal</h3>
+<p>
           The student enters a search query. The program compares it with a list of lesson titles
           and descriptions. Then it returns the best matching lessons in ranked order.
         </p>
-
-        <div class="grid-3">
-          <div class="step-card">
-            <strong>Step 1</strong>
-            <p>Create a list of lesson dictionaries.</p>
-          </div>
-          <div class="step-card">
-            <strong>Step 2</strong>
-            <p>Combine title and description into searchable text.</p>
-          </div>
-          <div class="step-card">
-            <strong>Step 3</strong>
-            <p>Use TF-IDF and cosine similarity to rank results.</p>
-          </div>
-        </div>
-
-        <button class="copy-btn" onclick="copyCode('projectCode')">Copy Project Code</button>
-        <pre id="projectCode"><code>from sklearn.feature_extraction.text import TfidfVectorizer
+<div class="grid-3">
+<div class="step-card">
+<strong>Step 1</strong>
+<p>Create a list of lesson dictionaries.</p>
+</div>
+<div class="step-card">
+<strong>Step 2</strong>
+<p>Combine title and description into searchable text.</p>
+</div>
+<div class="step-card">
+<strong>Step 3</strong>
+<p>Use TF-IDF and cosine similarity to rank results.</p>
+</div>
+</div>
+<button class="copy-btn" onclick="copyCode('projectCode')">Copy Project Code</button>
+<pre id="projectCode"><code>from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 lessons = [
@@ -1296,227 +1217,199 @@ print(query)
 print("\nBest lessons:")
 
 for lesson, score in ranked_results:
-    if score > 0:
+    if score &gt; 0:
         print("\nTitle:", lesson["title"])
         print("Description:", lesson["description"])
         print("Score:", round(score, 3))</code></pre>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">
-        <h2>Classroom Activities</h2>
-        <span class="small">Practice tasks</span>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3>Activity A: Stop Word Check</h3>
-          <ol>
-            <li>Write 5 English sentences.</li>
-            <li>Underline common words like is, the, a, an, of, to.</li>
-            <li>Underline topic words like Python, AI, ML, search.</li>
-            <li>Explain which words are more useful for search.</li>
-          </ol>
-        </div>
-
-        <div class="card">
-          <h3>Activity B: Lesson Search</h3>
-          <ol>
-            <li>Create 10 lesson titles.</li>
-            <li>Create one search query.</li>
-            <li>Use TfidfVectorizer.</li>
-            <li>Print top 3 ranked results.</li>
-          </ol>
-        </div>
-
-        <div class="card">
-          <h3>Activity C: Compare Two Methods</h3>
-          <ol>
-            <li>Run one program using CountVectorizer.</li>
-            <li>Run another using TfidfVectorizer.</li>
-            <li>Use the same documents and query.</li>
-            <li>Compare the results.</li>
-          </ol>
-        </div>
-
-        <div class="card">
-          <h3>Activity D: Brand Example</h3>
-          <ol>
-            <li>Use Programmers Picnic lesson names.</li>
-            <li>Search for “Python AI beginner”.</li>
-            <li>Search for “web design CSS”.</li>
-            <li>Check whether the correct lesson comes first.</li>
-          </ol>
-        </div>
-      </div>
-    </section>
-
-    <section id="editor">
-      <div class="section-title">
-        <h2>Practice in Python Editor</h2>
-        <span class="small">Run the examples</span>
-      </div>
-
-      <div class="card">
-        <p>
+</div>
+</section>
+<section>
+<div class="section-title">
+<h2>Classroom Activities</h2>
+<span class="small">Practice tasks</span>
+</div>
+<div class="grid-2">
+<div class="card">
+<h3>Activity A: Stop Word Check</h3>
+<ol>
+<li>Write 5 English sentences.</li>
+<li>Underline common words like is, the, a, an, of, to.</li>
+<li>Underline topic words like Python, AI, ML, search.</li>
+<li>Explain which words are more useful for search.</li>
+</ol>
+</div>
+<div class="card">
+<h3>Activity B: Lesson Search</h3>
+<ol>
+<li>Create 10 lesson titles.</li>
+<li>Create one search query.</li>
+<li>Use TfidfVectorizer.</li>
+<li>Print top 3 ranked results.</li>
+</ol>
+</div>
+<div class="card">
+<h3>Activity C: Compare Two Methods</h3>
+<ol>
+<li>Run one program using CountVectorizer.</li>
+<li>Run another using TfidfVectorizer.</li>
+<li>Use the same documents and query.</li>
+<li>Compare the results.</li>
+</ol>
+</div>
+<div class="card">
+<h3>Activity D: Brand Example</h3>
+<ol>
+<li>Use Programmers Picnic lesson names.</li>
+<li>Search for “Python AI beginner”.</li>
+<li>Search for “web design CSS”.</li>
+<li>Check whether the correct lesson comes first.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="editor">
+<div class="section-title">
+<h2>Practice in Python Editor</h2>
+<span class="small">Run the examples</span>
+</div>
+<div class="card">
+<p>
           Paste the Python examples into the embedded editor.
           Change the documents, lesson titles, and search queries.
         </p>
-
-        <div class="callout warning">
+<div class="callout warning">
           If the editor opens slowly, open it directly:
           <a href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">
             Python Editor Full Page
           </a>
-        </div>
-
-        <div class="editor-frame">
-          <iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-            title="Programmers Picnic Python Editor" loading="lazy" allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">
-        <h2>Common Mistakes</h2>
-        <span class="small">Important warnings</span>
-      </div>
-
-      <div class="card">
-        <table>
-          <thead>
-            <tr>
-              <th>Mistake</th>
-              <th>Problem</th>
-              <th>Better Thinking</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Thinking TF-IDF understands full human meaning</td>
-              <td>TF-IDF is still based on words and weights.</td>
-              <td>It is better than simple count, but not a full AI brain.</td>
-            </tr>
-            <tr>
-              <td>Forgetting stop words</td>
-              <td>Common words can disturb search ranking.</td>
-              <td>Use <code class="inline">stop_words="english"</code> for beginner English examples.</td>
-            </tr>
-            <tr>
-              <td>Expecting perfect results with tiny data</td>
-              <td>Small document lists may give limited results.</td>
-              <td>Use more lessons and richer descriptions.</td>
-            </tr>
-            <tr>
-              <td>Only printing the best result</td>
-              <td>The user may need more than one result.</td>
-              <td>Print ranked top results.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="quiz">
-      <div class="section-title">
-        <h2>Revision Test</h2>
-        <span class="small">Click each question to see the answer</span>
-      </div>
-
-      <div class="card quiz">
-        <details>
-          <summary>What is the problem with simple word counting?</summary>
-          <p>It treats all words equally, even common weak words like is, the, a, and of.</p>
-        </details>
-
-        <details>
-          <summary>What are stop words?</summary>
-          <p>Stop words are common words that usually do not carry strong topic meaning.</p>
-        </details>
-
-        <details>
-          <summary>Give five examples of stop words.</summary>
-          <p>is, am, are, the, a, an, of, to, in, on.</p>
-        </details>
-
-        <details>
-          <summary>Why is Python usually more important than is?</summary>
-          <p>Python tells us the topic. The word is mostly supports grammar.</p>
-        </details>
-
-        <details>
-          <summary>What is TF?</summary>
-          <p>TF means Term Frequency. It measures how often a word appears in a document.</p>
-        </details>
-
-        <details>
-          <summary>What is IDF?</summary>
-          <p>IDF means Inverse Document Frequency. It measures how rare or special a word is across documents.</p>
-        </details>
-
-        <details>
-          <summary>What is TF-IDF?</summary>
-          <p>TF-IDF is a word-weighting method that gives importance to useful words and reduces the power of common
+</div>
+<div class="editor-frame">
+<iframe allowfullscreen="" loading="lazy" src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" title="Programmers Picnic Python Editor">
+</iframe>
+</div>
+</div>
+</section>
+<section>
+<div class="section-title">
+<h2>Common Mistakes</h2>
+<span class="small">Important warnings</span>
+</div>
+<div class="card">
+<table>
+<thead>
+<tr>
+<th>Mistake</th>
+<th>Problem</th>
+<th>Better Thinking</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Thinking TF-IDF understands full human meaning</td>
+<td>TF-IDF is still based on words and weights.</td>
+<td>It is better than simple count, but not a full AI brain.</td>
+</tr>
+<tr>
+<td>Forgetting stop words</td>
+<td>Common words can disturb search ranking.</td>
+<td>Use <code class="inline">stop_words="english"</code> for beginner English examples.</td>
+</tr>
+<tr>
+<td>Expecting perfect results with tiny data</td>
+<td>Small document lists may give limited results.</td>
+<td>Use more lessons and richer descriptions.</td>
+</tr>
+<tr>
+<td>Only printing the best result</td>
+<td>The user may need more than one result.</td>
+<td>Print ranked top results.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="quiz">
+<div class="section-title">
+<h2>Revision Test</h2>
+<span class="small">Click each question to see the answer</span>
+</div>
+<div class="card quiz">
+<details>
+<summary>What is the problem with simple word counting?</summary>
+<p>It treats all words equally, even common weak words like is, the, a, and of.</p>
+</details>
+<details>
+<summary>What are stop words?</summary>
+<p>Stop words are common words that usually do not carry strong topic meaning.</p>
+</details>
+<details>
+<summary>Give five examples of stop words.</summary>
+<p>is, am, are, the, a, an, of, to, in, on.</p>
+</details>
+<details>
+<summary>Why is Python usually more important than is?</summary>
+<p>Python tells us the topic. The word is mostly supports grammar.</p>
+</details>
+<details>
+<summary>What is TF?</summary>
+<p>TF means Term Frequency. It measures how often a word appears in a document.</p>
+</details>
+<details>
+<summary>What is IDF?</summary>
+<p>IDF means Inverse Document Frequency. It measures how rare or special a word is across documents.</p>
+</details>
+<details>
+<summary>What is TF-IDF?</summary>
+<p>TF-IDF is a word-weighting method that gives importance to useful words and reduces the power of common
             words.</p>
-        </details>
-
-        <details>
-          <summary>Why is TF-IDF better than CountVectorizer for search?</summary>
-          <p>Because it does not only count words. It also considers how important or rare the words are.</p>
-        </details>
-
-        <details>
-          <summary>Which Python class do we use for TF-IDF?</summary>
-          <p>We use <code class="inline">TfidfVectorizer</code> from scikit-learn.</p>
-        </details>
-
-        <details>
-          <summary>What is the mini project in this lesson?</summary>
-          <p>Better Lesson Search using TF-IDF.</p>
-        </details>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">
-        <h2>50% Checkpoint</h2>
-        <span class="small">Before moving ahead</span>
-      </div>
-
-      <div class="card">
-        <h3>Students should now be able to explain:</h3>
-        <ul>
-          <li>Why simple word counting is limited.</li>
-          <li>What common words and stop words are.</li>
-          <li>Why all words are not equally important.</li>
-          <li>What TF means.</li>
-          <li>What IDF means.</li>
-          <li>What TF-IDF means.</li>
-          <li>How to use TfidfVectorizer in Python.</li>
-          <li>How to build a better lesson search program.</li>
-        </ul>
-
-        <div class="callout success">
-          <strong>Next 51% to 60%:</strong><br />
+</details>
+<details>
+<summary>Why is TF-IDF better than CountVectorizer for search?</summary>
+<p>Because it does not only count words. It also considers how important or rare the words are.</p>
+</details>
+<details>
+<summary>Which Python class do we use for TF-IDF?</summary>
+<p>We use <code class="inline">TfidfVectorizer</code> from scikit-learn.</p>
+</details>
+<details>
+<summary>What is the mini project in this lesson?</summary>
+<p>Better Lesson Search using TF-IDF.</p>
+</details>
+</div>
+</section>
+<section>
+<div class="section-title">
+<h2>50% Checkpoint</h2>
+<span class="small">Before moving ahead</span>
+</div>
+<div class="card">
+<h3>Students should now be able to explain:</h3>
+<ul>
+<li>Why simple word counting is limited.</li>
+<li>What common words and stop words are.</li>
+<li>Why all words are not equally important.</li>
+<li>What TF means.</li>
+<li>What IDF means.</li>
+<li>What TF-IDF means.</li>
+<li>How to use TfidfVectorizer in Python.</li>
+<li>How to build a better lesson search program.</li>
+</ul>
+<div class="callout success">
+<strong>Next 51% to 60%:</strong><br/>
           We can move from TF-IDF search to text classification, intent detection,
           and simple chatbot-style matching.
         </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer page">
-    <strong>Programmers Picnic AI-ML Classes by Champak Roy</strong><br />
-    NLP 41% to 50% • Stop Words • TF • IDF • TF-IDF • Better Search<br />
-    <a href="https://learnwithchampak.live" target="_blank">learnwithchampak.live</a>
+</div>
+</section>
+</main>
+<footer class="footer page">
+<strong>Programmers Picnic AI-ML Classes by Champak Roy</strong><br/>
+    NLP 41% to 50% • Stop Words • TF • IDF • TF-IDF • Better Search<br/>
+<a href="https://learnwithchampak.live" target="_blank">learnwithchampak.live</a>
     |
     <a href="https://aiml.learnwithchampak.live" target="_blank">aiml.learnwithchampak.live</a>
-  </footer>
-
-  <script>
+</footer>
+<script>
     function copyCode(id) {
       const el = document.getElementById(id);
       if (!el) return;
@@ -1551,6 +1444,5 @@ for lesson, score in ranked_results:
       }
     }
   </script>
-</body>
-
+<div data-include="footer"></div></body>
 </html>

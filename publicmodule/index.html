@@ -1,26 +1,27 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Publish Your Python Module on PyPI: 0 to Infinity Lesson</title>
-  <meta name="description" content="A beginner to advanced lesson showing how to package learnwithchampak, build it, upload to TestPyPI, handle tokens, and prepare for real PyPI publishing." />
-  <meta name="keywords" content="PyPI, TestPyPI, Python packaging, pyproject.toml, twine, build, wheel, learnwithchampak, Champak Roy" />
-  <meta name="author" content="Champak Roy" />
-  <meta property="og:title" content="Publish Your Python Module on PyPI: 0 to Infinity Lesson" />
-  <meta property="og:description" content="From package name check to TestPyPI upload and real PyPI release." />
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="og-pypi-lesson.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Publish Your Python Module on PyPI" />
-  <meta name="twitter:description" content="0 to Infinity packaging lesson by Champak Roy." />
-  <meta name="twitter:image" content="og-pypi-lesson.png" />
-  <link rel="preload" as="image" href="og-pypi-lesson.png" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494&host=ca-host-pub-1556223355139109" crossorigin="anonymous"></script>
-  <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
-  <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
-  <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Publish Your Python Module on PyPI: 0 to Infinity Lesson</title>
+<meta content="A beginner to advanced lesson showing how to package learnwithchampak, build it, upload to TestPyPI, handle tokens, and prepare for real PyPI publishing." name="description"/>
+<meta content="PyPI, TestPyPI, Python packaging, pyproject.toml, twine, build, wheel, learnwithchampak, Champak Roy" name="keywords"/>
+<meta content="Champak Roy" name="author"/>
+<meta content="Publish Your Python Module on PyPI: 0 to Infinity Lesson" property="og:title"/>
+<meta content="From package name check to TestPyPI upload and real PyPI release." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="og-pypi-lesson.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Publish Your Python Module on PyPI" name="twitter:title"/>
+<meta content="0 to Infinity packaging lesson by Champak Roy." name="twitter:description"/>
+<meta content="og-pypi-lesson.png" name="twitter:image"/>
+<link as="image" href="og-pypi-lesson.png" rel="preload"/>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494&amp;host=ca-host-pub-1556223355139109"></script>
+<script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+<script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+<script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+<style>
     :root {
       --saffron:#f4a124; --saffron-dark:#8a4d0a; --cream:#fff8ec; --ink:#21170a; --muted:#6d5b45;
       --card:#ffffff; --line:#f1d5a8; --code-bg:#111827; --code-text:#f9fafb; --green:#0d7a39;
@@ -39,50 +40,50 @@
     .footer{background:#5f3306;color:#fff;padding:30px 20px} .footer a{color:#fff2c7} button.copy{border:0;background:#7a4307;color:#fff;border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:700;float:right}
     @media(max-width:800px){.hero-grid,.shot-card,.two{grid-template-columns:1fr} h1{font-size:2.4rem}}
   </style>
-</head>
-<body>
+<link href="../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../assets/js/site.js"></script><script defer="defer" src="../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
 <header>
-  <div class="wrap hero-grid">
-    <div>
-      <span class="badge">0 to Infinity Lesson</span>
-      <h1>Publish Your Python Module on PyPI</h1>
-      <p class="lead">A complete practical lesson made from our real packaging journey: checking the name <strong>learnwithchampak</strong>, creating the project, building the wheel, uploading to TestPyPI, fixing token mistakes, and preparing for real PyPI.</p>
-    </div>
-    <div class="hero-panel">
-      <strong>Final learner goal</strong>
-      <pre><code>pip install learnwithchampak
+<div class="wrap hero-grid">
+<div>
+<span class="badge">0 to Infinity Lesson</span>
+<h1>Publish Your Python Module on PyPI</h1>
+<p class="lead">A complete practical lesson made from our real packaging journey: checking the name <strong>learnwithchampak</strong>, creating the project, building the wheel, uploading to TestPyPI, fixing token mistakes, and preparing for real PyPI.</p>
+</div>
+<div class="hero-panel">
+<strong>Final learner goal</strong>
+<pre><code>pip install learnwithchampak
 python
 &gt;&gt;&gt; from learnwithchampak import hello
 &gt;&gt;&gt; print(hello("Champak"))</code></pre>
-    </div>
-  </div>
+</div>
+</div>
 </header>
-<main class="wrap">
-  <div class="toc">
-    <a href="#part0">0. Big Picture</a><a href="#part1">1. Project Structure</a><a href="#part2">2. Code Files</a><a href="#part3">3. Build</a><a href="#part4">4. TestPyPI</a><a href="#part5">5. Real PyPI</a><a href="#screenshots">6. Screenshot Walkthrough</a>
-  </div>
-  <section id="part0" class="card">
-    <h2>0. What is PyPI?</h2>
-    <p>PyPI means <strong>Python Package Index</strong>. It is the public package library used by <code>pip</code>. TestPyPI is a separate practice server where you can safely test uploads before publishing the final package.</p>
-    <div class="checkpoint"><strong>Checkpoint:</strong> At the end, your package should install using <code>pip install learnwithchampak</code> from real PyPI. During practice it installs from TestPyPI.</div>
-  </section>
-  <section class="adbox" aria-label="Advertisement">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8321261883090494" data-ad-slot="7782388330" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>
-  <section id="part1" class="card">
-    <h2>1. Create the project</h2>
-    <p>In our example, the folder is <code>D:\champak-ai-ml\learnwithchampak</code>.</p>
-    <pre class="cmd"><code>cd D:\champak-ai-ml
+<main class="wrap" id="main-content">
+<div class="toc">
+<a href="#part0">0. Big Picture</a><a href="#part1">1. Project Structure</a><a href="#part2">2. Code Files</a><a href="#part3">3. Build</a><a href="#part4">4. TestPyPI</a><a href="#part5">5. Real PyPI</a><a href="#screenshots">6. Screenshot Walkthrough</a>
+</div>
+<section class="card" id="part0">
+<h2>0. What is PyPI?</h2>
+<p>PyPI means <strong>Python Package Index</strong>. It is the public package library used by <code>pip</code>. TestPyPI is a separate practice server where you can safely test uploads before publishing the final package.</p>
+<div class="checkpoint"><strong>Checkpoint:</strong> At the end, your package should install using <code>pip install learnwithchampak</code> from real PyPI. During practice it installs from TestPyPI.</div>
+</section>
+<section aria-label="Advertisement" class="adbox">
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</section>
+<section class="card" id="part1">
+<h2>1. Create the project</h2>
+<p>In our example, the folder is <code>D:\champak-ai-ml\learnwithchampak</code>.</p>
+<pre class="cmd"><code>cd D:\champak-ai-ml
 pip index versions learnwithchampak
 md learnwithchampak
 cd learnwithchampak</code></pre>
-    <p>If <code>pip index versions</code> says no matching distribution was found, the name is probably free. For the first real release, PyPI may still apply extra name rules.</p>
-    <pre class="cmd"><code>mkdir src
+<p>If <code>pip index versions</code> says no matching distribution was found, the name is probably free. For the first real release, PyPI may still apply extra name rules.</p>
+<pre class="cmd"><code>mkdir src
 mkdir src\learnwithchampak
 mkdir tests</code></pre>
-    <h3>Expected structure</h3>
-    <pre><code>learnwithchampak/
+<h3>Expected structure</h3>
+<pre><code>learnwithchampak/
 ├── pyproject.toml
 ├── README.md
 ├── LICENSE
@@ -92,26 +93,26 @@ mkdir tests</code></pre>
 │       └── core.py
 └── tests/
     └── test_core.py</code></pre>
-  </section>
-  <section id="part2" class="card">
-    <h2>2. Write the package code</h2>
-    <p>Create the empty files:</p>
-    <pre class="cmd"><code>type nul &gt; pyproject.toml
+</section>
+<section class="card" id="part2">
+<h2>2. Write the package code</h2>
+<p>Create the empty files:</p>
+<pre class="cmd"><code>type nul &gt; pyproject.toml
 type nul &gt; README.md
 type nul &gt; LICENSE
 type nul &gt; src\learnwithchampak\__init__.py
 type nul &gt; src\learnwithchampak\core.py
 type nul &gt; tests	est_core.py
 code .</code></pre>
-    <div class="two">
-      <div><h3>core.py</h3><pre><code>def hello(name: str = "World") -&gt; str:
+<div class="two">
+<div><h3>core.py</h3><pre><code>def hello(name: str = "World") -&gt; str:
     return f"Hello, {name}! Welcome to Learn With Champak."</code></pre></div>
-      <div><h3>__init__.py</h3><pre><code>from .core import hello
+<div><h3>__init__.py</h3><pre><code>from .core import hello
 
 __version__ = "0.1.0"</code></pre></div>
-    </div>
-    <h3>pyproject.toml</h3>
-    <pre><code>[build-system]
+</div>
+<h3>pyproject.toml</h3>
+<pre><code>[build-system]
 requires = ["setuptools&gt;=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
@@ -140,193 +141,179 @@ Repository = "https://github.com/programmer-s-picnic/learnwithchampak"
 
 [tool.setuptools.packages.find]
 where = ["src"]</code></pre>
-  </section>
-  <section id="part3" class="card">
-    <h2>3. Test locally and build</h2>
-    <pre class="cmd"><code>python -m venv .venv
+</section>
+<section class="card" id="part3">
+<h2>3. Test locally and build</h2>
+<pre class="cmd"><code>python -m venv .venv
 .venv\Scriptsctivate
 pip install -e .
 python</code></pre>
-    <pre><code>from learnwithchampak import hello
+<pre><code>from learnwithchampak import hello
 print(hello("Champak"))</code></pre>
-    <div class="checkpoint"><strong>Checkpoint:</strong> You should see <code>Hello, Champak! Welcome to Learn With Champak.</code></div>
-    <pre class="cmd"><code>python -m pip install --upgrade build twine
+<div class="checkpoint"><strong>Checkpoint:</strong> You should see <code>Hello, Champak! Welcome to Learn With Champak.</code></div>
+<pre class="cmd"><code>python -m pip install --upgrade build twine
 python -m build
 python -m twine check dist/*</code></pre>
-    <p>The build should create:</p>
-    <pre><code>dist/learnwithchampak-0.1.0.tar.gz
+<p>The build should create:</p>
+<pre><code>dist/learnwithchampak-0.1.0.tar.gz
 dist/learnwithchampak-0.1.0-py3-none-any.whl</code></pre>
-  </section>
-  <section id="part4" class="card">
-    <h2>4. Upload to TestPyPI</h2>
-    <p>TestPyPI and PyPI are separate. A real PyPI token will not work on TestPyPI.</p>
-    <ol>
-      <li>Create a TestPyPI account.</li>
-      <li>Enable two-factor authentication.</li>
-      <li>Create an API token.</li>
-      <li>For the first upload, choose <strong>Entire account</strong> scope.</li>
-    </ol>
-    <pre class="cmd"><code>python -m twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "PASTE_TESTPYPI_TOKEN_HERE" dist/*</code></pre>
-    <div class="warn"><strong>Security warning:</strong> Do not paste real tokens in screenshots, chat messages, or public code. If a token is exposed, revoke it immediately and create a new one.</div>
-    <h3>Common 403 Forbidden causes</h3>
-    <table><thead><tr><th>Problem</th><th>Fix</th></tr></thead><tbody>
-      <tr><td>Used real PyPI token on TestPyPI</td><td>Create token from test.pypi.org</td></tr>
-      <tr><td>Typed token as username</td><td>Username must be <code>__token__</code></td></tr>
-      <tr><td>Used project-scoped token before project exists</td><td>Use entire-account token for first upload</td></tr>
-      <tr><td>Copied only part of token</td><td>Copy full token beginning with <code>pypi-</code></td></tr>
-    </tbody></table>
-  </section>
-  <section id="part5" class="card">
-    <h2>5. Install from TestPyPI, then publish to real PyPI</h2>
-    <pre class="cmd"><code>pip uninstall learnwithchampak
+</section>
+<section class="card" id="part4">
+<h2>4. Upload to TestPyPI</h2>
+<p>TestPyPI and PyPI are separate. A real PyPI token will not work on TestPyPI.</p>
+<ol>
+<li>Create a TestPyPI account.</li>
+<li>Enable two-factor authentication.</li>
+<li>Create an API token.</li>
+<li>For the first upload, choose <strong>Entire account</strong> scope.</li>
+</ol>
+<pre class="cmd"><code>python -m twine upload --repository-url https://test.pypi.org/legacy/ -u __token__ -p "PASTE_TESTPYPI_TOKEN" dist/*</code></pre>
+<div class="warn"><strong>Security warning:</strong> Do not paste real tokens in screenshots, chat messages, or public code. If a token is exposed, revoke it immediately and create a new one.</div>
+<h3>Common 403 Forbidden causes</h3>
+<table><thead><tr><th>Problem</th><th>Fix</th></tr></thead><tbody>
+<tr><td>Used real PyPI token on TestPyPI</td><td>Create token from test.pypi.org</td></tr>
+<tr><td>Typed token as username</td><td>Username must be <code>__token__</code></td></tr>
+<tr><td>Used project-scoped token before project exists</td><td>Use entire-account token for first upload</td></tr>
+<tr><td>Copied only part of token</td><td>Copy full token beginning with <code>pypi-</code></td></tr>
+</tbody></table>
+</section>
+<section class="card" id="part5">
+<h2>5. Install from TestPyPI, then publish to real PyPI</h2>
+<pre class="cmd"><code>pip uninstall learnwithchampak
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple learnwithchampak</code></pre>
-    <pre><code>python
+<pre><code>python
 &gt;&gt;&gt; from learnwithchampak import hello
 &gt;&gt;&gt; print(hello("Champak"))</code></pre>
-    <p>After TestPyPI works, create a token on the real PyPI site and upload:</p>
-    <pre class="cmd"><code>python -m twine upload --repository-url https://upload.pypi.org/legacy/ -u __token__ -p "PASTE_REAL_PYPI_TOKEN_HERE" dist/*</code></pre>
-    <div class="checkpoint"><strong>Final checkpoint:</strong> After real upload succeeds, anyone can run <code>pip install learnwithchampak</code>.</div>
-  </section>
-  <section id="screenshots" class="card">
-    <h2>6. Screenshot walkthrough</h2>
-    <p>These screenshots show the real journey. Sensitive tokens and recovery code files were not included in the lesson package.</p>
-    
+<p>After TestPyPI works, create a token on the real PyPI site and upload:</p>
+<pre class="cmd"><code>python -m twine upload --repository-url https://upload.pypi.org/legacy/ -u __token__ -p "PASTE_REAL_PYPI_TOKEN" dist/*</code></pre>
+<div class="checkpoint"><strong>Final checkpoint:</strong> After real upload succeeds, anyone can run <code>pip install learnwithchampak</code>.</div>
+</section>
+<section class="card" id="screenshots">
+<h2>6. Screenshot walkthrough</h2>
+<p>These screenshots show the real journey. Sensitive tokens and recovery code files were not included in the lesson package.</p>
 <article class="shot-card" id="step-0">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 0</span>
-    <h3>Check whether the package name is available</h3>
-    <p>We use pip index versions learnwithchampak. If no matching distribution is found, the name is probably free, though PyPI can still block reserved or conflicting names.</p>
-  </div>
-  <a href="screenshots/0.png" target="_blank" rel="noopener"><img src="screenshots/0.png" alt="Check whether the package name is available screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 0</span>
+<h3>Check whether the package name is available</h3>
+<p>We use pip index versions learnwithchampak. If no matching distribution is found, the name is probably free, though PyPI can still block reserved or conflicting names.</p>
+</div>
+<a href="screenshots/0.png" rel="noopener" target="_blank"><img alt="Check whether the package name is available screenshot" loading="lazy" src="screenshots/0.png"/></a>
 </article>
-
 <article class="shot-card" id="step-1">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 1</span>
-    <h3>Create the project folder</h3>
-    <p>The project name is learnwithchampak. On PyPI the install name and Python import name can be the same when the package name has no hyphen.</p>
-  </div>
-  <a href="screenshots/1.png" target="_blank" rel="noopener"><img src="screenshots/1.png" alt="Create the project folder screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 1</span>
+<h3>Create the project folder</h3>
+<p>The project name is learnwithchampak. On PyPI the install name and Python import name can be the same when the package name has no hyphen.</p>
+</div>
+<a href="screenshots/1.png" rel="noopener" target="_blank"><img alt="Create the project folder screenshot" loading="lazy" src="screenshots/1.png"/></a>
 </article>
-
 <article class="shot-card" id="step-2">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 2</span>
-    <h3>Enter the folder</h3>
-    <p>Work from inside the root folder so every file is created in the correct place.</p>
-  </div>
-  <a href="screenshots/2.png" target="_blank" rel="noopener"><img src="screenshots/2.png" alt="Enter the folder screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 2</span>
+<h3>Enter the folder</h3>
+<p>Work from inside the root folder so every file is created in the correct place.</p>
+</div>
+<a href="screenshots/2.png" rel="noopener" target="_blank"><img alt="Enter the folder screenshot" loading="lazy" src="screenshots/2.png"/></a>
 </article>
-
 <article class="shot-card" id="step-3">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 3</span>
-    <h3>Create src and tests folders</h3>
-    <p>The src layout prevents accidental imports from the project root and is now a clean packaging habit.</p>
-  </div>
-  <a href="screenshots/3.png" target="_blank" rel="noopener"><img src="screenshots/3.png" alt="Create src and tests folders screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 3</span>
+<h3>Create src and tests folders</h3>
+<p>The src layout prevents accidental imports from the project root and is now a clean packaging habit.</p>
+</div>
+<a href="screenshots/3.png" rel="noopener" target="_blank"><img alt="Create src and tests folders screenshot" loading="lazy" src="screenshots/3.png"/></a>
 </article>
-
 <article class="shot-card" id="step-4">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 4</span>
-    <h3>Verify the folder in Explorer</h3>
-    <p>A visual check is useful for beginners: src and tests should exist beside pyproject.toml and README.md.</p>
-  </div>
-  <a href="screenshots/4.png" target="_blank" rel="noopener"><img src="screenshots/4.png" alt="Verify the folder in Explorer screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 4</span>
+<h3>Verify the folder in Explorer</h3>
+<p>A visual check is useful for beginners: src and tests should exist beside pyproject.toml and README.md.</p>
+</div>
+<a href="screenshots/4.png" rel="noopener" target="_blank"><img alt="Verify the folder in Explorer screenshot" loading="lazy" src="screenshots/4.png"/></a>
 </article>
-
 <article class="shot-card" id="step-5">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 5</span>
-    <h3>Prepare package files</h3>
-    <p>Inside src/learnwithchampak, create __init__.py and core.py. These make the actual importable package.</p>
-  </div>
-  <a href="screenshots/5.png" target="_blank" rel="noopener"><img src="screenshots/5.png" alt="Prepare package files screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 5</span>
+<h3>Prepare package files</h3>
+<p>Inside src/learnwithchampak, create __init__.py and core.py. These make the actual importable package.</p>
+</div>
+<a href="screenshots/5.png" rel="noopener" target="_blank"><img alt="Prepare package files screenshot" loading="lazy" src="screenshots/5.png"/></a>
 </article>
-
 <article class="shot-card" id="step-6">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 6</span>
-    <h3>Create top-level files</h3>
-    <p>pyproject.toml, README.md, LICENSE and test files are created from the terminal.</p>
-  </div>
-  <a href="screenshots/6.png" target="_blank" rel="noopener"><img src="screenshots/6.png" alt="Create top-level files screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 6</span>
+<h3>Create top-level files</h3>
+<p>pyproject.toml, README.md, LICENSE and test files are created from the terminal.</p>
+</div>
+<a href="screenshots/6.png" rel="noopener" target="_blank"><img alt="Create top-level files screenshot" loading="lazy" src="screenshots/6.png"/></a>
 </article>
-
 <article class="shot-card" id="step-7">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 7</span>
-    <h3>Return to the prompt</h3>
-    <p>After files are created, the project is ready to open in Visual Studio Code or another editor.</p>
-  </div>
-  <a href="screenshots/7.png" target="_blank" rel="noopener"><img src="screenshots/7.png" alt="Return to the prompt screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 7</span>
+<h3>Return to the prompt</h3>
+<p>After files are created, the project is ready to open in Visual Studio Code or another editor.</p>
+</div>
+<a href="screenshots/7.png" rel="noopener" target="_blank"><img alt="Return to the prompt screenshot" loading="lazy" src="screenshots/7.png"/></a>
 </article>
-
 <article class="shot-card" id="step-8">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 8</span>
-    <h3>Open the project in Visual Studio Code</h3>
-    <p>Use code . to edit the package files, README, and build configuration comfortably.</p>
-  </div>
-  <a href="screenshots/8.png" target="_blank" rel="noopener"><img src="screenshots/8.png" alt="Open the project in Visual Studio Code screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 8</span>
+<h3>Open the project in Visual Studio Code</h3>
+<p>Use code . to edit the package files, README, and build configuration comfortably.</p>
+</div>
+<a href="screenshots/8.png" rel="noopener" target="_blank"><img alt="Open the project in Visual Studio Code screenshot" loading="lazy" src="screenshots/8.png"/></a>
 </article>
-
 <article class="shot-card" id="step-9">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 9</span>
-    <h3>Install build and twine</h3>
-    <p>Build creates distribution files. Twine checks and uploads those files to TestPyPI or PyPI.</p>
-  </div>
-  <a href="screenshots/9.png" target="_blank" rel="noopener"><img src="screenshots/9.png" alt="Install build and twine screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 9</span>
+<h3>Install build and twine</h3>
+<p>Build creates distribution files. Twine checks and uploads those files to TestPyPI or PyPI.</p>
+</div>
+<a href="screenshots/9.png" rel="noopener" target="_blank"><img alt="Install build and twine screenshot" loading="lazy" src="screenshots/9.png"/></a>
 </article>
-
 <article class="shot-card" id="step-10">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 10</span>
-    <h3>Build the package</h3>
-    <p>python -m build creates a source distribution and wheel inside the dist folder.</p>
-  </div>
-  <a href="screenshots/10.png" target="_blank" rel="noopener"><img src="screenshots/10.png" alt="Build the package screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 10</span>
+<h3>Build the package</h3>
+<p>python -m build creates a source distribution and wheel inside the dist folder.</p>
+</div>
+<a href="screenshots/10.png" rel="noopener" target="_blank"><img alt="Build the package screenshot" loading="lazy" src="screenshots/10.png"/></a>
 </article>
-
 <article class="shot-card" id="step-11">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 11</span>
-    <h3>Check the package</h3>
-    <p>twine check dist/* verifies that the package metadata and README rendering are acceptable.</p>
-  </div>
-  <a href="screenshots/11.png" target="_blank" rel="noopener"><img src="screenshots/11.png" alt="Check the package screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 11</span>
+<h3>Check the package</h3>
+<p>twine check dist/* verifies that the package metadata and README rendering are acceptable.</p>
+</div>
+<a href="screenshots/11.png" rel="noopener" target="_blank"><img alt="Check the package screenshot" loading="lazy" src="screenshots/11.png"/></a>
 </article>
-
 <article class="shot-card" id="step-12">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 12</span>
-    <h3>Upload to TestPyPI and fix authentication problems</h3>
-    <p>403 errors usually mean wrong token, real PyPI token used on TestPyPI, missing __token__ username, or project-scoped token before the project exists. The final upload in this screenshot succeeds. Token text has been redacted.</p>
-  </div>
-  <a href="screenshots/12.png" target="_blank" rel="noopener"><img src="screenshots/12.png" alt="Upload to TestPyPI and fix authentication problems screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 12</span>
+<h3>Upload to TestPyPI and fix authentication problems</h3>
+<p>403 errors usually mean wrong token, real PyPI token used on TestPyPI, missing __token__ username, or project-scoped token before the project exists. The final upload in this screenshot succeeds. Token text has been redacted.</p>
+</div>
+<a href="screenshots/12.png" rel="noopener" target="_blank"><img alt="Upload to TestPyPI and fix authentication problems screenshot" loading="lazy" src="screenshots/12.png"/></a>
 </article>
-
 <article class="shot-card" id="step-13">
-  <div class="shot-copy">
-    <span class="step-pill">Screenshot 13</span>
-    <h3>Install from TestPyPI</h3>
-    <p>After successful upload, install from TestPyPI and test the function from a clean environment.</p>
-  </div>
-  <a href="screenshots/13.png" target="_blank" rel="noopener"><img src="screenshots/13.png" alt="Install from TestPyPI screenshot" loading="lazy"></a>
+<div class="shot-copy">
+<span class="step-pill">Screenshot 13</span>
+<h3>Install from TestPyPI</h3>
+<p>After successful upload, install from TestPyPI and test the function from a clean environment.</p>
+</div>
+<a href="screenshots/13.png" rel="noopener" target="_blank"><img alt="Install from TestPyPI screenshot" loading="lazy" src="screenshots/13.png"/></a>
 </article>
-  </section>
-  <section class="card">
-    <h2>7. Version updates: 0 to Infinity habit</h2>
-    <p>Every time you improve the module, increase the version number in <code>pyproject.toml</code> and <code>__init__.py</code>, delete old build files, rebuild, check, and upload.</p>
-    <pre class="cmd"><code>rmdir /s /q dist build src\learnwithchampak.egg-info
+</section>
+<section class="card">
+<h2>7. Version updates: 0 to Infinity habit</h2>
+<p>Every time you improve the module, increase the version number in <code>pyproject.toml</code> and <code>__init__.py</code>, delete old build files, rebuild, check, and upload.</p>
+<pre class="cmd"><code>rmdir /s /q dist build src\learnwithchampak.egg-info
 python -m build
 python -m twine check dist/*
 python -m twine upload dist/*</code></pre>
-  </section>
+</section>
 </main>
-<footer class="footer"><div class="wrap"><strong>Programmers Picnic AI-ML Classes by Champak Roy</strong><br>Learn Python, packaging, AI, ML, and deployment step by step. Visit <a href="https://learnwithchampak.live">learnwithchampak.live</a>.</div></footer>
+<footer class="footer"><div class="wrap"><strong>Programmers Picnic AI-ML Classes by Champak Roy</strong><br/>Learn Python, packaging, AI, ML, and deployment step by step. Visit <a href="https://learnwithchampak.live">learnwithchampak.live</a>.</div></footer>
 <script>
 document.querySelectorAll('pre').forEach(pre=>{
   const btn=document.createElement('button'); btn.className='copy'; btn.textContent='Copy';
@@ -335,5 +322,5 @@ document.querySelectorAll('pre').forEach(pre=>{
   pre.prepend(btn);
 });
 </script>
-</body>
+<div data-include="footer"></div></body>
 </html>

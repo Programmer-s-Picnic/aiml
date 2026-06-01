@@ -1,22 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Multiple Linear Regression | Programmer's Picnic</title>
-
-    <meta
-      name="description"
-      content="Learn Multiple Linear Regression from ground zero with intuition, formula, Python implementation, NumPy solution, sklearn model, charts, examples, and MCQs."
-    />
-    <meta name="theme-color" content="#f59e0b" />
-    <script
-      async=""
-      crossorigin="anonymous"
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-    ></script>
-
-    <style>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Multiple Linear Regression | Programmer's Picnic</title>
+<meta content="Learn Multiple Linear Regression from ground zero with intuition, formula, Python implementation, NumPy solution, sklearn model, charts, examples, and MCQs." name="description"/>
+<meta content="#f59e0b" name="theme-color"/>
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+<style>
       :root {
         --bg: #fffaf0;
         --bg2: #fff4d6;
@@ -169,90 +161,72 @@
         color: var(--muted);
       }
     </style>
-  </head>
-
-  <body>
-    <header>
-      <h1 id="speak0">Multiple Linear Regression</h1>
-      <p id="speak1">
+<link href="../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../assets/js/site.js"></script><script defer="defer" src="../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<header>
+<h1 id="speak0">Multiple Linear Regression</h1>
+<p id="speak1">
         Learn how prediction works when we have more than one input: hours
         studied, sleep, practice, experience, rooms, area, price, and more.
       </p>
-    </header>
-
-    <main>
-      <section>
-        <h2 id="speak2">1. The Simple Idea</h2>
-        <p>
+</header>
+<main id="main-content">
+<section>
+<h2 id="speak2">1. The Simple Idea</h2>
+<p>
           In simple linear regression, we use one input to predict one output.
         </p>
-
-        <div class="formula">y = a + bx</div>
-
-        <p>
+<div class="formula">y = a + bx</div>
+<p>
           But real life usually depends on many inputs. For example, marks may
           depend on:
         </p>
-
-        <div class="grid">
-          <div class="card">Hours studied</div>
-          <div class="card">Sleep</div>
-          <div class="card">Practice sessions</div>
-          <div class="card">Previous score</div>
-        </div>
-      </section>
-
-      <section>
-        <h2 id="speak3">2. Multiple Linear Regression Formula</h2>
-
-        <div class="formula">y = a + b₁x₁ + b₂x₂ + b₃x₃ + ... + bₙxₙ</div>
-
-        <p>Here:</p>
-
-        <div class="grid">
-          <div class="card"><b>y</b><br />Predicted output</div>
-          <div class="card"><b>a</b><br />Intercept or base value</div>
-          <div class="card"><b>x₁, x₂, x₃</b><br />Input features</div>
-          <div class="card"><b>b₁, b₂, b₃</b><br />Weights or coefficients</div>
-        </div>
-      </section>
-
-      <section>
-        <h2 id="speak4">3. Example</h2>
-
-        <p>
+<div class="grid">
+<div class="card">Hours studied</div>
+<div class="card">Sleep</div>
+<div class="card">Practice sessions</div>
+<div class="card">Previous score</div>
+</div>
+</section>
+<section>
+<h2 id="speak3">2. Multiple Linear Regression Formula</h2>
+<div class="formula">y = a + b₁x₁ + b₂x₂ + b₃x₃ + ... + bₙxₙ</div>
+<p>Here:</p>
+<div class="grid">
+<div class="card"><b>y</b><br/>Predicted output</div>
+<div class="card"><b>a</b><br/>Intercept or base value</div>
+<div class="card"><b>x₁, x₂, x₃</b><br/>Input features</div>
+<div class="card"><b>b₁, b₂, b₃</b><br/>Weights or coefficients</div>
+</div>
+</section>
+<section>
+<h2 id="speak4">3. Example</h2>
+<p>
           Suppose we want to predict marks using hours studied, sleep, and
           practice.
         </p>
-
-        <div class="formula">
+<div class="formula">
           Marks = 10 + 5 × Hours + 2 × Sleep + 3 × Practice
         </div>
-
-        <p>Meaning:</p>
-
-        <ul>
-          <li>Each extra study hour adds about 5 marks.</li>
-          <li>Each extra sleep hour adds about 2 marks.</li>
-          <li>Each practice session adds about 3 marks.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2 id="speak5">4. Dataset</h2>
-
-        <pre><code>Hours  Sleep  Practice  Marks
+<p>Meaning:</p>
+<ul>
+<li>Each extra study hour adds about 5 marks.</li>
+<li>Each extra sleep hour adds about 2 marks.</li>
+<li>Each practice session adds about 3 marks.</li>
+</ul>
+</section>
+<section>
+<h2 id="speak5">4. Dataset</h2>
+<pre><code>Hours  Sleep  Practice  Marks
 2      6      1         50
 4      7      2         65
 6      8      3         80
 8      7      4         88
 10     8      5         98</code></pre>
-      </section>
-
-      <section>
-        <h2 id="speak6">5. Python Implementation from Scratch</h2>
-
-        <pre><code>import numpy as np
+</section>
+<section>
+<h2 id="speak6">5. Python Implementation from Scratch</h2>
+<pre><code>import numpy as np
 
 # Inputs: Hours, Sleep, Practice
 X = np.array([
@@ -282,12 +256,10 @@ new_student = np.array([1, 7, 8, 4])
 prediction = new_student @ beta
 
 print("Predicted marks:", prediction)</code></pre>
-      </section>
-
-      <section>
-        <h2 id="speak7">6. Using NumPy Least Squares</h2>
-
-        <pre><code>import numpy as np
+</section>
+<section>
+<h2 id="speak7">6. Using NumPy Least Squares</h2>
+<pre><code>import numpy as np
 
 X = np.array([
     [2, 6, 1],
@@ -308,12 +280,10 @@ print("Coefficients:", beta[1:])
 
 prediction = np.array([1, 7, 8, 4]) @ beta
 print("Predicted marks:", prediction)</code></pre>
-      </section>
-
-      <section>
-        <h2 id="speak8">7. Using sklearn</h2>
-
-        <pre><code>import numpy as np
+</section>
+<section>
+<h2 id="speak8">7. Using sklearn</h2>
+<pre><code>import numpy as np
 from sklearn.linear_model import LinearRegression
 
 X = np.array([
@@ -336,12 +306,10 @@ new_student = np.array([[7, 8, 4]])
 prediction = model.predict(new_student)
 
 print("Predicted marks:", prediction[0])</code></pre>
-      </section>
-
-      <section>
-        <h2 id="speak9">8. Charts with Matplotlib</h2>
-
-        <pre><code>import numpy as np
+</section>
+<section>
+<h2 id="speak9">8. Charts with Matplotlib</h2>
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
@@ -375,94 +343,76 @@ plt.title("Actual and Predicted Marks")
 plt.legend()
 plt.grid(True)
 plt.show()</code></pre>
-      </section>
-
-      <section>
-        <h2 id="speak10">9. Important Concepts</h2>
-
-        <div class="grid">
-          <div class="card">
-            <h3>Feature</h3>
-            <p>An input column used for prediction.</p>
-          </div>
-
-          <div class="card">
-            <h3>Coefficient</h3>
-            <p>The weight or importance of a feature.</p>
-          </div>
-
-          <div class="card">
-            <h3>Intercept</h3>
-            <p>The base prediction when all inputs are zero.</p>
-          </div>
-
-          <div class="card">
-            <h3>Error</h3>
-            <p>The difference between actual and predicted output.</p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2 id="speak11">10. Warning: More Inputs Are Not Always Better</h2>
-
-        <div class="note">
+</section>
+<section>
+<h2 id="speak10">9. Important Concepts</h2>
+<div class="grid">
+<div class="card">
+<h3>Feature</h3>
+<p>An input column used for prediction.</p>
+</div>
+<div class="card">
+<h3>Coefficient</h3>
+<p>The weight or importance of a feature.</p>
+</div>
+<div class="card">
+<h3>Intercept</h3>
+<p>The base prediction when all inputs are zero.</p>
+</div>
+<div class="card">
+<h3>Error</h3>
+<p>The difference between actual and predicted output.</p>
+</div>
+</div>
+</section>
+<section>
+<h2 id="speak11">10. Warning: More Inputs Are Not Always Better</h2>
+<div class="note">
           Adding more inputs can improve prediction, but useless or repeated
           inputs can damage the model.
         </div>
-
-        <ul>
-          <li>
-            <b>Overfitting:</b> The model memorizes training data instead of
+<ul>
+<li>
+<b>Overfitting:</b> The model memorizes training data instead of
             learning general patterns.
           </li>
-          <li>
-            <b>Multicollinearity:</b> Two or more inputs carry almost the same
+<li>
+<b>Multicollinearity:</b> Two or more inputs carry almost the same
             information.
           </li>
-          <li><b>Noise:</b> Bad features confuse the model.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2 id="speak12">11. Embedded Python Editor</h2>
-        <p>Try the code live in the Programmer’s Picnic Python editor.</p>
-
-        <iframe
-          src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-        ></iframe>
-      </section>
-
-      <section>
-        <h2 id="speak13">12. MCQ Quiz</h2>
-
-        <div id="quiz"></div>
-        <button class="btn" onclick="checkScore()">Check Score</button>
-        <p id="scoreBox"></p>
-      </section>
-
-      <section>
-        <h2 id="speak14">13. YouTube Closing Summary</h2>
-
-        <p>
+<li><b>Noise:</b> Bad features confuse the model.</li>
+</ul>
+</section>
+<section>
+<h2 id="speak12">11. Embedded Python Editor</h2>
+<p>Try the code live in the Programmer’s Picnic Python editor.</p>
+<iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"></iframe>
+</section>
+<section>
+<h2 id="speak13">12. MCQ Quiz</h2>
+<div id="quiz"></div>
+<button class="btn" onclick="checkScore()">Check Score</button>
+<p id="scoreBox"></p>
+</section>
+<section>
+<h2 id="speak14">13. YouTube Closing Summary</h2>
+<p>
           Multiple Linear Regression is the natural upgrade of simple linear
           regression. Instead of using one input, we use many inputs to predict
           one output.
         </p>
-
-        <p>
+<p>
           One input gives us a line. Two inputs can give us a plane. More inputs
           create a hyperplane. But the goal remains the same: find the best
           fitting model with minimum error.
         </p>
-      </section>
-    </main>
-
-    <footer>Programmer's Picnic | Champak Roy</footer>
-    <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
-    <script>
+</section>
+</main>
+<footer>Programmer's Picnic | Champak Roy</footer>
+<script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+<script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+<script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+<script>
       const questions = [
         {
           q: "What is Multiple Linear Regression used for?",
@@ -599,5 +549,5 @@ plt.show()</code></pre>
           `<b>Your Score:</b> ${score} / ${questions.length}`;
       }
     </script>
-  </body>
+<div data-include="footer"></div></body>
 </html>

@@ -1,24 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>NLP Lesson 21% to 30% | Bag of Words and Count Vectors</title>
-
-    <!-- Google AdSense -->
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- Programmers Picnic / Learn With Champak Scripts -->
-    <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
-
-    <style>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NLP Lesson 21% to 30% | Bag of Words and Count Vectors</title>
+<!-- Google AdSense -->
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+<!-- Programmers Picnic / Learn With Champak Scripts -->
+<script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+<script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+<script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+<style>
       :root {
         --bg: #fff8ed;
         --card: #ffffff;
@@ -456,497 +449,410 @@
         }
       }
     </style>
-  </head>
-
-  <body>
-    <header>
-      <div class="badge">Programmers Picnic AI-ML Classes</div>
-      <h1>NLP Lesson 21% to 30%</h1>
-      <p>
+<meta content="NLP Lesson 21% to 30% | Bag of Words and Count Vectors - AI-ML learning resource by Programmer's Picnic." name="description"/><link href="../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../assets/js/site.js"></script><script defer="defer" src="../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<header>
+<div class="badge">Programmers Picnic AI-ML Classes</div>
+<h1>NLP Lesson 21% to 30%</h1>
+<p>
         Bag of Words, vocabulary building, binary vectors, count vectors,
         document-term matrix, and beginner-friendly Python examples for text
         representation.
       </p>
-      <p>By <strong>Champak Roy</strong></p>
-    </header>
-
-    <nav class="topbar">
-      <a href="#start">Start Lesson</a>
-      <a href="#bow">Bag of Words</a>
-      <a href="#vocabulary">Vocabulary</a>
-      <a href="#vectors">Count Vectors</a>
-      <a href="#python">Python Examples</a>
-      <a href="#editor">Practice Editor</a>
-      <button onclick="toggleDark()">Dark / Light</button>
-      <button onclick="window.print()">Print</button>
-      <button onclick="toggleFullScreen()">Full Screen</button>
-    </nav>
-
-    <main id="start">
-      <div class="ad-box">
+<p>By <strong>Champak Roy</strong></p>
+</header>
+<nav class="topbar">
+<a href="#start">Start Lesson</a>
+<a href="#bow">Bag of Words</a>
+<a href="#vocabulary">Vocabulary</a>
+<a href="#vectors">Count Vectors</a>
+<a href="#python">Python Examples</a>
+<a href="#editor">Practice Editor</a>
+<button onclick="toggleDark()">Dark / Light</button>
+<button onclick="window.print()">Print</button>
+<button onclick="toggleFullScreen()">Full Screen</button>
+</nav>
+<main id="main-content">
+<div class="ad-box">
         Advertisement
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-     crossorigin="anonymous"></script>
+        <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
 <!-- nlp -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-8321261883090494"
-     data-ad-slot="7782388330"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-      </div>
-
-      <div class="lesson-info">
-        <div class="info-card">
-          <strong>Level:</strong>
-          <p>21% to 30%</p>
-        </div>
-
-        <div class="info-card">
-          <strong>Previous Lesson:</strong>
-          <p>Text cleaning and preprocessing</p>
-        </div>
-
-        <div class="info-card">
-          <strong>This Lesson:</strong>
-          <p>Bag of Words and count vectors</p>
-        </div>
-
-        <div class="info-card">
-          <strong>Goal:</strong>
-          <p>Represent text as numbers using word counts.</p>
-        </div>
-      </div>
-
-      <section>
-        <h2>1. What We Have Learned So Far</h2>
-
-        <p>
+</div>
+<div class="lesson-info">
+<div class="info-card">
+<strong>Level:</strong>
+<p>21% to 30%</p>
+</div>
+<div class="info-card">
+<strong>Previous Lesson:</strong>
+<p>Text cleaning and preprocessing</p>
+</div>
+<div class="info-card">
+<strong>This Lesson:</strong>
+<p>Bag of Words and count vectors</p>
+</div>
+<div class="info-card">
+<strong>Goal:</strong>
+<p>Represent text as numbers using word counts.</p>
+</div>
+</div>
+<section>
+<h2>1. What We Have Learned So Far</h2>
+<p>
           In the first part of NLP, we learned that computers do not understand
           text directly. They understand numbers.
         </p>
-
-        <p>
+<p>
           Then we learned how to clean messy text before giving it to an NLP
           program.
         </p>
-
-        <div class="flow">
-          <span>Raw Text</span>
-          <span class="arrow">➡</span>
-          <span>Clean Text</span>
-          <span class="arrow">➡</span>
-          <span>Tokens</span>
-          <span class="arrow">➡</span>
-          <span>Numbers</span>
-        </div>
-
-        <div class="note">
+<div class="flow">
+<span>Raw Text</span>
+<span class="arrow">➡</span>
+<span>Clean Text</span>
+<span class="arrow">➡</span>
+<span>Tokens</span>
+<span class="arrow">➡</span>
+<span>Numbers</span>
+</div>
+<div class="note">
           This lesson focuses on one of the simplest ways to convert text into
           numbers: Bag of Words.
         </div>
-      </section>
-
-      <section id="bow">
-        <h2>2. What is Bag of Words?</h2>
-
-        <p>
-          <span class="big-word">Bag of Words</span>
-        </p>
-
-        <p>
+</section>
+<section id="bow">
+<h2>2. What is Bag of Words?</h2>
+<p>
+<span class="big-word">Bag of Words</span>
+</p>
+<p>
           Bag of Words is a simple NLP method where we represent text by
           counting words.
         </p>
-
-        <p>
+<p>
           It does not care much about grammar or exact sentence order. It mostly
           checks which words are present and how many times they appear.
         </p>
-
-        <div class="example">
-          <strong>Sentence:</strong>
-
-          <pre><code>Python AI Python ML</code></pre>
-
-          <p>Bag of Words thinking:</p>
-
-          <table>
-            <tr>
-              <th>Word</th>
-              <th>Count</th>
-            </tr>
-            <tr>
-              <td>python</td>
-              <td>2</td>
-            </tr>
-            <tr>
-              <td>ai</td>
-              <td>1</td>
-            </tr>
-            <tr>
-              <td>ml</td>
-              <td>1</td>
-            </tr>
-          </table>
-        </div>
-
-        <div class="success">
+<div class="example">
+<strong>Sentence:</strong>
+<pre><code>Python AI Python ML</code></pre>
+<p>Bag of Words thinking:</p>
+<table>
+<tr>
+<th>Word</th>
+<th>Count</th>
+</tr>
+<tr>
+<td>python</td>
+<td>2</td>
+</tr>
+<tr>
+<td>ai</td>
+<td>1</td>
+</tr>
+<tr>
+<td>ml</td>
+<td>1</td>
+</tr>
+</table>
+</div>
+<div class="success">
           Simple meaning: Bag of Words converts a sentence into word counts.
         </div>
-      </section>
-
-      <section>
-        <h2>3. Why Is It Called a Bag?</h2>
-
-        <p>
+</section>
+<section>
+<h2>3. Why Is It Called a Bag?</h2>
+<p>
           Imagine putting all words of a sentence into a bag. The bag contains
           words, but it does not strongly remember the sentence order.
         </p>
-
-        <div class="two-col">
-          <div class="mini-card">
-            <h3>Sentence 1</h3>
-            <pre><code>Python teaches AI</code></pre>
-          </div>
-
-          <div class="mini-card">
-            <h3>Sentence 2</h3>
-            <pre><code>AI teaches Python</code></pre>
-          </div>
-        </div>
-
-        <p>Both sentences contain the same words:</p>
-
-        <div class="vector-box">
-          <div class="vector-item">python</div>
-          <div class="vector-item">teaches</div>
-          <div class="vector-item">ai</div>
-        </div>
-
-        <div class="danger">
+<div class="two-col">
+<div class="mini-card">
+<h3>Sentence 1</h3>
+<pre><code>Python teaches AI</code></pre>
+</div>
+<div class="mini-card">
+<h3>Sentence 2</h3>
+<pre><code>AI teaches Python</code></pre>
+</div>
+</div>
+<p>Both sentences contain the same words:</p>
+<div class="vector-box">
+<div class="vector-item">python</div>
+<div class="vector-item">teaches</div>
+<div class="vector-item">ai</div>
+</div>
+<div class="danger">
           Bag of Words is simple and useful, but it may ignore deeper meaning
           because word order is not strongly considered.
         </div>
-      </section>
-
-      <section id="vocabulary">
-        <h2>4. Vocabulary in NLP</h2>
-
-        <p>
+</section>
+<section id="vocabulary">
+<h2>4. Vocabulary in NLP</h2>
+<p>
           Vocabulary means the list of unique words found in our text
           collection.
         </p>
-
-        <div class="example">
-          <strong>Sentences:</strong>
-
-          <pre><code>Python teaches AI
+<div class="example">
+<strong>Sentences:</strong>
+<pre><code>Python teaches AI
 Python teaches ML
 Champak Roy teaches NLP</code></pre>
-
-          <strong>Vocabulary:</strong>
-
-          <pre><code>["python", "teaches", "ai", "ml", "champak", "roy", "nlp"]</code></pre>
-        </div>
-
-        <p>
+<strong>Vocabulary:</strong>
+<pre><code>["python", "teaches", "ai", "ml", "champak", "roy", "nlp"]</code></pre>
+</div>
+<p>
           Once we have a vocabulary, we can convert every sentence into numbers.
         </p>
-
-        <table>
-          <tr>
-            <th>Word</th>
-            <th>Meaning in Vocabulary</th>
-          </tr>
-          <tr>
-            <td>python</td>
-            <td>A word found in the text collection</td>
-          </tr>
-          <tr>
-            <td>teaches</td>
-            <td>A repeated action word</td>
-          </tr>
-          <tr>
-            <td>ai</td>
-            <td>A topic word</td>
-          </tr>
-          <tr>
-            <td>ml</td>
-            <td>A topic word</td>
-          </tr>
-          <tr>
-            <td>nlp</td>
-            <td>A topic word</td>
-          </tr>
-        </table>
-      </section>
-
-      <section>
-        <h2>5. Binary Vector</h2>
-
-        <p>
+<table>
+<tr>
+<th>Word</th>
+<th>Meaning in Vocabulary</th>
+</tr>
+<tr>
+<td>python</td>
+<td>A word found in the text collection</td>
+</tr>
+<tr>
+<td>teaches</td>
+<td>A repeated action word</td>
+</tr>
+<tr>
+<td>ai</td>
+<td>A topic word</td>
+</tr>
+<tr>
+<td>ml</td>
+<td>A topic word</td>
+</tr>
+<tr>
+<td>nlp</td>
+<td>A topic word</td>
+</tr>
+</table>
+</section>
+<section>
+<h2>5. Binary Vector</h2>
+<p>
           A binary vector uses only <strong>0</strong> and <strong>1</strong>.
         </p>
-
-        <ul>
-          <li><strong>1</strong> means the word is present.</li>
-          <li><strong>0</strong> means the word is absent.</li>
-        </ul>
-
-        <div class="example">
-          <strong>Vocabulary:</strong>
-
-          <pre><code>["python", "ai", "ml", "nlp"]</code></pre>
-
-          <strong>Sentence:</strong>
-
-          <pre><code>python nlp</code></pre>
-
-          <strong>Binary Vector:</strong>
-
-          <pre><code>[1, 0, 0, 1]</code></pre>
-        </div>
-
-        <table>
-          <tr>
-            <th>Vocabulary Word</th>
-            <th>Present in sentence?</th>
-            <th>Number</th>
-          </tr>
-          <tr>
-            <td>python</td>
-            <td>Yes</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>ai</td>
-            <td>No</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>ml</td>
-            <td>No</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>nlp</td>
-            <td>Yes</td>
-            <td>1</td>
-          </tr>
-        </table>
-      </section>
-
-      <div class="ad-box">
+<ul>
+<li><strong>1</strong> means the word is present.</li>
+<li><strong>0</strong> means the word is absent.</li>
+</ul>
+<div class="example">
+<strong>Vocabulary:</strong>
+<pre><code>["python", "ai", "ml", "nlp"]</code></pre>
+<strong>Sentence:</strong>
+<pre><code>python nlp</code></pre>
+<strong>Binary Vector:</strong>
+<pre><code>[1, 0, 0, 1]</code></pre>
+</div>
+<table>
+<tr>
+<th>Vocabulary Word</th>
+<th>Present in sentence?</th>
+<th>Number</th>
+</tr>
+<tr>
+<td>python</td>
+<td>Yes</td>
+<td>1</td>
+</tr>
+<tr>
+<td>ai</td>
+<td>No</td>
+<td>0</td>
+</tr>
+<tr>
+<td>ml</td>
+<td>No</td>
+<td>0</td>
+</tr>
+<tr>
+<td>nlp</td>
+<td>Yes</td>
+<td>1</td>
+</tr>
+</table>
+</section>
+<div class="ad-box">
         Advertisement
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-     crossorigin="anonymous"></script>
+        <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
 <!-- nlp -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-8321261883090494"
-     data-ad-slot="7782388330"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-      </div>
-
-      <section id="vectors">
-        <h2>6. Count Vector</h2>
-
-        <p>
+</div>
+<section id="vectors">
+<h2>6. Count Vector</h2>
+<p>
           A count vector stores how many times each vocabulary word appears in a
           sentence.
         </p>
-
-        <div class="example">
-          <strong>Vocabulary:</strong>
-
-          <pre><code>["python", "ai", "ml", "nlp"]</code></pre>
-
-          <strong>Sentence:</strong>
-
-          <pre><code>python ai python nlp python</code></pre>
-
-          <strong>Count Vector:</strong>
-
-          <pre><code>[3, 1, 0, 1]</code></pre>
-        </div>
-
-        <table>
-          <tr>
-            <th>Vocabulary Word</th>
-            <th>Count in sentence</th>
-          </tr>
-          <tr>
-            <td>python</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>ai</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>ml</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>nlp</td>
-            <td>1</td>
-          </tr>
-        </table>
-
-        <div class="success">
+<div class="example">
+<strong>Vocabulary:</strong>
+<pre><code>["python", "ai", "ml", "nlp"]</code></pre>
+<strong>Sentence:</strong>
+<pre><code>python ai python nlp python</code></pre>
+<strong>Count Vector:</strong>
+<pre><code>[3, 1, 0, 1]</code></pre>
+</div>
+<table>
+<tr>
+<th>Vocabulary Word</th>
+<th>Count in sentence</th>
+</tr>
+<tr>
+<td>python</td>
+<td>3</td>
+</tr>
+<tr>
+<td>ai</td>
+<td>1</td>
+</tr>
+<tr>
+<td>ml</td>
+<td>0</td>
+</tr>
+<tr>
+<td>nlp</td>
+<td>1</td>
+</tr>
+</table>
+<div class="success">
           Binary vector checks presence. Count vector checks frequency.
         </div>
-      </section>
-
-      <section>
-        <h2>7. Binary Vector vs Count Vector</h2>
-
-        <table>
-          <tr>
-            <th>Feature</th>
-            <th>Binary Vector</th>
-            <th>Count Vector</th>
-          </tr>
-          <tr>
-            <td>Meaning</td>
-            <td>Word present or absent</td>
-            <td>How many times word appears</td>
-          </tr>
-          <tr>
-            <td>Values</td>
-            <td>Only 0 or 1</td>
-            <td>0, 1, 2, 3, 4...</td>
-          </tr>
-          <tr>
-            <td>Example</td>
-            <td>[1, 0, 1]</td>
-            <td>[3, 0, 2]</td>
-          </tr>
-          <tr>
-            <td>Useful when</td>
-            <td>We only need to know whether a word exists</td>
-            <td>Word repetition is important</td>
-          </tr>
-        </table>
-      </section>
-
-      <section>
-        <h2>8. Document-Term Matrix</h2>
-
-        <p>
+</section>
+<section>
+<h2>7. Binary Vector vs Count Vector</h2>
+<table>
+<tr>
+<th>Feature</th>
+<th>Binary Vector</th>
+<th>Count Vector</th>
+</tr>
+<tr>
+<td>Meaning</td>
+<td>Word present or absent</td>
+<td>How many times word appears</td>
+</tr>
+<tr>
+<td>Values</td>
+<td>Only 0 or 1</td>
+<td>0, 1, 2, 3, 4...</td>
+</tr>
+<tr>
+<td>Example</td>
+<td>[1, 0, 1]</td>
+<td>[3, 0, 2]</td>
+</tr>
+<tr>
+<td>Useful when</td>
+<td>We only need to know whether a word exists</td>
+<td>Word repetition is important</td>
+</tr>
+</table>
+</section>
+<section>
+<h2>8. Document-Term Matrix</h2>
+<p>
           A document-term matrix is a table where rows are documents and columns
           are vocabulary words.
         </p>
-
-        <div class="example">
-          <strong>Documents:</strong>
-
-          <pre><code>Doc 1: python ai
+<div class="example">
+<strong>Documents:</strong>
+<pre><code>Doc 1: python ai
 Doc 2: python ml
 Doc 3: ai nlp</code></pre>
-
-          <strong>Vocabulary:</strong>
-
-          <pre><code>["python", "ai", "ml", "nlp"]</code></pre>
-        </div>
-
-        <table>
-          <tr>
-            <th>Document</th>
-            <th>python</th>
-            <th>ai</th>
-            <th>ml</th>
-            <th>nlp</th>
-          </tr>
-          <tr>
-            <td>Doc 1</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>Doc 2</td>
-            <td>1</td>
-            <td>0</td>
-            <td>1</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>Doc 3</td>
-            <td>0</td>
-            <td>1</td>
-            <td>0</td>
-            <td>1</td>
-          </tr>
-        </table>
-
-        <div class="note">
+<strong>Vocabulary:</strong>
+<pre><code>["python", "ai", "ml", "nlp"]</code></pre>
+</div>
+<table>
+<tr>
+<th>Document</th>
+<th>python</th>
+<th>ai</th>
+<th>ml</th>
+<th>nlp</th>
+</tr>
+<tr>
+<td>Doc 1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Doc 2</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Doc 3</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</table>
+<div class="note">
           This table is very important. Many beginner machine learning models
           can use this kind of table as input.
         </div>
-      </section>
-
-      <section>
-        <h2>9. Bag of Words Limitations</h2>
-
-        <p>
+</section>
+<section>
+<h2>9. Bag of Words Limitations</h2>
+<p>
           Bag of Words is beginner-friendly and useful, but it has limitations.
         </p>
-
-        <table>
-          <tr>
-            <th>Limitation</th>
-            <th>Meaning</th>
-          </tr>
-          <tr>
-            <td>Ignores word order</td>
-            <td>
+<table>
+<tr>
+<th>Limitation</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>Ignores word order</td>
+<td>
               It may not understand the difference between different sentence
               orders.
             </td>
-          </tr>
-          <tr>
-            <td>Ignores grammar</td>
-            <td>It counts words but does not deeply understand grammar.</td>
-          </tr>
-          <tr>
-            <td>Large vocabulary problem</td>
-            <td>Many words can create very large vectors.</td>
-          </tr>
-          <tr>
-            <td>Meaning problem</td>
-            <td>
+</tr>
+<tr>
+<td>Ignores grammar</td>
+<td>It counts words but does not deeply understand grammar.</td>
+</tr>
+<tr>
+<td>Large vocabulary problem</td>
+<td>Many words can create very large vectors.</td>
+</tr>
+<tr>
+<td>Meaning problem</td>
+<td>
               It may not understand synonyms properly unless we handle them.
             </td>
-          </tr>
-        </table>
-
-        <div class="success">
+</tr>
+</table>
+<div class="success">
           Even with limitations, Bag of Words is one of the best first steps for
           understanding NLP.
         </div>
-      </section>
-
-      <section id="python">
-        <h2>10. Python Examples: 21% to 30%</h2>
-
-        <p>
+</section>
+<section id="python">
+<h2>10. Python Examples: 21% to 30%</h2>
+<p>
           These examples move from manual vectors to automatic CountVectorizer.
           Start with pure Python examples, then move to scikit-learn.
         </p>
-
-        <h3>Example 1: Build Vocabulary From Sentences</h3>
-
-        <pre><code>sentences = [
+<h3>Example 1: Build Vocabulary From Sentences</h3>
+<pre><code>sentences = [
     "python teaches ai",
     "python teaches ml",
     "champak roy teaches nlp"
@@ -962,10 +868,8 @@ for sentence in sentences:
             vocabulary.append(word)
 
 print(vocabulary)</code></pre>
-
-        <h3>Example 2: Create Binary Vector Manually</h3>
-
-        <pre><code>vocabulary = ["python", "ai", "ml", "nlp"]
+<h3>Example 2: Create Binary Vector Manually</h3>
+<pre><code>vocabulary = ["python", "ai", "ml", "nlp"]
 
 sentence = "python nlp"
 
@@ -980,10 +884,8 @@ for vocab_word in vocabulary:
         vector.append(0)
 
 print(vector)</code></pre>
-
-        <h3>Example 3: Create Count Vector Manually</h3>
-
-        <pre><code>vocabulary = ["python", "ai", "ml", "nlp"]
+<h3>Example 3: Create Count Vector Manually</h3>
+<pre><code>vocabulary = ["python", "ai", "ml", "nlp"]
 
 sentence = "python ai python nlp python"
 
@@ -996,10 +898,8 @@ for vocab_word in vocabulary:
     vector.append(count)
 
 print(vector)</code></pre>
-
-        <h3>Example 4: Convert Many Sentences Into Count Vectors</h3>
-
-        <pre><code>vocabulary = ["python", "ai", "ml", "nlp"]
+<h3>Example 4: Convert Many Sentences Into Count Vectors</h3>
+<pre><code>vocabulary = ["python", "ai", "ml", "nlp"]
 
 sentences = [
     "python ai",
@@ -1015,11 +915,9 @@ for sentence in sentences:
     for vocab_word in vocabulary:
         vector.append(words.count(vocab_word))
 
-    print(sentence, "-->", vector)</code></pre>
-
-        <h3>Example 5: Build Document-Term Matrix Manually</h3>
-
-        <pre><code>documents = [
+    print(sentence, "--&gt;", vector)</code></pre>
+<h3>Example 5: Build Document-Term Matrix Manually</h3>
+<pre><code>documents = [
     "python ai",
     "python ml",
     "ai nlp",
@@ -1052,10 +950,8 @@ print("Document-Term Matrix:")
 
 for row in matrix:
     print(row)</code></pre>
-
-        <h3>Example 6: Clean Text Before Bag of Words</h3>
-
-        <pre><code>import string
+<h3>Example 6: Clean Text Before Bag of Words</h3>
+<pre><code>import string
 
 documents = [
     "Python teaches AI!!!",
@@ -1078,10 +974,8 @@ for document in documents:
     clean_documents.append(clean_text)
 
 print(clean_documents)</code></pre>
-
-        <h3>Example 7: Bag of Words After Cleaning</h3>
-
-        <pre><code>import string
+<h3>Example 7: Bag of Words After Cleaning</h3>
+<pre><code>import string
 
 documents = [
     "Python teaches AI!!!",
@@ -1121,11 +1015,9 @@ for document in clean_documents:
     for vocab_word in vocabulary:
         vector.append(words.count(vocab_word))
 
-    print(document, "-->", vector)</code></pre>
-
-        <h3>Example 8: Find Most Repeated Word</h3>
-
-        <pre><code>sentence = "python ai python ml python nlp ai"
+    print(document, "--&gt;", vector)</code></pre>
+<h3>Example 8: Find Most Repeated Word</h3>
+<pre><code>sentence = "python ai python ml python nlp ai"
 
 words = sentence.split()
 
@@ -1143,16 +1035,14 @@ most_repeated_word = ""
 highest_count = 0
 
 for word, count in word_count.items():
-    if count > highest_count:
+    if count &gt; highest_count:
         highest_count = count
         most_repeated_word = word
 
 print("Most repeated word:", most_repeated_word)
 print("Count:", highest_count)</code></pre>
-
-        <h3>Example 9: Compare Two Texts Using Common Words</h3>
-
-        <pre><code>text1 = "python ai ml"
+<h3>Example 9: Compare Two Texts Using Common Words</h3>
+<pre><code>text1 = "python ai ml"
 text2 = "python nlp ai"
 
 words1 = set(text1.split())
@@ -1162,10 +1052,8 @@ common_words = words1.intersection(words2)
 
 print("Common words:", common_words)
 print("Number of common words:", len(common_words))</code></pre>
-
-        <h3>Example 10: Simple Similarity Score Using Sets</h3>
-
-        <pre><code>text1 = "python ai ml"
+<h3>Example 10: Simple Similarity Score Using Sets</h3>
+<pre><code>text1 = "python ai ml"
 text2 = "python nlp ai"
 
 words1 = set(text1.split())
@@ -1177,15 +1065,12 @@ all_words = words1.union(words2)
 similarity = len(common_words) / len(all_words)
 
 print("Similarity:", similarity)</code></pre>
-
-        <h3>Example 11: CountVectorizer Introduction</h3>
-
-        <p>
+<h3>Example 11: CountVectorizer Introduction</h3>
+<p>
           This example uses scikit-learn. Install scikit-learn in the editor if
           needed.
         </p>
-
-        <pre><code>from sklearn.feature_extraction.text import CountVectorizer
+<pre><code>from sklearn.feature_extraction.text import CountVectorizer
 
 documents = [
     "python teaches ai",
@@ -1202,10 +1087,8 @@ print(vectorizer.get_feature_names_out())
 
 print("Matrix:")
 print(matrix.toarray())</code></pre>
-
-        <h3>Example 12: CountVectorizer With Student Queries</h3>
-
-        <pre><code>from sklearn.feature_extraction.text import CountVectorizer
+<h3>Example 12: CountVectorizer With Student Queries</h3>
+<pre><code>from sklearn.feature_extraction.text import CountVectorizer
 
 queries = [
     "I want python class",
@@ -1223,10 +1106,8 @@ print(vectorizer.get_feature_names_out())
 
 print("Vectors:")
 print(matrix.toarray())</code></pre>
-
-        <h3>Example 13: Binary Bag of Words With CountVectorizer</h3>
-
-        <pre><code>from sklearn.feature_extraction.text import CountVectorizer
+<h3>Example 13: Binary Bag of Words With CountVectorizer</h3>
+<pre><code>from sklearn.feature_extraction.text import CountVectorizer
 
 documents = [
     "python python ai",
@@ -1243,10 +1124,8 @@ print(vectorizer.get_feature_names_out())
 
 print("Binary Matrix:")
 print(matrix.toarray())</code></pre>
-
-        <h3>Example 14: Mini Project — Course Page Vectors</h3>
-
-        <pre><code>from sklearn.feature_extraction.text import CountVectorizer
+<h3>Example 14: Mini Project — Course Page Vectors</h3>
+<pre><code>from sklearn.feature_extraction.text import CountVectorizer
 
 course_pages = [
     "python variables loops functions beginner",
@@ -1264,10 +1143,8 @@ print(vectorizer.get_feature_names_out())
 
 print("Course Page Vectors:")
 print(matrix.toarray())</code></pre>
-
-        <h3>Example 15: Mini Project — Search Query Vector</h3>
-
-        <pre><code>from sklearn.feature_extraction.text import CountVectorizer
+<h3>Example 15: Mini Project — Search Query Vector</h3>
+<pre><code>from sklearn.feature_extraction.text import CountVectorizer
 
 pages = [
     "python variables loops functions beginner",
@@ -1293,187 +1170,143 @@ print(matrix.toarray()[0])
 print("Page vectors:")
 for row in matrix.toarray()[1:]:
     print(row)</code></pre>
-
-        <div class="success">
+<div class="success">
           Classroom flow: First build vectors manually. Then show that
           CountVectorizer does the same idea automatically.
         </div>
-      </section>
-
-      <section id="editor">
-        <h2>11. Practice in Our Python Editor</h2>
-
-        <p>
+</section>
+<section id="editor">
+<h2>11. Practice in Our Python Editor</h2>
+<p>
           Use the embedded Programmers Picnic Python editor below to run the Bag
           of Words and CountVectorizer examples.
         </p>
-
-        <div class="editor-wrap">
-          <div class="editor-toolbar">
-            <span>Python Practice Editor</span>
-
-            <div>
-              <button onclick="makeEditorFullScreen()">
+<div class="editor-wrap">
+<div class="editor-toolbar">
+<span>Python Practice Editor</span>
+<div>
+<button onclick="makeEditorFullScreen()">
                 Editor Full Screen
               </button>
-              <a
-                href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-                target="_blank"
-                rel="noopener"
-              >
+<a href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" rel="noopener" target="_blank">
                 Open in New Tab
               </a>
-            </div>
-          </div>
-
-          <iframe
-            id="pythonEditor"
-            class="editor-frame"
-            src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-            title="Programmers Picnic Python Editor"
-            loading="lazy"
-            allow="clipboard-read; clipboard-write; fullscreen"
-          >
-          </iframe>
-        </div>
-
-        <div class="note" style="margin-top: 18px">
+</div>
+</div>
+<iframe allow="clipboard-read; clipboard-write; fullscreen" class="editor-frame" id="pythonEditor" loading="lazy" src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" title="Programmers Picnic Python Editor">
+</iframe>
+</div>
+<div class="note" style="margin-top: 18px">
           Tip: If the embedded editor appears small on mobile, tap “Open in New
           Tab”.
         </div>
-      </section>
-
-      <div class="ad-box">
+</section>
+<div class="ad-box">
         Advertisement
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-     crossorigin="anonymous"></script>
+        <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
 <!-- nlp -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-8321261883090494"
-     data-ad-slot="7782388330"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-      </div>
-
-      <section>
-        <h2>12. Complete Beginner Summary</h2>
-
-        <table>
-          <tr>
-            <th>Topic</th>
-            <th>Meaning</th>
-            <th>Example</th>
-          </tr>
-          <tr>
-            <td>Bag of Words</td>
-            <td>Represent text by word counts</td>
-            <td>python: 2, ai: 1</td>
-          </tr>
-          <tr>
-            <td>Vocabulary</td>
-            <td>Unique words in text collection</td>
-            <td>python, ai, ml, nlp</td>
-          </tr>
-          <tr>
-            <td>Binary Vector</td>
-            <td>Shows word presence or absence</td>
-            <td>[1, 0, 1]</td>
-          </tr>
-          <tr>
-            <td>Count Vector</td>
-            <td>Shows word frequency</td>
-            <td>[2, 0, 3]</td>
-          </tr>
-          <tr>
-            <td>Document-Term Matrix</td>
-            <td>Table of documents and word counts</td>
-            <td>Rows are documents, columns are words</td>
-          </tr>
-          <tr>
-            <td>CountVectorizer</td>
-            <td>Scikit-learn tool for Bag of Words</td>
-            <td>vectorizer.fit_transform()</td>
-          </tr>
-        </table>
-      </section>
-
-      <section>
-        <h2>13. Practice Questions</h2>
-
-        <ol>
-          <li>What is Bag of Words?</li>
-
-          <li>
+</div>
+<section>
+<h2>12. Complete Beginner Summary</h2>
+<table>
+<tr>
+<th>Topic</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>Bag of Words</td>
+<td>Represent text by word counts</td>
+<td>python: 2, ai: 1</td>
+</tr>
+<tr>
+<td>Vocabulary</td>
+<td>Unique words in text collection</td>
+<td>python, ai, ml, nlp</td>
+</tr>
+<tr>
+<td>Binary Vector</td>
+<td>Shows word presence or absence</td>
+<td>[1, 0, 1]</td>
+</tr>
+<tr>
+<td>Count Vector</td>
+<td>Shows word frequency</td>
+<td>[2, 0, 3]</td>
+</tr>
+<tr>
+<td>Document-Term Matrix</td>
+<td>Table of documents and word counts</td>
+<td>Rows are documents, columns are words</td>
+</tr>
+<tr>
+<td>CountVectorizer</td>
+<td>Scikit-learn tool for Bag of Words</td>
+<td>vectorizer.fit_transform()</td>
+</tr>
+</table>
+</section>
+<section>
+<h2>13. Practice Questions</h2>
+<ol>
+<li>What is Bag of Words?</li>
+<li>
             Build vocabulary from these sentences:
             <pre><code>python ai
 python ml
 ai nlp</code></pre>
-          </li>
-
-          <li>
+</li>
+<li>
             Create a binary vector using this vocabulary:
             <pre><code>Vocabulary: ["python", "ai", "ml", "nlp"]
 Sentence: "python ml"</code></pre>
-          </li>
-
-          <li>
+</li>
+<li>
             Create a count vector:
             <pre><code>Vocabulary: ["python", "ai", "ml"]
 Sentence: "python python ai"</code></pre>
-          </li>
-
-          <li>
+</li>
+<li>
             What is the difference between binary vector and count vector?
           </li>
-
-          <li>What is a document-term matrix?</li>
-
-          <li>Give one limitation of Bag of Words.</li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>14. Mini Assignment</h2>
-
-        <p>Create a small Bag of Words project for course search.</p>
-
-        <h3>Use these course titles:</h3>
-
-        <pre><code>Python Basics for Beginners
+<li>What is a document-term matrix?</li>
+<li>Give one limitation of Bag of Words.</li>
+</ol>
+</section>
+<section>
+<h2>14. Mini Assignment</h2>
+<p>Create a small Bag of Words project for course search.</p>
+<h3>Use these course titles:</h3>
+<pre><code>Python Basics for Beginners
 Beginning NLP with Text Similarity
 Machine Learning Model Training
 Google Search Console for Blogger</code></pre>
-
-        <h3>Your task:</h3>
-
-        <ul>
-          <li>Convert all titles to lowercase.</li>
-          <li>Build a vocabulary of unique words.</li>
-          <li>Create a count vector for each title.</li>
-          <li>Print the document-term matrix.</li>
-          <li>Try the same using CountVectorizer.</li>
-        </ul>
-
-        <div class="note">
+<h3>Your task:</h3>
+<ul>
+<li>Convert all titles to lowercase.</li>
+<li>Build a vocabulary of unique words.</li>
+<li>Create a count vector for each title.</li>
+<li>Print the document-term matrix.</li>
+<li>Try the same using CountVectorizer.</li>
+</ul>
+<div class="note">
           Teacher tip: Ask students to first do it manually, then with
           CountVectorizer. This makes the library feel logical instead of
           magical.
         </div>
-      </section>
-    </main>
-
-    <div class="footer">
-      <p>
-        <strong>Programmers Picnic AI-ML Classes by Champak Roy</strong>
-      </p>
-      <p>learnwithchampak.live | aiml.learnwithchampak.live</p>
-    </div>
-
-    <script>
+</section>
+</main>
+<div class="footer">
+<p>
+<strong>Programmers Picnic AI-ML Classes by Champak Roy</strong>
+</p>
+<p>learnwithchampak.live | aiml.learnwithchampak.live</p>
+</div>
+<script>
       function toggleDark() {
         document.body.classList.toggle("dark");
       }
@@ -1509,5 +1342,5 @@ Google Search Console for Blogger</code></pre>
         }
       });
     </script>
-  </body>
+<div data-include="footer"></div></body>
 </html>

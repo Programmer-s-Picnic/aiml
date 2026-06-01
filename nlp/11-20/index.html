@@ -1,24 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>NLP Lesson 11% to 20% | Text Cleaning and Preprocessing</title>
-
-    <!-- Google AdSense -->
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- Programmers Picnic / Learn With Champak Scripts -->
-    <script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
-    <script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
-
-    <style>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NLP Lesson 11% to 20% | Text Cleaning and Preprocessing</title>
+<!-- Google AdSense -->
+<script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
+<!-- Programmers Picnic / Learn With Champak Scripts -->
+<script src="https://varanasi-software-junction.github.io/search/branding/branding.js"></script>
+<script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+<script src="https://programmer-s-picnic.github.io/json-images/contact_champak.js"></script>
+<style>
       :root {
         --bg: #fff8ed;
         --card: #ffffff;
@@ -428,210 +421,170 @@
         }
       }
     </style>
-  </head>
-
-  <body>
-    <header>
-      <div class="badge">Programmers Picnic AI-ML Classes</div>
-      <h1>NLP Lesson 11% to 20%</h1>
-      <p>
+<meta content="NLP Lesson 11% to 20% | Text Cleaning and Preprocessing - AI-ML learning resource by Programmer's Picnic." name="description"/><link href="../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../assets/js/site.js"></script><script defer="defer" src="../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<header>
+<div class="badge">Programmers Picnic AI-ML Classes</div>
+<h1>NLP Lesson 11% to 20%</h1>
+<p>
         Text cleaning, lowercase conversion, punctuation removal, better
         tokenization, normalization, stemming idea, lemmatization idea, and
         beginner-friendly Python preprocessing projects.
       </p>
-      <p>By <strong>Champak Roy</strong></p>
-    </header>
-
-    <nav class="topbar">
-      <a href="#start">Start Lesson</a>
-      <a href="#cleaning">Text Cleaning</a>
-      <a href="#normalization">Normalization</a>
-      <a href="#python">Python Examples</a>
-      <a href="#editor">Practice Editor</a>
-      <button onclick="toggleDark()">Dark / Light</button>
-      <button onclick="window.print()">Print</button>
-      <button onclick="toggleFullScreen()">Full Screen</button>
-    </nav>
-
-    <main id="start">
-      <div class="ad-box">
+<p>By <strong>Champak Roy</strong></p>
+</header>
+<nav class="topbar">
+<a href="#start">Start Lesson</a>
+<a href="#cleaning">Text Cleaning</a>
+<a href="#normalization">Normalization</a>
+<a href="#python">Python Examples</a>
+<a href="#editor">Practice Editor</a>
+<button onclick="toggleDark()">Dark / Light</button>
+<button onclick="window.print()">Print</button>
+<button onclick="toggleFullScreen()">Full Screen</button>
+</nav>
+<main id="main-content">
+<div class="ad-box">
         Advertisement
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-     crossorigin="anonymous"></script>
+        <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
 <!-- nlp -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-8321261883090494"
-     data-ad-slot="7782388330"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-      </div>
-
-      <div class="lesson-info">
-        <div class="info-card">
-          <strong>Level:</strong>
-          <p>11% to 20%</p>
-        </div>
-
-        <div class="info-card">
-          <strong>Previous Lesson:</strong>
-          <p>NLP, tokens, vectors, cosine similarity</p>
-        </div>
-
-        <div class="info-card">
-          <strong>This Lesson:</strong>
-          <p>Cleaning text before converting it into numbers</p>
-        </div>
-
-        <div class="info-card">
-          <strong>Goal:</strong>
-          <p>Prepare messy text for NLP programs.</p>
-        </div>
-      </div>
-
-      <section>
-        <h2>1. Why Do We Need Text Cleaning?</h2>
-
-        <p>
+</div>
+<div class="lesson-info">
+<div class="info-card">
+<strong>Level:</strong>
+<p>11% to 20%</p>
+</div>
+<div class="info-card">
+<strong>Previous Lesson:</strong>
+<p>NLP, tokens, vectors, cosine similarity</p>
+</div>
+<div class="info-card">
+<strong>This Lesson:</strong>
+<p>Cleaning text before converting it into numbers</p>
+</div>
+<div class="info-card">
+<strong>Goal:</strong>
+<p>Prepare messy text for NLP programs.</p>
+</div>
+</div>
+<section>
+<h2>1. Why Do We Need Text Cleaning?</h2>
+<p>
           In the previous lesson, we learned that NLP converts text into
           numbers. But real text is usually messy.
         </p>
-
-        <div class="example">
-          <strong>Messy student message:</strong>
-
-          <pre><code>Hiii Sir!!! I want to Learn AI, ML & NLP... Is class ONLINE???</code></pre>
-
-          <p>
+<div class="example">
+<strong>Messy student message:</strong>
+<pre><code>Hiii Sir!!! I want to Learn AI, ML &amp; NLP... Is class ONLINE???</code></pre>
+<p>
             A human can understand this message. But for a computer, this text
             contains many small problems:
           </p>
-
-          <ul>
-            <li>Capital letters and small letters are mixed.</li>
-            <li>There are extra punctuation marks.</li>
-            <li>Words like <code>Hiii</code> may not match normal words.</li>
-            <li>
-              <code>ONLINE</code> and <code>online</code> may be treated
+<ul>
+<li>Capital letters and small letters are mixed.</li>
+<li>There are extra punctuation marks.</li>
+<li>Words like <code>Hiii</code> may not match normal words.</li>
+<li>
+<code>ONLINE</code> and <code>online</code> may be treated
               differently.
             </li>
-          </ul>
-        </div>
-
-        <div class="note">
+</ul>
+</div>
+<div class="note">
           Text cleaning means making text simpler and more regular before
           processing it.
         </div>
-      </section>
-
-      <section id="cleaning">
-        <h2>2. The Basic NLP Preprocessing Pipeline</h2>
-
-        <p>
+</section>
+<section id="cleaning">
+<h2>2. The Basic NLP Preprocessing Pipeline</h2>
+<p>
           A pipeline is a step-by-step process. In beginner NLP, a simple
           preprocessing pipeline looks like this:
         </p>
-
-        <div class="flow">
-          <span>Raw Text</span>
-          <span class="arrow">➡</span>
-          <span>Lowercase</span>
-          <span class="arrow">➡</span>
-          <span>Remove Punctuation</span>
-          <span class="arrow">➡</span>
-          <span>Tokenize</span>
-          <span class="arrow">➡</span>
-          <span>Remove Common Words</span>
-          <span class="arrow">➡</span>
-          <span>Useful Words</span>
-        </div>
-
-        <table>
-          <tr>
-            <th>Step</th>
-            <th>Meaning</th>
-            <th>Example</th>
-          </tr>
-          <tr>
-            <td>Lowercase</td>
-            <td>Convert all letters to small letters</td>
-            <td>AI becomes ai</td>
-          </tr>
-          <tr>
-            <td>Remove punctuation</td>
-            <td>Remove symbols like ! ? , .</td>
-            <td>hello!!! becomes hello</td>
-          </tr>
-          <tr>
-            <td>Tokenize</td>
-            <td>Break text into words</td>
-            <td>learn ai becomes learn, ai</td>
-          </tr>
-          <tr>
-            <td>Remove common words</td>
-            <td>Remove very common words</td>
-            <td>is, the, and</td>
-          </tr>
-        </table>
-      </section>
-
-      <section>
-        <h2>3. Lowercase Conversion</h2>
-
-        <p>
+<div class="flow">
+<span>Raw Text</span>
+<span class="arrow">➡</span>
+<span>Lowercase</span>
+<span class="arrow">➡</span>
+<span>Remove Punctuation</span>
+<span class="arrow">➡</span>
+<span>Tokenize</span>
+<span class="arrow">➡</span>
+<span>Remove Common Words</span>
+<span class="arrow">➡</span>
+<span>Useful Words</span>
+</div>
+<table>
+<tr>
+<th>Step</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>Lowercase</td>
+<td>Convert all letters to small letters</td>
+<td>AI becomes ai</td>
+</tr>
+<tr>
+<td>Remove punctuation</td>
+<td>Remove symbols like ! ? , .</td>
+<td>hello!!! becomes hello</td>
+</tr>
+<tr>
+<td>Tokenize</td>
+<td>Break text into words</td>
+<td>learn ai becomes learn, ai</td>
+</tr>
+<tr>
+<td>Remove common words</td>
+<td>Remove very common words</td>
+<td>is, the, and</td>
+</tr>
+</table>
+</section>
+<section>
+<h2>3. Lowercase Conversion</h2>
+<p>
           Computers may treat <code>Python</code>, <code>PYTHON</code>, and
           <code>python</code> as different words.
         </p>
-
-        <div class="example">
-          <strong>Before:</strong>
-
-          <pre><code>Python PYTHON python</code></pre>
-
-          <strong>After lowercase:</strong>
-
-          <pre><code>python python python</code></pre>
-        </div>
-
-        <p>
+<div class="example">
+<strong>Before:</strong>
+<pre><code>Python PYTHON python</code></pre>
+<strong>After lowercase:</strong>
+<pre><code>python python python</code></pre>
+</div>
+<p>
           Lowercase conversion helps the computer understand that these words
           are the same.
         </p>
-
-        <pre><code>text = "Python PYTHON python"
+<pre><code>text = "Python PYTHON python"
 
 clean_text = text.lower()
 
 print(clean_text)</code></pre>
-      </section>
-
-      <section>
-        <h2>4. Removing Punctuation</h2>
-
-        <p>
+</section>
+<section>
+<h2>4. Removing Punctuation</h2>
+<p>
           Punctuation marks are symbols such as comma, full stop, question mark,
           and exclamation mark.
         </p>
-
-        <div class="example">
-          <strong>Before:</strong>
-
-          <pre><code>Do you teach AI, ML, and NLP?</code></pre>
-
-          <strong>After punctuation removal:</strong>
-
-          <pre><code>Do you teach AI ML and NLP</code></pre>
-        </div>
-
-        <p>
+<div class="example">
+<strong>Before:</strong>
+<pre><code>Do you teach AI, ML, and NLP?</code></pre>
+<strong>After punctuation removal:</strong>
+<pre><code>Do you teach AI ML and NLP</code></pre>
+</div>
+<p>
           This makes tokenization cleaner because words are separated from
           punctuation marks.
         </p>
-
-        <pre><code>import string
+<pre><code>import string
 
 text = "Do you teach AI, ML, and NLP?"
 
@@ -642,180 +595,146 @@ for character in text:
         clean_text = clean_text + character
 
 print(clean_text)</code></pre>
-      </section>
-
-      <section>
-        <h2>5. Extra Spaces</h2>
-
-        <p>
+</section>
+<section>
+<h2>5. Extra Spaces</h2>
+<p>
           Sometimes text contains too many spaces. We should convert multiple
           spaces into one space.
         </p>
-
-        <div class="example">
-          <strong>Before:</strong>
-
-          <pre><code>Python     AI      ML</code></pre>
-
-          <strong>After:</strong>
-
-          <pre><code>Python AI ML</code></pre>
-        </div>
-
-        <pre><code>text = "Python     AI      ML"
+<div class="example">
+<strong>Before:</strong>
+<pre><code>Python     AI      ML</code></pre>
+<strong>After:</strong>
+<pre><code>Python AI ML</code></pre>
+</div>
+<pre><code>text = "Python     AI      ML"
 
 clean_text = " ".join(text.split())
 
 print(clean_text)</code></pre>
-
-        <div class="success">
+<div class="success">
           The expression <code>text.split()</code> breaks the text into words.
           Then <code>" ".join(...)</code> joins the words using one space.
         </div>
-      </section>
-
-      <div class="ad-box">
+</section>
+<div class="ad-box">
         Advertisement
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-     crossorigin="anonymous"></script>
+        <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
 <!-- nlp -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-8321261883090494"
-     data-ad-slot="7782388330"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-      </div>
-
-      <section id="normalization">
-        <h2>6. Normalization</h2>
-
-        <p>
+</div>
+<section id="normalization">
+<h2>6. Normalization</h2>
+<p>
           Normalization means converting different forms of text into a common
           form.
         </p>
-
-        <table>
-          <tr>
-            <th>Input</th>
-            <th>Normalized Form</th>
-          </tr>
-          <tr>
-            <td>AI</td>
-            <td>artificial intelligence</td>
-          </tr>
-          <tr>
-            <td>ML</td>
-            <td>machine learning</td>
-          </tr>
-          <tr>
-            <td>course</td>
-            <td>class</td>
-          </tr>
-          <tr>
-            <td>tutorial</td>
-            <td>lesson</td>
-          </tr>
-        </table>
-
-        <div class="example">
-          <strong>Before normalization:</strong>
-
-          <pre><code>I want an AI course</code></pre>
-
-          <strong>After normalization:</strong>
-
-          <pre><code>i want an artificial intelligence class</code></pre>
-        </div>
-      </section>
-
-      <section>
-        <h2>7. Stemming Idea</h2>
-
-        <p>Stemming means cutting a word down to its rough root form.</p>
-
-        <table>
-          <tr>
-            <th>Word</th>
-            <th>Stem-like Root</th>
-          </tr>
-          <tr>
-            <td>learning</td>
-            <td>learn</td>
-          </tr>
-          <tr>
-            <td>learned</td>
-            <td>learn</td>
-          </tr>
-          <tr>
-            <td>teaching</td>
-            <td>teach</td>
-          </tr>
-          <tr>
-            <td>classes</td>
-            <td>class</td>
-          </tr>
-        </table>
-
-        <div class="note">
+<table>
+<tr>
+<th>Input</th>
+<th>Normalized Form</th>
+</tr>
+<tr>
+<td>AI</td>
+<td>artificial intelligence</td>
+</tr>
+<tr>
+<td>ML</td>
+<td>machine learning</td>
+</tr>
+<tr>
+<td>course</td>
+<td>class</td>
+</tr>
+<tr>
+<td>tutorial</td>
+<td>lesson</td>
+</tr>
+</table>
+<div class="example">
+<strong>Before normalization:</strong>
+<pre><code>I want an AI course</code></pre>
+<strong>After normalization:</strong>
+<pre><code>i want an artificial intelligence class</code></pre>
+</div>
+</section>
+<section>
+<h2>7. Stemming Idea</h2>
+<p>Stemming means cutting a word down to its rough root form.</p>
+<table>
+<tr>
+<th>Word</th>
+<th>Stem-like Root</th>
+</tr>
+<tr>
+<td>learning</td>
+<td>learn</td>
+</tr>
+<tr>
+<td>learned</td>
+<td>learn</td>
+</tr>
+<tr>
+<td>teaching</td>
+<td>teach</td>
+</tr>
+<tr>
+<td>classes</td>
+<td>class</td>
+</tr>
+</table>
+<div class="note">
           Beginner meaning: stemming helps us treat related word forms as almost
           the same.
         </div>
-
-        <div class="danger">
+<div class="danger">
           Stemming is not always perfect. It may sometimes cut words too much.
           For beginners, first understand the idea before using advanced tools.
         </div>
-      </section>
-
-      <section>
-        <h2>8. Lemmatization Idea</h2>
-
-        <p>
+</section>
+<section>
+<h2>8. Lemmatization Idea</h2>
+<p>
           Lemmatization also converts a word to its base form, but it is usually
           smarter than stemming.
         </p>
-
-        <table>
-          <tr>
-            <th>Word</th>
-            <th>Lemma</th>
-          </tr>
-          <tr>
-            <td>running</td>
-            <td>run</td>
-          </tr>
-          <tr>
-            <td>better</td>
-            <td>good</td>
-          </tr>
-          <tr>
-            <td>children</td>
-            <td>child</td>
-          </tr>
-          <tr>
-            <td>studies</td>
-            <td>study</td>
-          </tr>
-        </table>
-
-        <div class="success">
+<table>
+<tr>
+<th>Word</th>
+<th>Lemma</th>
+</tr>
+<tr>
+<td>running</td>
+<td>run</td>
+</tr>
+<tr>
+<td>better</td>
+<td>good</td>
+</tr>
+<tr>
+<td>children</td>
+<td>child</td>
+</tr>
+<tr>
+<td>studies</td>
+<td>study</td>
+</tr>
+</table>
+<div class="success">
           Simple difference: stemming cuts words; lemmatization tries to find
           the proper dictionary form.
         </div>
-      </section>
+</section>
+<section id="python">
+<h2>9. Python Example: Complete Text Cleaner</h2>
+<p>Now let us build a small text cleaner using only basic Python.</p>
+<pre><code>import string
 
-      <section id="python">
-        <h2>9. Python Example: Complete Text Cleaner</h2>
-
-        <p>Now let us build a small text cleaner using only basic Python.</p>
-
-        <pre><code>import string
-
-text = "Hiii Sir!!! I want to Learn AI, ML & NLP... Is class ONLINE???"
+text = "Hiii Sir!!! I want to Learn AI, ML &amp; NLP... Is class ONLINE???"
 
 # Step 1: lowercase
 text = text.lower()
@@ -831,36 +750,27 @@ for character in text:
 clean_text = " ".join(clean_text.split())
 
 print(clean_text)</code></pre>
-
-        <h3>Possible Output</h3>
-
-        <pre><code>hiii sir i want to learn ai ml nlp is class online</code></pre>
-
-        <div class="note">
+<h3>Possible Output</h3>
+<pre><code>hiii sir i want to learn ai ml nlp is class online</code></pre>
+<div class="note">
           Notice that the text is now simpler. It is ready for tokenization and
           further NLP processing.
         </div>
-      </section>
-
-      <section>
-        <h2>10. More Code Samples: 11% to 20%</h2>
-
-        <p>
+</section>
+<section>
+<h2>10. More Code Samples: 11% to 20%</h2>
+<p>
           These examples continue the previous lesson. Copy one example at a
           time into the Python editor and run it.
         </p>
-
-        <h3>Example 1: Lowercase Student Message</h3>
-
-        <pre><code>message = "I Want To Learn PYTHON and AI"
+<h3>Example 1: Lowercase Student Message</h3>
+<pre><code>message = "I Want To Learn PYTHON and AI"
 
 message = message.lower()
 
 print(message)</code></pre>
-
-        <h3>Example 2: Remove Punctuation From a Question</h3>
-
-        <pre><code>import string
+<h3>Example 2: Remove Punctuation From a Question</h3>
+<pre><code>import string
 
 question = "Do you teach Python, AI, ML, and NLP?"
 
@@ -871,18 +781,14 @@ for ch in question:
         clean_question = clean_question + ch
 
 print(clean_question)</code></pre>
-
-        <h3>Example 3: Remove Extra Spaces</h3>
-
-        <pre><code>text = "Python      AI       ML       NLP"
+<h3>Example 3: Remove Extra Spaces</h3>
+<pre><code>text = "Python      AI       ML       NLP"
 
 clean_text = " ".join(text.split())
 
 print(clean_text)</code></pre>
-
-        <h3>Example 4: Full Cleaning Function</h3>
-
-        <pre><code>import string
+<h3>Example 4: Full Cleaning Function</h3>
+<pre><code>import string
 
 def clean_text(text):
     text = text.lower()
@@ -897,13 +803,11 @@ def clean_text(text):
 
     return result
 
-message = "Hello!!! I want to Learn AI & ML..."
+message = "Hello!!! I want to Learn AI &amp; ML..."
 
 print(clean_text(message))</code></pre>
-
-        <h3>Example 5: Clean and Tokenize</h3>
-
-        <pre><code>import string
+<h3>Example 5: Clean and Tokenize</h3>
+<pre><code>import string
 
 def clean_text(text):
     text = text.lower()
@@ -925,10 +829,8 @@ tokens = cleaned.split()
 
 print("Cleaned text:", cleaned)
 print("Tokens:", tokens)</code></pre>
-
-        <h3>Example 6: Remove Common Words After Cleaning</h3>
-
-        <pre><code>import string
+<h3>Example 6: Remove Common Words After Cleaning</h3>
+<pre><code>import string
 
 common_words = ["is", "am", "are", "the", "a", "an", "and", "to", "in", "of"]
 
@@ -958,10 +860,8 @@ for word in words:
 
 print("Cleaned:", cleaned)
 print("Important words:", important_words)</code></pre>
-
-        <h3>Example 7: Normalize AI and ML</h3>
-
-        <pre><code>text = "I want to learn AI and ML"
+<h3>Example 7: Normalize AI and ML</h3>
+<pre><code>text = "I want to learn AI and ML"
 
 normalization = {
     "ai": "artificial intelligence",
@@ -979,10 +879,8 @@ for word in words:
         final_words.append(word)
 
 print(final_words)</code></pre>
-
-        <h3>Example 8: Normalize Course Words</h3>
-
-        <pre><code>text = "I want a tutorial for artificial intelligence"
+<h3>Example 8: Normalize Course Words</h3>
+<pre><code>text = "I want a tutorial for artificial intelligence"
 
 normalization = {
     "tutorial": "lesson",
@@ -1002,24 +900,20 @@ for word in words:
         final_words.append(word)
 
 print(final_words)</code></pre>
-
-        <h3>Example 9: Very Simple Stemming Idea</h3>
-
-        <pre><code>words = ["learning", "learned", "teaching", "classes"]
+<h3>Example 9: Very Simple Stemming Idea</h3>
+<pre><code>words = ["learning", "learned", "teaching", "classes"]
 
 for word in words:
     if word.endswith("ing"):
-        print(word, "-->", word[:-3])
+        print(word, "--&gt;", word[:-3])
     elif word.endswith("ed"):
-        print(word, "-->", word[:-2])
+        print(word, "--&gt;", word[:-2])
     elif word.endswith("es"):
-        print(word, "-->", word[:-2])
+        print(word, "--&gt;", word[:-2])
     else:
-        print(word, "-->", word)</code></pre>
-
-        <h3>Example 10: Clean a List of Student Messages</h3>
-
-        <pre><code>import string
+        print(word, "--&gt;", word)</code></pre>
+<h3>Example 10: Clean a List of Student Messages</h3>
+<pre><code>import string
 
 messages = [
     "Hello Sir!!! I want Python class.",
@@ -1043,10 +937,8 @@ def clean_text(text):
 
 for message in messages:
     print(clean_text(message))</code></pre>
-
-        <h3>Example 11: Build a Cleaner Search Query</h3>
-
-        <pre><code>import string
+<h3>Example 11: Build a Cleaner Search Query</h3>
+<pre><code>import string
 
 search = "NLP!!! text similarity??? Python examples..."
 
@@ -1062,10 +954,8 @@ clean_search = " ".join(clean_search.split())
 
 print("Original search:", search)
 print("Clean search:", clean_search)</code></pre>
-
-        <h3>Example 12: Clean Before Matching FAQ</h3>
-
-        <pre><code>import string
+<h3>Example 12: Clean Before Matching FAQ</h3>
+<pre><code>import string
 
 faqs = {
     "fees": "Please check the course fee details on learnwithchampak.live.",
@@ -1099,10 +989,8 @@ for keyword in faqs:
 
 if answer_found == False:
     print("Please contact Champak Roy for details.")</code></pre>
-
-        <h3>Example 13: Count Important Words After Cleaning</h3>
-
-        <pre><code>import string
+<h3>Example 13: Count Important Words After Cleaning</h3>
+<pre><code>import string
 
 text = "AI is useful. AI is powerful. Python helps AI and ML."
 
@@ -1132,16 +1020,14 @@ for word in words:
             word_count[word] = 1
 
 print(word_count)</code></pre>
-
-        <h3>Example 14: Mini Project — Clean Blog Titles</h3>
-
-        <pre><code>import string
+<h3>Example 14: Mini Project — Clean Blog Titles</h3>
+<pre><code>import string
 
 titles = [
     "Beginning NLP!!!",
     "Python, AI, ML and Data Science",
     "Google Search Console: Full Guide",
-    "Sorting Trace & Algorithm Detection"
+    "Sorting Trace &amp; Algorithm Detection"
 ]
 
 def clean_text(text):
@@ -1157,10 +1043,8 @@ def clean_text(text):
 
 for title in titles:
     print(clean_text(title))</code></pre>
-
-        <h3>Example 15: Mini Project — Student Message Cleaner</h3>
-
-        <pre><code>import string
+<h3>Example 15: Mini Project — Student Message Cleaner</h3>
+<pre><code>import string
 
 def clean_text(text):
     text = text.lower()
@@ -1184,188 +1068,144 @@ print(cleaned)
 
 print("Words:")
 print(cleaned.split())</code></pre>
-
-        <div class="success">
+<div class="success">
           Classroom flow: In this lesson, students should understand that good
           NLP starts with clean text. Bad input usually gives bad output.
         </div>
-      </section>
-
-      <section id="editor">
-        <h2>11. Practice in Our Python Editor</h2>
-
-        <p>
+</section>
+<section id="editor">
+<h2>11. Practice in Our Python Editor</h2>
+<p>
           Use the embedded Programmers Picnic Python editor below to run the
           text cleaning examples.
         </p>
-
-        <div class="editor-wrap">
-          <div class="editor-toolbar">
-            <span>Python Practice Editor</span>
-
-            <div>
-              <button onclick="makeEditorFullScreen()">
+<div class="editor-wrap">
+<div class="editor-toolbar">
+<span>Python Practice Editor</span>
+<div>
+<button onclick="makeEditorFullScreen()">
                 Editor Full Screen
               </button>
-              <a
-                href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-                target="_blank"
-                rel="noopener"
-              >
+<a href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" rel="noopener" target="_blank">
                 Open in New Tab
               </a>
-            </div>
-          </div>
-
-          <iframe
-            id="pythonEditor"
-            class="editor-frame"
-            src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-            title="Programmers Picnic Python Editor"
-            loading="lazy"
-            allow="clipboard-read; clipboard-write; fullscreen"
-          >
-          </iframe>
-        </div>
-
-        <div class="note" style="margin-top: 18px">
+</div>
+</div>
+<iframe allow="clipboard-read; clipboard-write; fullscreen" class="editor-frame" id="pythonEditor" loading="lazy" src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" title="Programmers Picnic Python Editor">
+</iframe>
+</div>
+<div class="note" style="margin-top: 18px">
           Tip: If the embedded editor appears small on mobile, tap “Open in New
           Tab”.
         </div>
-      </section>
-
-      <div class="ad-box">
+</section>
+<div class="ad-box">
         Advertisement
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"
-     crossorigin="anonymous"></script>
+        <script async="" crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494"></script>
 <!-- nlp -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-8321261883090494"
-     data-ad-slot="7782388330"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
+<ins class="adsbygoogle" data-ad-client="ca-pub-8321261883090494" data-ad-format="auto" data-ad-slot="7782388330" data-full-width-responsive="true" style="display:block"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-      </div>
-
-      <section>
-        <h2>12. Complete Beginner Summary</h2>
-
-        <table>
-          <tr>
-            <th>Topic</th>
-            <th>Meaning</th>
-            <th>Example</th>
-          </tr>
-          <tr>
-            <td>Text Cleaning</td>
-            <td>Making text simpler before NLP</td>
-            <td>Hello!!! becomes hello</td>
-          </tr>
-          <tr>
-            <td>Lowercase</td>
-            <td>Convert all text to small letters</td>
-            <td>AI becomes ai</td>
-          </tr>
-          <tr>
-            <td>Punctuation Removal</td>
-            <td>Remove symbols</td>
-            <td>Python, becomes Python</td>
-          </tr>
-          <tr>
-            <td>Extra Space Removal</td>
-            <td>Keep only normal spacing</td>
-            <td>AI ML becomes AI ML</td>
-          </tr>
-          <tr>
-            <td>Normalization</td>
-            <td>Convert different forms to one form</td>
-            <td>ML becomes machine learning</td>
-          </tr>
-          <tr>
-            <td>Stemming</td>
-            <td>Cut word to rough root</td>
-            <td>learning becomes learn</td>
-          </tr>
-          <tr>
-            <td>Lemmatization</td>
-            <td>Find proper base word</td>
-            <td>children becomes child</td>
-          </tr>
-        </table>
-      </section>
-
-      <section>
-        <h2>13. Practice Questions</h2>
-
-        <ol>
-          <li>Why do we clean text before NLP?</li>
-
-          <li>
+</div>
+<section>
+<h2>12. Complete Beginner Summary</h2>
+<table>
+<tr>
+<th>Topic</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>Text Cleaning</td>
+<td>Making text simpler before NLP</td>
+<td>Hello!!! becomes hello</td>
+</tr>
+<tr>
+<td>Lowercase</td>
+<td>Convert all text to small letters</td>
+<td>AI becomes ai</td>
+</tr>
+<tr>
+<td>Punctuation Removal</td>
+<td>Remove symbols</td>
+<td>Python, becomes Python</td>
+</tr>
+<tr>
+<td>Extra Space Removal</td>
+<td>Keep only normal spacing</td>
+<td>AI ML becomes AI ML</td>
+</tr>
+<tr>
+<td>Normalization</td>
+<td>Convert different forms to one form</td>
+<td>ML becomes machine learning</td>
+</tr>
+<tr>
+<td>Stemming</td>
+<td>Cut word to rough root</td>
+<td>learning becomes learn</td>
+</tr>
+<tr>
+<td>Lemmatization</td>
+<td>Find proper base word</td>
+<td>children becomes child</td>
+</tr>
+</table>
+</section>
+<section>
+<h2>13. Practice Questions</h2>
+<ol>
+<li>Why do we clean text before NLP?</li>
+<li>
             Convert this text to lowercase:
             <pre><code>Python AI ML NLP</code></pre>
-          </li>
-
-          <li>
+</li>
+<li>
             Remove punctuation:
             <pre><code>Hello!!! Do you teach AI???</code></pre>
-          </li>
-
-          <li>
+</li>
+<li>
             Remove extra spaces:
             <pre><code>Python      is      useful</code></pre>
-          </li>
-
-          <li>What is normalization?</li>
-
-          <li>What is the difference between stemming and lemmatization?</li>
-
-          <li>
+</li>
+<li>What is normalization?</li>
+<li>What is the difference between stemming and lemmatization?</li>
+<li>
             Clean this student message:
-            <pre><code>Sir!!! I want to Learn ML & NLP...</code></pre>
-          </li>
-        </ol>
-      </section>
-
-      <section>
-        <h2>14. Mini Assignment</h2>
-
-        <p>
+            <pre><code>Sir!!! I want to Learn ML &amp; NLP...</code></pre>
+</li>
+</ol>
+</section>
+<section>
+<h2>14. Mini Assignment</h2>
+<p>
           Create a Python program that takes a student message and cleans it.
         </p>
-
-        <h3>Input Example</h3>
-
-        <pre><code>Hello Sir!!! I want to Learn AI, ML, and NLP...</code></pre>
-
-        <h3>Your program should do these steps:</h3>
-
-        <ul>
-          <li>Convert the message to lowercase.</li>
-          <li>Remove punctuation.</li>
-          <li>Remove extra spaces.</li>
-          <li>Break the cleaned text into words.</li>
-          <li>Print the final word list.</li>
-        </ul>
-
-        <div class="note">
+<h3>Input Example</h3>
+<pre><code>Hello Sir!!! I want to Learn AI, ML, and NLP...</code></pre>
+<h3>Your program should do these steps:</h3>
+<ul>
+<li>Convert the message to lowercase.</li>
+<li>Remove punctuation.</li>
+<li>Remove extra spaces.</li>
+<li>Break the cleaned text into words.</li>
+<li>Print the final word list.</li>
+</ul>
+<div class="note">
           Expected output idea:
           <pre><code>hello sir i want to learn ai ml and nlp
 ["hello", "sir", "i", "want", "to", "learn", "ai", "ml", "and", "nlp"]</code></pre>
-        </div>
-      </section>
-    </main>
-
-    <div class="footer">
-      <p>
-        <strong>Programmers Picnic AI-ML Classes by Champak Roy</strong>
-      </p>
-      <p>learnwithchampak.live | aiml.learnwithchampak.live</p>
-    </div>
-
-    <script>
+</div>
+</section>
+</main>
+<div class="footer">
+<p>
+<strong>Programmers Picnic AI-ML Classes by Champak Roy</strong>
+</p>
+<p>learnwithchampak.live | aiml.learnwithchampak.live</p>
+</div>
+<script>
       function toggleDark() {
         document.body.classList.toggle("dark");
       }
@@ -1401,5 +1241,5 @@ print(cleaned.split())</code></pre>
         }
       });
     </script>
-  </body>
+<div data-include="footer"></div></body>
 </html>

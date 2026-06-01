@@ -1,130 +1,95 @@
 {
   "brand": {
     "title": "AI-ML Classes",
-    "subtitle": "Learn With Champak | Programmer's Picnic",
+    "subtitle": "Programmer's Picnic by Champak Roy",
     "badge": "AI"
   },
   "items": [
     {
       "label": "Home",
-      "href": "#top",
-      "icon": "🏠"
+      "href": "index.html"
     },
     {
-      "label": "Important Links",
-      "href": "#links",
-      "icon": "🔗",
+      "label": "Course Map",
+      "href": "coursemap/index.html"
+    },
+    {
+      "label": "Lessons",
+      "href": "lessons/index.html",
       "children": [
         {
-          "label": "Home",
-          "href": "https://www.learnwithchampak.live/",
-          "icon": "🗺️"
+          "label": "Statistics",
+          "href": "lessons/stats/index.html"
+        },
+        {
+          "label": "Terms",
+          "href": "lessons/terms/index.html"
+        },
+        {
+          "label": "Regression",
+          "href": "regression/index.html"
+        },
+        {
+          "label": "Classification",
+          "href": "classification/index.html"
+        },
+        {
+          "label": "NLP",
+          "href": "nlp/index.html"
+        },
+        {
+          "label": "Matplotlib 3D",
+          "href": "matplotlib/3d/0/index.html"
         }
       ]
     },
     {
-      "label": "Editors",
-      "href": "https://editor.learnwithchampak.live/",
-      "icon": "📅",
+      "label": "Practice",
+      "href": "assignments/week1.txt",
+      "children": [
+        {
+          "label": "Assignments",
+          "href": "assignments/week1.txt"
+        },
+        {
+          "label": "Projects",
+          "href": "projects/index.html"
+        },
+        {
+          "label": "Datasets",
+          "href": "datasets/index.html"
+        }
+      ]
+    },
+    {
+      "label": "Tools",
+      "href": "tools/index.html",
       "children": [
         {
           "label": "Python Editor",
-          "href": "https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1",
-          "icon": "🖥️"
-        },
-
-        {
-          "label": "Javascript Editor",
-          "href": "https://editor.learnwithchampak.live/java-script/editor/",
-          "icon": "🖥️"
+          "href": "https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
         },
         {
           "label": "SQL Editor",
-          "href": "https://editor.learnwithchampak.live/sql/premium/",
-          "icon": "🖥️"
+          "href": "https://editor.learnwithchampak.live/sql/premium/"
         },
         {
-          "label": "HTML Editor",
-          "href": "https://editor.learnwithchampak.live/samples/html/editor/",
-          "icon": "🖥️"
-        },
-        {
-          "label": "JSON Editor",
-          "href": "https://editor.learnwithchampak.live/samples/html/editor/json/",
-          "icon": "🖥️"
-        },
-        {
-          "label": "API Studio",
-          "href": "https://editor.learnwithchampak.live/api/",
-          "icon": "🖥️"
-        },
-        {
-          "label": "Face AI Demo",
-          "href": "https://editor.learnwithchampak.live/samples/face/",
-          "icon": "🖥️"
-        },
-        {
-          "label": "Zoom Meeting",
-          "href": "https://www.learnwithchampak.live/p/champak.html#timing",
-          "icon": "🖥️"
-        },
-        {
-          "label": "White Board",
-          "href": "https://editor.learnwithchampak.live/whiteboard/",
-          "icon": "🖥️"
-        },
-        {
-          "label": "Room Board",
-          "href": "https://editor.learnwithchampak.live/room/",
-          "icon": "🖥️"
+          "label": "Whiteboard",
+          "href": "https://editor.learnwithchampak.live/whiteboard/"
         }
       ]
-    }
-    , {
-      "label": "AI-ML",
-      "href": "https://aiml.learnwithchampak.live/",
-      "icon": "📅",
-      "children": [
-        {
-          "label": "AI-ML Course Map",
-          "href": "https://aiml.learnwithchampak.live/coursemap/?tmode=1",
-          "icon": "🖥️"
-        },
-
-        {
-          "label": "AI-ML Terms",
-          "href": "https://aiml.learnwithchampak.live/lessons/terms/",
-          "icon": "🖥️"
-        },
-        {
-          "label": "AI-ML Statistics",
-          "href": "https://aiml.learnwithchampak.live/lessons/stats/",
-          "icon": "🖥️"
-        }
-      ]
-    }
-    , {
-      "label": "AI-ML Datasets",
-      "href": "#",
-      "icon": "📅",
-      "children": [
-        {
-          "label": "finance_demo.csv",
-          "href": "https://aiml.learnwithchampak.live/course/datasets/finance_demo.csv",
-          "icon": "🖥️"
-        },
-
-        {
-          "label": "AI-ML Terms",
-          "href": "https://aiml.learnwithchampak.live/lessons/terms/",
-          "icon": "🖥️"
-        },
-        {
-          "label": "AI-ML Statistics",
-          "href": "https://aiml.learnwithchampak.live/lessons/stats/",
-          "icon": "🖥️"
-        }
-      ]
+    },
+    {
+      "label": "Student",
+      "href": "student/index.html"
+    },
+    {
+      "label": "Teacher",
+      "href": "teacher/index.html"
+    },
+    {
+      "label": "Contact",
+      "href": "https://www.learnwithchampak.live/p/champak.html"
     }
   ]
 }

@@ -1,0 +1,4 @@
+{
+  "note": "Do not use client-side JSON files for real authentication.",
+  "password_sha256_demo": "replace-only-for-local-demo"
+}

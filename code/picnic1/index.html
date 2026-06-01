@@ -1,20 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>
-      ML Foundations V4 Ultra — Regression, Classification & K-Means |
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>
+      ML Foundations V4 Ultra — Regression, Classification &amp; K-Means |
       Programmer's Picnic
     </title>
-
-    <meta
-      name="description"
-      content="Level 0 to Expert Machine Learning lesson covering regression, classification, K-Means, NumPy polyfit, polynomial fit, SciPy linear regression, interactive charts, Python editor, speak tags and MCQ quiz."
-    />
-    <meta name="theme-color" content="#f59e0b" />
-
-    <style>
+<meta content="Level 0 to Expert Machine Learning lesson covering regression, classification, K-Means, NumPy polyfit, polynomial fit, SciPy linear regression, interactive charts, Python editor, speak tags and MCQ quiz." name="description"/>
+<meta content="#f59e0b" name="theme-color"/>
+<style>
       :root {
         --bg: #fff7e6;
         --bg2: #fffaf0;
@@ -391,188 +387,161 @@
         transition: 0.25s;
       }
     </style>
-  </head>
-
-  <body>
-    <nav class="nav">
-      <div class="nav-inner">
-        <a href="#intro">Intro</a>
-        <a href="#prediction">Prediction</a>
-        <a href="#regression">Regression</a>
-        <a href="#numpy">NumPy</a>
-        <a href="#classification">Classification</a>
-        <a href="#kmeans">K-Means</a>
-        <a href="#graphs">Interactive Graphs</a>
-        <a href="#editor">Python Editor</a>
-        <a href="#quiz">MCQ</a>
-      </div>
-    </nav>
-
-    <main class="wrap">
-      <section class="hero" id="intro">
-        <span class="badge">Programmer's Picnic | V4 Ultra Lesson</span>
-        <h1 id="speak0">
+<link href="../../assets/css/site.css" rel="stylesheet"/><script defer="defer" src="../../assets/js/site.js"></script><script defer="defer" src="../../assets/js/include.js"></script></head>
+<body><div data-include="header"></div>
+<nav class="nav">
+<div class="nav-inner">
+<a href="#intro">Intro</a>
+<a href="#prediction">Prediction</a>
+<a href="#regression">Regression</a>
+<a href="#numpy">NumPy</a>
+<a href="#classification">Classification</a>
+<a href="#kmeans">K-Means</a>
+<a href="#graphs">Interactive Graphs</a>
+<a href="#editor">Python Editor</a>
+<a href="#quiz">MCQ</a>
+</div>
+</nav>
+<main class="wrap" id="main-content">
+<section class="hero" id="intro">
+<span class="badge">Programmer's Picnic | V4 Ultra Lesson</span>
+<h1 id="speak0">
           Machine Learning Foundations: Prediction, Regression, Classification
           and K-Means
         </h1>
-        <p class="lead" id="speak1">
+<p class="lead" id="speak1">
           This lesson starts from level zero and moves step by step toward
           expert understanding. We will learn how machines predict numbers,
           classify categories, and find groups in data.
         </p>
-
-        <div class="pillrow">
-          <span class="pill">Level 0 to Expert</span>
-          <span class="pill">Speak Tags</span>
-          <span class="pill">Interactive Graphs</span>
-          <span class="pill">Python Editor</span>
-          <span class="pill">MCQ Quiz</span>
-        </div>
-      </section>
+<div class="pillrow">
+<span class="pill">Level 0 to Expert</span>
+<span class="pill">Speak Tags</span>
+<span class="pill">Interactive Graphs</span>
+<span class="pill">Python Editor</span>
+<span class="pill">MCQ Quiz</span>
+</div>
+</section>
 <section class="grid">
-  <div class="card">
-    <h2 id="speak18">📸 Topics Covered (Class Whiteboard)</h2>
-    <p id="speak19">
+<div class="card">
+<h2 id="speak18">📸 Topics Covered (Class Whiteboard)</h2>
+<p id="speak19">
       These are the actual topics we completed in class. This lesson is built directly from this roadmap.
     </p>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      
-      <!-- IMAGE 1 -->
-      <div>
-        <img 
-          src="WhatsApp Image 2026-04-30 at 8.41.27 AM.jpeg"
-          alt="ML Topics Whiteboard 1"
-          style="width:100%;border-radius:18px;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,.15)"
-          onclick="zoomImage(this)"
-        />
-        <p style="font-weight:700;color:#78350f;margin-top:8px;">
-          Prediction & Classification Overview
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+<!-- IMAGE 1 -->
+<div>
+<img alt="ML Topics Whiteboard 1" onclick="zoomImage(this)" src="WhatsApp Image 2026-04-30 at 8.41.27 AM.jpeg" style="width:100%;border-radius:18px;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,.15)"/>
+<p style="font-weight:700;color:#78350f;margin-top:8px;">
+          Prediction &amp; Classification Overview
         </p>
-      </div>
-
-      <!-- IMAGE 2 -->
-      <div>
-        <img 
-          src="WhatsApp Image 2026-04-30 at 8.41.26 AM.jpeg"
-          alt="ML Topics Whiteboard 2"
-          style="width:100%;border-radius:18px;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,.15)"
-          onclick="zoomImage(this)"
-        />
-        <p style="font-weight:700;color:#78350f;margin-top:8px;">
+</div>
+<!-- IMAGE 2 -->
+<div>
+<img alt="ML Topics Whiteboard 2" onclick="zoomImage(this)" src="WhatsApp Image 2026-04-30 at 8.41.26 AM.jpeg" style="width:100%;border-radius:18px;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,.15)"/>
+<p style="font-weight:700;color:#78350f;margin-top:8px;">
           Supervised vs Unsupervised (K-Means)
         </p>
-      </div>
-
-    </div>
-  </div>
+</div>
+</div>
+</div>
 </section>
-      <section class="grid">
-        <div class="card half">
-          <h2 id="speak2">The Big Picture</h2>
-          <p>
+<section class="grid">
+<div class="card half">
+<h2 id="speak2">The Big Picture</h2>
+<p>
             Machine Learning means teaching a computer using data instead of
             writing every rule manually. The computer studies examples and then
             makes a useful decision.
           </p>
-          <div class="note">
+<div class="note">
             Machine Learning is mainly about patterns. If data has a pattern, a
             model can often learn it.
           </div>
-        </div>
-
-        <div class="card half">
-          <h2 id="speak3">Three Big Tasks</h2>
-          <div class="table-wrap">
-            <table>
-              <tr>
-                <th>Task</th>
-                <th>Output</th>
-                <th>Example</th>
-              </tr>
-              <tr>
-                <td>Regression</td>
-                <td>Number</td>
-                <td>House price</td>
-              </tr>
-              <tr>
-                <td>Classification</td>
-                <td>Category</td>
-                <td>Spam or not spam</td>
-              </tr>
-              <tr>
-                <td>Clustering</td>
-                <td>Hidden group</td>
-                <td>Customer groups</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section class="grid" id="prediction">
-        <div class="card">
-          <h2 id="speak4">1. Prediction</h2>
-          <p>
+</div>
+<div class="card half">
+<h2 id="speak3">Three Big Tasks</h2>
+<div class="table-wrap">
+<table>
+<tr>
+<th>Task</th>
+<th>Output</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>Regression</td>
+<td>Number</td>
+<td>House price</td>
+</tr>
+<tr>
+<td>Classification</td>
+<td>Category</td>
+<td>Spam or not spam</td>
+</tr>
+<tr>
+<td>Clustering</td>
+<td>Hidden group</td>
+<td>Customer groups</td>
+</tr>
+</table>
+</div>
+</div>
+</section>
+<section class="grid" id="prediction">
+<div class="card">
+<h2 id="speak4">1. Prediction</h2>
+<p>
             Prediction means estimating a future or unknown value from existing
             data. In Machine Learning, prediction usually means regression when
             the answer is a number.
           </p>
-
-          <h3>Two simple examples</h3>
-          <ul>
-            <li><b>Example 1:</b> Study hours → predicted marks.</li>
-            <li><b>Example 2:</b> Temperature → predicted ice cream sales.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="grid" id="regression">
-        <div class="card two-third">
-          <h2 id="speak5">2. Linear Regression</h2>
-          <p>
+<h3>Two simple examples</h3>
+<ul>
+<li><b>Example 1:</b> Study hours → predicted marks.</li>
+<li><b>Example 2:</b> Temperature → predicted ice cream sales.</li>
+</ul>
+</div>
+</section>
+<section class="grid" id="regression">
+<div class="card two-third">
+<h2 id="speak5">2. Linear Regression</h2>
+<p>
             Linear Regression draws the best possible straight line through data
             points. It is used when the relationship looks almost straight.
           </p>
-
-          <div class="formula">y = mx + b</div>
-
-          <p>
+<div class="formula">y = mx + b</div>
+<p>
             Here, <b>x</b> is input, <b>y</b> is output, <b>m</b> is slope, and
             <b>b</b> is intercept.
           </p>
-
-          <h3>Two simple examples</h3>
-          <ul>
-            <li>
-              <b>Example 1:</b> More study hours usually means higher marks.
+<h3>Two simple examples</h3>
+<ul>
+<li>
+<b>Example 1:</b> More study hours usually means higher marks.
             </li>
-            <li>
-              <b>Example 2:</b> Larger house area usually means higher house
+<li>
+<b>Example 2:</b> Larger house area usually means higher house
               price.
             </li>
-          </ul>
-        </div>
-
-        <div class="card third">
-          <h2 id="speak6">Why important?</h2>
-          <p>
+</ul>
+</div>
+<div class="card third">
+<h2 id="speak6">Why important?</h2>
+<p>
             Linear Regression is often the first real Machine Learning model. It
             teaches slope, error, prediction, and model fitting.
           </p>
-        </div>
-      </section>
-
-      <section class="grid" id="numpy">
-        <div class="card half">
-          <h2 id="speak7">3. NumPy polyfit</h2>
-          <p>
+</div>
+</section>
+<section class="grid" id="numpy">
+<div class="card half">
+<h2 id="speak7">3. NumPy polyfit</h2>
+<p>
             NumPy <code>polyfit</code> can fit a straight line or curve. Degree
             1 means linear regression.
           </p>
-
-          <button class="copy" onclick="copyCode('code1')">Copy Code</button>
-          <pre id="code1"><code>import numpy as np
+<button class="copy" onclick="copyCode('code1')">Copy Code</button>
+<pre id="code1"><code>import numpy as np
 
 x = np.array([1, 2, 3, 4, 5])
 y = np.array([40, 50, 60, 70, 80])
@@ -582,18 +551,15 @@ m, b = np.polyfit(x, y, 1)
 print("Slope:", m)
 print("Intercept:", b)
 print("Prediction for 6 hours:", m * 6 + b)</code></pre>
-        </div>
-
-        <div class="card half">
-          <h2 id="speak8">4. Polynomial Fit</h2>
-          <p>
+</div>
+<div class="card half">
+<h2 id="speak8">4. Polynomial Fit</h2>
+<p>
             Polynomial fit is useful when data is curved instead of straight.
           </p>
-
-          <div class="formula">y = ax² + bx + c</div>
-
-          <button class="copy" onclick="copyCode('code2')">Copy Code</button>
-          <pre id="code2"><code>import numpy as np
+<div class="formula">y = ax² + bx + c</div>
+<button class="copy" onclick="copyCode('code2')">Copy Code</button>
+<pre id="code2"><code>import numpy as np
 
 x = np.array([1, 2, 3, 4, 5])
 y = np.array([2, 5, 10, 17, 26])
@@ -602,17 +568,15 @@ a, b, c = np.polyfit(x, y, 2)
 
 print(a, b, c)
 print("Prediction:", a*6**2 + b*6 + c)</code></pre>
-        </div>
-
-        <div class="card">
-          <h2 id="speak9">5. SciPy Linear Regression</h2>
-          <p>
+</div>
+<div class="card">
+<h2 id="speak9">5. SciPy Linear Regression</h2>
+<p>
             SciPy linear regression gives slope and intercept, but it also gives
             statistical values like correlation.
           </p>
-
-          <button class="copy" onclick="copyCode('code3')">Copy Code</button>
-          <pre id="code3"><code>from scipy import stats
+<button class="copy" onclick="copyCode('code3')">Copy Code</button>
+<pre id="code3"><code>from scipy import stats
 
 x = [1, 2, 3, 4, 5]
 y = [40, 50, 60, 70, 80]
@@ -622,241 +586,208 @@ result = stats.linregress(x, y)
 print("Slope:", result.slope)
 print("Intercept:", result.intercept)
 print("Correlation:", result.rvalue)</code></pre>
-        </div>
-      </section>
-
-      <section class="grid" id="classification">
-        <div class="card">
-          <h2 id="speak10">6. Classification</h2>
-          <p>
+</div>
+</section>
+<section class="grid" id="classification">
+<div class="card">
+<h2 id="speak10">6. Classification</h2>
+<p>
             Classification predicts a category. The answer is not a number like
             price. The answer is a label.
           </p>
-
-          <div class="table-wrap">
-            <table>
-              <tr>
-                <th>Type</th>
-                <th>Input</th>
-                <th>Output</th>
-                <th>Example</th>
-              </tr>
-              <tr>
-                <td>Binary Classification</td>
-                <td>1 or more inputs</td>
-                <td>2 classes</td>
-                <td>Pass / Fail</td>
-              </tr>
-              <tr>
-                <td>Multi-class Classification</td>
-                <td>1 or more inputs</td>
-                <td>More than 2 classes</td>
-                <td>A / B / C grade</td>
-              </tr>
-            </table>
-          </div>
-
-          <h3>Two simple examples</h3>
-          <ul>
-            <li><b>Example 1:</b> Email → spam or not spam.</li>
-            <li><b>Example 2:</b> Animal image → cat, dog, or cow.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="grid" id="kmeans">
-        <div class="card two-third">
-          <h2 id="speak11">7. Unsupervised Learning and K-Means</h2>
-          <p>
+<div class="table-wrap">
+<table>
+<tr>
+<th>Type</th>
+<th>Input</th>
+<th>Output</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>Binary Classification</td>
+<td>1 or more inputs</td>
+<td>2 classes</td>
+<td>Pass / Fail</td>
+</tr>
+<tr>
+<td>Multi-class Classification</td>
+<td>1 or more inputs</td>
+<td>More than 2 classes</td>
+<td>A / B / C grade</td>
+</tr>
+</table>
+</div>
+<h3>Two simple examples</h3>
+<ul>
+<li><b>Example 1:</b> Email → spam or not spam.</li>
+<li><b>Example 2:</b> Animal image → cat, dog, or cow.</li>
+</ul>
+</div>
+</section>
+<section class="grid" id="kmeans">
+<div class="card two-third">
+<h2 id="speak11">7. Unsupervised Learning and K-Means</h2>
+<p>
             In supervised learning, answers are already given during training.
             In unsupervised learning, answers are not given. The model finds
             groups by itself.
           </p>
-
-          <p>
+<p>
             K-Means is a clustering algorithm. It groups similar points
             together.
           </p>
-
-          <h3>Two simple examples</h3>
-          <ul>
-            <li>
-              <b>Example 1:</b> Group students as beginner, intermediate, and
+<h3>Two simple examples</h3>
+<ul>
+<li>
+<b>Example 1:</b> Group students as beginner, intermediate, and
               advanced.
             </li>
-            <li>
-              <b>Example 2:</b> Group customers as low spender, medium spender,
+<li>
+<b>Example 2:</b> Group customers as low spender, medium spender,
               and high spender.
             </li>
-          </ul>
-        </div>
-
-        <div class="card third">
-          <h2 id="speak12">Expert warning</h2>
-          <p>
+</ul>
+</div>
+<div class="card third">
+<h2 id="speak12">Expert warning</h2>
+<p>
             K-Means needs the value of K. It is also sensitive to outliers and
             scale. Always normalize data for better clustering.
           </p>
-        </div>
-      </section>
-
-      <section class="grid">
-        <div class="card">
-          <h2 id="speak13">Regression vs Classification vs Clustering</h2>
-          <div class="table-wrap">
-            <table>
-              <tr>
-                <th>Point</th>
-                <th>Regression</th>
-                <th>Classification</th>
-                <th>Clustering</th>
-              </tr>
-              <tr>
-                <td>Output</td>
-                <td>Number</td>
-                <td>Category</td>
-                <td>Group</td>
-              </tr>
-              <tr>
-                <td>Training type</td>
-                <td>Supervised</td>
-                <td>Supervised</td>
-                <td>Unsupervised</td>
-              </tr>
-              <tr>
-                <td>Example</td>
-                <td>Price prediction</td>
-                <td>Spam detection</td>
-                <td>Customer segmentation</td>
-              </tr>
-              <tr>
-                <td>Question answered</td>
-                <td>How much?</td>
-                <td>Which class?</td>
-                <td>Which group?</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section class="grid" id="graphs">
-        <div class="card">
-          <h2 id="speak14">8. Interactive Graph Lab</h2>
-          <p>
+</div>
+</section>
+<section class="grid">
+<div class="card">
+<h2 id="speak13">Regression vs Classification vs Clustering</h2>
+<div class="table-wrap">
+<table>
+<tr>
+<th>Point</th>
+<th>Regression</th>
+<th>Classification</th>
+<th>Clustering</th>
+</tr>
+<tr>
+<td>Output</td>
+<td>Number</td>
+<td>Category</td>
+<td>Group</td>
+</tr>
+<tr>
+<td>Training type</td>
+<td>Supervised</td>
+<td>Supervised</td>
+<td>Unsupervised</td>
+</tr>
+<tr>
+<td>Example</td>
+<td>Price prediction</td>
+<td>Spam detection</td>
+<td>Customer segmentation</td>
+</tr>
+<tr>
+<td>Question answered</td>
+<td>How much?</td>
+<td>Which class?</td>
+<td>Which group?</td>
+</tr>
+</table>
+</div>
+</div>
+</section>
+<section class="grid" id="graphs">
+<div class="card">
+<h2 id="speak14">8. Interactive Graph Lab</h2>
+<p>
             Change the dataset and model type. The chart will update
             automatically.
           </p>
-
-          <div class="controls">
-            <label>
+<div class="controls">
+<label>
               Dataset:
               <select id="dataset">
-                <option value="study">Study Hours → Marks</option>
-                <option value="icecream">Temperature → Sales</option>
-                <option value="curve">Curved Growth</option>
-              </select>
-            </label>
-
-            <label>
+<option value="study">Study Hours → Marks</option>
+<option value="icecream">Temperature → Sales</option>
+<option value="curve">Curved Growth</option>
+</select>
+</label>
+<label>
               Model:
               <select id="modelType">
-                <option value="linear">Linear</option>
-                <option value="poly">Polynomial</option>
-              </select>
-            </label>
-
-            <button class="btn" onclick="drawChart()">Draw Graph</button>
-          </div>
-
-          <canvas id="chart" width="1000" height="420"></canvas>
-        </div>
-      </section>
-
-      <section class="grid" id="editor">
-        <div class="card">
-          <h2 id="speak15">9. Embedded Python Editor</h2>
-          <p>
+<option value="linear">Linear</option>
+<option value="poly">Polynomial</option>
+</select>
+</label>
+<button class="btn" onclick="drawChart()">Draw Graph</button>
+</div>
+<canvas height="420" id="chart" width="1000"></canvas>
+</div>
+</section>
+<section class="grid" id="editor">
+<div class="card">
+<h2 id="speak15">9. Embedded Python Editor</h2>
+<p>
             Practice the same regression and classification examples in the live
             Python editor.
           </p>
-
-          <p>
-            <a
-              class="btn"
-              href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-              target="_blank"
-            >
+<p>
+<a class="btn" href="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1" target="_blank">
               Open Python Editor in New Tab
             </a>
-          </p>
-
-          <iframe
-            src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-          ></iframe>
-        </div>
-      </section>
-
-      <section class="grid">
-        <div class="card">
-          <h2 id="speak16">10. Expert Notes</h2>
-
-          <details open>
-            <summary>Linear Regression assumptions</summary>
-            <p>
+</p>
+<iframe src="https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"></iframe>
+</div>
+</section>
+<section class="grid">
+<div class="card">
+<h2 id="speak16">10. Expert Notes</h2>
+<details open="">
+<summary>Linear Regression assumptions</summary>
+<p>
               Linear Regression works best when the data has a roughly
               straight-line relationship, errors are not extreme, and features
               are not strongly duplicated.
             </p>
-          </details>
-
-          <details>
-            <summary>Polynomial Regression danger</summary>
-            <p>
+</details>
+<details>
+<summary>Polynomial Regression danger</summary>
+<p>
               A very high degree can memorize training data and fail on new
               data. This is called overfitting.
             </p>
-          </details>
-
-          <details>
-            <summary>Classification boundary</summary>
-            <p>
+</details>
+<details>
+<summary>Classification boundary</summary>
+<p>
               Classification creates a decision boundary. Simple models create
               simple boundaries. Advanced models create complex boundaries.
             </p>
-          </details>
-
-          <details>
-            <summary>K-Means limitation</summary>
-            <p>
+</details>
+<details>
+<summary>K-Means limitation</summary>
+<p>
               K-Means works well for round and separated clusters, but it may
               fail on irregular shapes.
             </p>
-          </details>
-        </div>
-      </section>
-
-      <section class="grid" id="quiz">
-        <div class="card">
-          <h2 id="speak17">11. MCQ Quiz</h2>
-          <p>Choose the best answer and submit.</p>
-
-          <div id="quizBox"></div>
-
-          <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
-          <button class="btn secondary" onclick="resetQuiz()">Reset</button>
-
-          <div id="quizResult" class="result" style="display: none"></div>
-        </div>
-      </section>
-
-      <section class="footer">
-        <p><b>Programmer's Picnic | Champak Roy</b></p>
-        <p>Machine Learning Foundations V4 Ultra</p>
-      </section>
-    </main>
-
-    <script>
+</details>
+</div>
+</section>
+<section class="grid" id="quiz">
+<div class="card">
+<h2 id="speak17">11. MCQ Quiz</h2>
+<p>Choose the best answer and submit.</p>
+<div id="quizBox"></div>
+<button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+<button class="btn secondary" onclick="resetQuiz()">Reset</button>
+<div class="result" id="quizResult" style="display: none"></div>
+</div>
+</section>
+<section class="footer">
+<p><b>Programmer's Picnic | Champak Roy</b></p>
+<p>Machine Learning Foundations V4 Ultra</p>
+</section>
+</main>
+<script>
       function copyCode(id) {
         const text = document.getElementById(id).innerText;
         navigator.clipboard.writeText(text);
@@ -1151,8 +1082,7 @@ print("Correlation:", result.rvalue)</code></pre>
       loadQuiz();
       drawChart();
     </script>
-
-    <script>
+<script>
       (function () {
         const selector = '[id^="speak"]';
         let items = [];
@@ -1246,9 +1176,8 @@ print("Correlation:", result.rvalue)</code></pre>
         makePanel();
       })();
     </script>
-
-    <script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
-    <script>
+<script src="https://programmer-s-picnic.github.io/json-images/find-on-page.js"></script>
+<script>
 function zoomImage(img){
   const overlay = document.createElement("div");
   overlay.style.cssText = `
@@ -1275,5 +1204,5 @@ function zoomImage(img){
   document.body.appendChild(overlay);
 }
 </script>
-  </body>
+<div data-include="footer"></div></body>
 </html>
