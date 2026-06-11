@@ -1,20 +1,40 @@
-1. AI-ML Terms
-2. Language = Python
-3. Introduction to Numpy, Pandas and Matplotlib
-4. Statistics Terms: Mean, Median, Mode, Quartiles, Mean Deviation, Variance, Standard Deviation
-5. Curve Fitting theory. Coefficient of Correlation, Linear Regression, Predictions.
-6. Classifications based on Predictions.
-7. Using Datasets: 
-   1. Using demo data and random data.
-   2. Varanasi Weather
-   3. Shares Data using Yahoo Finance, short term and long term predictions.
-   4. IPL Data
-   5. Medical Data
-   6. List respectable data sources
-   7. learn data transfer <---> from pandas, xlsx, csv, databases, internet and more
-8. Learn probability, bayes theorem and more.
-9. Supervised learning with single variable, multiple variables, and multilevel
-10. Sample applications with important uses 
-11. Sources like scikit, kaggle, tensorflow, and data frames. Make a reputed sources list
-12. Images processing, thumb prints, face recognition, vehicle recognition, vehicle numbers reading, qr code, barcode reading
-13. All projects must be real needs based
+
+# AI Builder Program — COMPLETE SYLLABUS (6 Weeks, 4 Days/Week)
+
+## WEEK 1: Python Foundations
+Day 1: Variables, input/output  
+Day 2: Numbers, expressions  
+Day 3: Lists, loops  
+Day 4: Functions, conditions  
+Project: Result Analyzer
+
+## WEEK 2: Data Handling
+Day 5: NumPy basics  
+Day 6: Pandas DataFrame  
+Day 7: CSV + filtering  
+Day 8: Matplotlib charts  
+Project: Data Dashboard
+
+## WEEK 3: Statistics + ML Intro
+Day 9: Mean, median, std dev  
+Day 10: Correlation  
+Day 11: Linear Regression  
+Day 12: Visualization  
+Project: Marks Predictor
+
+## WEEK 4: Classification
+Day 13: Regression vs Classification  
+Day 14: Decision Trees  
+Day 15: KNN  
+Day 16: Accuracy + Confusion Matrix  
+Project: Spam Classifier
+
+## WEEK 5: NLP
+Day 17: Text cleaning  
+Day 18: Word frequency  
+Day 19: Rule-based sentiment  
+Day 20: ML sentiment  
+Project: Review Analyzer
+
+## WEEK 6: Final Project
+Day 21–24: Build + Present  

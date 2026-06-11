@@ -1,46 +1,27 @@
-# AI-ML Classes from 0 to Infinity
+# Pandas Projects Pack (Easy • Moderate • Difficult)
 
-Static course site for Programmer's Picnic AI-ML Classes by Champak Roy.
+This pack contains 3 projects that demonstrate:
 
-## What is inside
+- **Data entry from:** CSV, JSON, MySQL, MongoDB
+- **Processing with:** Pandas
+- **Charts with:** Matplotlib (saved as PNG)
+- **Export to:** CSV, JSON, MySQL, MongoDB, PNG
 
-- shared `header.html` and `footer.html`
-- automatic navigation from `assets/data/menu.json`
-- automatic breadcrumbs based on the current file path
-- student-friendly homepage
-- lessons, datasets, assignments, projects, teacher and student sections
-- `sitemap.xml`, `robots.txt`, `404.html`, and `CNAME`
-- warm light blue theme in `assets/css/site.css`
+## Quick Start
+1. Install:
+   - `pip install -r requirements.txt`
+2. Run an easy script:
+   - `cd scripts`
+   - `python easy_expense_analytics.py`
+3. Outputs appear in:
+   - `output/`
 
-## Editing navigation
+> For MySQL/MongoDB: edit connection strings inside scripts.
 
-Edit:
-
-```txt
-assets/data/menu.json
-```
-
-The header search and navigation are generated from this file.
-
-## Adding a new lesson
-
-Create a folder with an `index.html`, for example:
-
-```txt
-lessons/new-topic/index.html
-```
-
-Use the shared includes:
-
-```html
-<link rel="stylesheet" href="../../assets/css/site.css">
-<script defer src="../../assets/js/site.js"></script>
-<script defer src="../../assets/js/include.js"></script>
-<div data-include="header"></div>
-<main id="main-content" class="pp-content">...</main>
-<div data-include="footer"></div>
-```
-
-## Deployment
-
-Upload the contents of this folder to GitHub Pages or any static host. Keep `CNAME` if the custom domain is `aiml.learnwithchampak.live`.
+## Files
+- `index.html` – hub page
+- `project_easy.html` – Easy project
+- `project_moderate.html` – Moderate project
+- `project_difficult.html` – Difficult project
+- `scripts/` – Python starter scripts
+- `data/` – sample datasets
