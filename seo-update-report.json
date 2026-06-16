@@ -1,0 +1,478 @@
+{
+  "updated_html_files": 79,
+  "base_url": "https://aiml.learnwithchampak.live",
+  "changes": [
+    {
+      "file": "404.html",
+      "gtag_removed": 2,
+      "title": "Page Not Found | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/404.html"
+    },
+    {
+      "file": "footer.html",
+      "gtag_removed": 2,
+      "seo": "partial include"
+    },
+    {
+      "file": "header.html",
+      "gtag_removed": 2,
+      "seo": "partial include"
+    },
+    {
+      "file": "index.html",
+      "gtag_removed": 2,
+      "title": "Study AI/ML with Champak Roy in Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/"
+    },
+    {
+      "file": "sarkar.html",
+      "gtag_removed": 2,
+      "title": "🇮🇳 Government Services Dashboard | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/sarkar.html"
+    },
+    {
+      "file": "search.html",
+      "gtag_removed": 2,
+      "title": "A single landing page for your complete AI-ML | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/search.html"
+    },
+    {
+      "file": "authorised/index.html",
+      "gtag_removed": 2,
+      "title": "This page is strictly for learning purposes a | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/authorised/"
+    },
+    {
+      "file": "book/index.html",
+      "gtag_removed": 2,
+      "title": "Make your own chatbot from 0 to infinity. | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/book/"
+    },
+    {
+      "file": "course/course-map.html",
+      "gtag_removed": 2,
+      "title": "From Python beginner to project-ready AI-ML b | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/course-map.html"
+    },
+    {
+      "file": "course/index.html",
+      "gtag_removed": 2,
+      "title": "AI-ML Projects Ready to Deploy | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/"
+    },
+    {
+      "file": "course/scriptaadds.html",
+      "gtag_removed": 2,
+      "title": "AI/ML Course | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/scriptaadds.html"
+    },
+    {
+      "file": "coursemap/index.html",
+      "gtag_removed": 2,
+      "title": "AI-ML with Python 16-Week Complete Roadmap | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/coursemap/"
+    },
+    {
+      "file": "datasets/index.html",
+      "gtag_removed": 2,
+      "title": "🎬 Week Lesson: Hollywood Film Dataset Analysi | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/datasets/"
+    },
+    {
+      "file": "lessons/index.html",
+      "gtag_removed": 2,
+      "title": "AI-ML Terminology from Ground Level | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/lessons/"
+    },
+    {
+      "file": "publicmodule/index.html",
+      "gtag_removed": 2,
+      "title": "Publish Your Python Module on PyPI | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/publicmodule/"
+    },
+    {
+      "file": "puzzle/index.html",
+      "gtag_removed": 2,
+      "title": "Grid Point Highlighter | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/puzzle/"
+    },
+    {
+      "file": "regression/index.html",
+      "gtag_removed": 2,
+      "title": "Coefficient of Correlation + polyfit() + poly | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/regression/"
+    },
+    {
+      "file": "student/index.html",
+      "gtag_removed": 2,
+      "title": "AI Builder Program - Student | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/student/"
+    },
+    {
+      "file": "teacher/index.html",
+      "gtag_removed": 2,
+      "title": "Teacher Panel | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/teacher/"
+    },
+    {
+      "file": "tools/index.html",
+      "gtag_removed": 2,
+      "title": "Tools Hub | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/tools/"
+    },
+    {
+      "file": "wizard/index.html",
+      "gtag_removed": 2,
+      "title": "AI/ML Module Finder Wizard | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/wizard/"
+    },
+    {
+      "file": "regression/0-10/index.html",
+      "gtag_removed": 2,
+      "title": "Power 0, Linear and Higher-Degree Curve Fitti | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/regression/0-10/"
+    },
+    {
+      "file": "regression/compare/index.html",
+      "gtag_removed": 2,
+      "title": "Programmer's Picnic — Regression Master Lesso | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/regression/compare/"
+    },
+    {
+      "file": "regression/compare/test.html",
+      "gtag_removed": 2,
+      "title": "Join the live class, access your learning pla | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/regression/compare/test.html"
+    },
+    {
+      "file": "regression/multipleinputs/index.html",
+      "gtag_removed": 2,
+      "title": "Multiple Linear Regression | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/regression/multipleinputs/"
+    },
+    {
+      "file": "regression/np/polyfit/index.html",
+      "gtag_removed": 2,
+      "title": "Coefficient of Correlation + polyfit() + poly | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/regression/np/polyfit/"
+    },
+    {
+      "file": "nlp/0-10/index.html",
+      "gtag_removed": 2,
+      "title": "NLP 0–10 Guide | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/nlp/0-10/"
+    },
+    {
+      "file": "nlp/11-20/index.html",
+      "gtag_removed": 2,
+      "title": "NLP Lesson 11% to 20% | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/nlp/11-20/"
+    },
+    {
+      "file": "nlp/21-30/index.html",
+      "gtag_removed": 2,
+      "title": "NLP Lesson 21% to 30% | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/nlp/21-30/"
+    },
+    {
+      "file": "nlp/31-40/index.html",
+      "gtag_removed": 2,
+      "title": "From Words to Meaningful Comparison | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/nlp/31-40/"
+    },
+    {
+      "file": "nlp/41-50/index.html",
+      "gtag_removed": 2,
+      "title": "Better Text Search with TF-IDF | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/nlp/41-50/"
+    },
+    {
+      "file": "nlp/51-60/index.html",
+      "gtag_removed": 2,
+      "title": "Synonyms, Antonyms and Meaning Matching using | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/nlp/51-60/"
+    },
+    {
+      "file": "nlp/61-70/index.html",
+      "gtag_removed": 2,
+      "title": "Build a Meaning-Based Chatbot using NLTK Word | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/nlp/61-70/"
+    },
+    {
+      "file": "nlp/begin/index.html",
+      "gtag_removed": 2,
+      "title": "Beginning NLP Lesson | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/nlp/begin/"
+    },
+    {
+      "file": "matplotlib/3d/0/index.html",
+      "gtag_removed": 2,
+      "title": "3D Drawing in Matplotlib | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/matplotlib/3d/0/"
+    },
+    {
+      "file": "matplotlib/3d/1/index.html",
+      "gtag_removed": 2,
+      "title": "3D in Matplotlib | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/matplotlib/3d/1/"
+    },
+    {
+      "file": "lessons/stats/index.html",
+      "gtag_removed": 2,
+      "title": "Statistics for AI-ML with Direct Method, Pyth | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/lessons/stats/"
+    },
+    {
+      "file": "lessons/terms/index.html",
+      "gtag_removed": 2,
+      "title": "AI-ML Terminology from Ground Level | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/lessons/terms/"
+    },
+    {
+      "file": "images/image-generator/index.html",
+      "gtag_removed": 2,
+      "title": "Programmer’s Picnic — Free AI Image Generator | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/images/image-generator/"
+    },
+    {
+      "file": "course/projects/index.html",
+      "gtag_removed": 2,
+      "title": "AI-ML Projects Ready to Deploy | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/projects/"
+    },
+    {
+      "file": "course/projects/ipl-dashboard.html",
+      "gtag_removed": 2,
+      "title": "IPL Dashboard | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/projects/ipl-dashboard.html"
+    },
+    {
+      "file": "course/projects/risk-classifier.html",
+      "gtag_removed": 2,
+      "title": "Risk Classifier | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/projects/risk-classifier.html"
+    },
+    {
+      "file": "course/projects/sales-predictor.html",
+      "gtag_removed": 2,
+      "title": "Sales Predictor | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/projects/sales-predictor.html"
+    },
+    {
+      "file": "course/projects/weather-analyzer.html",
+      "gtag_removed": 2,
+      "title": "Weather Analyzer | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/projects/weather-analyzer.html"
+    },
+    {
+      "file": "course/week01/assignment.html",
+      "gtag_removed": 2,
+      "title": "Python Foundations I — Assignment Pack | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week01/assignment.html"
+    },
+    {
+      "file": "course/week01/lesson.html",
+      "gtag_removed": 2,
+      "title": "Python Foundations I | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/week01/lesson.html"
+    },
+    {
+      "file": "course/week02/assignment.html",
+      "gtag_removed": 2,
+      "title": "Python Foundations II — Assignment Pack | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week02/assignment.html"
+    },
+    {
+      "file": "course/week02/lesson.html",
+      "gtag_removed": 2,
+      "title": "Python Foundations II | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/week02/lesson.html"
+    },
+    {
+      "file": "course/week03/assignment.html",
+      "gtag_removed": 2,
+      "title": "Comprehensive assignment pack for NumPy Speci | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week03/assignment.html"
+    },
+    {
+      "file": "course/week03/lesson.html",
+      "gtag_removed": 2,
+      "title": "NumPy from ground 0 to expert point 100 | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week03/lesson.html"
+    },
+    {
+      "file": "course/week04/assignment.html",
+      "gtag_removed": 2,
+      "title": "Pandas and Matplotlib — Assignment Pack | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week04/assignment.html"
+    },
+    {
+      "file": "course/week04/lesson.html",
+      "gtag_removed": 2,
+      "title": "Pandas and Matplotlib | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/week04/lesson.html"
+    },
+    {
+      "file": "course/week05/assignment.html",
+      "gtag_removed": 2,
+      "title": "Statistics for AI — Assignment Pack | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week05/assignment.html"
+    },
+    {
+      "file": "course/week05/lesson.html",
+      "gtag_removed": 2,
+      "title": "Statistics for AI | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/week05/lesson.html"
+    },
+    {
+      "file": "course/week06/assignment.html",
+      "gtag_removed": 2,
+      "title": "Regression and Correlation — Assignment Pack | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week06/assignment.html"
+    },
+    {
+      "file": "course/week06/lesson.html",
+      "gtag_removed": 2,
+      "title": "Regression and Correlation | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/week06/lesson.html"
+    },
+    {
+      "file": "course/week07/assignment.html",
+      "gtag_removed": 2,
+      "title": "Classification Fundamentals — Assignment Pack | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week07/assignment.html"
+    },
+    {
+      "file": "course/week07/lesson.html",
+      "gtag_removed": 2,
+      "title": "Classification Fundamentals | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/week07/lesson.html"
+    },
+    {
+      "file": "course/week08/assignment.html",
+      "gtag_removed": 2,
+      "title": "Probability and Bayes Thinking — Assignment P | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week08/assignment.html"
+    },
+    {
+      "file": "course/week08/lesson.html",
+      "gtag_removed": 2,
+      "title": "Probability and Bayes Thinking | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/week08/lesson.html"
+    },
+    {
+      "file": "course/week09/assignment.html",
+      "gtag_removed": 2,
+      "title": "Working with Datasets — Assignment Pack | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week09/assignment.html"
+    },
+    {
+      "file": "course/week09/lesson.html",
+      "gtag_removed": 2,
+      "title": "Working with Datasets | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/week09/lesson.html"
+    },
+    {
+      "file": "course/week10/assignment.html",
+      "gtag_removed": 2,
+      "title": "Real Project I — Weather and IPL — Assignment | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week10/assignment.html"
+    },
+    {
+      "file": "course/week10/lesson.html",
+      "gtag_removed": 2,
+      "title": "Real Project I — Weather and IPL | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/week10/lesson.html"
+    },
+    {
+      "file": "course/week11/assignment.html",
+      "gtag_removed": 2,
+      "title": "Real Project II — Finance and Medical Data — | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week11/assignment.html"
+    },
+    {
+      "file": "course/week11/lesson.html",
+      "gtag_removed": 2,
+      "title": "Real Project II — Finance and Medical Data | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week11/lesson.html"
+    },
+    {
+      "file": "course/week12/assignment.html",
+      "gtag_removed": 2,
+      "title": "Capstone and Deployment — Assignment Pack | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/course/week12/assignment.html"
+    },
+    {
+      "file": "course/week12/lesson.html",
+      "gtag_removed": 2,
+      "title": "Capstone and Deployment | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/course/week12/lesson.html"
+    },
+    {
+      "file": "code/1/index.html",
+      "gtag_removed": 2,
+      "title": "Mean, Median, Mode, Max, Min and Range Direct | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/code/1/"
+    },
+    {
+      "file": "code/picnic1/index.html",
+      "gtag_removed": 2,
+      "title": "Machine Learning Foundations: Prediction, Reg | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/code/picnic1/"
+    },
+    {
+      "file": "code/pandas/cleaning/index.html",
+      "gtag_removed": 2,
+      "title": "Dataset Cleaning to Linear Regression — Champ | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/code/pandas/cleaning/"
+    },
+    {
+      "file": "code/pandas/csv/index.html",
+      "gtag_removed": 2,
+      "title": "Pandas + CSV + Matplotlib — Comprehensive Les | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/code/pandas/csv/"
+    },
+    {
+      "file": "code/pandas/projects/index.html",
+      "gtag_removed": 2,
+      "title": "Pandas Projects Pack | AI/ML with Champak Roy, Varanasi",
+      "canonical": "https://aiml.learnwithchampak.live/code/pandas/projects/"
+    },
+    {
+      "file": "code/pandas/projects/project_difficult.html",
+      "gtag_removed": 2,
+      "title": "Difficult Project — IoT Anomaly Monitor | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/code/pandas/projects/project_difficult.html"
+    },
+    {
+      "file": "code/pandas/projects/project_easy.html",
+      "gtag_removed": 2,
+      "title": "Easy Project — Expense Tracker Analytics | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/code/pandas/projects/project_easy.html"
+    },
+    {
+      "file": "code/pandas/projects/project_moderate.html",
+      "gtag_removed": 2,
+      "title": "Moderate Project — Sales & Customers Dashboar | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/code/pandas/projects/project_moderate.html"
+    },
+    {
+      "file": "code/pandas/sql/index.html",
+      "gtag_removed": 2,
+      "title": "Using SQL with Pandas (Beginner → Advanced) | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/code/pandas/sql/"
+    },
+    {
+      "file": "classification/unsupervised/index.html",
+      "gtag_removed": 2,
+      "title": "K-Means Clustering — From Zero to Expert | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/classification/unsupervised/"
+    },
+    {
+      "file": "authorised/lesson/index.html",
+      "gtag_removed": 2,
+      "title": "This page is strictly for learning purposes a | Champak Roy AI/ML",
+      "canonical": "https://aiml.learnwithchampak.live/authorised/lesson/"
+    }
+  ]
+}
