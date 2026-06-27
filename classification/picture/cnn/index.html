@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Picture Classification using CNN in Python | 0 to Infinity Lesson</title>
+
+    <meta name="description"
+        content="A beginner-friendly 0 to infinity lesson on picture classification using CNN in Python. Learn image pixels, NumPy arrays, labels, one-hot encoding, CNN layers, training, prediction, accuracy graph, and loss graph." />
+    <meta name="keywords"
+        content="CNN, Convolutional Neural Network, Python, picture classification, image classification, TensorFlow, Keras, mango dog cat classifier, AI ML lesson, Champak Roy, Programmer's Picnic" />
+    <meta name="author" content="Champak Roy" />
+
+    <meta property="og:title" content="Picture Classification using CNN in Python" />
+    <meta property="og:description"
+        content="Learn picture classification from zero to infinity using CNN, TensorFlow, Keras, NumPy, and Python." />
+    <meta property="og:type" content="article" />
+
+    <style>
+        :root {
+            --bg: #eafff9;
+            --hero: #073b3a;
+            --hero2: #075e59;
+            --card: rgba(255, 255, 255, 0.94);
+            --text: #102a2a;
+            --muted: #4f6f6d;
+            --accent: #ff9f1c;
+            --accent2: #2ec4b6;
+            --line: #bdeee6;
+            --code-bg: #101820;
+            --code-text: #e8fff9;
+            --note: #fff6df;
+            --practice: #effff5;
+            --warning: #fff0f0;
+            --shadow: 0 16px 42px rgba(7, 59, 58, 0.14);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(46, 196, 182, 0.25), transparent 34rem),
+                linear-gradient(180deg, var(--bg), #f8fffd);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--hero), var(--hero2));
+            color: white;
+            padding: 48px 18px 38px;
+            text-align: center;
+            border-bottom: 8px solid var(--accent);
+        }
+
+        .hero-inner {
+            max-width: 1120px;
+            margin: auto;
+        }
+
+        .badge {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2.2rem, 6vw, 4.3rem);
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+        }
+
+        .subtitle {
+            max-width: 850px;
+            margin: 18px auto 0;
+            color: #dafaf5;
+            font-size: 1.14rem;
+        }
+
+        .nav-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 1100px;
+            margin: 26px auto 0;
+        }
+
+        .nav-pills a {
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            padding: 9px 14px;
+            font-size: 0.94rem;
+            font-weight: 700;
+        }
+
+        .nav-pills a:hover,
+        .nav-pills a:focus {
+            outline: 3px solid rgba(255, 159, 28, 0.55);
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: auto;
+            padding: 28px 16px 64px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(9, 97, 91, 0.12);
+            border-radius: 24px;
+            padding: 26px;
+            margin: 22px 0;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+        }
+
+        h2 {
+            color: #07504d;
+            margin-top: 0;
+            font-size: clamp(1.45rem, 3vw, 2.1rem);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            color: #084a47;
+            margin-bottom: 8px;
+        }
+
+        .lead {
+            color: var(--muted);
+            font-size: 1.08rem;
+        }
+
+        .note,
+        .practice,
+        .warning {
+            border-radius: 18px;
+            padding: 16px 18px;
+            margin: 18px 0;
+        }
+
+        .note {
+            background: var(--note);
+            border: 1px solid #ffd58a;
+        }
+
+        .practice {
+            background: var(--practice);
+            border: 1px solid #b7efcb;
+        }
+
+        .warning {
+            background: var(--warning);
+            border: 1px solid #ffbaba;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 18px;
+            border-radius: 18px;
+            overflow-x: auto;
+            border: 1px solid #29424d;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+            font-size: 0.93rem;
+            line-height: 1.55;
+            tab-size: 4;
+        }
+
+        code {
+            font-family: Consolas, Monaco, "Courier New", monospace;
+        }
+
+        p code,
+        li code,
+        td code {
+            background: #dff8f4;
+            color: #063f3d;
+            padding: 2px 6px;
+            border-radius: 7px;
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .mini {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 18px;
+        }
+
+        .mini strong {
+            display: block;
+            color: #064946;
+            margin-bottom: 5px;
+        }
+
+        .flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-top: 14px;
+        }
+
+        .step {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font-weight: 800;
+            color: #064946;
+        }
+
+        .arrow {
+            color: #08746e;
+            font-size: 1.3rem;
+            font-weight: 900;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 14px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            border: 1px solid #d6efeb;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #dff8f4;
+            color: #064946;
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        button {
+            border: none;
+            border-radius: 999px;
+            padding: 12px 18px;
+            font-weight: 800;
+            cursor: pointer;
+            background: var(--accent);
+            color: #251400;
+        }
+
+        button.secondary {
+            background: #dff8f4;
+            color: #063f3d;
+            border: 1px solid #a8e6dd;
+        }
+
+        button:hover,
+        button:focus {
+            outline: 3px solid rgba(46, 196, 182, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 28px 16px;
+            color: #436866;
+            border-top: 1px solid #cceee8;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        @media print {
+
+            .nav-pills,
+            .btn-row,
+            button {
+                display: none !important;
+            }
+
+            .card {
+                box-shadow: none;
+                break-inside: avoid;
+            }
+
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="badge">Computer Vision • CNN • Python • TensorFlow</div>
+
+            <h1>Picture Classification using CNN in Python</h1>
+
+            <p class="subtitle">
+                A complete 0 to infinity lesson: pixels, arrays, labels, one-hot encoding,
+                Convolutional Neural Network layers, training, prediction, and graphs.
+            </p>
+
+            <nav class="nav-pills" aria-label="Lesson navigation">
+                <a href="#goal">Goal</a>
+                <a href="#picture">Picture Basics</a>
+                <a href="#folders">Folders</a>
+                <a href="#install">Install</a>
+                <a href="#imports">Imports</a>
+                <a href="#settings">Settings</a>
+                <a href="#array">Image to Array</a>
+                <a href="#labels">Labels</a>
+                <a href="#cnn">CNN Layers</a>
+                <a href="#training">Training</a>
+                <a href="#prediction">Prediction</a>
+                <a href="#complete-code">Complete Code</a>
+                <a href="#practice">Practice</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card" id="goal">
+            <h2>1. What We Are Making</h2>
+
+            <p class="lead">
+                We are making a Python program that can classify a picture as
+                <strong>mango</strong>, <strong>dog</strong>, or <strong>cat</strong>.
+            </p>
+
+            <pre><code>Input image → CNN model → Predicted class
+
+Possible outputs:
+mango
+dog
+cat</code></pre>
+
+            <div class="note">
+                <strong>CNN</strong> means <strong>Convolutional Neural Network</strong>.
+                A CNN is a Deep Learning model specially designed for image data.
+            </div>
+
+            <div class="flow">
+                <span class="step">Image</span><span class="arrow">→</span>
+                <span class="step">Pixels</span><span class="arrow">→</span>
+                <span class="step">CNN</span><span class="arrow">→</span>
+                <span class="step">Probabilities</span><span class="arrow">→</span>
+                <span class="step">Class</span>
+            </div>
+        </section>
+
+        <section class="card" id="picture">
+            <h2>2. Zero Level: What Is a Picture?</h2>
+
+            <p>
+                A picture is a grid of pixels. Each pixel has color values.
+                A normal color image has three color channels:
+            </p>
+
+            <div class="grid">
+                <div class="mini">
+                    <strong>Red</strong>
+                    First color channel.
+                </div>
+
+                <div class="mini">
+                    <strong>Green</strong>
+                    Second color channel.
+                </div>
+
+                <div class="mini">
+                    <strong>Blue</strong>
+                    Third color channel.
+                </div>
+            </div>
+
+            <p>So an image is stored as:</p>
+
+            <pre><code>height × width × 3</code></pre>
+
+            <p>In our lesson every image becomes:</p>
+
+            <pre><code>64 × 64 × 3</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Part</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><code>64</code></td>
+                        <td>Image height</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>64</code></td>
+                        <td>Image width</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>3</code></td>
+                        <td>Red, Green, and Blue color channels</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card" id="folders">
+            <h2>3. Required Folder Structure</h2>
+
+            <p>
+                Keep the training images inside class folders. The folder names are the class names.
+            </p>
+
+            <pre><code>classification/
+    picture/
+        cnnclassifier.py
+        test.png
+        pictures/
+            mango/
+                mango1.png
+                mango2.png
+            dog/
+                dog1.png
+                dog2.png
+            cat/
+                cat1.png
+                cat2.png</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Folder</th>
+                        <th>Class</th>
+                        <th>Label Number</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><code>mango</code></td>
+                        <td>Mango</td>
+                        <td>0</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>dog</code></td>
+                        <td>Dog</td>
+                        <td>1</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>cat</code></td>
+                        <td>Cat</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card" id="install">
+            <h2>4. Install Required Libraries</h2>
+
+            <p>Run this command in the terminal:</p>
+
+            <pre><code>pip install pillow numpy matplotlib tensorflow</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Library</th>
+                        <th>Use</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><code>pillow</code></td>
+                        <td>To open and resize images</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>numpy</code></td>
+                        <td>To handle image arrays and numbers</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>matplotlib</code></td>
+                        <td>To show images and graphs</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>tensorflow</code></td>
+                        <td>To create and train the CNN model</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card" id="imports">
+            <h2>5. Import Libraries</h2>
+
+            <pre><code>from PIL import Image
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from tensorflow.keras.utils import to_categorical</code></pre>
+
+            <div class="grid">
+                <div class="mini">
+                    <strong>Image</strong>
+                    Opens and processes image files.
+                </div>
+
+                <div class="mini">
+                    <strong>NumPy</strong>
+                    Converts images into numerical arrays.
+                </div>
+
+                <div class="mini">
+                    <strong>Sequential</strong>
+                    Builds the CNN layer by layer.
+                </div>
+
+                <div class="mini">
+                    <strong>Conv2D</strong>
+                    Learns visual patterns from images.
+                </div>
+
+                <div class="mini">
+                    <strong>MaxPooling2D</strong>
+                    Reduces size but keeps important features.
+                </div>
+
+                <div class="mini">
+                    <strong>Dense</strong>
+                    Makes the final classification decision.
+                </div>
+            </div>
+        </section>
+
+        <section class="card" id="settings">
+            <h2>6. Basic Settings</h2>
+
+            <pre><code>base_folder = "classification/picture/pictures"
+
+classes = ["mango", "dog", "cat"]
+
+image_width = 64
+image_height = 64
+
+number_of_classes = len(classes)</code></pre>
+
+            <p>
+                The model will learn three classes. Every image is resized to
+                <code>64 × 64</code> so all inputs have the same size.
+            </p>
+
+            <div class="note">
+                Machine Learning models need a fixed input shape. That is why we resize every image.
+            </div>
+        </section>
+
+        <section class="card" id="array">
+            <h2>7. Convert Image into CNN Input</h2>
+
+            <pre><code>def image_to_array(image_path):
+    img = Image.open(image_path).convert("RGB")
+    img = img.resize((image_width, image_height))
+
+    arr = np.array(img)
+
+    arr = arr / 255.0
+
+    return arr</code></pre>
+
+            <h3>What this function does</h3>
+
+            <div class="flow">
+                <span class="step">Open Image</span><span class="arrow">→</span>
+                <span class="step">Convert to RGB</span><span class="arrow">→</span>
+                <span class="step">Resize</span><span class="arrow">→</span>
+                <span class="step">Array</span><span class="arrow">→</span>
+                <span class="step">Normalize</span>
+            </div>
+
+            <h3>Why divide by 255?</h3>
+
+            <p>
+                Pixel values normally go from <code>0</code> to <code>255</code>.
+                CNN training works better when values are small, so we convert them to
+                the range <code>0</code> to <code>1</code>.
+            </p>
+
+            <pre><code>0   / 255 = 0.0
+128 / 255 = 0.501
+255 / 255 = 1.0</code></pre>
+        </section>
+
+        <section class="card" id="labels">
+            <h2>8. X, y, and One-Hot Labels</h2>
+
+            <p>
+                In Machine Learning, <code>X</code> usually stores input data and <code>y</code>
+                stores correct answers.
+            </p>
+
+            <pre><code>X = []
+y = []</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><code>X</code></td>
+                        <td>Stores image arrays</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>y</code></td>
+                        <td>Stores correct labels</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Normal labels</h3>
+
+            <pre><code>mango → 0
+dog   → 1
+cat   → 2</code></pre>
+
+            <h3>One-hot labels</h3>
+
+            <pre><code>mango → [1, 0, 0]
+dog   → [0, 1, 0]
+cat   → [0, 0, 1]</code></pre>
+
+            <p>In code:</p>
+
+            <pre><code>y_categorical = to_categorical(y, number_of_classes)</code></pre>
+
+            <div class="note">
+                The final CNN layer gives probabilities for all classes. One-hot encoding matches that style.
+            </div>
+        </section>
+
+        <section class="card" id="cnn">
+            <h2>9. Create the CNN Model</h2>
+
+            <pre><code>model = Sequential()
+
+model.add(
+    Conv2D(
+        filters=16,
+        kernel_size=(3, 3),
+        activation="relu",
+        input_shape=(image_height, image_width, 3)
+    )
+)
+
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(
+    Conv2D(
+        filters=32,
+        kernel_size=(3, 3),
+        activation="relu"
+    )
+)
+
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Flatten())
+
+model.add(Dense(64, activation="relu"))
+
+model.add(Dense(number_of_classes, activation="softmax"))</code></pre>
+
+            <h3>Layer-by-layer meaning</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Layer</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><code>Conv2D</code></td>
+                        <td>Finds patterns like edges, textures, shapes, and small visual features.</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>MaxPooling2D</code></td>
+                        <td>Reduces size and keeps important information.</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>Flatten</code></td>
+                        <td>Converts 2D feature maps into a 1D list.</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>Dense</code></td>
+                        <td>Combines learned features and makes decisions.</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>softmax</code></td>
+                        <td>Gives probability for each class.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="flow">
+                <span class="step">Edges</span><span class="arrow">→</span>
+                <span class="step">Shapes</span><span class="arrow">→</span>
+                <span class="step">Textures</span><span class="arrow">→</span>
+                <span class="step">Object Parts</span><span class="arrow">→</span>
+                <span class="step">Class</span>
+            </div>
+        </section>
+
+        <section class="card" id="training">
+            <h2>10. Compile and Train the CNN</h2>
+
+            <h3>Compile</h3>
+
+            <pre><code>model.compile(
+    optimizer="adam",
+    loss="categorical_crossentropy",
+    metrics=["accuracy"]
+)</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td><code>adam</code></td>
+                        <td>Optimizer that improves the model during training.</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>categorical_crossentropy</code></td>
+                        <td>Loss function for multi-class classification.</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>accuracy</code></td>
+                        <td>Shows how many predictions are correct.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Train</h3>
+
+            <pre><code>history = model.fit(
+    X,
+    y_categorical,
+    epochs=50,
+    batch_size=2,
+    verbose=1
+)</code></pre>
+
+            <div class="grid">
+                <div class="mini">
+                    <strong>Epoch</strong>
+                    One full pass through all training images.
+                </div>
+
+                <div class="mini">
+                    <strong>Batch size</strong>
+                    Number of images processed at a time.
+                </div>
+
+                <div class="mini">
+                    <strong>History</strong>
+                    Stores accuracy and loss values after training.
+                </div>
+            </div>
+        </section>
+
+        <section class="card" id="prediction">
+            <h2>11. Predict a New Image</h2>
+
+            <pre><code>test_image_path = "classification/picture/test.png"
+
+test_arr = image_to_array(test_image_path)
+
+test_arr = np.array(test_arr).reshape(1, image_height, image_width, 3)
+
+prediction = model.predict(test_arr)
+
+predicted_number = np.argmax(prediction[0])
+
+predicted_class = classes[predicted_number]</code></pre>
+
+            <h3>Why reshape?</h3>
+
+            <p>One image has shape:</p>
+
+            <pre><code>(64, 64, 3)</code></pre>
+
+            <p>But CNN expects a batch:</p>
+
+            <pre><code>(1, 64, 64, 3)</code></pre>
+
+            <p>Meaning:</p>
+
+            <pre><code>1 image
+64 height
+64 width
+3 color channels</code></pre>
+
+            <h3>Prediction probabilities</h3>
+
+            <pre><code>[[0.12, 0.18, 0.70]]</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Probability</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>mango</td>
+                        <td>12%</td>
+                    </tr>
+
+                    <tr>
+                        <td>dog</td>
+                        <td>18%</td>
+                    </tr>
+
+                    <tr>
+                        <td>cat</td>
+                        <td>70%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <code>np.argmax()</code> finds the position of the highest probability.
+                In this example the highest probability is for <strong>cat</strong>.
+            </div>
+        </section>
+
+        <section class="card" id="complete-code">
+            <h2>12. Complete CNN Code</h2>
+
+            <pre><code>from PIL import Image
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from tensorflow.keras.utils import to_categorical
+
+
+# --------------------------------------------------
+# 1. Basic settings
+# --------------------------------------------------
+
+base_folder = "classification/picture/pictures"
+
+# Mango 0, Dog 1, Cat 2
+classes = ["mango", "dog", "cat"]
+
+image_width = 64
+image_height = 64
+
+number_of_classes = len(classes)
+
+
+# --------------------------------------------------
+# 2. Function to convert image into CNN input
+# --------------------------------------------------
+
+def image_to_array(image_path):
+    """
+    This function:
+    1. Opens the image
+    2. Converts it to RGB
+    3. Resizes it to 64 x 64
+    4. Converts it to NumPy array
+    5. Divides pixel values by 255
+    """
+
+    img = Image.open(image_path).convert("RGB")
+    img = img.resize((image_width, image_height))
+
+    arr = np.array(img)
+
+    # Normalize pixel values from 0-255 to 0-1
+    arr = arr / 255.0
+
+    return arr
+
+
+# --------------------------------------------------
+# 3. Read training images manually
+# --------------------------------------------------
+
+X = []
+y = []
+
+# Mango images
+folder_path = os.path.join(base_folder, "mango")
+
+image_path = os.path.join(folder_path, "mango1.png")
+print(image_path)
+arr = image_to_array(image_path)
+X.append(arr)
+y.append(0)
+
+image_path = os.path.join(folder_path, "mango2.png")
+print(image_path)
+arr = image_to_array(image_path)
+X.append(arr)
+y.append(0)
+
+
+# Dog images
+folder_path = os.path.join(base_folder, "dog")
+
+image_path = os.path.join(folder_path, "dog1.png")
+print(image_path)
+arr = image_to_array(image_path)
+X.append(arr)
+y.append(1)
+
+image_path = os.path.join(folder_path, "dog2.png")
+print(image_path)
+arr = image_to_array(image_path)
+X.append(arr)
+y.append(1)
+
+
+# Cat images
+folder_path = os.path.join(base_folder, "cat")
+
+image_path = os.path.join(folder_path, "cat1.png")
+print(image_path)
+arr = image_to_array(image_path)
+X.append(arr)
+y.append(2)
+
+image_path = os.path.join(folder_path, "cat2.png")
+print(image_path)
+arr = image_to_array(image_path)
+X.append(arr)
+y.append(2)
+
+
+# --------------------------------------------------
+# 4. Convert lists to NumPy arrays
+# --------------------------------------------------
+
+X = np.array(X)
+y = np.array(y)
+
+print("X shape:", X.shape)
+print("y:", y)
+
+# Convert labels into one-hot format
+y_categorical = to_categorical(y, number_of_classes)
+
+print("One-hot labels:")
+print(y_categorical)
+
+
+# --------------------------------------------------
+# 5. Create CNN model
+# --------------------------------------------------
+
+model = Sequential()
+
+# First convolution layer
+model.add(
+    Conv2D(
+        filters=16,
+        kernel_size=(3, 3),
+        activation="relu",
+        input_shape=(image_height, image_width, 3)
+    )
+)
+
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+# Second convolution layer
+model.add(
+    Conv2D(
+        filters=32,
+        kernel_size=(3, 3),
+        activation="relu"
+    )
+)
+
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Flatten())
+
+model.add(Dense(64, activation="relu"))
+
+model.add(Dense(number_of_classes, activation="softmax"))
+
+
+# --------------------------------------------------
+# 6. Compile CNN model
+# --------------------------------------------------
+
+model.compile(
+    optimizer="adam",
+    loss="categorical_crossentropy",
+    metrics=["accuracy"]
+)
+
+print()
+print("CNN Model Summary:")
+model.summary()
+
+
+# --------------------------------------------------
+# 7. Train CNN model
+# --------------------------------------------------
+
+history = model.fit(
+    X,
+    y_categorical,
+    epochs=50,
+    batch_size=2,
+    verbose=1
+)
+
+print()
+print("CNN training completed successfully.")
+
+
+# --------------------------------------------------
+# 8. Predict a new image
+# --------------------------------------------------
+
+test_image_path = "classification/picture/test.png"
+
+test_arr = image_to_array(test_image_path)
+
+# Convert one image into a batch of one image
+test_arr = np.array(test_arr).reshape(1, image_height, image_width, 3)
+
+prediction = model.predict(test_arr)
+
+print()
+print("Prediction probabilities:")
+print(prediction)
+
+predicted_number = np.argmax(prediction[0])
+
+predicted_class = classes[predicted_number]
+
+print("Predicted class number:", predicted_number)
+print("Predicted class:", predicted_class)
+
+
+# --------------------------------------------------
+# 9. Show test image with prediction
+# --------------------------------------------------
+
+img = Image.open(test_image_path)
+
+plt.imshow(img)
+plt.axis("off")
+plt.title("Predicted class: " + predicted_class)
+plt.show()
+
+
+# --------------------------------------------------
+# 10. Show training accuracy graph
+# --------------------------------------------------
+
+plt.figure(figsize=(8, 5))
+plt.plot(history.history["accuracy"], marker="o")
+plt.title("CNN Training Accuracy")
+plt.xlabel("Epoch")
+plt.ylabel("Accuracy")
+plt.grid(True)
+plt.show()
+
+
+# --------------------------------------------------
+# 11. Show training loss graph
+# --------------------------------------------------
+
+plt.figure(figsize=(8, 5))
+plt.plot(history.history["loss"], marker="o")
+plt.title("CNN Training Loss")
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.grid(True)
+plt.show()</code></pre>
+        </section>
+
+        <section class="card" id="auto-code">
+            <h2>13. Improved Version: Read All Images Automatically</h2>
+
+            <p>
+                The previous code manually reads <code>mango1.png</code>, <code>mango2.png</code>,
+                <code>dog1.png</code>, and so on. This improved version reads all images from folders.
+            </p>
+
+            <pre><code>X = []
+y = []
+
+for label_number, class_name in enumerate(classes):
+    folder_path = os.path.join(base_folder, class_name)
+
+    if not os.path.exists(folder_path):
+        print("Folder not found:", folder_path)
+        continue
+
+    for file_name in os.listdir(folder_path):
+        file_name_lower = file_name.lower()
+
+        if (
+            file_name_lower.endswith(".png")
+            or file_name_lower.endswith(".jpg")
+            or file_name_lower.endswith(".jpeg")
+        ):
+            image_path = os.path.join(folder_path, file_name)
+
+            try:
+                arr = image_to_array(image_path)
+
+                X.append(arr)
+                y.append(label_number)
+
+                print("Loaded:", image_path, "Label:", class_name)
+
+            except Exception as e:
+                print("Could not load:", image_path)
+                print("Error:", e)</code></pre>
+
+            <div class="note">
+                This is better because you can add more images without changing the code.
+            </div>
+        </section>
+
+        <section class="card" id="warning">
+            <h2>14. Very Important Warning</h2>
+
+            <p>
+                This lesson uses only 2 mango images, 2 dog images, and 2 cat images.
+                That is enough for understanding the program, but it is not enough for a real CNN.
+            </p>
+
+            <div class="warning">
+                With only 6 images, the CNN may memorize the images instead of learning real patterns.
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Images Needed</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Demo only</td>
+                        <td>2 images per class</td>
+                    </tr>
+
+                    <tr>
+                        <td>Beginner practice</td>
+                        <td>20 images per class</td>
+                    </tr>
+
+                    <tr>
+                        <td>Better learning</td>
+                        <td>50 images per class</td>
+                    </tr>
+
+                    <tr>
+                        <td>Good project</td>
+                        <td>100+ images per class</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card" id="mental-model">
+            <h2>15. Final Mental Model</h2>
+
+            <div class="flow">
+                <span class="step">Image</span><span class="arrow">→</span>
+                <span class="step">Resize</span><span class="arrow">→</span>
+                <span class="step">Array</span><span class="arrow">→</span>
+                <span class="step">Normalize</span><span class="arrow">→</span>
+                <span class="step">CNN</span><span class="arrow">→</span>
+                <span class="step">Softmax</span><span class="arrow">→</span>
+                <span class="step">Prediction</span>
+            </div>
+
+            <pre><code>Image
+↓
+Resize to 64 × 64
+↓
+Convert to NumPy array
+↓
+Normalize pixels from 0-255 to 0-1
+↓
+CNN layer learns edges and patterns
+↓
+Pooling reduces size
+↓
+More CNN layers learn better patterns
+↓
+Flatten converts features to list
+↓
+Dense layer decides
+↓
+Softmax gives probabilities
+↓
+Highest probability becomes final class</code></pre>
+        </section>
+
+        <section class="card" id="practice">
+            <h2>16. Practice Questions</h2>
+
+            <div class="practice">
+                <h3>Question 1</h3>
+                <p>What is the shape of one image after resizing?</p>
+                <pre><code>64 × 64 × 3</code></pre>
+            </div>
+
+            <div class="practice">
+                <h3>Question 2</h3>
+                <p>Why do we divide pixel values by 255?</p>
+                <pre><code>To normalize pixel values from 0-255 to 0-1.</code></pre>
+            </div>
+
+            <div class="practice">
+                <h3>Question 3</h3>
+                <p>What does Conv2D do?</p>
+                <pre><code>It scans the image and learns visual patterns.</code></pre>
+            </div>
+
+            <div class="practice">
+                <h3>Question 4</h3>
+                <p>What does MaxPooling2D do?</p>
+                <pre><code>It reduces size while keeping important features.</code></pre>
+            </div>
+
+            <div class="practice">
+                <h3>Question 5</h3>
+                <p>What does softmax do?</p>
+                <pre><code>It gives probability for each class.</code></pre>
+            </div>
+
+            <div class="btn-row">
+                <button onclick="window.print()">Print Lesson</button>
+                <button class="secondary" onclick="toggleSummary()">Toggle Quick Summary</button>
+            </div>
+
+            <div id="summaryBox" class="note hidden">
+                <strong>Quick Summary:</strong>
+                A CNN reads image pixels, learns patterns through convolution layers,
+                reduces size through pooling, converts features using flattening,
+                and finally predicts the class using softmax probabilities.
+            </div>
+        </section>
+
+        <section class="card" id="next">
+            <h2>17. Next Step: From Demo to Real Project</h2>
+
+            <p>After this lesson, improve the project by adding:</p>
+
+            <div class="grid">
+                <div class="mini">
+                    <strong>More images</strong>
+                    Use at least 20 to 50 images per class.
+                </div>
+
+                <div class="mini">
+                    <strong>Train-test split</strong>
+                    Test the model on unseen images.
+                </div>
+
+                <div class="mini">
+                    <strong>Data augmentation</strong>
+                    Rotate, zoom, and flip images for better learning.
+                </div>
+
+                <div class="mini">
+                    <strong>Model saving</strong>
+                    Save trained model using <code>model.save()</code>.
+                </div>
+
+                <div class="mini">
+                    <strong>Model loading</strong>
+                    Load saved model for later prediction.
+                </div>
+
+                <div class="mini">
+                    <strong>Web interface</strong>
+                    Upload an image and show prediction in a webpage.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <strong>Programmer's Picnic AI-ML Classes by Champak Roy</strong><br />
+        Learn programming from zero to infinity.
+    </footer>
+
+    <script>
+        function toggleSummary() {
+            const box = document.getElementById("summaryBox");
+            box.classList.toggle("hidden");
+        }
+    </script>
+</body>
+
+</html>

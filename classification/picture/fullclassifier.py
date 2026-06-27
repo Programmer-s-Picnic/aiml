@@ -26,8 +26,10 @@ def image_to_features(image_path):
     average_blue = arr[:, :, 2].mean()
 
     features = [average_red, average_green, average_blue]
+    
 
     return features
+
 
 
 X = []

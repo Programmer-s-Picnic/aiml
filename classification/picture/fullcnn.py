@@ -216,7 +216,8 @@ model.summary()
 # --------------------------------------------------
 # 7. Train CNN model
 # --------------------------------------------------
-
+print(X,y)
+input()
 history = model.fit(
     X,
     y_categorical,
@@ -268,30 +269,4 @@ img = Image.open(test_image_path)
 plt.imshow(img)
 plt.axis("off")
 plt.title("Predicted class: " + predicted_class)
-plt.show()
-
-
-# --------------------------------------------------
-# 10. Show training accuracy graph
-# --------------------------------------------------
-
-plt.figure(figsize=(8, 5))
-plt.plot(history.history["accuracy"], marker="o")
-plt.title("CNN Training Accuracy")
-plt.xlabel("Epoch")
-plt.ylabel("Accuracy")
-plt.grid(True)
-plt.show()
-
-
-# --------------------------------------------------
-# 11. Show training loss graph
-# --------------------------------------------------
-
-plt.figure(figsize=(8, 5))
-plt.plot(history.history["loss"], marker="o")
-plt.title("CNN Training Loss")
-plt.xlabel("Epoch")
-plt.ylabel("Loss")
-plt.grid(True)
 plt.show()
