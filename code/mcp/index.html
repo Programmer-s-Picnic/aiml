@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Model Context Protocol (MCP) - 0 to Infinity Lesson</title>
+
+    <meta name="description"
+        content="A beginner-friendly 0 to infinity lesson on Model Context Protocol (MCP), Python, AI tools, agents, FastAPI, JSON, and job-ready AI skills." />
+    <meta name="keywords"
+        content="MCP, Model Context Protocol, Python, AI, LLM, FastAPI, JSON, Agentic AI, AI Jobs, Prompt Engineering" />
+    <meta name="author" content="Champak Roy" />
+
+    <meta property="og:title" content="Model Context Protocol (MCP) - 0 to Infinity Lesson" />
+    <meta property="og:description" content="Learn MCP from zero level to advanced AI agent workflows." />
+    <meta property="og:type" content="article" />
+
+    <style>
+        :root {
+            --bg: #fff8ed;
+            --card: #ffffff;
+            --primary: #ff8a00;
+            --secondary: #0f766e;
+            --dark: #1f2937;
+            --muted: #6b7280;
+            --code: #111827;
+            --codeText: #f9fafb;
+            --border: #fed7aa;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ff8a00, #ffb703);
+            color: #111827;
+            padding: 45px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.3rem;
+        }
+
+        header p {
+            max-width: 850px;
+            margin: 15px auto 0;
+            font-size: 1.1rem;
+        }
+
+        nav {
+            background: #111827;
+            padding: 12px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 8px 12px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ffb703;
+        }
+
+        main {
+            max-width: 1050px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        h2 {
+            color: var(--secondary);
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #c2410c;
+        }
+
+        .level {
+            display: inline-block;
+            background: #ffedd5;
+            color: #9a3412;
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        pre {
+            background: var(--code);
+            color: var(--codeText);
+            padding: 18px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-size: 0.95rem;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .note {
+            background: #ecfeff;
+            border-left: 6px solid var(--secondary);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: #fff7ed;
+            border-left: 6px solid #ea580c;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .mini-card {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+        button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #115e59;
+        }
+
+        .output {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+            border: 1px solid #cbd5e1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #111827;
+            color: white;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Model Context Protocol (MCP)</h1>
+        <p>A 0 to Infinity lesson for Python, AI, agents, tools, FastAPI, JSON, and job-ready AI development.</p>
+    </header>
+
+    <nav>
+        <a href="#zero">0 Level</a>
+        <a href="#basic">Basics</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#python">Python</a>
+        <a href="#fastapi">FastAPI</a>
+        <a href="#agent">Agent</a>
+        <a href="#security">Security</a>
+        <a href="#jobs">Jobs</a>
+        <a href="#practice">Practice</a>
+    </nav>
+
+    <main>
+
+        <section id="zero">
+            <span class="level">Level 0</span>
+            <h2>What Problem Does MCP Solve?</h2>
+
+            <p>
+                A normal AI chatbot knows many things, but it cannot automatically access your live files,
+                database, email, calendar, GitHub repository, local tools, or business software.
+            </p>
+
+            <p>
+                <strong>Model Context Protocol (MCP)</strong> is a standard way for AI applications to connect
+                with external tools and data sources.
+            </p>
+
+            <div class="note">
+                Simple meaning: MCP is like a common plug system for AI tools.
+                Instead of building a new custom connection every time, we can expose tools through MCP.
+            </div>
+
+            <h3>Example</h3>
+            <p>Without MCP:</p>
+            <pre><code>ChatGPT or Claude: I cannot access your local student database directly.</code></pre>
+
+            <p>With MCP:</p>
+            <pre><code>AI Assistant → MCP Client → MCP Server → Student Database → Result back to AI</code></pre>
+        </section>
+
+        <section id="basic">
+            <span class="level">Beginner</span>
+            <h2>MCP in One Sentence</h2>
+
+            <p>
+                MCP allows an AI assistant to discover and use external tools in a structured and safe way.
+            </p>
+
+            <div class="grid">
+                <div class="mini-card">
+                    <h3>Tools</h3>
+                    <p>Functions the AI can call, such as calculator, search, database lookup, or file reader.</p>
+                </div>
+
+                <div class="mini-card">
+                    <h3>Resources</h3>
+                    <p>Data the AI can read, such as files, documents, notes, or database records.</p>
+                </div>
+
+                <div class="mini-card">
+                    <h3>Prompts</h3>
+                    <p>Reusable instruction templates that guide the AI for a specific task.</p>
+                </div>
+            </div>
+
+            <h3>Normal Function vs MCP Tool</h3>
+
+            <pre><code>def add(a, b):
+    return a + b
+
+print(add(10, 20))</code></pre>
+
+            <p>
+                This is a normal Python function. In MCP, we expose such functions so that an AI assistant
+                can discover and call them.
+            </p>
+        </section>
+
+        <section id="architecture">
+            <span class="level">Core Concept</span>
+            <h2>MCP Architecture</h2>
+
+            <pre><code>User
+ ↓
+AI App / Host
+ ↓
+MCP Client
+ ↓
+MCP Server
+ ↓
+Tools / Files / Database / API</code></pre>
+
+            <h3>Important Terms</h3>
+
+            <ul>
+                <li><strong>Host:</strong> The AI application used by the user.</li>
+                <li><strong>Client:</strong> The part that talks to MCP servers.</li>
+                <li><strong>Server:</strong> The program that exposes tools, resources, and prompts.</li>
+                <li><strong>Tool:</strong> A callable action, like searching, calculating, or fetching data.</li>
+            </ul>
+
+            <div class="note">
+                Think of MCP Server as a waiter. The AI asks for something. The MCP Server brings the correct data or
+                performs the correct action.
+            </div>
+        </section>
+
+        <section id="python">
+            <span class="level">Python Foundation</span>
+            <h2>Before MCP: Understand Tools as Python Functions</h2>
+
+            <p>Before learning MCP deeply, understand that tools are usually just functions.</p>
+
+            <pre><code>def get_course_fee(course_name):
+    fees = {
+        "python": 5000,
+        "ai": 10000,
+        "dsa": 7000
+    }
+
+    return fees.get(course_name.lower(), "Course not found")
+
+
+print(get_course_fee("python"))
+print(get_course_fee("ai"))</code></pre>
+
+            <h3>Output</h3>
+            <pre><code>5000
+10000</code></pre>
+
+            <p>
+                In an AI system, this function could become a tool. The AI can ask:
+                <em>"What is the fee for the AI course?"</em>
+            </p>
+        </section>
+
+        <section>
+            <span class="level">JSON</span>
+            <h2>Why JSON Matters in MCP</h2>
+
+            <p>
+                MCP communication is structured. JSON is commonly used in modern APIs and AI tool calls.
+            </p>
+
+            <pre><code>{
+  "tool": "get_course_fee",
+  "arguments": {
+    "course_name": "python"
+  }
+}</code></pre>
+
+            <p>The result may look like this:</p>
+
+            <pre><code>{
+  "result": 5000
+}</code></pre>
+
+            <div class="note">
+                Learn JSON properly. It is very important for AI tools, APIs, FastAPI, agents, and MCP.
+            </div>
+        </section>
+
+        <section id="fastapi">
+            <span class="level">Practical Backend</span>
+            <h2>FastAPI Style Tool Server</h2>
+
+            <p>
+                This is not a full MCP server, but it helps you understand how an AI tool server works.
+            </p>
+
+            <pre><code># Install:
+# pip install fastapi uvicorn
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"message": "AI Tool Server is running"}
+
+@app.get("/course-fee/{course_name}")
+def get_course_fee(course_name: str):
+    fees = {
+        "python": 5000,
+        "ai": 10000,
+        "dsa": 7000,
+        "machine-learning": 12000
+    }
+
+    return {
+        "course": course_name,
+        "fee": fees.get(course_name.lower(), "Course not found")
+    }
+
+# Run:
+# uvicorn main:app --reload</code></pre>
+
+            <p>
+                This teaches the idea of exposing a tool through a server.
+                MCP formalizes this idea for AI applications.
+            </p>
+        </section>
+
+        <section id="agent">
+            <span class="level">Agentic AI</span>
+            <h2>How MCP Helps AI Agents</h2>
+
+            <p>
+                An AI agent does not only answer questions. It can plan, choose tools, call them, read results,
+                and continue working.
+            </p>
+
+            <h3>Example Workflow</h3>
+
+            <pre><code>User: Find Python jobs and summarize the best ones.
+
+AI Agent:
+1. Understands the task
+2. Calls job search tool
+3. Gets job results
+4. Filters remote Python jobs
+5. Summarizes salary, skills, and apply links
+6. Gives final answer</code></pre>
+
+            <h3>Where MCP Fits</h3>
+
+            <pre><code>AI Agent
+  ↓
+MCP Client
+  ↓
+Job Search MCP Server
+  ↓
+Job API / Website / Database</code></pre>
+        </section>
+
+        <section>
+            <span class="level">Interactive Demo</span>
+            <h2>Mini Tool Simulation</h2>
+
+            <p>Click the button to simulate an AI calling a tool.</p>
+
+            <button onclick="runTool()">Run Tool</button>
+
+            <div class="output" id="output">Output will appear here.</div>
+
+            <script>
+                function getCourseFee(courseName) {
+                    const fees = {
+                        python: 5000,
+                        ai: 10000,
+                        dsa: 7000,
+                        "machine learning": 12000
+                    };
+
+                    return fees[courseName.toLowerCase()] || "Course not found";
+                }
+
+                function runTool() {
+                    const request = {
+                        tool: "getCourseFee",
+                        arguments: {
+                            courseName: "AI"
+                        }
+                    };
+
+                    const result = getCourseFee(request.arguments.courseName);
+
+                    document.getElementById("output").textContent =
+                        "AI wants to call this tool:\n\n" +
+                        JSON.stringify(request, null, 2) +
+                        "\n\nTool result:\n\n" +
+                        JSON.stringify({ result: result }, null, 2);
+                }
+            </script>
+        </section>
+
+        <section>
+            <span class="level">MCP vs RAG</span>
+            <h2>MCP and RAG Are Different</h2>
+
+            <div class="grid">
+                <div class="mini-card">
+                    <h3>RAG</h3>
+                    <p>Retrieval-Augmented Generation gives the AI relevant information from documents.</p>
+                </div>
+
+                <div class="mini-card">
+                    <h3>MCP</h3>
+                    <p>Model Context Protocol lets the AI connect with tools, data sources, and actions.</p>
+                </div>
+            </div>
+
+            <h3>Simple Difference</h3>
+
+            <pre><code>RAG:
+AI reads extra information before answering.
+
+MCP:
+AI can use external tools and systems.</code></pre>
+        </section>
+
+        <section id="security">
+            <span class="level">Important</span>
+            <h2>Security Rules for MCP</h2>
+
+            <div class="warning">
+                MCP can connect AI with real tools and data. That means security is extremely important.
+            </div>
+
+            <ul>
+                <li>Never expose private files without permission.</li>
+                <li>Do not allow unsafe commands.</li>
+                <li>Validate every input.</li>
+                <li>Use authentication where needed.</li>
+                <li>Log tool calls.</li>
+                <li>Give the AI only the permissions it needs.</li>
+                <li>Ask the user before destructive actions like delete, send, pay, or publish.</li>
+            </ul>
+
+            <h3>Dangerous Example</h3>
+
+            <pre><code># Bad idea
+import os
+
+def run_command(command):
+    return os.system(command)</code></pre>
+
+            <h3>Safer Idea</h3>
+
+            <pre><code>def allowed_action(action):
+    allowed = ["list_courses", "get_fee", "show_schedule"]
+
+    if action not in allowed:
+        return "Action not allowed"
+
+    return "Action allowed"</code></pre>
+        </section>
+
+        <section id="jobs">
+            <span class="level">Career</span>
+            <h2>Why MCP Helps in Jobs and Income</h2>
+
+            <p>
+                MCP is useful for modern AI roles because companies want people who can connect AI models
+                with real business systems.
+            </p>
+
+            <h3>Job Roles Where MCP Helps</h3>
+
+            <ul>
+                <li>AI Engineer</li>
+                <li>Python Developer</li>
+                <li>LLM Application Developer</li>
+                <li>Agentic AI Developer</li>
+                <li>AI Automation Developer</li>
+                <li>Prompt Engineer with Tools</li>
+                <li>Technical AI Trainer</li>
+                <li>AI Curriculum Developer</li>
+            </ul>
+
+            <h3>Freelancing Ideas</h3>
+
+            <ul>
+                <li>Build AI assistants for schools and coaching centers.</li>
+                <li>Connect chatbot to course data.</li>
+                <li>Create AI assistant for local business FAQs.</li>
+                <li>Build GitHub code explanation assistant.</li>
+                <li>Create AI tutor using Python, FastAPI, JSON, and MCP concepts.</li>
+            </ul>
+        </section>
+
+        <section>
+            <span class="level">Project</span>
+            <h2>Beginner Project: Course Assistant Tool</h2>
+
+            <p>
+                Build a small AI-ready backend that can answer course-related questions.
+            </p>
+
+            <h3>Data</h3>
+
+            <pre><code>courses = [
+    {
+        "name": "Python",
+        "fee": 5000,
+        "duration": "2 months"
+    },
+    {
+        "name": "AI",
+        "fee": 10000,
+        "duration": "3 months"
+    },
+    {
+        "name": "DSA",
+        "fee": 7000,
+        "duration": "2 months"
+    }
+]</code></pre>
+
+            <h3>Possible Tools</h3>
+
+            <ul>
+                <li>get_course_fee</li>
+                <li>get_course_duration</li>
+                <li>list_all_courses</li>
+                <li>recommend_course</li>
+            </ul>
+        </section>
+
+        <section id="practice">
+            <span class="level">Practice</span>
+            <h2>Practice Questions</h2>
+
+            <ol>
+                <li>What is the full form of MCP?</li>
+                <li>What is the role of an MCP server?</li>
+                <li>What is the difference between a tool and a resource?</li>
+                <li>Why is JSON important in AI tool calling?</li>
+                <li>How is MCP different from RAG?</li>
+                <li>Why should MCP tools be secured?</li>
+                <li>Create a Python function called <code>get_student_result</code>.</li>
+                <li>Create a JSON request for calling <code>get_student_result</code>.</li>
+                <li>Design three tools for a school AI assistant.</li>
+                <li>Design three tools for a programming course AI assistant.</li>
+            </ol>
+        </section>
+
+        <section>
+            <span class="level">0 to Infinity Roadmap</span>
+            <h2>Learning Path</h2>
+
+            <ol>
+                <li>Python functions</li>
+                <li>Dictionaries and lists</li>
+                <li>JSON</li>
+                <li>APIs</li>
+                <li>FastAPI</li>
+                <li>LLM basics</li>
+                <li>Prompt engineering</li>
+                <li>Tool calling</li>
+                <li>RAG</li>
+                <li>MCP concepts</li>
+                <li>MCP server development</li>
+                <li>Security and permissions</li>
+                <li>Agentic AI workflows</li>
+                <li>Portfolio projects</li>
+                <li>Freelancing and job applications</li>
+            </ol>
+        </section>
+
+        <section>
+            <span class="level">Summary</span>
+            <h2>Final Summary</h2>
+
+            <p>
+                MCP is important because AI is moving from simple chatbots to useful agents.
+                These agents need tools, data, permissions, and structured communication.
+            </p>
+
+            <p>
+                For Python and AI learners, MCP is a powerful career skill because it connects programming,
+                APIs, JSON, FastAPI, automation, and agentic AI.
+            </p>
+
+            <div class="note">
+                Learn MCP not as theory only. Build small tools first. Then connect them to AI workflows.
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Model Context Protocol (MCP) Lesson | Programmer's Picnic AI-ML Classes by Champak Roy</p>
+    </footer>
+
+</body>
+
+</html>
