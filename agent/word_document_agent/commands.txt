@@ -1,0 +1,10 @@
+(
+    ("greet",),
+    ("time",),
+    ("eat",),
+    ("create", "champak.docx"),
+    ("write", "Hello Champak Roy"),
+    ("font", "Arial", 24),
+    ("save",),
+    ("read", "champak.docx"),
+)
