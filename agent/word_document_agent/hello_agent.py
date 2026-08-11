@@ -20,17 +20,16 @@ class HelloAgent:
     def Observe(self, supplied_request=None):
         """OBSERVE: receive commands and begin the complete agent pipeline.
 
-        A tuple of command tuples is processed as a batch. Each command tuple
-        starts with its command word, for example ("create", "champak.docx").
-        A string is still accepted for the interactive loop.
+        A tuple represents one ordered series of complete command strings.
+        For example::
+
+            ("create test.docx", "write Hello", "save", "read")
+
+        Commands are executed from the first tuple item to the last. A string
+        is still accepted as one command for the interactive loop.
         """
         if isinstance(supplied_request, tuple):
-            if supplied_request and all(isinstance(item, tuple) for item in supplied_request):
-                return self._process_commands(supplied_request)
-            if not supplied_request or not isinstance(supplied_request[0], str):
-                raise TypeError("A command tuple must start with a command word")
-            print(f"HelloAgent observed command tuple: {supplied_request}")
-            return supplied_request
+            return self._process_commands(supplied_request)
 
         if supplied_request is None:
             supplied_request = input("\nYou: ")
@@ -45,12 +44,8 @@ class HelloAgent:
         if not request:
             return "empty"
 
-        command = (
-            request[0].strip().lower()
-            if isinstance(request, tuple)
-            else request.split(maxsplit=1)[0].lower()
-        )
-        if command in self.WORD_COMMANDS:
+        command = request.split(maxsplit=1)[0].lower()
+        if command in {"create", "open", "read", "write", "font", "save", "delete", "status"}:
             return "transfer_to_word_agent"
         if command in {"batch", "commands"}:
             return "read_command_file"
@@ -148,8 +143,8 @@ TWO-AGENT COMMANDS
         """Read a safe Python tuple literal from a same-folder text file."""
         path = Path(__file__).resolve().parent / Path(filename).name
         commands = ast.literal_eval(path.read_text(encoding="utf-8"))
-        if not isinstance(commands, tuple) or not all(isinstance(item, tuple) for item in commands):
-            raise ValueError("The file must contain a tuple of command tuples.")
+        if not isinstance(commands, tuple) or not all(isinstance(item, str) for item in commands):
+            raise ValueError("The file must contain a tuple of command strings.")
         return commands
 
     def _process_commands(self, commands):
@@ -157,7 +152,7 @@ TWO-AGENT COMMANDS
         results = []
         print(f"HelloAgent.Observe received a tuple containing {len(commands)} commands.")
         for request in commands:
-            if not isinstance(request, tuple) or not request or not isinstance(request[0], str):
+            if not isinstance(request, str) or not request.strip():
                 results.append(f"{request!r} -> Invalid command")
                 continue
 

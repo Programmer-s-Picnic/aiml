@@ -6,21 +6,18 @@ from hello_agent import HelloAgent
 if __name__ == "__main__":
     agent = HelloAgent()
 
-    # A Python tuple is given to HelloAgent. Every command travels through:
-    # HelloAgent Observe -> Plan -> Act -> WordAgent Observe -> Plan -> Act.
-    # WordAgent returns each result to HelloAgent.
     commands = (
-        ("greet",),
-        ("time",),
-        ("eat",),
-        ("create", "test.docx"),
-        ("write", "Hello Champak Roy"),
-        ("font", "Arial", 24),
-        ("save",),
-        ("read", "test.docx"),
+        "greet",
+        "time",
+        "eat",
+        "create test.docx",
+        "write Hello Champak Roy",
+        "font Arial 24",
+        "save",
+        "read",
     )
-    # The tuple enters the application only through HelloAgent.Observe.
-    results = agent.Observe(commands)
+    results = agent.Observe(("greet"))
+    # results = agent.Observe(commands)
 
     print("\nResults received by HelloAgent:")
     for result in results:
