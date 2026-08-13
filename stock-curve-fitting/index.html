@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Stock Curve Fitting Lab | TensorFlow.js</title>
+  <meta name="description" content="Fit and compare weighted polynomial stock regression models from CSV data using TensorFlow.js.">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="style.css">
+  <style>.weight-box{margin:22px 0;padding:18px;border:1px solid #cbd9e6;border-radius:12px;background:#f8fbfe}.weight-box h3{margin-bottom:4px}.weight-box select,.weight-box input{margin:0;min-width:120px}.prediction-card{border:1px solid #cbd9e6;border-radius:10px;padding:14px}.prediction-card h3{font-size:1rem;margin:0 0 10px}.prediction-card .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}.parameter-add{margin-top:10px}.remove-feature{background:#fff0f0;color:#b42318;border:1px solid #e4a7a3;padding:7px 11px;white-space:nowrap}</style>
+  <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Learn With Champak · TensorFlow.js</p>
+      <h1>Stock Curve Fitting Lab</h1>
+      <p>Upload CSV data, compare polynomial degrees, inspect graphs, and predict a numeric stock target from multiple inputs.</p>
+    </div>
+    <span class="badge">Runs in your browser</span>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>1. Load stock data</h2>
+      <div class="upload-row">
+        <label class="file-button">Choose CSV<input id="csvFile" type="file" accept=".csv,text/csv"></label>
+        <button id="sampleBtn" class="secondary">Load sample data</button>
+        <span id="fileStatus" class="muted">No CSV loaded</span>
+      </div>
+      <details>
+        <summary>Required CSV format</summary>
+        <p>Each row represents one day. Use numeric value columns such as CoalPrice, SteelPrice and USDINR. Every selected input can have either a fixed importance weight or its own daily weight column.</p>
+      </details>
+      <div class="table-wrap"><table id="previewTable"></table></div>
+    </section>
+
+    <section class="panel" id="setupPanel" hidden>
+      <h2>2. Configure models</h2>
+      <div class="form-grid">
+        <div><label>Available input parameter<select id="availableFeatureSelect"></select></label><button id="addFeatureBtn" type="button" class="secondary parameter-add">Add parameter</button><select id="featureSelect" multiple hidden aria-hidden="true"></select></div>
+        <label>Target to predict
+          <select id="targetSelect"></select>
+        </label>
+        <label>Optional whole-day weight
+          <select id="weightSelect"><option value="">Equal weight for every day</option></select>
+          <small>Separate from parameter weights; useful for emphasizing recent days.</small>
+        </label>
+        <label>Graph label column
+          <select id="labelSelect"><option value="">Row number</option></select>
+        </label>
+        <label>Degrees to compare
+          <input id="degrees" value="1, 2, 3" inputmode="numeric" aria-describedby="degreeHelp">
+          <small id="degreeHelp">Comma-separated, 1–5</small>
+        </label>
+        <label>Test data (%)
+          <input id="testPercent" type="number" min="10" max="50" value="20">
+        </label>
+        <label>Training epochs
+          <input id="epochs" type="number" min="50" max="5000" value="600">
+        </label>
+        <label>Learning rate
+          <input id="learningRate" type="number" min="0.00001" max="1" step="0.001" value="0.03">
+        </label>
+      </div>
+      <div class="weight-box"><h3>Selected parameters and weights</h3><p class="muted">Add inputs above. Each input can use a fixed importance or a CSV column containing a different weight for each day.</p><div class="table-wrap"><table id="featureWeightsTable"></table></div><p id="noFeaturesMessage" class="muted" hidden>No parameters selected. Choose a column above and click Add parameter.</p></div>
+      <label class="check"><input id="shuffle" type="checkbox"> Shuffle rows before train/test split (usually leave off for time-series data)</label>
+      <div class="actions">
+        <button id="trainBtn">Train and compare</button>
+        <button id="stopBtn" class="danger" disabled>Stop</button>
+        <span id="trainStatus" role="status"></span>
+      </div>
+      <div class="progress"><span id="progressBar"></span></div>
+    </section>
+
+    <section class="panel" id="resultsPanel" hidden>
+      <div class="section-title"><h2>3. Results</h2><button id="downloadBtn" class="secondary">Download results CSV</button></div>
+      <p id="bestSummary" class="callout"></p>
+      <div class="table-wrap"><table id="metricsTable"></table></div>
+      <div class="charts">
+        <article><h3>Actual and fitted target</h3><canvas id="fitChart"></canvas></article>
+        <article><h3>Training loss</h3><canvas id="lossChart"></canvas></article>
+        <article><h3>Actual vs predicted</h3><canvas id="scatterChart"></canvas></article>
+      </div>
+    </section>
+
+    <section class="panel" id="predictPanel" hidden>
+      <h2>4. Make a prediction</h2>
+      <div class="form-grid" id="predictionInputs"></div>
+      <div class="actions"><button id="predictBtn">Predict</button><output id="predictionOutput"></output></div>
+    </section>
+
+    <section class="panel note">
+      <h2>Important</h2>
+      <p>This educational tool finds mathematical relationships in historical data. Polynomial fits can overfit and stock markets change. Do not treat a fitted value as investment advice or a guaranteed future price.</p>
+    </section>
+  </main>
+</body>
+</html>
