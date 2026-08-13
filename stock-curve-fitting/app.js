@@ -85,14 +85,18 @@ function getConfig(){
   if(!degrees.length) throw new Error('Enter at least one degree from 1 to 5.');
   if(features.length>6 && Math.max(...degrees)>3) throw new Error('Use at most 6 inputs for degrees above 3 to avoid an excessive number of polynomial terms.');
   const featureWeights=features.map(feature=>{const tr=[...document.querySelectorAll('#featureWeightsTable tbody tr')].find(x=>x.dataset.feature===feature),mode=tr.querySelector('.weight-mode').value,fixed=Number(tr.querySelector('.fixed-weight').value),column=tr.querySelector('.weight-column').value;if(mode==='fixed'&&(!Number.isFinite(fixed)||fixed<0))throw new Error(`Enter a non-negative fixed weight for ${feature}.`);if(mode==='column'&&!column)throw new Error(`Choose a daily weight column for ${feature}.`);return{feature,mode,fixed,column};});
-  return {features,featureWeights,target,weight,label,degrees,epochs:+$('epochs').value,lr:+$('learningRate').value,test:+$('testPercent').value/100,shuffle:$('shuffle').checked};
+  const test=+$('testPercent').value/100, validation=+$('validationPercent').value/100;
+  if(test+validation>.7) throw new Error('Validation and test data together must be 70% or less.');
+  return {features,featureWeights,target,weight,label,degrees,epochs:+$('epochs').value,lr:+$('learningRate').value,test,validation,shuffle:$('shuffle').checked,optimize:$('optimizeWeights').value==='learn',regularization:+$('regularization').value};
 }
 
 function cleanData(c){
   const data=state.rows.map((r,index)=>{const raw=c.features.map(f=>Number(r[f])),parameterWeights=c.featureWeights.map(fw=>fw.mode==='column'?Number(r[fw.column]):fw.fixed);return{raw,parameterWeights,x:raw.map((v,i)=>v*parameterWeights[i]),y:Number(r[c.target]),w:c.weight?Number(r[c.weight]):1,label:c.label?r[c.label]:String(index+1),index};}).filter(d=>d.raw.every(Number.isFinite)&&d.parameterWeights.every(v=>Number.isFinite(v)&&v>=0)&&Number.isFinite(d.y)&&Number.isFinite(d.w)&&d.w>0);
   if(data.length<10) throw new Error(`Only ${data.length} usable rows. At least 10 are required.`);
   if(c.shuffle) for(let i=data.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[data[i],data[j]]=[data[j],data[i]];}
-  const cut=Math.max(2,Math.min(data.length-2,Math.floor(data.length*(1-c.test)))); return {all:data,train:data.slice(0,cut),test:data.slice(cut)};
+  if(data.length<15) throw new Error('At least 15 usable rows are required for training, validation and test sets.');
+  const trainEnd=Math.max(5,Math.floor(data.length*(1-c.test-c.validation))), validationEnd=Math.max(trainEnd+2,Math.floor(data.length*(1-c.test)));
+  return {all:data,train:data.slice(0,trainEnd),validation:data.slice(trainEnd,validationEnd),test:data.slice(validationEnd)};
 }
 
 function exponentVectors(vars,degree){
@@ -113,44 +117,53 @@ async function trainAll(){
       const model=await fitDegree(c,data,degree,i,c.degrees.length); state.models.push(model);
     }
     if(!state.models.length) throw new Error('Training stopped before a model completed.');
-    state.best=[...state.models].sort((a,b)=>a.test.rmse-b.test.rmse)[0]; renderResults(c,data); renderPredictionForm(c);
+    state.best=[...state.models].sort((a,b)=>a.validation.rmse-b.validation.rmse)[0]; renderResults(c,data); renderPredictionForm(c);
     $('trainStatus').textContent=state.stop?'Stopped; showing completed models.':'Training complete.'; $('progressBar').style.width='100%';
   }catch(e){showError(e);}finally{$('trainBtn').disabled=false;$('stopBtn').disabled=true;}
 }
 
 async function fitDegree(c,data,degree,modelIndex,totalModels){
   const terms=exponentVectors(c.features.length,degree); if(terms.length>500)throw new Error(`Degree ${degree} creates ${terms.length} terms. Reduce the degree or number of inputs.`);
-  const rawTrain=data.train.map(d=>expand(d.x,terms)), scale=meanStd(rawTrain), xs=rawTrain.map(r=>normalize(r,scale));
+  const inputScale=meanStd(data.train.map(d=>d.raw));
+  const xs=data.train.map(d=>normalize(d.raw,inputScale));
   const yMean=data.train.reduce((s,d)=>s+d.y,0)/data.train.length, yStd=Math.sqrt(data.train.reduce((s,d)=>s+(d.y-yMean)**2,0)/data.train.length)||1;
   const ys=data.train.map(d=>(d.y-yMean)/yStd), ws=data.train.map(d=>d.w), xT=tf.tensor2d(xs), yT=tf.tensor1d(ys), wT=tf.tensor1d(ws);
-  const W=tf.variable(tf.zeros([terms.length,1])), b=tf.variable(tf.scalar(0)), opt=tf.train.adam(c.lr), losses=[];
+  const W=tf.variable(tf.randomNormal([terms.length,1],0,.02)), b=tf.variable(tf.scalar(0)), opt=tf.train.adam(c.lr), losses=[];
+  const starts=c.featureWeights.map((fw,i)=>{const vals=data.train.map(d=>d.parameterWeights[i]).filter(v=>v>0);return vals.length?vals.reduce((a,v)=>a+v,0)/vals.length:1;});
+  const avg=starts.reduce((a,v)=>a+v,0)/starts.length||1, logits=tf.variable(tf.tensor1d(starts.map(v=>Math.log(Math.max(v/avg,1e-6)))));
+  const fixedGates=tf.tensor1d(starts.map(v=>v/avg));
+  const featureTensor=(input,gates)=>{const gated=input.mul(gates);return tf.concat(terms.map(p=>p.reduce((col,e,j)=>e?col.mul(gated.slice([0,j],[-1,1]).pow(e)):col,tf.ones([input.shape[0],1]))),1);};
+  const variables=c.optimize?[W,b,logits]:[W,b];
   for(let epoch=0;epoch<c.epochs;epoch++){
     if(state.stop)break;
-    const loss=opt.minimize(()=>tf.tidy(()=>{const pred=xT.matMul(W).add(b).reshape([-1]);return pred.sub(yT).square().mul(wT).sum().div(wT.sum());}),true,[W,b]);
+    const loss=opt.minimize(()=>tf.tidy(()=>{const gates=c.optimize?tf.softmax(logits).mul(c.features.length):fixedGates;const pred=featureTensor(xT,gates).matMul(W).add(b).reshape([-1]);const mse=pred.sub(yT).square().mul(wT).sum().div(wT.sum());return mse.add(W.square().mean().mul(c.regularization));}),true,variables);
     if(epoch%5===0||epoch===c.epochs-1){losses.push({epoch:epoch+1,loss:(await loss.data())[0]});await tf.nextFrame();}
     loss.dispose(); $('progressBar').style.width=`${100*(modelIndex+(epoch+1)/c.epochs)/totalModels}%`;
   }
-  const weights=Array.from(await W.data()),bias=(await b.data())[0]; tf.dispose([xT,yT,wT,W,b]);
-  const model={degree,terms,scale,yMean,yStd,weights,bias,losses,config:c}; model.predict=x=>{const z=normalize(expand(x,terms),scale);return (z.reduce((s,v,j)=>s+v*weights[j],bias))*yStd+yMean;};
-  model.train=metrics(data.train.map(d=>d.y),data.train.map(d=>model.predict(d.x)));model.test=metrics(data.test.map(d=>d.y),data.test.map(d=>model.predict(d.x)));return model;
+  const weights=Array.from(await W.data()),bias=(await b.data())[0];
+  const gates=c.optimize?Array.from(await tf.softmax(logits).mul(c.features.length).data()):Array.from(await fixedGates.data());
+  tf.dispose([xT,yT,wT,W,b,logits,fixedGates]);
+  const model={degree,terms,inputScale,yMean,yStd,weights,bias,gates,losses,config:c}; model.predict=raw=>{const gated=normalize(raw,inputScale).map((v,i)=>v*gates[i]);const z=expand(gated,terms);return z.reduce((s,v,j)=>s+v*weights[j],bias)*yStd+yMean;};
+  model.train=metrics(data.train.map(d=>d.y),data.train.map(d=>model.predict(d.raw)));model.validation=metrics(data.validation.map(d=>d.y),data.validation.map(d=>model.predict(d.raw)));model.test=metrics(data.test.map(d=>d.y),data.test.map(d=>model.predict(d.raw)));return model;
 }
 
 function metrics(actual,pred){const n=actual.length,mse=actual.reduce((s,y,i)=>s+(y-pred[i])**2,0)/n,mae=actual.reduce((s,y,i)=>s+Math.abs(y-pred[i]),0)/n,avg=actual.reduce((a,b)=>a+b,0)/n,sst=actual.reduce((s,y)=>s+(y-avg)**2,0);return{rmse:Math.sqrt(mse),mae,r2:sst?1-actual.reduce((s,y,i)=>s+(y-pred[i])**2,0)/sst:0};}
 function renderResults(c,data){
-  $('resultsPanel').hidden=false;$('predictPanel').hidden=false;$('bestSummary').textContent=`Best test result: degree ${state.best.degree}, RMSE ${fmt(state.best.test.rmse)}, MAE ${fmt(state.best.test.mae)}, R² ${fmt(state.best.test.r2)}. It uses ${state.best.terms.length} polynomial terms.`;
-  $('metricsTable').innerHTML='<thead><tr><th>Degree</th><th>Terms</th><th>Train RMSE</th><th>Test RMSE</th><th>Test MAE</th><th>Test R²</th></tr></thead><tbody>'+state.models.map(m=>`<tr><td>${m.degree}${m===state.best?' (best)':''}</td><td>${m.terms.length}</td><td>${fmt(m.train.rmse)}</td><td>${fmt(m.test.rmse)}</td><td>${fmt(m.test.mae)}</td><td>${fmt(m.test.r2)}</td></tr>`).join('')+'</tbody>';
+  $('resultsPanel').hidden=false;$('predictPanel').hidden=false;$('bestSummary').textContent=`Validation selected degree ${state.best.degree} (validation RMSE ${fmt(state.best.validation.rmse)}). Final untouched test: RMSE ${fmt(state.best.test.rmse)}, MAE ${fmt(state.best.test.mae)}, R² ${fmt(state.best.test.r2)}.`;
+  $('metricsTable').innerHTML='<thead><tr><th>Degree</th><th>Terms</th><th>Train RMSE</th><th>Validation RMSE</th><th>Test RMSE</th><th>Test MAE</th><th>Test R²</th></tr></thead><tbody>'+state.models.map(m=>`<tr><td>${m.degree}${m===state.best?' (selected)':''}</td><td>${m.terms.length}</td><td>${fmt(m.train.rmse)}</td><td>${fmt(m.validation.rmse)}</td><td>${fmt(m.test.rmse)}</td><td>${fmt(m.test.mae)}</td><td>${fmt(m.test.r2)}</td></tr>`).join('')+'</tbody>';
+  $('optimizedWeightsTable').innerHTML='<thead><tr><th>Parameter</th><th>Optimized relative weight</th><th>Share</th></tr></thead><tbody>'+c.features.map((f,i)=>`<tr><td>${esc(f)}</td><td>${fmt(state.best.gates[i])}</td><td>${fmt(state.best.gates[i]/c.features.length*100)}%</td></tr>`).join('')+'</tbody>';
   state.charts.forEach(ch=>ch.destroy());state.charts=[];
   const sorted=[...data.all].sort((a,b)=>a.index-b.index),labels=sorted.map(d=>d.label),actual=sorted.map(d=>d.y);
-  state.charts.push(new Chart($('fitChart'),{type:'line',data:{labels,datasets:[{label:`Actual ${c.target}`,data:actual,borderColor:'#172536',backgroundColor:'#172536',pointRadius:2,borderWidth:2},...state.models.map((m,i)=>({label:`Degree ${m.degree}`,data:sorted.map(d=>m.predict(d.x)),borderColor:COLORS[i%COLORS.length],pointRadius:0,borderWidth:2}))]},options:chartOptions('Data order')}));
+  state.charts.push(new Chart($('fitChart'),{type:'line',data:{labels,datasets:[{label:`Actual ${c.target}`,data:actual,borderColor:'#172536',backgroundColor:'#172536',pointRadius:2,borderWidth:2},...state.models.map((m,i)=>({label:`Degree ${m.degree}`,data:sorted.map(d=>m.predict(d.raw)),borderColor:COLORS[i%COLORS.length],pointRadius:0,borderWidth:2}))]},options:chartOptions('Data order')}));
   state.charts.push(new Chart($('lossChart'),{type:'line',data:{datasets:state.models.map((m,i)=>({label:`Degree ${m.degree}`,data:m.losses.map(v=>({x:v.epoch,y:v.loss})),borderColor:COLORS[i%COLORS.length],pointRadius:0}))},options:chartOptions('Epoch','Weighted normalized MSE',true)}));
-  const testActual=data.test.map(d=>d.y),testPred=data.test.map(d=>state.best.predict(d.x)),lo=Math.min(...testActual,...testPred),hi=Math.max(...testActual,...testPred);
+  const testActual=data.test.map(d=>d.y),testPred=data.test.map(d=>state.best.predict(d.raw)),lo=Math.min(...testActual,...testPred),hi=Math.max(...testActual,...testPred);
   state.charts.push(new Chart($('scatterChart'),{type:'scatter',data:{datasets:[{label:'Test rows',data:testActual.map((x,i)=>({x,y:testPred[i]})),backgroundColor:'#1261a0'},{label:'Ideal',data:[{x:lo,y:lo},{x:hi,y:hi}],type:'line',borderColor:'#b42318',pointRadius:0}]},options:chartOptions(`Actual ${c.target}`,`Predicted ${c.target}`,true)}));
   state.last={c,data,sorted};
 }
 function chartOptions(xTitle,yTitle='',linear=false){return{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:false},plugins:{legend:{position:'bottom'}},scales:{x:{type:linear?'linear':'category',title:{display:true,text:xTitle}},y:{title:{display:!!yTitle,text:yTitle}}}};}
-function renderPredictionForm(c){$('predictionInputs').innerHTML=c.featureWeights.map((fw,i)=>`<div class="prediction-card"><h3>${esc(fw.feature)}</h3><div class="pair"><label>Value<input class="prediction-value" data-index="${i}" type="number" step="any" placeholder="${escAttr(fw.feature)}"></label><label>Importance weight<input class="prediction-weight" data-index="${i}" type="number" min="0" step="any" value="${fw.mode==='fixed'?fw.fixed:1}"></label></div></div>`).join('');$('predictionOutput').textContent='';}
-function predictManual(){try{const values=[...document.querySelectorAll('.prediction-value')].map(i=>Number(i.value)),weights=[...document.querySelectorAll('.prediction-weight')].map(i=>Number(i.value));if(values.some(v=>!Number.isFinite(v))||weights.some(v=>!Number.isFinite(v)||v<0))throw new Error('Enter every parameter value and a non-negative weight.');const x=values.map((v,i)=>v*weights[i]);$('predictionOutput').textContent=`Predicted ${state.best.config.target}: ${fmt(state.best.predict(x))} (degree ${state.best.degree})`;}catch(e){showError(e);}}
-function downloadResults(){const {c,sorted}=state.last,headers=[c.label||'Row',`Actual ${c.target}`,...state.models.map(m=>`Degree ${m.degree} prediction`)];const lines=[headers,...sorted.map(d=>[d.label,d.y,...state.models.map(m=>m.predict(d.x))])].map(r=>r.map(csvCell).join(','));const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'}));a.download='stock-curve-fitting-results.csv';a.click();URL.revokeObjectURL(a.href);}
+function renderPredictionForm(c){$('predictionInputs').innerHTML=c.features.map((f,i)=>`<div class="prediction-card"><h3>${esc(f)}</h3><label>Value<input class="prediction-value" data-index="${i}" type="number" step="any" placeholder="${escAttr(f)}"></label><small>Model weight: ${fmt(state.best.gates[i])}</small></div>`).join('');$('predictionOutput').textContent='';}
+function predictManual(){try{const values=[...document.querySelectorAll('.prediction-value')].map(i=>Number(i.value));if(values.some(v=>!Number.isFinite(v)))throw new Error('Enter every parameter value.');$('predictionOutput').textContent=`Predicted ${state.best.config.target}: ${fmt(state.best.predict(values))} (degree ${state.best.degree})`;}catch(e){showError(e);}}
+function downloadResults(){const {c,sorted}=state.last,headers=[c.label||'Row',`Actual ${c.target}`,...state.models.map(m=>`Degree ${m.degree} prediction`)];const lines=[['Optimized parameter weights'],...c.features.map((f,i)=>[f,state.best.gates[i]]),[],headers,...sorted.map(d=>[d.label,d.y,...state.models.map(m=>m.predict(d.raw))])].map(r=>r.map(csvCell).join(','));const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'}));a.download='stock-optimized-curve-results.csv';a.click();URL.revokeObjectURL(a.href);}
 const csvCell=v=>`"${String(v).replaceAll('"','""')}"`;const fmt=n=>Number(n).toLocaleString(undefined,{maximumFractionDigits:4});const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const escAttr=esc;
 function showError(e){console.error(e);alert(e.message||String(e));$('trainStatus').textContent=e.message||String(e);}
 const SAMPLE_FALLBACK=`Date,Open,High,Low,Close,Volume,RSI,Weight\n2026-07-01,100,104,98,103,150000,55,1\n2026-07-02,103,106,101,105,165000,58,1\n2026-07-03,105,108,102,104,142000,54,1\n2026-07-04,104,109,103,108,188000,62,1\n2026-07-05,108,111,106,110,210000,66,1\n2026-07-06,110,112,107,109,176000,61,1\n2026-07-07,109,114,108,113,235000,69,1\n2026-07-08,113,116,111,115,248000,72,1\n2026-07-09,115,117,112,114,193000,65,1\n2026-07-10,114,119,113,118,270000,74,1`;
