@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   $('csvFile').addEventListener('change', e => e.target.files[0] && loadFile(e.target.files[0]));
   $('addFeatureBtn').addEventListener('click', addSelectedFeature);
   $('addOutputBtn').addEventListener('click', addSelectedOutput);
-  $('resultOutputSelect').addEventListener('change', renderSelectedResult);
+  $('resultOutputSelect').addEventListener('change', () => { populateResultDegrees(); renderSelectedResult(); });
+  $('resultDegreeSelect').addEventListener('change', renderSelectedResult);
   $('sampleBtn').addEventListener('click', loadSample);
   $('trainBtn').addEventListener('click', trainAll);
   $('stopBtn').addEventListener('click', () => { state.stop = true; $('trainStatus').textContent = 'Stopping…'; });
@@ -95,10 +96,10 @@ function getConfig(){
 
 function cleanData(c){
   const data=state.rows.map((r,index)=>{const raw=c.features.map(f=>Number(r[f])),parameterWeights=c.featureWeights.map(fw=>fw.fixed),y=Object.fromEntries(c.outputs.map(o=>[o,Number(r[o])]));return{raw,parameterWeights,y,label:c.label?r[c.label]:String(index+1),index};}).filter(d=>d.raw.every(Number.isFinite)&&d.parameterWeights.every(v=>Number.isFinite(v)&&v>=0)&&c.outputs.every(o=>Number.isFinite(d.y[o])));
-  if(data.length<10) throw new Error(`Only ${data.length} usable rows. At least 10 are required.`);
+  if(data.length<3) throw new Error(`Only ${data.length} usable rows. At least 3 are needed so training, validation and test sets each contain data.`);
   if(c.shuffle) for(let i=data.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[data[i],data[j]]=[data[j],data[i]];}
-  if(data.length<15) throw new Error('At least 15 usable rows are required for training, validation and test sets.');
-  const trainEnd=Math.max(5,Math.floor(data.length*(1-c.test-c.validation))), validationEnd=Math.max(trainEnd+2,Math.floor(data.length*(1-c.test)));
+  const trainEnd=Math.max(1,Math.min(data.length-2,Math.floor(data.length*(1-c.test-c.validation))));
+  const validationEnd=Math.max(trainEnd+1,Math.min(data.length-1,Math.floor(data.length*(1-c.test))));
   return {all:data,train:data.slice(0,trainEnd),validation:data.slice(trainEnd,validationEnd),test:data.slice(validationEnd)};
 }
 
@@ -126,7 +127,7 @@ async function trainAll(){
       if(state.stop)break;
     }
     if(!Object.keys(state.results).length) throw new Error('Training stopped before a model completed.');
-    $('resultOutputSelect').innerHTML=Object.keys(state.results).map(o=>`<option value="${escAttr(o)}">${esc(o)}</option>`).join('');renderSelectedResult();renderPredictionForm(c);
+    $('resultOutputSelect').innerHTML=Object.keys(state.results).map(o=>`<option value="${escAttr(o)}">${esc(o)}</option>`).join('');populateResultDegrees();renderSelectedResult();renderPredictionForm(c);
     $('trainStatus').textContent=state.stop?'Stopped; showing completed models.':'Training complete.'; $('progressBar').style.width='100%';
   }catch(e){showError(e);}finally{$('trainBtn').disabled=false;$('stopBtn').disabled=true;}
 }
@@ -157,13 +158,28 @@ async function fitDegree(c,data,output,degree,modelIndex,totalModels){
 }
 
 function metrics(actual,pred){const n=actual.length,mse=actual.reduce((s,y,i)=>s+(y-pred[i])**2,0)/n,mae=actual.reduce((s,y,i)=>s+Math.abs(y-pred[i]),0)/n,avg=actual.reduce((a,b)=>a+b,0)/n,sst=actual.reduce((s,y)=>s+(y-avg)**2,0);return{rmse:Math.sqrt(mse),mae,r2:sst?1-actual.reduce((s,y,i)=>s+(y-pred[i])**2,0)/sst:0};}
-function renderSelectedResult(){const output=$('resultOutputSelect').value,result=state.results[output];if(result)renderResults(result.c,result.data,result.models,result.best,output);}
+function populateResultDegrees(){const result=state.results[$('resultOutputSelect').value], select=$('resultDegreeSelect');if(!result||!select)return;const previous=select.value;select.innerHTML='<option value="auto">Automatic best degree</option>'+result.models.map(m=>`<option value="${m.degree}">Degree ${m.degree}</option>`).join('');if([...select.options].some(o=>o.value===previous))select.value=previous;}
+function chosenModel(result){const choice=$('resultDegreeSelect')?.value||'auto';return choice==='auto'?result.best:result.models.find(m=>String(m.degree)===choice)||result.best;}
+function renderSelectedResult(){const output=$('resultOutputSelect').value,result=state.results[output];if(result)renderResults(result.c,result.data,result.models,chosenModel(result),output);}
+function resultExplanationElement(){
+  let element=$('plainResult');
+  if(!element){
+    element=document.createElement('div');
+    element.id='plainResult';
+    element.className='plain-result';
+    const summary=$('bestSummary');
+    if(summary) summary.insertAdjacentElement('afterend',element);
+    else $('resultsPanel')?.prepend(element);
+  }
+  return element;
+}
 function renderResults(c,data,models,best,output){
-  $('resultsPanel').hidden=false;$('predictPanel').hidden=false;$('bestSummary').textContent=`${output}: validation selected degree ${best.degree} (RMSE ${fmt(best.validation.rmse)}). Untouched test RMSE ${fmt(best.test.rmse)}, MAE ${fmt(best.test.mae)}, R² ${fmt(best.test.r2)}.`;
+  const automatic=$('resultDegreeSelect').value==='auto';
+  $('resultsPanel').hidden=false;$('predictPanel').hidden=false;$('bestSummary').textContent=`${output}: ${automatic?'validation selected':'you selected'} degree ${best.degree} (validation RMSE ${fmt(best.validation.rmse)}). Test RMSE ${fmt(best.test.rmse)}, MAE ${fmt(best.test.mae)}, R² ${fmt(best.test.r2)}.`;
   $('metricsTable').innerHTML='<thead><tr><th>Degree</th><th>Terms</th><th>Train RMSE</th><th>Validation RMSE</th><th>Test RMSE</th><th>Test MAE</th><th>Test R²</th></tr></thead><tbody>'+models.map(m=>`<tr><td>${m.degree}${m===best?' (selected)':''}</td><td>${m.terms.length}</td><td>${fmt(m.train.rmse)}</td><td>${fmt(m.validation.rmse)}</td><td>${fmt(m.test.rmse)}</td><td>${fmt(m.test.mae)}</td><td>${fmt(m.test.r2)}</td></tr>`).join('')+'</tbody>';
   $('optimizedWeightsTable').innerHTML='<thead><tr><th>Parameter</th><th>Optimized relative weight</th><th>Share</th></tr></thead><tbody>'+c.features.map((f,i)=>`<tr><td>${esc(f)}</td><td>${fmt(best.gates[i])}</td><td>${fmt(best.gates[i]/c.features.length*100)}%</td></tr>`).join('')+'</tbody>';
   const r2=best.test.r2, quality=r2>=.8?'strong':r2>=.5?'moderate':r2>=0?'weak':'poor', top=c.features.map((f,i)=>({f,share:best.gates[i]/c.features.length*100})).sort((a,b)=>b.share-a.share)[0];
-  $('plainResult').innerHTML=`<h3>Plain-English result</h3><p>The selected degree ${best.degree} curve has <strong>${quality} test performance</strong> (R² ${fmt(r2)}). Its predictions are typically about <strong>${fmt(best.test.rmse)}</strong> output units away. The most emphasized input is <strong>${esc(top.f)}</strong> at ${fmt(top.share)}% of the learned weight.</p><p>${r2<.5?'Treat predictions cautiously and consider more data or better inputs.':'Verify it against newer unseen data before relying on it.'}</p>`;
+  resultExplanationElement().innerHTML=`<h3>Plain-English result</h3><p>The selected degree ${best.degree} curve has <strong>${quality} test performance</strong> (R² ${fmt(r2)}). Its predictions are typically about <strong>${fmt(best.test.rmse)}</strong> output units away. The most emphasized input is <strong>${esc(top.f)}</strong> at ${fmt(top.share)}% of the learned weight.</p><p>${r2<.5?'Treat predictions cautiously and consider more data or better inputs.':'Verify it against newer unseen data before relying on it.'}</p>`;
   state.charts.forEach(ch=>ch.destroy());state.charts=[];
   const sorted=[...data.all].sort((a,b)=>a.index-b.index),labels=sorted.map(d=>d.label),actual=sorted.map(d=>d.y[output]);
   state.charts.push(new Chart($('fitChart'),{type:'line',data:{labels,datasets:[{label:`Actual ${output}`,data:actual,borderColor:'#172536',backgroundColor:'#172536',pointRadius:2,borderWidth:2},...models.map((m,i)=>({label:`Degree ${m.degree}`,data:sorted.map(d=>m.predict(d.raw)),borderColor:COLORS[i%COLORS.length],pointRadius:0,borderWidth:2}))]},options:chartOptions('Data order')}));
@@ -174,8 +190,8 @@ function renderResults(c,data,models,best,output){
 }
 function chartOptions(xTitle,yTitle='',linear=false){return{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:false},plugins:{legend:{position:'bottom'}},scales:{x:{type:linear?'linear':'category',title:{display:true,text:xTitle}},y:{title:{display:!!yTitle,text:yTitle}}}};}
 function renderPredictionForm(c){$('predictionInputs').innerHTML=c.features.map(f=>`<div class="prediction-card"><h3>${esc(f)}</h3><label>Value<input class="prediction-value" type="number" step="any" placeholder="${escAttr(f)}"></label></div>`).join('');$('predictionOutput').textContent='';}
-function predictManual(){try{const values=[...document.querySelectorAll('.prediction-value')].map(i=>Number(i.value));if(values.some(v=>!Number.isFinite(v)))throw new Error('Enter every input parameter value.');$('predictionOutput').innerHTML=Object.entries(state.results).map(([o,r])=>`${esc(o)}: <strong>${fmt(r.best.predict(values))}</strong> (degree ${r.best.degree})`).join('<br>');}catch(e){showError(e);}}
-function downloadResults(){const {c,data}=state.last,lines=[];for(const [output,r] of Object.entries(state.results)){lines.push([`Output: ${output}`],['Input','Optimized weight'],...c.features.map((f,i)=>[f,r.best.gates[i]]),[],[c.label||'Row',`Actual ${output}`,'Best prediction'],...data.all.map(d=>[d.label,d.y[output],r.best.predict(d.raw)]),[]);}const csv=lines.map(r=>r.map(csvCell).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='stock-multiple-output-training-results.csv';a.click();URL.revokeObjectURL(a.href);}
+function predictManual(){try{const values=[...document.querySelectorAll('.prediction-value')].map(i=>Number(i.value));if(values.some(v=>!Number.isFinite(v)))throw new Error('Enter every input parameter value.');$('predictionOutput').innerHTML=Object.entries(state.results).map(([o,r])=>{const m=o===$('resultOutputSelect').value?chosenModel(r):r.best;return `${esc(o)}: <strong>${fmt(m.predict(values))}</strong> (degree ${m.degree})`;}).join('<br>');}catch(e){showError(e);}}
+function downloadResults(){const {c,data}=state.last,lines=[];for(const [output,r] of Object.entries(state.results)){const m=output===$('resultOutputSelect').value?chosenModel(r):r.best;lines.push([`Output: ${output}`],[`Curve degree: ${m.degree}`],['Input','Weight'],...c.features.map((f,i)=>[f,m.gates[i]]),[],[c.label||'Row',`Actual ${output}`,'Prediction'],...data.all.map(d=>[d.label,d.y[output],m.predict(d.raw)]),[]);}const csv=lines.map(r=>r.map(csvCell).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='stock-multiple-output-training-results.csv';a.click();URL.revokeObjectURL(a.href);}
 const csvCell=v=>`"${String(v).replaceAll('"','""')}"`;const fmt=n=>Number(n).toLocaleString(undefined,{maximumFractionDigits:4});const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const escAttr=esc;
 function showError(e){console.error(e);alert(e.message||String(e));$('trainStatus').textContent=e.message||String(e);}
 const SAMPLE_FALLBACK=['Date,CoalPrice,SteelPrice,USDINR,CrudeOil,Volume,TargetClose,TargetHigh,TargetLow',...Array.from({length:20},(_,i)=>{const close=101+i*1.7;return `2026-07-${String(i+1).padStart(2,'0')},${142+i*2},${50500+i*370},${(83.42+i*.07).toFixed(2)},${(78.1+i*.48).toFixed(1)},${150000+i*13000},${close.toFixed(1)},${(close+2.5).toFixed(1)},${(close-3.5).toFixed(1)}`;})].join('\n');

@@ -7,4 +7,5 @@
 .glossary{margin-top:22px;padding:14px 18px;border:1px solid #cbd9e6;border-radius:12px}
 .glossary summary{color:#0b2545;font-size:1.05rem}.glossary dl{display:grid;grid-template-columns:max-content 1fr;gap:10px 18px}
 .glossary dt{font-weight:800;color:#0b2545}.glossary dd{margin:0;color:#607386}
-@media(max-width:700px){#setupPanel>.form-grid,.glossary dl{grid-template-columns:1fr}.glossary dl{gap:3px}.glossary dd{margin-bottom:10px}}
+.result-choices{display:grid;grid-template-columns:repeat(2,minmax(220px,360px));gap:18px;margin:12px 0 18px}
+@media(max-width:700px){#setupPanel>.form-grid,.glossary dl,.result-choices{grid-template-columns:1fr}.glossary dl{gap:3px}.glossary dd{margin-bottom:10px}}

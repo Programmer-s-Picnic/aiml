@@ -22,8 +22,10 @@ Opening `index.html` directly may work for uploaded files, but a local server is
 - Every input receives one importance weight entered once in the interface. That same weight applies to all records. CSV weight columns are neither needed nor used.
 - Add parameters from the available-column selector and remove them individually before training.
 - Outputs: add one or more numeric output columns, such as TargetClose, TargetHigh and TargetLow. The program trains and selects a separate model for every output.
+- After training, choose **Automatic best degree** or manually select any trained curve degree for the displayed output. The selected curve controls its results, graphs, prediction and export.
 - Label: optional date or timestamp used on the graph.
 - Rows with missing/non-numeric selected values are ignored.
+- There is no 15-row requirement. A minimum of 3 usable rows is necessary to keep at least one row in each of the training, validation and test sets. Very small datasets produce unreliable results.
 
 For future prediction, build the target in advance. Example: each row's `NextDayClose` should be tomorrow's close while its inputs contain only information known today. Do not include future data among the inputs; that would be data leakage.
 
