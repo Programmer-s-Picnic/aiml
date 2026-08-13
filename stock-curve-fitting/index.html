@@ -1,24 +1,75 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Stock Curve Fitting Lab | TensorFlow.js</title>
-  <meta name="description" content="Fit and compare weighted polynomial stock regression models from CSV data using TensorFlow.js.">
+  <meta name="description"
+    content="Fit and compare weighted polynomial stock regression models from CSV data using TensorFlow.js.">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="style.css?v=20260813-3">
   <link rel="stylesheet" href="simple.css?v=20260813-3">
-  <style>.weight-box{margin:22px 0;padding:18px;border:1px solid #cbd9e6;border-radius:12px;background:#f8fbfe}.weight-box h3{margin-bottom:4px}.weight-box select,.weight-box input{margin:0;min-width:120px}.prediction-card{border:1px solid #cbd9e6;border-radius:10px;padding:14px}.prediction-card h3{font-size:1rem;margin:0 0 10px}.prediction-card .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}.parameter-add{margin-top:10px}.remove-feature{background:#fff0f0;color:#b42318;border:1px solid #e4a7a3;padding:7px 11px;white-space:nowrap}</style>
+  <style>
+    .weight-box {
+      margin: 22px 0;
+      padding: 18px;
+      border: 1px solid #cbd9e6;
+      border-radius: 12px;
+      background: #f8fbfe
+    }
+
+    .weight-box h3 {
+      margin-bottom: 4px
+    }
+
+    .weight-box select,
+    .weight-box input {
+      margin: 0;
+      min-width: 120px
+    }
+
+    .prediction-card {
+      border: 1px solid #cbd9e6;
+      border-radius: 10px;
+      padding: 14px
+    }
+
+    .prediction-card h3 {
+      font-size: 1rem;
+      margin: 0 0 10px
+    }
+
+    .prediction-card .pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .parameter-add {
+      margin-top: 10px
+    }
+
+    .remove-feature {
+      background: #fff0f0;
+      color: #b42318;
+      border: 1px solid #e4a7a3;
+      padding: 7px 11px;
+      white-space: nowrap
+    }
+  </style>
   <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script defer src="app.js?v=20260813-3"></script>
 </head>
+
 <body>
   <header class="hero">
     <div>
       <p class="eyebrow">Learn With Champak · TensorFlow.js</p>
       <h1>Stock Curve Training & Fitting Lab</h1>
-      <p>Train polynomial stock models, optimize input weights, compare degrees on validation data, and test predictions on unseen rows.</p>
+      <p>Train polynomial stock models, optimize input weights, compare degrees on validation data, and test predictions
+        on unseen rows.</p>
     </div>
     <span class="badge">Runs in your browser</span>
   </header>
@@ -33,19 +84,29 @@
       </div>
       <details>
         <summary>Required CSV format</summary>
-        <p>Each row represents one day. Use numeric value columns such as CoalPrice, SteelPrice and USDINR. Each selected input receives one weight that applies to every day.</p>
+        <p>Each row represents one day. Use numeric value columns.. Each selected input receives one weight that applies
+          to every day.</p>
       </details>
-      <div class="table-wrap"><table id="previewTable"></table></div>
+      <div class="table-wrap">
+        <table id="previewTable"></table>
+      </div>
     </section>
 
     <section class="panel" id="setupPanel" hidden>
       <h2>2. Choose inputs and outputs</h2>
-      <p class="step-help">An <strong>input</strong> may influence the stock (coal, steel, dollar rate). An <strong>output</strong> is what you want to predict (closing, high or low price).</p>
+      <p class="step-help">An <strong>input</strong> may influence the stock (coal, steel, dollar rate). An
+        <strong>output</strong> is what you want to predict (closing, high or low price).</p>
       <div class="form-grid">
-        <div><label>Input parameter<select id="availableFeatureSelect"></select></label><button id="addFeatureBtn" type="button" class="secondary parameter-add">+ Add input</button><select id="featureSelect" multiple hidden aria-hidden="true"></select></div>
-        <div><label>Output to predict<select id="availableOutputSelect"></select></label><button id="addOutputBtn" type="button" class="secondary parameter-add">+ Add output</button><select id="outputSelect" multiple hidden aria-hidden="true"></select></div>
+        <div><label>Input parameter<select id="availableFeatureSelect"></select></label><button id="addFeatureBtn"
+            type="button" class="secondary parameter-add">+ Add input</button><select id="featureSelect" multiple hidden
+            aria-hidden="true"></select></div>
+        <div><label>Output to predict<select id="availableOutputSelect"></select></label><button id="addOutputBtn"
+            type="button" class="secondary parameter-add">+ Add output</button><select id="outputSelect" multiple hidden
+            aria-hidden="true"></select></div>
         <label>Graph label column
-          <select id="labelSelect"><option value="">Row number</option></select>
+          <select id="labelSelect">
+            <option value="">Row number</option>
+          </select>
         </label>
         <label>Degrees to compare
           <input id="degrees" value="1, 2, 3" inputmode="numeric" aria-describedby="degreeHelp">
@@ -59,7 +120,10 @@
           <small>Selects the best polynomial degree without touching the test set.</small>
         </label>
         <label>Parameter-weight mode
-          <select id="optimizeWeights"><option value="learn" selected>Learn optimized weights</option><option value="given">Use configured CSV/fixed weights</option></select>
+          <select id="optimizeWeights">
+            <option value="learn" selected>Learn optimized weights</option>
+            <option value="given">Use configured CSV/fixed weights</option>
+          </select>
         </label>
         <label>Curve regularization
           <input id="regularization" type="number" min="0" max="1" step="0.0001" value="0.001">
@@ -72,9 +136,26 @@
           <input id="learningRate" type="number" min="0.00001" max="1" step="0.001" value="0.03">
         </label>
       </div>
-      <div class="weight-box"><h3>Selected parameters and one-time weights</h3><p class="muted">Enter each parameter’s weight once. It applies to all days. In optimized mode it initializes training; in fixed mode it remains unchanged.</p><div class="table-wrap"><table id="featureWeightsTable"></table></div><p id="noFeaturesMessage" class="muted" hidden>No parameters selected. Choose a column above and click Add parameter.</p></div>
-      <div class="weight-box"><h3>Outputs to predict</h3><p class="muted">The program trains a separate model for each output.</p><div class="table-wrap"><table id="outputsTable"></table></div><p id="noOutputsMessage" class="muted" hidden>No outputs selected.</p></div>
-      <label class="check"><input id="shuffle" type="checkbox"> Shuffle rows before train/test split (usually leave off for time-series data)</label>
+      <div class="weight-box">
+        <h3>Selected parameters and one-time weights</h3>
+        <p class="muted">Enter each parameter’s weight once. It applies to all days. In optimized mode it initializes
+          training; in fixed mode it remains unchanged.</p>
+        <div class="table-wrap">
+          <table id="featureWeightsTable"></table>
+        </div>
+        <p id="noFeaturesMessage" class="muted" hidden>No parameters selected. Choose a column above and click Add
+          parameter.</p>
+      </div>
+      <div class="weight-box">
+        <h3>Outputs to predict</h3>
+        <p class="muted">The program trains a separate model for each output.</p>
+        <div class="table-wrap">
+          <table id="outputsTable"></table>
+        </div>
+        <p id="noOutputsMessage" class="muted" hidden>No outputs selected.</p>
+      </div>
+      <label class="check"><input id="shuffle" type="checkbox"> Shuffle rows before train/test split (usually leave off
+        for time-series data)</label>
       <div class="actions">
         <button id="trainBtn">Train and compare</button>
         <button id="stopBtn" class="danger" disabled>Stop</button>
@@ -84,20 +165,55 @@
     </section>
 
     <section class="panel" id="resultsPanel" hidden>
-      <div class="section-title"><h2>3. Results</h2><button id="downloadBtn" class="secondary">Download results CSV</button></div>
-      <div class="result-choices"><label>Show output<select id="resultOutputSelect"></select></label><label>Use fitted curve<select id="resultDegreeSelect"><option value="auto">Automatic best degree</option></select></label></div>
+      <div class="section-title">
+        <h2>3. Results</h2><button id="downloadBtn" class="secondary">Download results CSV</button>
+      </div>
+      <div class="result-choices"><label>Show output<select id="resultOutputSelect"></select></label><label>Use fitted
+          curve<select id="resultDegreeSelect">
+            <option value="auto">Automatic best degree</option>
+          </select></label></div>
       <p id="bestSummary" class="callout"></p>
       <div id="plainResult" class="plain-result"></div>
-      <h3>Optimized parameter weights</h3><div class="table-wrap"><table id="optimizedWeightsTable"></table></div>
-      <div class="table-wrap"><table id="metricsTable"></table></div>
-      <div class="charts">
-        <article><h3>Actual and fitted target</h3><canvas id="fitChart"></canvas></article>
-        <article><h3>Training loss</h3><canvas id="lossChart"></canvas></article>
-        <article><h3>Actual vs predicted</h3><canvas id="scatterChart"></canvas></article>
+      <h3>Optimized parameter weights</h3>
+      <div class="table-wrap">
+        <table id="optimizedWeightsTable"></table>
       </div>
-      <details class="glossary" open><summary>What do these results mean?</summary><dl>
-        <dt>Degree</dt><dd>Curve complexity. Degree 1 is a straight line; higher degrees follow bends but may overfit.</dd><dt>Terms</dt><dd>Mathematical combinations used, including interactions such as Coal Price × Dollar Rate.</dd><dt>RMSE</dt><dd>Typical prediction error, with larger mistakes penalized more. Lower is better; it uses the output price unit.</dd><dt>MAE</dt><dd>Average absolute prediction error. Lower is better and it uses the output price unit.</dd><dt>R²</dt><dd>Variation explained. Near 1 is strong, near 0 is weak, and below 0 is worse than using the average.</dd><dt>Validation</dt><dd>Data used to choose the best curve without training on it.</dd><dt>Test</dt><dd>Untouched data used only for the final performance check.</dd><dt>Weight share</dt><dd>Relative emphasis on each input. It shows association, not proof of cause.</dd>
-      </dl></details>
+      <div class="table-wrap">
+        <table id="metricsTable"></table>
+      </div>
+      <div class="charts">
+        <article>
+          <h3>Actual and fitted target</h3><canvas id="fitChart"></canvas>
+        </article>
+        <article>
+          <h3>Training loss</h3><canvas id="lossChart"></canvas>
+        </article>
+        <article>
+          <h3>Actual vs predicted</h3><canvas id="scatterChart"></canvas>
+        </article>
+      </div>
+      <details class="glossary" open>
+        <summary>What do these results mean?</summary>
+        <dl>
+          <dt>Degree</dt>
+          <dd>Curve complexity. Degree 1 is a straight line; higher degrees follow bends but may overfit.</dd>
+          <dt>Terms</dt>
+          <dd>Mathematical combinations used, including interactions such as Coal Price × Dollar Rate.</dd>
+          <dt>RMSE</dt>
+          <dd>Typical prediction error, with larger mistakes penalized more. Lower is better; it uses the output price
+            unit.</dd>
+          <dt>MAE</dt>
+          <dd>Average absolute prediction error. Lower is better and it uses the output price unit.</dd>
+          <dt>R²</dt>
+          <dd>Variation explained. Near 1 is strong, near 0 is weak, and below 0 is worse than using the average.</dd>
+          <dt>Validation</dt>
+          <dd>Data used to choose the best curve without training on it.</dd>
+          <dt>Test</dt>
+          <dd>Untouched data used only for the final performance check.</dd>
+          <dt>Weight share</dt>
+          <dd>Relative emphasis on each input. It shows association, not proof of cause.</dd>
+        </dl>
+      </details>
     </section>
 
     <section class="panel" id="predictPanel" hidden>
@@ -108,8 +224,10 @@
 
     <section class="panel note">
       <h2>Important</h2>
-      <p>This educational tool finds mathematical relationships in historical data. Polynomial fits can overfit and stock markets change. Do not treat a fitted value as investment advice or a guaranteed future price.</p>
+      <p>This educational tool finds mathematical relationships in historical data. Polynomial fits can overfit and
+        stock markets change. Do not treat a fitted value as investment advice or a guaranteed future price.</p>
     </section>
   </main>
 </body>
+
 </html>
