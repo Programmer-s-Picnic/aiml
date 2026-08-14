@@ -1,483 +1,304 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://aiml.learnwithchampak.live/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.00</priority>
-  </url>
-  <url>
-    <loc>https://aiml.learnwithchampak.live/authorised/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
     <loc>https://aiml.learnwithchampak.live/authorised/lesson/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/book/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://aiml.learnwithchampak.live/classification/picture/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/classification/picture/cnn/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-27</lastmod>
+  </url>
+  <url>
+    <loc>https://aiml.learnwithchampak.live/classification/picture/</loc>
+    <lastmod>2026-06-27</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/classification/unsupervised/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/code/1/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/code/mcp/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-30</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/code/pandas/cleaning/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/code/pandas/csv/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/code/pandas/projects/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/code/pandas/projects/project_difficult.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/code/pandas/projects/project_easy.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/code/pandas/projects/project_moderate.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/code/pandas/sql/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/code/picnic1/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://aiml.learnwithchampak.live/course/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/course-map.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/pandas/csv/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/projects/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/projects/ipl-dashboard.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/projects/risk-classifier.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/projects/sales-predictor.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/projects/weather-analyzer.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
-  </url>
-  <url>
-    <loc>https://aiml.learnwithchampak.live/course/scriptaadds.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week01/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week01/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week02/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week02/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week03/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week03/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week04/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week04/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week05/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week05/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week06/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week06/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week07/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week07/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week08/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week08/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week09/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week09/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week10/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week10/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week11/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week11/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week12/assignment.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/course/week12/lesson.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/coursemap/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/datasets/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/images/image-generator/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
-    <loc>https://aiml.learnwithchampak.live/lessons/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <loc>https://aiml.learnwithchampak.live/</loc>
+    <lastmod>2026-07-15</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/lessons/stats/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/lessons/terms/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/matplotlib/3d/0/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/matplotlib/3d/1/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/nlp/0-10/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/nlp/11-20/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/nlp/21-30/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/nlp/31-40/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/nlp/41-50/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/nlp/51-60/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/nlp/61-70/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/nlp/begin/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/publicmodule/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/puzzle/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://aiml.learnwithchampak.live/regression/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/regression/0-10/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/regression/compare/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://aiml.learnwithchampak.live/regression/compare/test.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/regression/multipleinputs/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/regression/np/polyfit/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/sarkar.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
-    <loc>https://aiml.learnwithchampak.live/search.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <loc>https://aiml.learnwithchampak.live/stock-curve-fitting/</loc>
+    <lastmod>2026-08-13</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/student/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/teacher/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <lastmod>2026-06-18</lastmod>
+  </url>
+  <url>
+    <loc>https://aiml.learnwithchampak.live/tflow/pass-fail/</loc>
+    <lastmod>2026-07-20</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/tools/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
   <url>
     <loc>https://aiml.learnwithchampak.live/wizard/</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
+    <lastmod>2026-06-18</lastmod>
   </url>
 </urlset>
+
