@@ -2,251 +2,883 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TensorFlow.js Face Counter</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>TensorFlow.js Face Crossing Counter</title>
+
+  <!-- TensorFlow.js -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+
+  <!-- TensorFlow.js Face Detection Model -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection@1.0.3/dist/face-detection.min.js"></script>
+
   <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; padding: 20px; background: #eef6ff; color: #172033; font-family: Arial, sans-serif; text-align: center; }
-    .app { width: min(760px, 100%); margin: auto; padding: 22px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(20,70,120,.14); }
-    h1 { margin-top: 0; color: #0d47a1; }
-    .stage { position: relative; width: 100%; aspect-ratio: 4/3; margin: 18px auto; overflow: hidden; border-radius: 12px; background: #101827; }
-    video, canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-    video { object-fit: fill; }
-    .scores { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
-    .score { padding: 14px; border-radius: 10px; background: #e3f2fd; font-size: 1.1rem; }
-    .score strong { display: block; margin-top: 4px; color: #0d47a1; font-size: 1.8rem; }
-    button { margin: 5px; padding: 11px 18px; border: 0; border-radius: 8px; background: #1565c0; color: white; font-size: 1rem; cursor: pointer; }
-    button:disabled { background: #8ca6bf; cursor: not-allowed; }
-    #resetButton { background: #526477; }
-    #status { min-height: 24px; color: #38516b; }
-    .note { font-size: .9rem; color: #536779; }
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #eef6ff;
+      color: #172033;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .app {
+      width: min(760px, 100%);
+      margin: auto;
+      padding: 22px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(20, 70, 120, 0.14);
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #0d47a1;
+    }
+
+    .instructions {
+      max-width: 620px;
+      margin: 0 auto 18px;
+      color: #43566b;
+      line-height: 1.6;
+    }
+
+    .scores {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .score {
+      padding: 14px;
+      border-radius: 10px;
+      background: #e3f2fd;
+      font-size: 1.1rem;
+    }
+
+    .score strong {
+      display: block;
+      margin-top: 4px;
+      color: #0d47a1;
+      font-size: 1.8rem;
+    }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      margin: 18px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #101827;
+    }
+
+    video,
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    video {
+      object-fit: fill;
+    }
+
+    button {
+      margin: 5px;
+      padding: 11px 18px;
+      border: 0;
+      border-radius: 8px;
+      background: #1565c0;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #8ca6bf;
+      cursor: not-allowed;
+    }
+
+    #resetButton {
+      background: #526477;
+    }
+
+    #status {
+      min-height: 26px;
+      margin-top: 17px;
+      color: #38516b;
+      font-weight: 600;
+    }
+
+    .note {
+      margin-bottom: 0;
+      color: #536779;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 12px;
+      }
+
+      .app {
+        padding: 18px 12px;
+      }
+
+      .scores {
+        gap: 8px;
+      }
+
+      .score {
+        padding: 12px 8px;
+        font-size: 0.95rem;
+      }
+
+      button {
+        padding: 10px 14px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <main class="app">
     <h1>Face Crossing Counter</h1>
-    <p>Cross the blue centre line. Move fully into the other side to be counted.</p>
+
+    <p class="instructions">
+      Begin with your complete face on one side of the blue line.
+      Move steadily across the line until the centre of your face
+      reaches the other side.
+    </p>
 
     <div class="scores">
-      <div class="score">Left to Right<strong id="leftToRight">0</strong></div>
-      <div class="score">Right to Left<strong id="rightToLeft">0</strong></div>
+      <div class="score">
+        Left to Right
+        <strong id="leftToRight">0</strong>
+      </div>
+
+      <div class="score">
+        Right to Left
+        <strong id="rightToLeft">0</strong>
+      </div>
     </div>
 
     <div class="stage">
-      <video id="video" autoplay playsinline muted></video>
+      <video
+        id="video"
+        autoplay
+        playsinline
+        muted
+      ></video>
+
       <canvas id="overlay"></canvas>
     </div>
 
-    <button id="startButton">Start Camera and Counter</button>
-    <button id="stopButton" disabled>Stop</button>
-    <button id="resetButton">Reset Counts</button>
+    <div>
+      <button id="startButton" type="button">
+        Start Camera and Counter
+      </button>
+
+      <button id="stopButton" type="button" disabled>
+        Stop
+      </button>
+
+      <button id="resetButton" type="button">
+        Reset Counts
+      </button>
+    </div>
+
     <p id="status">Ready.</p>
-    <p class="note">For learning only. Camera frames stay in this page and are not uploaded by this code.</p>
+
+    <p class="note">
+      For learning only. Camera frames remain inside this page and
+      are not intentionally uploaded by this code.
+    </p>
   </main>
 
   <script>
-    const video = document.getElementById("video");
-    const canvas = document.getElementById("overlay");
-    const context = canvas.getContext("2d");
-    const startButton = document.getElementById("startButton");
-    const stopButton = document.getElementById("stopButton");
-    const resetButton = document.getElementById("resetButton");
-    const statusText = document.getElementById("status");
-    const leftToRightText = document.getElementById("leftToRight");
-    const rightToLeftText = document.getElementById("rightToLeft");
+    const video =
+      document.getElementById("video");
 
-    let detector;
-    let stream;
+    const canvas =
+      document.getElementById("overlay");
+
+    const context =
+      canvas.getContext("2d");
+
+    const startButton =
+      document.getElementById("startButton");
+
+    const stopButton =
+      document.getElementById("stopButton");
+
+    const resetButton =
+      document.getElementById("resetButton");
+
+    const statusText =
+      document.getElementById("status");
+
+    const leftToRightText =
+      document.getElementById("leftToRight");
+
+    const rightToLeftText =
+      document.getElementById("rightToLeft");
+
+    let detector = null;
+    let stream = null;
     let running = false;
-    let animationId;
+    let animationId = null;
+
     let nextTrackId = 1;
     let tracks = [];
+
     let leftToRight = 0;
     let rightToLeft = 0;
 
+    /*
+     * Position of the vertical counting line.
+     *
+     * 0.5 means 50% of the video width.
+     */
     const LINE_POSITION = 0.5;
+
+    /*
+     * Neutral area around the line.
+     *
+     * A face must move completely beyond this area
+     * before a crossing is confirmed.
+     */
     const DEAD_ZONE = 28;
+
+    /*
+     * Used when more than one face is visible.
+     */
     const MAX_MATCH_DISTANCE = 240;
-    const MAX_MISSED_FRAMES = 30;
+
+    /*
+     * Keep a temporarily missing track alive.
+     */
+    const MAX_MISSED_FRAMES = 90;
 
     function sideOfLine(x, lineX) {
-      if (x < lineX - DEAD_ZONE) return "left";
-      if (x > lineX + DEAD_ZONE) return "right";
+      if (x < lineX - DEAD_ZONE) {
+        return "left";
+      }
+
+      if (x > lineX + DEAD_ZONE) {
+        return "right";
+      }
+
       return "middle";
     }
 
-    function distance(a, b) {
-      return Math.hypot(a.x - b.x, a.y - b.y);
+    function distance(firstPoint, secondPoint) {
+      return Math.hypot(
+        firstPoint.x - secondPoint.x,
+        firstPoint.y - secondPoint.y
+      );
     }
 
-    function updateTracks(detections, lineX) {
-      const unusedTracks = new Set(tracks);
+    function updateCounterDisplay() {
+      leftToRightText.textContent =
+        leftToRight;
+
+      rightToLeftText.textContent =
+        rightToLeft;
+    }
+
+    function createTrack(detection, lineX) {
+      const newTrack = {
+        id: nextTrackId++,
+        x: detection.x,
+        y: detection.y,
+        box: detection.box,
+        stableSide: sideOfLine(
+          detection.x,
+          lineX
+        ),
+        missed: 0
+      };
+
+      tracks.push(newTrack);
+
+      return newTrack;
+    }
+
+    function registerCrossing(
+      previousSide,
+      newSide
+    ) {
+      if (
+        previousSide === "left" &&
+        newSide === "right"
+      ) {
+        leftToRight++;
+
+        statusText.textContent =
+          "Crossing recorded: Left → Right";
+      }
+
+      if (
+        previousSide === "right" &&
+        newSide === "left"
+      ) {
+        rightToLeft++;
+
+        statusText.textContent =
+          "Crossing recorded: Right → Left";
+      }
+
+      updateCounterDisplay();
+    }
+
+    function updateTracks(
+      detections,
+      lineX
+    ) {
+      const unusedTracks =
+        new Set(tracks);
 
       for (const detection of detections) {
         let bestTrack = null;
-        let bestDistance = MAX_MATCH_DISTANCE;
+        let bestDistance =
+          MAX_MATCH_DISTANCE;
 
-        for (const track of unusedTracks) {
-          const currentDistance = distance(track, detection);
-          if (currentDistance < bestDistance) {
-            bestDistance = currentDistance;
-            bestTrack = track;
+        /*
+         * Important fix:
+         *
+         * When exactly one face and one track exist,
+         * always keep the same track ID.
+         *
+         * This prevents Face 1, Face 2, Face 3...
+         * being created for the same person when
+         * detection is slow or movement is large.
+         */
+        if (
+          detections.length === 1 &&
+          tracks.length === 1
+        ) {
+          bestTrack = tracks[0];
+        } else {
+          /*
+           * When several faces are visible,
+           * match each detection to the nearest
+           * unused track.
+           */
+          for (const track of unusedTracks) {
+            const currentDistance =
+              distance(track, detection);
+
+            if (
+              currentDistance <
+              bestDistance
+            ) {
+              bestDistance =
+                currentDistance;
+
+              bestTrack = track;
+            }
           }
         }
 
+        /*
+         * No suitable track was found.
+         * Create a new temporary face ID.
+         */
         if (!bestTrack) {
-          tracks.push({
-            id: nextTrackId++,
-            x: detection.x,
-            y: detection.y,
-            box: detection.box,
-            stableSide: sideOfLine(detection.x, lineX),
-            missed: 0
-          });
+          createTrack(
+            detection,
+            lineX
+          );
+
           continue;
         }
 
         unusedTracks.delete(bestTrack);
-        bestTrack.x = detection.x;
-        bestTrack.y = detection.y;
-        bestTrack.box = detection.box;
+
+        bestTrack.x =
+          detection.x;
+
+        bestTrack.y =
+          detection.y;
+
+        bestTrack.box =
+          detection.box;
+
         bestTrack.missed = 0;
 
-        const newSide = sideOfLine(bestTrack.x, lineX);
-        if (newSide !== "middle" && bestTrack.stableSide !== "middle" && newSide !== bestTrack.stableSide) {
-          if (bestTrack.stableSide === "left") leftToRight++;
-          else rightToLeft++;
-          leftToRightText.textContent = leftToRight;
-          rightToLeftText.textContent = rightToLeft;
-          statusText.textContent = bestTrack.stableSide === "left"
-            ? "Crossing recorded: Left → Right"
-            : "Crossing recorded: Right → Left";
+        const newSide =
+          sideOfLine(
+            bestTrack.x,
+            lineX
+          );
+
+        /*
+         * Count only when the face moves from
+         * one stable side to the other.
+         *
+         * Movement inside the middle dead zone
+         * does not change the stable side.
+         */
+        if (
+          newSide !== "middle" &&
+          bestTrack.stableSide !== "middle" &&
+          newSide !== bestTrack.stableSide
+        ) {
+          registerCrossing(
+            bestTrack.stableSide,
+            newSide
+          );
         }
-        if (newSide !== "middle") bestTrack.stableSide = newSide;
+
+        /*
+         * Do not replace a stable side with
+         * "middle". Wait until the face reaches
+         * the opposite stable side.
+         */
+        if (newSide !== "middle") {
+          bestTrack.stableSide =
+            newSide;
+        }
       }
 
-      for (const track of unusedTracks) track.missed++;
-      tracks = tracks.filter(track => track.missed <= MAX_MISSED_FRAMES);
+      /*
+       * Increase the missed-frame count for
+       * unmatched tracks.
+       */
+      for (const track of unusedTracks) {
+        track.missed++;
+      }
+
+      /*
+       * Remove tracks that have been missing
+       * for too long.
+       */
+      tracks = tracks.filter(
+        track =>
+          track.missed <=
+          MAX_MISSED_FRAMES
+      );
+    }
+
+    function drawCounterPanel() {
+      context.save();
+
+      context.fillStyle =
+        "rgba(5, 22, 40, 0.82)";
+
+      context.fillRect(
+        12,
+        12,
+        250,
+        76
+      );
+
+      context.fillStyle = "white";
+      context.font =
+        "bold 19px Arial";
+
+      context.fillText(
+        "Left → Right: " +
+          leftToRight,
+        26,
+        42
+      );
+
+      context.fillText(
+        "Right → Left: " +
+          rightToLeft,
+        26,
+        72
+      );
+
+      context.restore();
+    }
+
+    function drawCountingLine(lineX) {
+      context.save();
+
+      context.strokeStyle =
+        "#1e88e5";
+
+      context.lineWidth = 4;
+
+      context.beginPath();
+
+      context.moveTo(
+        lineX,
+        0
+      );
+
+      context.lineTo(
+        lineX,
+        canvas.height
+      );
+
+      context.stroke();
+
+      context.fillStyle = "white";
+      context.font =
+        "bold 16px Arial";
+
+      context.fillText(
+        "LEFT",
+        Math.max(
+          15,
+          lineX - 70
+        ),
+        canvas.height - 18
+      );
+
+      context.fillText(
+        "RIGHT",
+        lineX + 15,
+        canvas.height - 18
+      );
+
+      context.restore();
+    }
+
+    function drawTrack(
+      track,
+      lineX
+    ) {
+      const box = track.box;
+
+      const currentSide =
+        sideOfLine(
+          track.x,
+          lineX
+        );
+
+      context.save();
+
+      context.strokeStyle =
+        "#00e676";
+
+      context.fillStyle =
+        "#00e676";
+
+      context.lineWidth = 3;
+      context.font =
+        "16px Arial";
+
+      context.strokeRect(
+        box.xMin,
+        box.yMin,
+        box.width,
+        box.height
+      );
+
+      context.fillText(
+        "Face " +
+          track.id +
+          " | " +
+          currentSide.toUpperCase(),
+        box.xMin,
+        Math.max(
+          18,
+          box.yMin - 7
+        )
+      );
+
+      /*
+       * Draw the centre point used for
+       * deciding the side of the line.
+       */
+      context.beginPath();
+
+      context.arc(
+        track.x,
+        track.y,
+        6,
+        0,
+        Math.PI * 2
+      );
+
+      context.fill();
+
+      context.restore();
     }
 
     function draw(lineX) {
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
 
-      // Keep the directional totals visible inside the camera view.
-      context.save();
-      context.fillStyle = "rgba(5, 22, 40, 0.82)";
-      context.fillRect(12, 12, 250, 76);
-      context.fillStyle = "white";
-      context.font = "bold 19px Arial";
-      context.fillText("Left → Right: " + leftToRight, 26, 42);
-      context.fillText("Right → Left: " + rightToLeft, 26, 72);
-      context.restore();
+      drawCounterPanel();
+      drawCountingLine(lineX);
 
-      context.strokeStyle = "#1e88e5";
-      context.lineWidth = 4;
-      context.beginPath();
-      context.moveTo(lineX, 0);
-      context.lineTo(lineX, canvas.height);
-      context.stroke();
-
-      context.save();
-      context.fillStyle = "#ffffff";
-      context.font = "bold 16px Arial";
-      context.fillText("LEFT", Math.max(15, lineX - 70), canvas.height - 18);
-      context.fillText("RIGHT", lineX + 15, canvas.height - 18);
-      context.restore();
-
-      context.font = "16px Arial";
       for (const track of tracks) {
-        const box = track.box;
-        context.strokeStyle = "#00e676";
-        context.lineWidth = 3;
-        context.strokeRect(box.xMin, box.yMin, box.width, box.height);
-        context.fillStyle = "#00e676";
-        context.fillText(
-          "Face " + track.id + " | " + sideOfLine(track.x, lineX).toUpperCase(),
-          box.xMin,
-          Math.max(18, box.yMin - 7)
+        drawTrack(
+          track,
+          lineX
         );
-        context.beginPath();
-        context.arc(track.x, track.y, 5, 0, Math.PI * 2);
-        context.fill();
       }
     }
 
     async function detectLoop() {
-      if (!running) return;
-      try {
-        const faces = await detector.estimateFaces(video, { flipHorizontal: false });
-        const detections = faces.map(face => ({
-          x: face.box.xMin + face.box.width / 2,
-          y: face.box.yMin + face.box.height / 2,
-          box: face.box
-        }));
-        const lineX = canvas.width * LINE_POSITION;
-        updateTracks(detections, lineX);
-        draw(lineX);
-        statusText.textContent = "Faces visible: " + faces.length + " | Active tracks: " + tracks.length;
-      } catch (error) {
-        statusText.textContent = "Detection error: " + error.message;
+      if (!running) {
+        return;
       }
-      if (running) animationId = requestAnimationFrame(detectLoop);
+
+      try {
+        const faces =
+          await detector.estimateFaces(
+            video,
+            {
+              flipHorizontal: false
+            }
+          );
+
+        const detections =
+          faces.map(face => ({
+            x:
+              face.box.xMin +
+              face.box.width / 2,
+
+            y:
+              face.box.yMin +
+              face.box.height / 2,
+
+            box: face.box
+          }));
+
+        const lineX =
+          canvas.width *
+          LINE_POSITION;
+
+        updateTracks(
+          detections,
+          lineX
+        );
+
+        draw(lineX);
+
+        const activeIds =
+          tracks
+            .map(track => track.id)
+            .join(", ") ||
+          "none";
+
+        statusText.textContent =
+          "Faces visible: " +
+          faces.length +
+          " | Active track IDs: " +
+          activeIds;
+      } catch (error) {
+        statusText.textContent =
+          "Detection error: " +
+          error.message;
+      }
+
+      if (running) {
+        animationId =
+          requestAnimationFrame(
+            detectLoop
+          );
+      }
+    }
+
+    async function loadDetector() {
+      if (detector) {
+        return;
+      }
+
+      statusText.textContent =
+        "Loading the face detector...";
+
+      await tf.ready();
+
+      detector =
+        await faceDetection.createDetector(
+          faceDetection
+            .SupportedModels
+            .MediaPipeFaceDetector,
+          {
+            runtime: "tfjs",
+            modelType: "short",
+            maxFaces: 10
+          }
+        );
     }
 
     async function startCounter() {
+      if (running) {
+        return;
+      }
+
       startButton.disabled = true;
-      statusText.textContent = "Loading model and requesting camera...";
+
+      statusText.textContent =
+        "Loading model and requesting camera...";
+
       try {
-        await tf.ready();
-        if (!detector) {
-          detector = await faceDetection.createDetector(
-            faceDetection.SupportedModels.MediaPipeFaceDetector,
-            { runtime: "tfjs", modelType: "short", maxFaces: 10 }
+        if (
+          !navigator.mediaDevices ||
+          !navigator.mediaDevices
+            .getUserMedia
+        ) {
+          throw new Error(
+            "Camera access requires HTTPS or localhost."
           );
         }
-        stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
+
+        await loadDetector();
+
+        stream =
+          await navigator
+            .mediaDevices
+            .getUserMedia({
+              video: {
+                width: {
+                  ideal: 640
+                },
+                height: {
+                  ideal: 480
+                },
+                facingMode: "user"
+              },
+              audio: false
+            });
+
         video.srcObject = stream;
-        await new Promise(resolve => video.addEventListener("loadeddata", resolve, { once: true }));
+
+        await new Promise(resolve => {
+          video.addEventListener(
+            "loadeddata",
+            resolve,
+            {
+              once: true
+            }
+          );
+        });
+
         await video.play();
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+
+        canvas.width =
+          video.videoWidth;
+
+        canvas.height =
+          video.videoHeight;
+
         tracks = [];
+        nextTrackId = 1;
+
         running = true;
+
         stopButton.disabled = false;
+
+        statusText.textContent =
+          "Counter started. Begin completely on one side.";
+
         detectLoop();
       } catch (error) {
-        statusText.textContent = "Could not start: " + error.message;
+        statusText.textContent =
+          "Could not start: " +
+          error.message;
+
         startButton.disabled = false;
       }
     }
 
     function stopCounter() {
       running = false;
-      cancelAnimationFrame(animationId);
-      if (stream) stream.getTracks().forEach(track => track.stop());
+
+      if (animationId) {
+        cancelAnimationFrame(
+          animationId
+        );
+
+        animationId = null;
+      }
+
+      if (stream) {
+        stream
+          .getTracks()
+          .forEach(track =>
+            track.stop()
+          );
+
+        stream = null;
+      }
+
       video.srcObject = null;
+
       tracks = [];
-      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      context.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
       startButton.disabled = false;
       stopButton.disabled = true;
-      statusText.textContent = "Stopped.";
+
+      statusText.textContent =
+        "Counter stopped.";
     }
 
     function resetCounts() {
       leftToRight = 0;
       rightToLeft = 0;
-      leftToRightText.textContent = "0";
-      rightToLeftText.textContent = "0";
+
       tracks = [];
-      statusText.textContent = "Counts reset.";
+      nextTrackId = 1;
+
+      updateCounterDisplay();
+
+      if (
+        running &&
+        canvas.width
+      ) {
+        const lineX =
+          canvas.width *
+          LINE_POSITION;
+
+        draw(lineX);
+      }
+
+      statusText.textContent =
+        "Counts and tracking IDs reset.";
     }
 
-    startButton.addEventListener("click", startCounter);
-    stopButton.addEventListener("click", stopCounter);
-    resetButton.addEventListener("click", resetCounts);
-    window.addEventListener("beforeunload", stopCounter);
+    startButton.addEventListener(
+      "click",
+      startCounter
+    );
+
+    stopButton.addEventListener(
+      "click",
+      stopCounter
+    );
+
+    resetButton.addEventListener(
+      "click",
+      resetCounts
+    );
+
+    window.addEventListener(
+      "beforeunload",
+      stopCounter
+    );
   </script>
 </body>
 </html>
