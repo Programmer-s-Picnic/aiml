@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Introduction to TensorFlow.js</title>
+
+  <!-- Add TensorFlow.js using a CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #eef6ff;
+      color: #172033;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+    }
+
+    .container {
+      width: min(850px, 100%);
+      margin: auto;
+      padding: 30px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(20, 70, 120, 0.12);
+    }
+
+    h1,
+    h2 {
+      color: #0d47a1;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .note {
+      padding: 15px;
+      background: #e3f2fd;
+      border-left: 5px solid #1976d2;
+      border-radius: 6px;
+    }
+
+    pre {
+      padding: 18px;
+      overflow-x: auto;
+      background: #101827;
+      color: #e8f4ff;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 7px;
+      background: #1565c0;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0d47a1;
+    }
+
+    button:focus {
+      outline: 4px solid #90caf9;
+      outline-offset: 3px;
+    }
+
+    #output {
+      margin-top: 18px;
+      padding: 16px;
+      background: #e8f5e9;
+      border-left: 5px solid #2e7d32;
+      border-radius: 6px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+    }
+
+    .links li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Introduction to TensorFlow</h1>
+
+    <p>
+      TensorFlow is an open-source machine-learning library.
+      It helps us create programs that can learn from examples
+      and make predictions.
+    </p>
+
+    <p>
+      TensorFlow can be used for:
+    </p>
+
+    <ul>
+      <li>Face detection</li>
+      <li>Face recognition</li>
+      <li>Image classification</li>
+      <li>Speech recognition</li>
+      <li>Text processing</li>
+      <li>Data prediction</li>
+    </ul>
+
+    <h2>TensorFlow.js</h2>
+
+    <p>
+      TensorFlow.js is the JavaScript version of TensorFlow.
+      It allows machine-learning programs to run directly inside
+      a web browser.
+    </p>
+
+    <p>
+      This is useful because a browser can access images, videos
+      and the webcam. We will use these features later for face
+      detection and face recognition.
+    </p>
+
+    <h2>Adding TensorFlow.js</h2>
+
+    <p>
+      We can add TensorFlow.js to an HTML page using a CDN.
+    </p>
+
+    <div class="note">
+      <strong>CDN</strong> means Content Delivery Network.
+      It allows us to use a library through an internet link
+      without downloading it manually.
+    </div>
+
+    <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"&gt;&lt;/script&gt;</code></pre>
+
+    <p>
+      After this script loads, TensorFlow.js becomes available
+      through the object named <code>tf</code>.
+    </p>
+
+    <h2>Hello World with TensorFlow.js</h2>
+
+    <p>
+      The following program creates two groups of numbers and
+      adds them using TensorFlow.js.
+    </p>
+
+    <pre><code>const first = tf.tensor1d([1, 2, 3]);
+const second = tf.tensor1d([10, 20, 30]);
+
+const answer = first.add(second);
+
+answer.print();</code></pre>
+
+    <p>
+      Select the button to run the program:
+    </p>
+
+    <button id="runButton" type="button">
+      Run Hello World
+    </button>
+
+    <div id="output">
+      The result will appear here.
+    </div>
+
+    <h2>Understanding the code</h2>
+
+    <p>
+      This statement creates the first tensor:
+    </p>
+
+    <pre><code>const first = tf.tensor1d([1, 2, 3]);</code></pre>
+
+    <p>
+      This statement creates the second tensor:
+    </p>
+
+    <pre><code>const second = tf.tensor1d([10, 20, 30]);</code></pre>
+
+    <p>
+      This statement adds the corresponding numbers:
+    </p>
+
+    <pre><code>const answer = first.add(second);</code></pre>
+
+    <p>The calculation is:</p>
+
+    <pre><code>1 + 10 = 11
+2 + 20 = 22
+3 + 30 = 33</code></pre>
+
+    <p>The final result is:</p>
+
+    <pre><code>[11, 22, 33]</code></pre>
+
+    <h2>What is a tensor?</h2>
+
+    <p>
+      A tensor is a container of numbers. It is similar to a
+      JavaScript array, but TensorFlow can perform fast mathematical
+      operations on it.
+    </p>
+
+    <div class="note">
+      Images are also represented as tensors. This is why tensors
+      will be important when we start face detection.
+    </div>
+
+    <h2>Useful links</h2>
+
+    <ul class="links">
+      <li>
+        <a
+          href="https://www.tensorflow.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          TensorFlow official website
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="https://www.tensorflow.org/js"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          TensorFlow.js official website
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="https://www.tensorflow.org/js/tutorials/setup"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          TensorFlow.js setup guide
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="https://www.tensorflow.org/js/tutorials"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          TensorFlow.js tutorials
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="https://js.tensorflow.org/api/latest/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          TensorFlow.js API documentation
+        </a>
+      </li>
+    </ul>
+
+    <h2>Next lesson</h2>
+
+    <p>
+      In the next lesson, we will learn how TensorFlow represents
+      images and how JavaScript accesses an image from an HTML page.
+    </p>
+  </main>
+
+  <script>
+    const runButton = document.getElementById("runButton");
+    const output = document.getElementById("output");
+
+    function runHelloWorld() {
+      // Create two tensors
+      const first = tf.tensor1d([1, 2, 3]);
+      const second = tf.tensor1d([10, 20, 30]);
+
+      // Add the tensors
+      const answer = first.add(second);
+
+      // Get the result
+      const values = answer.dataSync();
+
+      // Display the result
+      output.textContent =
+        "Hello, TensorFlow.js!\n\n" +
+        "First tensor: [1, 2, 3]\n" +
+        "Second tensor: [10, 20, 30]\n" +
+        "Answer: [" + values.join(", ") + "]";
+
+      // Release the tensors from memory
+      first.dispose();
+      second.dispose();
+      answer.dispose();
+    }
+
+    runButton.addEventListener("click", runHelloWorld);
+  </script>
+</body>
+</html>
