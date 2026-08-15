@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lesson 6 of the TensorFlow.js face recognition series: track detected faces and count left-to-right and right-to-left line crossings.">
+  <title>Lesson 6: Face Crossing Counter with TensorFlow.js</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #eef6ff; color: #172033; font: 17px/1.7 Arial, sans-serif; }
+    .page { width: min(1050px, calc(100% - 28px)); margin: 24px auto; background: #fff; border-radius: 18px; box-shadow: 0 12px 36px rgba(18,73,125,.13); overflow: hidden; }
+    header { padding: 44px clamp(22px, 6vw, 64px); color: #fff; background: linear-gradient(135deg,#0d47a1,#1976d2); }
+    header p { max-width: 780px; margin-bottom: 0; }
+    main { padding: 32px clamp(20px, 6vw, 64px) 48px; }
+    h1 { margin: 0 0 12px; font-size: clamp(2rem, 5vw, 3.35rem); line-height: 1.12; }
+    h2 { margin-top: 42px; color: #0d47a1; line-height: 1.25; }
+    h3 { color: #145da0; }
+    a { color: #0b5fbd; }
+    code { padding: 2px 5px; border-radius: 4px; background: #edf4fb; color: #7b1f45; }
+    pre { overflow-x: auto; padding: 18px; border-left: 5px solid #42a5f5; border-radius: 8px; background: #102033; color: #eaf4ff; line-height: 1.55; }
+    pre code { padding: 0; background: transparent; color: inherit; }
+    .lesson-number { display: inline-block; padding: 5px 12px; border: 1px solid rgba(255,255,255,.55); border-radius: 999px; font-weight: bold; }
+    .card, .checkpoint, .warning { margin: 20px 0; padding: 18px 20px; border-radius: 10px; }
+    .card { background: #f3f9ff; border: 1px solid #c8e2fa; }
+    .checkpoint { background: #e8f5e9; border-left: 5px solid #2e7d32; }
+    .warning { background: #fff8e1; border-left: 5px solid #f9a825; }
+    .flow { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin: 24px 0; text-align: center; }
+    .flow div { display: grid; place-items: center; min-height: 82px; padding: 10px; border-radius: 9px; background: #e3f2fd; color: #0d47a1; font-weight: bold; }
+    .flow span { align-self: center; color: #4b647b; font-size: 1.5rem; }
+    .editor { width: 100%; height: 760px; border: 1px solid #b9d5ee; border-radius: 12px; background: white; }
+    .button { display: inline-block; margin-top: 12px; padding: 10px 16px; border-radius: 8px; background: #1565c0; color: #fff; text-decoration: none; font-weight: bold; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 11px; border: 1px solid #bdd5e8; text-align: left; }
+    th { background: #e3f2fd; }
+    footer { padding: 22px; background: #e3f2fd; text-align: center; color: #39536b; }
+    @media (max-width: 760px) { .flow { grid-template-columns: 1fr; } .flow span { transform: rotate(90deg); } .editor { height: 680px; } }
+  </style>
+</head>
+<body>
+<article class="page">
+  <header>
+    <span class="lesson-number">Lesson 6</span>
+    <h1>Face Crossing Counter</h1>
+    <p>Turn face detections into useful events: count people moving from left to right and from right to left across a virtual line.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <strong>What you will build:</strong> a browser application that opens the webcam, detects faces, gives each visible face a temporary tracking ID, draws a centre line, and updates two directional counters.
+    </section>
+
+    <h2>Learning objectives</h2>
+    <ul>
+      <li>Understand why detection alone cannot count crossings.</li>
+      <li>Calculate the centre point of a face box.</li>
+      <li>Match a face in one video frame with a face in the next.</li>
+      <li>Identify a genuine left-to-right or right-to-left crossing.</li>
+      <li>Avoid repeated counts near the line.</li>
+    </ul>
+
+    <h2>1. Detection is not tracking</h2>
+    <p>Lesson 5 detected faces independently in every frame. If the model reports one face in 100 frames, that does <em>not</em> mean 100 people appeared. It may be the same person seen 100 times.</p>
+    <p>A counter therefore needs a small tracking system. A <strong>track</strong> is our program's short-lived record of one visible face. It stores an ID, the latest centre position, the last stable side of the line, and the number of frames for which the face has been missing.</p>
+
+    <div class="flow" aria-label="Face counter processing flow">
+      <div>Detect faces</div><span>→</span><div>Find centres</div><span>→</span><div>Match tracks</div><span>→</span><div>Check crossing</div><span>→</span><div>Update count</div>
+    </div>
+
+    <h2>2. Find the centre of each face</h2>
+    <p>The detector returns a bounding box. Its centre is a convenient single point to track:</p>
+    <pre><code>const centreX = face.box.xMin + face.box.width / 2;
+const centreY = face.box.yMin + face.box.height / 2;</code></pre>
+    <p>If <code>centreX</code> is smaller than the line's x-coordinate, the face is on the left. If it is larger, the face is on the right.</p>
+
+    <h2>3. Match detections between frames</h2>
+    <p>For every new face centre, the example finds the nearest unmatched track. If the distance is reasonably small, it treats them as the same face:</p>
+    <pre><code>function distance(a, b) {
+  return Math.hypot(a.x - b.x, a.y - b.y);
+}</code></pre>
+    <p>If no existing track is close enough, the program creates a new track with a new ID. Tracks that remain missing for several frames are removed.</p>
+
+    <div class="warning">
+      <strong>Important:</strong> this is simple centroid tracking for learning. It is not face recognition. IDs may change if faces overlap, move very quickly, or leave and re-enter the camera view.
+    </div>
+
+    <h2>4. Count a crossing—not a position</h2>
+    <p>A person is counted only when their stable side changes:</p>
+    <table>
+      <thead><tr><th>Previous stable side</th><th>New stable side</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>Left</td><td>Right</td><td>Increase Left → Right</td></tr>
+        <tr><td>Right</td><td>Left</td><td>Increase Right → Left</td></tr>
+        <tr><td>Left</td><td>Left</td><td>Do nothing</td></tr>
+        <tr><td>Right</td><td>Right</td><td>Do nothing</td></tr>
+      </tbody>
+    </table>
+
+    <h2>5. Add a dead zone</h2>
+    <p>Detection boxes naturally shake by a few pixels. Without protection, a stationary face near the line could appear to cross back and forth. The example creates a narrow middle area:</p>
+    <pre><code>function sideOfLine(x, lineX) {
+  if (x &lt; lineX - DEAD_ZONE) return "left";
+  if (x &gt; lineX + DEAD_ZONE) return "right";
+  return "middle";
+}</code></pre>
+    <p>A new direction is confirmed only after the face has moved completely beyond this middle area.</p>
+
+    <section class="checkpoint">
+      <strong>Checkpoint 1:</strong> Why would counting <code>faces.length</code> in every frame give the wrong total?<br>
+      <strong>Checkpoint 2:</strong> What problem does <code>DEAD_ZONE</code> solve?<br>
+      <strong>Checkpoint 3:</strong> Is temporary tracking ID 4 the real identity of a person? No—it only connects nearby detections.
+    </section>
+
+    <h2>6. Run the complete example</h2>
+    <ol>
+      <li>Select <strong>Start Camera and Counter</strong> and allow camera access.</li>
+      <li>Keep your face on one side of the blue line.</li>
+      <li>Move fully across the line.</li>
+      <li>Check which directional counter changes.</li>
+      <li>Try changing <code>DEAD_ZONE</code> from <code>28</code> to <code>50</code>.</li>
+    </ol>
+
+    <iframe class="editor" title="Lesson 6 Face Counter Code Editor" src="https://editor.learnwithchampak.live/samples/html/preview/#code=PCFET0NUWVBFIGh0bWw-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ-CiAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPgogIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KICA8dGl0bGU-VGVuc29yRmxvdy5qcyBGYWNlIENvdW50ZXI8L3RpdGxlPgogIDxzY3JpcHQgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL0B0ZW5zb3JmbG93L3RmanNANC4yMi4wL2Rpc3QvdGYubWluLmpzIj48L3NjcmlwdD4KICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9AdGVuc29yZmxvdy1tb2RlbHMvZmFjZS1kZXRlY3Rpb25AMS4wLjMvZGlzdC9mYWNlLWRldGVjdGlvbi5taW4uanMiPjwvc2NyaXB0PgogIDxzdHlsZT4KICAgICogeyBib3gtc2l6aW5nOiBib3JkZXItYm94OyB9CiAgICBib2R5IHsgbWFyZ2luOiAwOyBwYWRkaW5nOiAyMHB4OyBiYWNrZ3JvdW5kOiAjZWVmNmZmOyBjb2xvcjogIzE3MjAzMzsgZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyB0ZXh0LWFsaWduOiBjZW50ZXI7IH0KICAgIC5hcHAgeyB3aWR0aDogbWluKDc2MHB4LCAxMDAlKTsgbWFyZ2luOiBhdXRvOyBwYWRkaW5nOiAyMnB4OyBiYWNrZ3JvdW5kOiB3aGl0ZTsgYm9yZGVyLXJhZGl1czogMTZweDsgYm94LXNoYWRvdzogMCAxMHB4IDMwcHggcmdiYSgyMCw3MCwxMjAsLjE0KTsgfQogICAgaDEgeyBtYXJnaW4tdG9wOiAwOyBjb2xvcjogIzBkNDdhMTsgfQogICAgLnN0YWdlIHsgcG9zaXRpb246IHJlbGF0aXZlOyB3aWR0aDogMTAwJTsgYXNwZWN0LXJhdGlvOiA0LzM7IG1hcmdpbjogMThweCBhdXRvOyBvdmVyZmxvdzogaGlkZGVuOyBib3JkZXItcmFkaXVzOiAxMnB4OyBiYWNrZ3JvdW5kOiAjMTAxODI3OyB9CiAgICB2aWRlbywgY2FudmFzIHsgcG9zaXRpb246IGFic29sdXRlOyBpbnNldDogMDsgd2lkdGg6IDEwMCU7IGhlaWdodDogMTAwJTsgfQogICAgdmlkZW8geyBvYmplY3QtZml0OiBmaWxsOyB9CiAgICAuc2NvcmVzIHsgZGlzcGxheTogZ3JpZDsgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoMiwgMWZyKTsgZ2FwOiAxMnB4OyBtYXJnaW46IDE2cHggMDsgfQogICAgLnNjb3JlIHsgcGFkZGluZzogMTRweDsgYm9yZGVyLXJhZGl1czogMTBweDsgYmFja2dyb3VuZDogI2UzZjJmZDsgZm9udC1zaXplOiAxLjFyZW07IH0KICAgIC5zY29yZSBzdHJvbmcgeyBkaXNwbGF5OiBibG9jazsgbWFyZ2luLXRvcDogNHB4OyBjb2xvcjogIzBkNDdhMTsgZm9udC1zaXplOiAxLjhyZW07IH0KICAgIGJ1dHRvbiB7IG1hcmdpbjogNXB4OyBwYWRkaW5nOiAxMXB4IDE4cHg7IGJvcmRlcjogMDsgYm9yZGVyLXJhZGl1czogOHB4OyBiYWNrZ3JvdW5kOiAjMTU2NWMwOyBjb2xvcjogd2hpdGU7IGZvbnQtc2l6ZTogMXJlbTsgY3Vyc29yOiBwb2ludGVyOyB9CiAgICBidXR0b246ZGlzYWJsZWQgeyBiYWNrZ3JvdW5kOiAjOGNhNmJmOyBjdXJzb3I6IG5vdC1hbGxvd2VkOyB9CiAgICAjcmVzZXRCdXR0b24geyBiYWNrZ3JvdW5kOiAjNTI2NDc3OyB9CiAgICAjc3RhdHVzIHsgbWluLWhlaWdodDogMjRweDsgY29sb3I6ICMzODUxNmI7IH0KICAgIC5ub3RlIHsgZm9udC1zaXplOiAuOXJlbTsgY29sb3I6ICM1MzY3Nzk7IH0KICA8L3N0eWxlPgo8L2hlYWQ-Cjxib2R5PgogIDxtYWluIGNsYXNzPSJhcHAiPgogICAgPGgxPkZhY2UgQ3Jvc3NpbmcgQ291bnRlcjwvaDE-CiAgICA8cD5Dcm9zcyB0aGUgYmx1ZSBjZW50cmUgbGluZS4gTW92ZSBmdWxseSBpbnRvIHRoZSBvdGhlciBzaWRlIHRvIGJlIGNvdW50ZWQuPC9wPgoKICAgIDxkaXYgY2xhc3M9InNjb3JlcyI-CiAgICAgIDxkaXYgY2xhc3M9InNjb3JlIj5MZWZ0IHRvIFJpZ2h0PHN0cm9uZyBpZD0ibGVmdFRvUmlnaHQiPjA8L3N0cm9uZz48L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0ic2NvcmUiPlJpZ2h0IHRvIExlZnQ8c3Ryb25nIGlkPSJyaWdodFRvTGVmdCI-MDwvc3Ryb25nPjwvZGl2PgogICAgPC9kaXY-CgogICAgPGRpdiBjbGFzcz0ic3RhZ2UiPgogICAgICA8dmlkZW8gaWQ9InZpZGVvIiBhdXRvcGxheSBwbGF5c2lubGluZSBtdXRlZD48L3ZpZGVvPgogICAgICA8Y2FudmFzIGlkPSJvdmVybGF5Ij48L2NhbnZhcz4KICAgIDwvZGl2PgoKICAgIDxidXR0b24gaWQ9InN0YXJ0QnV0dG9uIj5TdGFydCBDYW1lcmEgYW5kIENvdW50ZXI8L2J1dHRvbj4KICAgIDxidXR0b24gaWQ9InN0b3BCdXR0b24iIGRpc2FibGVkPlN0b3A8L2J1dHRvbj4KICAgIDxidXR0b24gaWQ9InJlc2V0QnV0dG9uIj5SZXNldCBDb3VudHM8L2J1dHRvbj4KICAgIDxwIGlkPSJzdGF0dXMiPlJlYWR5LjwvcD4KICAgIDxwIGNsYXNzPSJub3RlIj5Gb3IgbGVhcm5pbmcgb25seS4gQ2FtZXJhIGZyYW1lcyBzdGF5IGluIHRoaXMgcGFnZSBhbmQgYXJlIG5vdCB1cGxvYWRlZCBieSB0aGlzIGNvZGUuPC9wPgogIDwvbWFpbj4KCiAgPHNjcmlwdD4KICAgIGNvbnN0IHZpZGVvID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInZpZGVvIik7CiAgICBjb25zdCBjYW52YXMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgib3ZlcmxheSIpOwogICAgY29uc3QgY29udGV4dCA9IGNhbnZhcy5nZXRDb250ZXh0KCIyZCIpOwogICAgY29uc3Qgc3RhcnRCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhcnRCdXR0b24iKTsKICAgIGNvbnN0IHN0b3BCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RvcEJ1dHRvbiIpOwogICAgY29uc3QgcmVzZXRCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgicmVzZXRCdXR0b24iKTsKICAgIGNvbnN0IHN0YXR1c1RleHQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhdHVzIik7CiAgICBjb25zdCBsZWZ0VG9SaWdodFRleHQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgibGVmdFRvUmlnaHQiKTsKICAgIGNvbnN0IHJpZ2h0VG9MZWZ0VGV4dCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJyaWdodFRvTGVmdCIpOwoKICAgIGxldCBkZXRlY3RvcjsKICAgIGxldCBzdHJlYW07CiAgICBsZXQgcnVubmluZyA9IGZhbHNlOwogICAgbGV0IGFuaW1hdGlvbklkOwogICAgbGV0IG5leHRUcmFja0lkID0gMTsKICAgIGxldCB0cmFja3MgPSBbXTsKICAgIGxldCBsZWZ0VG9SaWdodCA9IDA7CiAgICBsZXQgcmlnaHRUb0xlZnQgPSAwOwoKICAgIGNvbnN0IExJTkVfUE9TSVRJT04gPSAwLjU7CiAgICBjb25zdCBERUFEX1pPTkUgPSAyODsKICAgIGNvbnN0IE1BWF9NQVRDSF9ESVNUQU5DRSA9IDEyMDsKICAgIGNvbnN0IE1BWF9NSVNTRURfRlJBTUVTID0gMTI7CgogICAgZnVuY3Rpb24gc2lkZU9mTGluZSh4LCBsaW5lWCkgewogICAgICBpZiAoeCA8IGxpbmVYIC0gREVBRF9aT05FKSByZXR1cm4gImxlZnQiOwogICAgICBpZiAoeCA-IGxpbmVYICsgREVBRF9aT05FKSByZXR1cm4gInJpZ2h0IjsKICAgICAgcmV0dXJuICJtaWRkbGUiOwogICAgfQoKICAgIGZ1bmN0aW9uIGRpc3RhbmNlKGEsIGIpIHsKICAgICAgcmV0dXJuIE1hdGguaHlwb3QoYS54IC0gYi54LCBhLnkgLSBiLnkpOwogICAgfQoKICAgIGZ1bmN0aW9uIHVwZGF0ZVRyYWNrcyhkZXRlY3Rpb25zLCBsaW5lWCkgewogICAgICBjb25zdCB1bnVzZWRUcmFja3MgPSBuZXcgU2V0KHRyYWNrcyk7CgogICAgICBmb3IgKGNvbnN0IGRldGVjdGlvbiBvZiBkZXRlY3Rpb25zKSB7CiAgICAgICAgbGV0IGJlc3RUcmFjayA9IG51bGw7CiAgICAgICAgbGV0IGJlc3REaXN0YW5jZSA9IE1BWF9NQVRDSF9ESVNUQU5DRTsKCiAgICAgICAgZm9yIChjb25zdCB0cmFjayBvZiB1bnVzZWRUcmFja3MpIHsKICAgICAgICAgIGNvbnN0IGN1cnJlbnREaXN0YW5jZSA9IGRpc3RhbmNlKHRyYWNrLCBkZXRlY3Rpb24pOwogICAgICAgICAgaWYgKGN1cnJlbnREaXN0YW5jZSA8IGJlc3REaXN0YW5jZSkgewogICAgICAgICAgICBiZXN0RGlzdGFuY2UgPSBjdXJyZW50RGlzdGFuY2U7CiAgICAgICAgICAgIGJlc3RUcmFjayA9IHRyYWNrOwogICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgaWYgKCFiZXN0VHJhY2spIHsKICAgICAgICAgIHRyYWNrcy5wdXNoKHsKICAgICAgICAgICAgaWQ6IG5leHRUcmFja0lkKyssCiAgICAgICAgICAgIHg6IGRldGVjdGlvbi54LAogICAgICAgICAgICB5OiBkZXRlY3Rpb24ueSwKICAgICAgICAgICAgYm94OiBkZXRlY3Rpb24uYm94LAogICAgICAgICAgICBzdGFibGVTaWRlOiBzaWRlT2ZMaW5lKGRldGVjdGlvbi54LCBsaW5lWCksCiAgICAgICAgICAgIG1pc3NlZDogMAogICAgICAgICAgfSk7CiAgICAgICAgICBjb250aW51ZTsKICAgICAgICB9CgogICAgICAgIHVudXNlZFRyYWNrcy5kZWxldGUoYmVzdFRyYWNrKTsKICAgICAgICBiZXN0VHJhY2sueCA9IGRldGVjdGlvbi54OwogICAgICAgIGJlc3RUcmFjay55ID0gZGV0ZWN0aW9uLnk7CiAgICAgICAgYmVzdFRyYWNrLmJveCA9IGRldGVjdGlvbi5ib3g7CiAgICAgICAgYmVzdFRyYWNrLm1pc3NlZCA9IDA7CgogICAgICAgIGNvbnN0IG5ld1NpZGUgPSBzaWRlT2ZMaW5lKGJlc3RUcmFjay54LCBsaW5lWCk7CiAgICAgICAgaWYgKG5ld1NpZGUgIT09ICJtaWRkbGUiICYmIGJlc3RUcmFjay5zdGFibGVTaWRlICE9PSAibWlkZGxlIiAmJiBuZXdTaWRlICE9PSBiZXN0VHJhY2suc3RhYmxlU2lkZSkgewogICAgICAgICAgaWYgKGJlc3RUcmFjay5zdGFibGVTaWRlID09PSAibGVmdCIpIGxlZnRUb1JpZ2h0Kys7CiAgICAgICAgICBlbHNlIHJpZ2h0VG9MZWZ0Kys7CiAgICAgICAgICBsZWZ0VG9SaWdodFRleHQudGV4dENvbnRlbnQgPSBsZWZ0VG9SaWdodDsKICAgICAgICAgIHJpZ2h0VG9MZWZ0VGV4dC50ZXh0Q29udGVudCA9IHJpZ2h0VG9MZWZ0OwogICAgICAgIH0KICAgICAgICBpZiAobmV3U2lkZSAhPT0gIm1pZGRsZSIpIGJlc3RUcmFjay5zdGFibGVTaWRlID0gbmV3U2lkZTsKICAgICAgfQoKICAgICAgZm9yIChjb25zdCB0cmFjayBvZiB1bnVzZWRUcmFja3MpIHRyYWNrLm1pc3NlZCsrOwogICAgICB0cmFja3MgPSB0cmFja3MuZmlsdGVyKHRyYWNrID0-IHRyYWNrLm1pc3NlZCA8PSBNQVhfTUlTU0VEX0ZSQU1FUyk7CiAgICB9CgogICAgZnVuY3Rpb24gZHJhdyhsaW5lWCkgewogICAgICBjb250ZXh0LmNsZWFyUmVjdCgwLCAwLCBjYW52YXMud2lkdGgsIGNhbnZhcy5oZWlnaHQpOwogICAgICBjb250ZXh0LnN0cm9rZVN0eWxlID0gIiMxZTg4ZTUiOwogICAgICBjb250ZXh0LmxpbmVXaWR0aCA9IDQ7CiAgICAgIGNvbnRleHQuYmVnaW5QYXRoKCk7CiAgICAgIGNvbnRleHQubW92ZVRvKGxpbmVYLCAwKTsKICAgICAgY29udGV4dC5saW5lVG8obGluZVgsIGNhbnZhcy5oZWlnaHQpOwogICAgICBjb250ZXh0LnN0cm9rZSgpOwoKICAgICAgY29udGV4dC5mb250ID0gIjE2cHggQXJpYWwiOwogICAgICBmb3IgKGNvbnN0IHRyYWNrIG9mIHRyYWNrcykgewogICAgICAgIGNvbnN0IGJveCA9IHRyYWNrLmJveDsKICAgICAgICBjb250ZXh0LnN0cm9rZVN0eWxlID0gIiMwMGU2NzYiOwogICAgICAgIGNvbnRleHQubGluZVdpZHRoID0gMzsKICAgICAgICBjb250ZXh0LnN0cm9rZVJlY3QoYm94LnhNaW4sIGJveC55TWluLCBib3gud2lkdGgsIGJveC5oZWlnaHQpOwogICAgICAgIGNvbnRleHQuZmlsbFN0eWxlID0gIiMwMGU2NzYiOwogICAgICAgIGNvbnRleHQuZmlsbFRleHQoIkZhY2UgIiArIHRyYWNrLmlkLCBib3gueE1pbiwgTWF0aC5tYXgoMTgsIGJveC55TWluIC0gNykpOwogICAgICAgIGNvbnRleHQuYmVnaW5QYXRoKCk7CiAgICAgICAgY29udGV4dC5hcmModHJhY2sueCwgdHJhY2sueSwgNSwgMCwgTWF0aC5QSSAqIDIpOwogICAgICAgIGNvbnRleHQuZmlsbCgpOwogICAgICB9CiAgICB9CgogICAgYXN5bmMgZnVuY3Rpb24gZGV0ZWN0TG9vcCgpIHsKICAgICAgaWYgKCFydW5uaW5nKSByZXR1cm47CiAgICAgIHRyeSB7CiAgICAgICAgY29uc3QgZmFjZXMgPSBhd2FpdCBkZXRlY3Rvci5lc3RpbWF0ZUZhY2VzKHZpZGVvLCB7IGZsaXBIb3Jpem9udGFsOiBmYWxzZSB9KTsKICAgICAgICBjb25zdCBkZXRlY3Rpb25zID0gZmFjZXMubWFwKGZhY2UgPT4gKHsKICAgICAgICAgIHg6IGZhY2UuYm94LnhNaW4gKyBmYWNlLmJveC53aWR0aCAvIDIsCiAgICAgICAgICB5OiBmYWNlLmJveC55TWluICsgZmFjZS5ib3guaGVpZ2h0IC8gMiwKICAgICAgICAgIGJveDogZmFjZS5ib3gKICAgICAgICB9KSk7CiAgICAgICAgY29uc3QgbGluZVggPSBjYW52YXMud2lkdGggKiBMSU5FX1BPU0lUSU9OOwogICAgICAgIHVwZGF0ZVRyYWNrcyhkZXRlY3Rpb25zLCBsaW5lWCk7CiAgICAgICAgZHJhdyhsaW5lWCk7CiAgICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9ICJGYWNlcyB2aXNpYmxlOiAiICsgZmFjZXMubGVuZ3RoICsgIiB8IEFjdGl2ZSB0cmFja3M6ICIgKyB0cmFja3MubGVuZ3RoOwogICAgICB9IGNhdGNoIChlcnJvcikgewogICAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSAiRGV0ZWN0aW9uIGVycm9yOiAiICsgZXJyb3IubWVzc2FnZTsKICAgICAgfQogICAgICBpZiAocnVubmluZykgYW5pbWF0aW9uSWQgPSByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoZGV0ZWN0TG9vcCk7CiAgICB9CgogICAgYXN5bmMgZnVuY3Rpb24gc3RhcnRDb3VudGVyKCkgewogICAgICBzdGFydEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7CiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSAiTG9hZGluZyBtb2RlbCBhbmQgcmVxdWVzdGluZyBjYW1lcmEuLi4iOwogICAgICB0cnkgewogICAgICAgIGF3YWl0IHRmLnJlYWR5KCk7CiAgICAgICAgaWYgKCFkZXRlY3RvcikgewogICAgICAgICAgZGV0ZWN0b3IgPSBhd2FpdCBmYWNlRGV0ZWN0aW9uLmNyZWF0ZURldGVjdG9yKAogICAgICAgICAgICBmYWNlRGV0ZWN0aW9uLlN1cHBvcnRlZE1vZGVscy5NZWRpYVBpcGVGYWNlRGV0ZWN0b3IsCiAgICAgICAgICAgIHsgcnVudGltZTogInRmanMiLCBtb2RlbFR5cGU6ICJzaG9ydCIsIG1heEZhY2VzOiAxMCB9CiAgICAgICAgICApOwogICAgICAgIH0KICAgICAgICBzdHJlYW0gPSBhd2FpdCBuYXZpZ2F0b3IubWVkaWFEZXZpY2VzLmdldFVzZXJNZWRpYSh7IHZpZGVvOiB7IHdpZHRoOiA2NDAsIGhlaWdodDogNDgwIH0sIGF1ZGlvOiBmYWxzZSB9KTsKICAgICAgICB2aWRlby5zcmNPYmplY3QgPSBzdHJlYW07CiAgICAgICAgYXdhaXQgbmV3IFByb21pc2UocmVzb2x2ZSA9PiB2aWRlby5hZGRFdmVudExpc3RlbmVyKCJsb2FkZWRkYXRhIiwgcmVzb2x2ZSwgeyBvbmNlOiB0cnVlIH0pKTsKICAgICAgICBhd2FpdCB2aWRlby5wbGF5KCk7CiAgICAgICAgY2FudmFzLndpZHRoID0gdmlkZW8udmlkZW9XaWR0aDsKICAgICAgICBjYW52YXMuaGVpZ2h0ID0gdmlkZW8udmlkZW9IZWlnaHQ7CiAgICAgICAgdHJhY2tzID0gW107CiAgICAgICAgcnVubmluZyA9IHRydWU7CiAgICAgICAgc3RvcEJ1dHRvbi5kaXNhYmxlZCA9IGZhbHNlOwogICAgICAgIGRldGVjdExvb3AoKTsKICAgICAgfSBjYXRjaCAoZXJyb3IpIHsKICAgICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gIkNvdWxkIG5vdCBzdGFydDogIiArIGVycm9yLm1lc3NhZ2U7CiAgICAgICAgc3RhcnRCdXR0b24uZGlzYWJsZWQgPSBmYWxzZTsKICAgICAgfQogICAgfQoKICAgIGZ1bmN0aW9uIHN0b3BDb3VudGVyKCkgewogICAgICBydW5uaW5nID0gZmFsc2U7CiAgICAgIGNhbmNlbEFuaW1hdGlvbkZyYW1lKGFuaW1hdGlvbklkKTsKICAgICAgaWYgKHN0cmVhbSkgc3RyZWFtLmdldFRyYWNrcygpLmZvckVhY2godHJhY2sgPT4gdHJhY2suc3RvcCgpKTsKICAgICAgdmlkZW8uc3JjT2JqZWN0ID0gbnVsbDsKICAgICAgdHJhY2tzID0gW107CiAgICAgIGNvbnRleHQuY2xlYXJSZWN0KDAsIDAsIGNhbnZhcy53aWR0aCwgY2FudmFzLmhlaWdodCk7CiAgICAgIHN0YXJ0QnV0dG9uLmRpc2FibGVkID0gZmFsc2U7CiAgICAgIHN0b3BCdXR0b24uZGlzYWJsZWQgPSB0cnVlOwogICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gIlN0b3BwZWQuIjsKICAgIH0KCiAgICBmdW5jdGlvbiByZXNldENvdW50cygpIHsKICAgICAgbGVmdFRvUmlnaHQgPSAwOwogICAgICByaWdodFRvTGVmdCA9IDA7CiAgICAgIGxlZnRUb1JpZ2h0VGV4dC50ZXh0Q29udGVudCA9ICIwIjsKICAgICAgcmlnaHRUb0xlZnRUZXh0LnRleHRDb250ZW50ID0gIjAiOwogICAgICB0cmFja3MgPSBbXTsKICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9ICJDb3VudHMgcmVzZXQuIjsKICAgIH0KCiAgICBzdGFydEJ1dHRvbi5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsIHN0YXJ0Q291bnRlcik7CiAgICBzdG9wQnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgc3RvcENvdW50ZXIpOwogICAgcmVzZXRCdXR0b24uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCByZXNldENvdW50cyk7CiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigiYmVmb3JldW5sb2FkIiwgc3RvcENvdW50ZXIpOwogIDwvc2NyaXB0Pgo8L2JvZHk-CjwvaHRtbD4" allow="camera"></iframe>
+    <a class="button" href="https://editor.learnwithchampak.live/samples/html/preview/#code=PCFET0NUWVBFIGh0bWw-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ-CiAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPgogIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KICA8dGl0bGU-VGVuc29yRmxvdy5qcyBGYWNlIENvdW50ZXI8L3RpdGxlPgogIDxzY3JpcHQgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL0B0ZW5zb3JmbG93L3RmanNANC4yMi4wL2Rpc3QvdGYubWluLmpzIj48L3NjcmlwdD4KICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9AdGVuc29yZmxvdy1tb2RlbHMvZmFjZS1kZXRlY3Rpb25AMS4wLjMvZGlzdC9mYWNlLWRldGVjdGlvbi5taW4uanMiPjwvc2NyaXB0PgogIDxzdHlsZT4KICAgICogeyBib3gtc2l6aW5nOiBib3JkZXItYm94OyB9CiAgICBib2R5IHsgbWFyZ2luOiAwOyBwYWRkaW5nOiAyMHB4OyBiYWNrZ3JvdW5kOiAjZWVmNmZmOyBjb2xvcjogIzE3MjAzMzsgZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyB0ZXh0LWFsaWduOiBjZW50ZXI7IH0KICAgIC5hcHAgeyB3aWR0aDogbWluKDc2MHB4LCAxMDAlKTsgbWFyZ2luOiBhdXRvOyBwYWRkaW5nOiAyMnB4OyBiYWNrZ3JvdW5kOiB3aGl0ZTsgYm9yZGVyLXJhZGl1czogMTZweDsgYm94LXNoYWRvdzogMCAxMHB4IDMwcHggcmdiYSgyMCw3MCwxMjAsLjE0KTsgfQogICAgaDEgeyBtYXJnaW4tdG9wOiAwOyBjb2xvcjogIzBkNDdhMTsgfQogICAgLnN0YWdlIHsgcG9zaXRpb246IHJlbGF0aXZlOyB3aWR0aDogMTAwJTsgYXNwZWN0LXJhdGlvOiA0LzM7IG1hcmdpbjogMThweCBhdXRvOyBvdmVyZmxvdzogaGlkZGVuOyBib3JkZXItcmFkaXVzOiAxMnB4OyBiYWNrZ3JvdW5kOiAjMTAxODI3OyB9CiAgICB2aWRlbywgY2FudmFzIHsgcG9zaXRpb246IGFic29sdXRlOyBpbnNldDogMDsgd2lkdGg6IDEwMCU7IGhlaWdodDogMTAwJTsgfQogICAgdmlkZW8geyBvYmplY3QtZml0OiBmaWxsOyB9CiAgICAuc2NvcmVzIHsgZGlzcGxheTogZ3JpZDsgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoMiwgMWZyKTsgZ2FwOiAxMnB4OyBtYXJnaW46IDE2cHggMDsgfQogICAgLnNjb3JlIHsgcGFkZGluZzogMTRweDsgYm9yZGVyLXJhZGl1czogMTBweDsgYmFja2dyb3VuZDogI2UzZjJmZDsgZm9udC1zaXplOiAxLjFyZW07IH0KICAgIC5zY29yZSBzdHJvbmcgeyBkaXNwbGF5OiBibG9jazsgbWFyZ2luLXRvcDogNHB4OyBjb2xvcjogIzBkNDdhMTsgZm9udC1zaXplOiAxLjhyZW07IH0KICAgIGJ1dHRvbiB7IG1hcmdpbjogNXB4OyBwYWRkaW5nOiAxMXB4IDE4cHg7IGJvcmRlcjogMDsgYm9yZGVyLXJhZGl1czogOHB4OyBiYWNrZ3JvdW5kOiAjMTU2NWMwOyBjb2xvcjogd2hpdGU7IGZvbnQtc2l6ZTogMXJlbTsgY3Vyc29yOiBwb2ludGVyOyB9CiAgICBidXR0b246ZGlzYWJsZWQgeyBiYWNrZ3JvdW5kOiAjOGNhNmJmOyBjdXJzb3I6IG5vdC1hbGxvd2VkOyB9CiAgICAjcmVzZXRCdXR0b24geyBiYWNrZ3JvdW5kOiAjNTI2NDc3OyB9CiAgICAjc3RhdHVzIHsgbWluLWhlaWdodDogMjRweDsgY29sb3I6ICMzODUxNmI7IH0KICAgIC5ub3RlIHsgZm9udC1zaXplOiAuOXJlbTsgY29sb3I6ICM1MzY3Nzk7IH0KICA8L3N0eWxlPgo8L2hlYWQ-Cjxib2R5PgogIDxtYWluIGNsYXNzPSJhcHAiPgogICAgPGgxPkZhY2UgQ3Jvc3NpbmcgQ291bnRlcjwvaDE-CiAgICA8cD5Dcm9zcyB0aGUgYmx1ZSBjZW50cmUgbGluZS4gTW92ZSBmdWxseSBpbnRvIHRoZSBvdGhlciBzaWRlIHRvIGJlIGNvdW50ZWQuPC9wPgoKICAgIDxkaXYgY2xhc3M9InNjb3JlcyI-CiAgICAgIDxkaXYgY2xhc3M9InNjb3JlIj5MZWZ0IHRvIFJpZ2h0PHN0cm9uZyBpZD0ibGVmdFRvUmlnaHQiPjA8L3N0cm9uZz48L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0ic2NvcmUiPlJpZ2h0IHRvIExlZnQ8c3Ryb25nIGlkPSJyaWdodFRvTGVmdCI-MDwvc3Ryb25nPjwvZGl2PgogICAgPC9kaXY-CgogICAgPGRpdiBjbGFzcz0ic3RhZ2UiPgogICAgICA8dmlkZW8gaWQ9InZpZGVvIiBhdXRvcGxheSBwbGF5c2lubGluZSBtdXRlZD48L3ZpZGVvPgogICAgICA8Y2FudmFzIGlkPSJvdmVybGF5Ij48L2NhbnZhcz4KICAgIDwvZGl2PgoKICAgIDxidXR0b24gaWQ9InN0YXJ0QnV0dG9uIj5TdGFydCBDYW1lcmEgYW5kIENvdW50ZXI8L2J1dHRvbj4KICAgIDxidXR0b24gaWQ9InN0b3BCdXR0b24iIGRpc2FibGVkPlN0b3A8L2J1dHRvbj4KICAgIDxidXR0b24gaWQ9InJlc2V0QnV0dG9uIj5SZXNldCBDb3VudHM8L2J1dHRvbj4KICAgIDxwIGlkPSJzdGF0dXMiPlJlYWR5LjwvcD4KICAgIDxwIGNsYXNzPSJub3RlIj5Gb3IgbGVhcm5pbmcgb25seS4gQ2FtZXJhIGZyYW1lcyBzdGF5IGluIHRoaXMgcGFnZSBhbmQgYXJlIG5vdCB1cGxvYWRlZCBieSB0aGlzIGNvZGUuPC9wPgogIDwvbWFpbj4KCiAgPHNjcmlwdD4KICAgIGNvbnN0IHZpZGVvID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInZpZGVvIik7CiAgICBjb25zdCBjYW52YXMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgib3ZlcmxheSIpOwogICAgY29uc3QgY29udGV4dCA9IGNhbnZhcy5nZXRDb250ZXh0KCIyZCIpOwogICAgY29uc3Qgc3RhcnRCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhcnRCdXR0b24iKTsKICAgIGNvbnN0IHN0b3BCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RvcEJ1dHRvbiIpOwogICAgY29uc3QgcmVzZXRCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgicmVzZXRCdXR0b24iKTsKICAgIGNvbnN0IHN0YXR1c1RleHQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhdHVzIik7CiAgICBjb25zdCBsZWZ0VG9SaWdodFRleHQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgibGVmdFRvUmlnaHQiKTsKICAgIGNvbnN0IHJpZ2h0VG9MZWZ0VGV4dCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJyaWdodFRvTGVmdCIpOwoKICAgIGxldCBkZXRlY3RvcjsKICAgIGxldCBzdHJlYW07CiAgICBsZXQgcnVubmluZyA9IGZhbHNlOwogICAgbGV0IGFuaW1hdGlvbklkOwogICAgbGV0IG5leHRUcmFja0lkID0gMTsKICAgIGxldCB0cmFja3MgPSBbXTsKICAgIGxldCBsZWZ0VG9SaWdodCA9IDA7CiAgICBsZXQgcmlnaHRUb0xlZnQgPSAwOwoKICAgIGNvbnN0IExJTkVfUE9TSVRJT04gPSAwLjU7CiAgICBjb25zdCBERUFEX1pPTkUgPSAyODsKICAgIGNvbnN0IE1BWF9NQVRDSF9ESVNUQU5DRSA9IDEyMDsKICAgIGNvbnN0IE1BWF9NSVNTRURfRlJBTUVTID0gMTI7CgogICAgZnVuY3Rpb24gc2lkZU9mTGluZSh4LCBsaW5lWCkgewogICAgICBpZiAoeCA8IGxpbmVYIC0gREVBRF9aT05FKSByZXR1cm4gImxlZnQiOwogICAgICBpZiAoeCA-IGxpbmVYICsgREVBRF9aT05FKSByZXR1cm4gInJpZ2h0IjsKICAgICAgcmV0dXJuICJtaWRkbGUiOwogICAgfQoKICAgIGZ1bmN0aW9uIGRpc3RhbmNlKGEsIGIpIHsKICAgICAgcmV0dXJuIE1hdGguaHlwb3QoYS54IC0gYi54LCBhLnkgLSBiLnkpOwogICAgfQoKICAgIGZ1bmN0aW9uIHVwZGF0ZVRyYWNrcyhkZXRlY3Rpb25zLCBsaW5lWCkgewogICAgICBjb25zdCB1bnVzZWRUcmFja3MgPSBuZXcgU2V0KHRyYWNrcyk7CgogICAgICBmb3IgKGNvbnN0IGRldGVjdGlvbiBvZiBkZXRlY3Rpb25zKSB7CiAgICAgICAgbGV0IGJlc3RUcmFjayA9IG51bGw7CiAgICAgICAgbGV0IGJlc3REaXN0YW5jZSA9IE1BWF9NQVRDSF9ESVNUQU5DRTsKCiAgICAgICAgZm9yIChjb25zdCB0cmFjayBvZiB1bnVzZWRUcmFja3MpIHsKICAgICAgICAgIGNvbnN0IGN1cnJlbnREaXN0YW5jZSA9IGRpc3RhbmNlKHRyYWNrLCBkZXRlY3Rpb24pOwogICAgICAgICAgaWYgKGN1cnJlbnREaXN0YW5jZSA8IGJlc3REaXN0YW5jZSkgewogICAgICAgICAgICBiZXN0RGlzdGFuY2UgPSBjdXJyZW50RGlzdGFuY2U7CiAgICAgICAgICAgIGJlc3RUcmFjayA9IHRyYWNrOwogICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgaWYgKCFiZXN0VHJhY2spIHsKICAgICAgICAgIHRyYWNrcy5wdXNoKHsKICAgICAgICAgICAgaWQ6IG5leHRUcmFja0lkKyssCiAgICAgICAgICAgIHg6IGRldGVjdGlvbi54LAogICAgICAgICAgICB5OiBkZXRlY3Rpb24ueSwKICAgICAgICAgICAgYm94OiBkZXRlY3Rpb24uYm94LAogICAgICAgICAgICBzdGFibGVTaWRlOiBzaWRlT2ZMaW5lKGRldGVjdGlvbi54LCBsaW5lWCksCiAgICAgICAgICAgIG1pc3NlZDogMAogICAgICAgICAgfSk7CiAgICAgICAgICBjb250aW51ZTsKICAgICAgICB9CgogICAgICAgIHVudXNlZFRyYWNrcy5kZWxldGUoYmVzdFRyYWNrKTsKICAgICAgICBiZXN0VHJhY2sueCA9IGRldGVjdGlvbi54OwogICAgICAgIGJlc3RUcmFjay55ID0gZGV0ZWN0aW9uLnk7CiAgICAgICAgYmVzdFRyYWNrLmJveCA9IGRldGVjdGlvbi5ib3g7CiAgICAgICAgYmVzdFRyYWNrLm1pc3NlZCA9IDA7CgogICAgICAgIGNvbnN0IG5ld1NpZGUgPSBzaWRlT2ZMaW5lKGJlc3RUcmFjay54LCBsaW5lWCk7CiAgICAgICAgaWYgKG5ld1NpZGUgIT09ICJtaWRkbGUiICYmIGJlc3RUcmFjay5zdGFibGVTaWRlICE9PSAibWlkZGxlIiAmJiBuZXdTaWRlICE9PSBiZXN0VHJhY2suc3RhYmxlU2lkZSkgewogICAgICAgICAgaWYgKGJlc3RUcmFjay5zdGFibGVTaWRlID09PSAibGVmdCIpIGxlZnRUb1JpZ2h0Kys7CiAgICAgICAgICBlbHNlIHJpZ2h0VG9MZWZ0Kys7CiAgICAgICAgICBsZWZ0VG9SaWdodFRleHQudGV4dENvbnRlbnQgPSBsZWZ0VG9SaWdodDsKICAgICAgICAgIHJpZ2h0VG9MZWZ0VGV4dC50ZXh0Q29udGVudCA9IHJpZ2h0VG9MZWZ0OwogICAgICAgIH0KICAgICAgICBpZiAobmV3U2lkZSAhPT0gIm1pZGRsZSIpIGJlc3RUcmFjay5zdGFibGVTaWRlID0gbmV3U2lkZTsKICAgICAgfQoKICAgICAgZm9yIChjb25zdCB0cmFjayBvZiB1bnVzZWRUcmFja3MpIHRyYWNrLm1pc3NlZCsrOwogICAgICB0cmFja3MgPSB0cmFja3MuZmlsdGVyKHRyYWNrID0-IHRyYWNrLm1pc3NlZCA8PSBNQVhfTUlTU0VEX0ZSQU1FUyk7CiAgICB9CgogICAgZnVuY3Rpb24gZHJhdyhsaW5lWCkgewogICAgICBjb250ZXh0LmNsZWFyUmVjdCgwLCAwLCBjYW52YXMud2lkdGgsIGNhbnZhcy5oZWlnaHQpOwogICAgICBjb250ZXh0LnN0cm9rZVN0eWxlID0gIiMxZTg4ZTUiOwogICAgICBjb250ZXh0LmxpbmVXaWR0aCA9IDQ7CiAgICAgIGNvbnRleHQuYmVnaW5QYXRoKCk7CiAgICAgIGNvbnRleHQubW92ZVRvKGxpbmVYLCAwKTsKICAgICAgY29udGV4dC5saW5lVG8obGluZVgsIGNhbnZhcy5oZWlnaHQpOwogICAgICBjb250ZXh0LnN0cm9rZSgpOwoKICAgICAgY29udGV4dC5mb250ID0gIjE2cHggQXJpYWwiOwogICAgICBmb3IgKGNvbnN0IHRyYWNrIG9mIHRyYWNrcykgewogICAgICAgIGNvbnN0IGJveCA9IHRyYWNrLmJveDsKICAgICAgICBjb250ZXh0LnN0cm9rZVN0eWxlID0gIiMwMGU2NzYiOwogICAgICAgIGNvbnRleHQubGluZVdpZHRoID0gMzsKICAgICAgICBjb250ZXh0LnN0cm9rZVJlY3QoYm94LnhNaW4sIGJveC55TWluLCBib3gud2lkdGgsIGJveC5oZWlnaHQpOwogICAgICAgIGNvbnRleHQuZmlsbFN0eWxlID0gIiMwMGU2NzYiOwogICAgICAgIGNvbnRleHQuZmlsbFRleHQoIkZhY2UgIiArIHRyYWNrLmlkLCBib3gueE1pbiwgTWF0aC5tYXgoMTgsIGJveC55TWluIC0gNykpOwogICAgICAgIGNvbnRleHQuYmVnaW5QYXRoKCk7CiAgICAgICAgY29udGV4dC5hcmModHJhY2sueCwgdHJhY2sueSwgNSwgMCwgTWF0aC5QSSAqIDIpOwogICAgICAgIGNvbnRleHQuZmlsbCgpOwogICAgICB9CiAgICB9CgogICAgYXN5bmMgZnVuY3Rpb24gZGV0ZWN0TG9vcCgpIHsKICAgICAgaWYgKCFydW5uaW5nKSByZXR1cm47CiAgICAgIHRyeSB7CiAgICAgICAgY29uc3QgZmFjZXMgPSBhd2FpdCBkZXRlY3Rvci5lc3RpbWF0ZUZhY2VzKHZpZGVvLCB7IGZsaXBIb3Jpem9udGFsOiBmYWxzZSB9KTsKICAgICAgICBjb25zdCBkZXRlY3Rpb25zID0gZmFjZXMubWFwKGZhY2UgPT4gKHsKICAgICAgICAgIHg6IGZhY2UuYm94LnhNaW4gKyBmYWNlLmJveC53aWR0aCAvIDIsCiAgICAgICAgICB5OiBmYWNlLmJveC55TWluICsgZmFjZS5ib3guaGVpZ2h0IC8gMiwKICAgICAgICAgIGJveDogZmFjZS5ib3gKICAgICAgICB9KSk7CiAgICAgICAgY29uc3QgbGluZVggPSBjYW52YXMud2lkdGggKiBMSU5FX1BPU0lUSU9OOwogICAgICAgIHVwZGF0ZVRyYWNrcyhkZXRlY3Rpb25zLCBsaW5lWCk7CiAgICAgICAgZHJhdyhsaW5lWCk7CiAgICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9ICJGYWNlcyB2aXNpYmxlOiAiICsgZmFjZXMubGVuZ3RoICsgIiB8IEFjdGl2ZSB0cmFja3M6ICIgKyB0cmFja3MubGVuZ3RoOwogICAgICB9IGNhdGNoIChlcnJvcikgewogICAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSAiRGV0ZWN0aW9uIGVycm9yOiAiICsgZXJyb3IubWVzc2FnZTsKICAgICAgfQogICAgICBpZiAocnVubmluZykgYW5pbWF0aW9uSWQgPSByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoZGV0ZWN0TG9vcCk7CiAgICB9CgogICAgYXN5bmMgZnVuY3Rpb24gc3RhcnRDb3VudGVyKCkgewogICAgICBzdGFydEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7CiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSAiTG9hZGluZyBtb2RlbCBhbmQgcmVxdWVzdGluZyBjYW1lcmEuLi4iOwogICAgICB0cnkgewogICAgICAgIGF3YWl0IHRmLnJlYWR5KCk7CiAgICAgICAgaWYgKCFkZXRlY3RvcikgewogICAgICAgICAgZGV0ZWN0b3IgPSBhd2FpdCBmYWNlRGV0ZWN0aW9uLmNyZWF0ZURldGVjdG9yKAogICAgICAgICAgICBmYWNlRGV0ZWN0aW9uLlN1cHBvcnRlZE1vZGVscy5NZWRpYVBpcGVGYWNlRGV0ZWN0b3IsCiAgICAgICAgICAgIHsgcnVudGltZTogInRmanMiLCBtb2RlbFR5cGU6ICJzaG9ydCIsIG1heEZhY2VzOiAxMCB9CiAgICAgICAgICApOwogICAgICAgIH0KICAgICAgICBzdHJlYW0gPSBhd2FpdCBuYXZpZ2F0b3IubWVkaWFEZXZpY2VzLmdldFVzZXJNZWRpYSh7IHZpZGVvOiB7IHdpZHRoOiA2NDAsIGhlaWdodDogNDgwIH0sIGF1ZGlvOiBmYWxzZSB9KTsKICAgICAgICB2aWRlby5zcmNPYmplY3QgPSBzdHJlYW07CiAgICAgICAgYXdhaXQgbmV3IFByb21pc2UocmVzb2x2ZSA9PiB2aWRlby5hZGRFdmVudExpc3RlbmVyKCJsb2FkZWRkYXRhIiwgcmVzb2x2ZSwgeyBvbmNlOiB0cnVlIH0pKTsKICAgICAgICBhd2FpdCB2aWRlby5wbGF5KCk7CiAgICAgICAgY2FudmFzLndpZHRoID0gdmlkZW8udmlkZW9XaWR0aDsKICAgICAgICBjYW52YXMuaGVpZ2h0ID0gdmlkZW8udmlkZW9IZWlnaHQ7CiAgICAgICAgdHJhY2tzID0gW107CiAgICAgICAgcnVubmluZyA9IHRydWU7CiAgICAgICAgc3RvcEJ1dHRvbi5kaXNhYmxlZCA9IGZhbHNlOwogICAgICAgIGRldGVjdExvb3AoKTsKICAgICAgfSBjYXRjaCAoZXJyb3IpIHsKICAgICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gIkNvdWxkIG5vdCBzdGFydDogIiArIGVycm9yLm1lc3NhZ2U7CiAgICAgICAgc3RhcnRCdXR0b24uZGlzYWJsZWQgPSBmYWxzZTsKICAgICAgfQogICAgfQoKICAgIGZ1bmN0aW9uIHN0b3BDb3VudGVyKCkgewogICAgICBydW5uaW5nID0gZmFsc2U7CiAgICAgIGNhbmNlbEFuaW1hdGlvbkZyYW1lKGFuaW1hdGlvbklkKTsKICAgICAgaWYgKHN0cmVhbSkgc3RyZWFtLmdldFRyYWNrcygpLmZvckVhY2godHJhY2sgPT4gdHJhY2suc3RvcCgpKTsKICAgICAgdmlkZW8uc3JjT2JqZWN0ID0gbnVsbDsKICAgICAgdHJhY2tzID0gW107CiAgICAgIGNvbnRleHQuY2xlYXJSZWN0KDAsIDAsIGNhbnZhcy53aWR0aCwgY2FudmFzLmhlaWdodCk7CiAgICAgIHN0YXJ0QnV0dG9uLmRpc2FibGVkID0gZmFsc2U7CiAgICAgIHN0b3BCdXR0b24uZGlzYWJsZWQgPSB0cnVlOwogICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gIlN0b3BwZWQuIjsKICAgIH0KCiAgICBmdW5jdGlvbiByZXNldENvdW50cygpIHsKICAgICAgbGVmdFRvUmlnaHQgPSAwOwogICAgICByaWdodFRvTGVmdCA9IDA7CiAgICAgIGxlZnRUb1JpZ2h0VGV4dC50ZXh0Q29udGVudCA9ICIwIjsKICAgICAgcmlnaHRUb0xlZnRUZXh0LnRleHRDb250ZW50ID0gIjAiOwogICAgICB0cmFja3MgPSBbXTsKICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9ICJDb3VudHMgcmVzZXQuIjsKICAgIH0KCiAgICBzdGFydEJ1dHRvbi5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsIHN0YXJ0Q291bnRlcik7CiAgICBzdG9wQnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgc3RvcENvdW50ZXIpOwogICAgcmVzZXRCdXR0b24uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCByZXNldENvdW50cyk7CiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigiYmVmb3JldW5sb2FkIiwgc3RvcENvdW50ZXIpOwogIDwvc2NyaXB0Pgo8L2JvZHk-CjwvaHRtbD4" target="_blank" rel="noopener noreferrer">Open example in a new tab</a>
+
+    <h2>7. Parameters you can tune</h2>
+    <table>
+      <thead><tr><th>Setting</th><th>Meaning</th><th>Trade-off</th></tr></thead>
+      <tbody>
+        <tr><td><code>DEAD_ZONE</code></td><td>Half-width of the neutral area</td><td>Larger values reduce false counts but require more movement.</td></tr>
+        <tr><td><code>MAX_MATCH_DISTANCE</code></td><td>Maximum distance for matching a face to a track</td><td>Too small loses fast faces; too large may mix two people.</td></tr>
+        <tr><td><code>MAX_MISSED_FRAMES</code></td><td>How long a missing track is retained</td><td>Larger values tolerate brief detection failures but retain stale tracks longer.</td></tr>
+        <tr><td><code>LINE_POSITION</code></td><td>Horizontal position of the vertical line</td><td><code>0.5</code> places it at the centre.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>8. Practice tasks</h2>
+    <ol>
+      <li>Move the line to 40% of the frame width.</li>
+      <li>Add a third display showing the total crossings.</li>
+      <li>Play a short sound whenever a crossing is recorded.</li>
+      <li>Change the app to use a horizontal line and count top-to-bottom versus bottom-to-top.</li>
+      <li>Record the time of the most recent crossing.</li>
+    </ol>
+
+    <h2>Limitations and responsible use</h2>
+    <ul>
+      <li>A face counter estimates crossings; it should not be treated as an exact security or billing system.</li>
+      <li>Ask for permission before using cameras around other people.</li>
+      <li>This example processes frames inside the page and does not intentionally upload them.</li>
+      <li>Performance and accuracy vary with lighting, camera position, face size, movement, and device speed.</li>
+    </ul>
+
+    <h2>Official references</h2>
+    <ul>
+      <li><a href="https://www.tensorflow.org/js/models" target="_blank" rel="noopener noreferrer">TensorFlow.js pre-trained models</a></li>
+      <li><a href="https://github.com/tensorflow/tfjs-models" target="_blank" rel="noopener noreferrer">TensorFlow.js Models repository</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank" rel="noopener noreferrer">MDN: getUserMedia()</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank" rel="noopener noreferrer">MDN: Canvas API</a></li>
+    </ul>
+
+    <h2>Next lesson</h2>
+    <p><strong>Lesson 7: Introduction to Face Recognition</strong>—understand face landmarks, face embeddings, similarity, thresholds, enrolment, and why recognition is different from detection.</p>
+  </main>
+
+  <footer>Learn With Champak · TensorFlow.js Face Recognition and Attendance Series</footer>
+</article>
+</body>
+</html>

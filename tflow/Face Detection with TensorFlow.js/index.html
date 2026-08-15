@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Build a real-time face detection application using TensorFlow.js, a pretrained model, webcam video and canvas bounding boxes.">
+  <meta name="author" content="Champak Roy">
+  <title>Lesson 5: Face Detection with TensorFlow.js</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection@1.0.3/dist/face-detection.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #eef6ff;
+      color: #172033;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+    }
+
+    .container {
+      width: min(920px, 100%);
+      margin: auto;
+      padding: 30px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(20, 70, 120, 0.12);
+    }
+
+    h1, h2 { color: #0d47a1; }
+    h1 { margin-top: 0; }
+
+    .note, .warning {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 6px;
+    }
+
+    .note {
+      background: #e3f2fd;
+      border-left: 5px solid #1976d2;
+    }
+
+    .warning {
+      background: #fff4df;
+      border-left: 5px solid #e18a00;
+    }
+
+    code {
+      padding: 2px 5px;
+      background: #e7eff8;
+      color: #0f3e70;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+    }
+
+    pre {
+      padding: 18px;
+      overflow-x: auto;
+      background: #101827;
+      color: #e8f4ff;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    table {
+      width: 100%;
+      margin: 18px 0;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 11px;
+      border: 1px solid #c9d9e8;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { background: #e3f2fd; }
+
+    .demo {
+      margin: 24px 0;
+      padding: 20px;
+      background: #f8fbff;
+      border: 1px solid #bdd6ee;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .camera {
+      position: relative;
+      width: min(640px, 100%);
+      margin: auto;
+      background: #172033;
+    }
+
+    video, canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    canvas {
+      position: absolute;
+      inset: 0;
+    }
+
+    button {
+      margin: 14px 4px 0;
+      padding: 11px 17px;
+      border: 0;
+      border-radius: 7px;
+      background: #1565c0;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled) { background: #0d47a1; }
+    button:disabled { background: #8b9aaa; cursor: not-allowed; }
+
+    button:focus-visible, a:focus-visible {
+      outline: 4px solid #90caf9;
+      outline-offset: 3px;
+    }
+
+    #status {
+      margin-top: 16px;
+      padding: 13px;
+      background: #e3f2fd;
+      border-radius: 7px;
+      font-family: Consolas, monospace;
+    }
+
+    .editor-frame {
+      width: 100%;
+      height: 680px;
+      border: 1px solid #9bbbd8;
+      border-radius: 10px;
+      background: white;
+    }
+
+    a { color: #0d47a1; text-underline-offset: 3px; }
+    .links li { margin-bottom: 8px; }
+
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      .container { padding: 20px 16px; }
+      .editor-frame { height: 580px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Lesson 5: Face Detection with TensorFlow.js</h1>
+
+    <p>
+      In Lesson 4, we converted webcam frames into tensors. We can now
+      pass those live images to a pretrained model and ask it to locate faces.
+    </p>
+
+    <h2>1. What is face detection?</h2>
+
+    <p>
+      Face detection answers the question: <strong>Where are the faces?</strong>
+      It returns the location of each detected face, usually as a rectangle.
+    </p>
+
+    <div class="warning">
+      Face detection does not identify a person. Recognition—answering
+      “Whose face is this?”—is a later project.
+    </div>
+
+    <h2>2. Detection result</h2>
+
+    <p>A detector can return a box containing:</p>
+
+    <table>
+      <thead><tr><th>Value</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>xMin</code></td><td>Left edge of the face</td></tr>
+        <tr><td><code>yMin</code></td><td>Top edge of the face</td></tr>
+        <tr><td><code>width</code></td><td>Width of the detected face</td></tr>
+        <tr><td><code>height</code></td><td>Height of the detected face</td></tr>
+      </tbody>
+    </table>
+
+    <h2>3. Pretrained model</h2>
+
+    <p>
+      A pretrained model has already learned from a large collection of
+      examples. We load it and perform inference instead of training a new
+      detector in this lesson.
+    </p>
+
+    <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"&gt;&lt;/script&gt;
+
+&lt;script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection@1.0.3/dist/face-detection.min.js"&gt;&lt;/script&gt;</code></pre>
+
+    <h2>4. Creating the detector</h2>
+
+    <pre><code>const detector = await faceDetection.createDetector(
+  faceDetection.SupportedModels.MediaPipeFaceDetector,
+  {
+    runtime: "tfjs",
+    modelType: "short",
+    maxFaces: 10
+  }
+);</code></pre>
+
+    <ul>
+      <li><code>runtime: "tfjs"</code> runs the model through TensorFlow.js.</li>
+      <li><code>modelType: "short"</code> is suitable for faces relatively close to the camera.</li>
+      <li><code>maxFaces</code> limits the number of returned faces.</li>
+    </ul>
+
+    <h2>5. Detecting faces</h2>
+
+    <pre><code>const faces = await detector.estimateFaces(video, {
+  flipHorizontal: false
+});</code></pre>
+
+    <p>
+      The result is an array. No detected face gives an empty array. The
+      number of elements is therefore the current face count.
+    </p>
+
+    <pre><code>const faceCount = faces.length;</code></pre>
+
+    <h2>6. Drawing bounding boxes</h2>
+
+    <p>
+      A transparent canvas is placed over the video. Each face box is drawn
+      using <code>strokeRect()</code>.
+    </p>
+
+    <pre><code>faces.forEach(face =&gt; {
+  const box = face.box;
+
+  context.strokeRect(
+    box.xMin,
+    box.yMin,
+    box.width,
+    box.height
+  );
+});</code></pre>
+
+    <div class="note">
+      The canvas drawing size must match <code>video.videoWidth</code> and
+      <code>video.videoHeight</code>. Otherwise, the rectangles will not align.
+    </div>
+
+    <h2>7. Continuous detection loop</h2>
+
+    <p>
+      Video changes continuously, so detection must repeat. We wait for one
+      prediction to finish before requesting the next frame.
+    </p>
+
+    <pre><code>async function detectFaces() {
+  if (!running) return;
+
+  const faces = await detector.estimateFaces(video);
+  drawFaces(faces);
+
+  requestAnimationFrame(detectFaces);
+}</code></pre>
+
+    <p>
+      Waiting with <code>await</code> prevents multiple model predictions from
+      piling up at the same time.
+    </p>
+
+    <h2>8. Live face detector</h2>
+
+    <div class="demo">
+      <div class="camera">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="canvas"></canvas>
+      </div>
+
+      <button id="startButton" type="button">Start Face Detection</button>
+      <button id="stopButton" type="button" disabled>Stop</button>
+
+      <div id="status" aria-live="polite">Model not loaded.</div>
+    </div>
+
+    <h2>9. Application workflow</h2>
+
+    <ol>
+      <li>Load TensorFlow.js and the pretrained model package.</li>
+      <li>Create the detector once.</li>
+      <li>Ask for webcam permission.</li>
+      <li>Match the canvas size to the video.</li>
+      <li>Estimate faces in the current frame.</li>
+      <li>Clear the earlier canvas drawing.</li>
+      <li>Draw a box around every current face.</li>
+      <li>Repeat until the user stops the application.</li>
+    </ol>
+
+    <h2>10. Detection limitations</h2>
+
+    <ul>
+      <li>Very small or distant faces may be missed.</li>
+      <li>Dark lighting and strong backlighting reduce accuracy.</li>
+      <li>Side-facing or partly covered faces can be harder to detect.</li>
+      <li>Model confidence is not a guarantee of correctness.</li>
+      <li>Performance varies across phones, browsers and computers.</li>
+    </ul>
+
+    <h2>11. Try the complete code</h2>
+
+    <p>
+      The example is loaded in the editor below. If camera access is blocked
+      inside the embedded preview, open it in a new tab.
+    </p>
+
+    <iframe
+      class="editor-frame"
+      title="TensorFlow.js face detection example"
+      src="https://editor.learnwithchampak.live/samples/html/preview/#code=PCFET0NUWVBFIGh0bWw-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ-CiAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPgogIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KICA8dGl0bGU-VGVuc29yRmxvdy5qcyBGYWNlIERldGVjdGlvbjwvdGl0bGU-CgogIDxzY3JpcHQgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL0B0ZW5zb3JmbG93L3RmanNANC4yMi4wL2Rpc3QvdGYubWluLmpzIj48L3NjcmlwdD4KICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9AdGVuc29yZmxvdy1tb2RlbHMvZmFjZS1kZXRlY3Rpb25AMS4wLjMvZGlzdC9mYWNlLWRldGVjdGlvbi5taW4uanMiPjwvc2NyaXB0PgoKICA8c3R5bGU-CiAgICBib2R5IHsKICAgICAgcGFkZGluZzogMjBweDsKICAgICAgZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOwogICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICB9CgogICAgLmNhbWVyYSB7CiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsKICAgICAgd2lkdGg6IG1pbig2NDBweCwgMTAwJSk7CiAgICAgIG1hcmdpbjogYXV0bzsKICAgICAgYmFja2dyb3VuZDogIzE3MjAzMzsKICAgIH0KCiAgICB2aWRlbywgY2FudmFzIHsKICAgICAgZGlzcGxheTogYmxvY2s7CiAgICAgIHdpZHRoOiAxMDAlOwogICAgICBoZWlnaHQ6IGF1dG87CiAgICB9CgogICAgY2FudmFzIHsKICAgICAgcG9zaXRpb246IGFic29sdXRlOwogICAgICBpbnNldDogMDsKICAgIH0KCiAgICBidXR0b24gewogICAgICBtYXJnaW46IDEycHggNHB4OwogICAgICBwYWRkaW5nOiAxMHB4IDE2cHg7CiAgICAgIGZvbnQtc2l6ZTogMTZweDsKICAgIH0KCiAgICAjc3RhdHVzIHsKICAgICAgcGFkZGluZzogMTJweDsKICAgICAgYmFja2dyb3VuZDogI2VlZjZmZjsKICAgICAgYm9yZGVyLXJhZGl1czogOHB4OwogICAgfQogIDwvc3R5bGU-CjwvaGVhZD4KCjxib2R5PgogIDxoMT5UZW5zb3JGbG93LmpzIEZhY2UgRGV0ZWN0aW9uPC9oMT4KCiAgPGRpdiBjbGFzcz0iY2FtZXJhIj4KICAgIDx2aWRlbyBpZD0idmlkZW8iIGF1dG9wbGF5IHBsYXlzaW5saW5lIG11dGVkPjwvdmlkZW8-CiAgICA8Y2FudmFzIGlkPSJjYW52YXMiPjwvY2FudmFzPgogIDwvZGl2PgoKICA8YnV0dG9uIGlkPSJzdGFydEJ1dHRvbiIgdHlwZT0iYnV0dG9uIj5TdGFydCBGYWNlIERldGVjdGlvbjwvYnV0dG9uPgogIDxidXR0b24gaWQ9InN0b3BCdXR0b24iIHR5cGU9ImJ1dHRvbiIgZGlzYWJsZWQ-U3RvcDwvYnV0dG9uPgoKICA8ZGl2IGlkPSJzdGF0dXMiPk1vZGVsIG5vdCBsb2FkZWQuPC9kaXY-CgogIDxzY3JpcHQ-CiAgICBjb25zdCB2aWRlbyA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJ2aWRlbyIpOwogICAgY29uc3QgY2FudmFzID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImNhbnZhcyIpOwogICAgY29uc3QgY29udGV4dCA9IGNhbnZhcy5nZXRDb250ZXh0KCIyZCIpOwogICAgY29uc3Qgc3RhcnRCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhcnRCdXR0b24iKTsKICAgIGNvbnN0IHN0b3BCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RvcEJ1dHRvbiIpOwogICAgY29uc3Qgc3RhdHVzID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInN0YXR1cyIpOwoKICAgIGxldCBkZXRlY3RvciA9IG51bGw7CiAgICBsZXQgc3RyZWFtID0gbnVsbDsKICAgIGxldCBhbmltYXRpb25JZCA9IG51bGw7CiAgICBsZXQgcnVubmluZyA9IGZhbHNlOwoKICAgIGFzeW5jIGZ1bmN0aW9uIGxvYWREZXRlY3RvcigpIHsKICAgICAgc3RhdHVzLnRleHRDb250ZW50ID0gIkxvYWRpbmcgZmFjZSBkZXRlY3Rvci4uLiI7CiAgICAgIGF3YWl0IHRmLnJlYWR5KCk7CgogICAgICBkZXRlY3RvciA9IGF3YWl0IGZhY2VEZXRlY3Rpb24uY3JlYXRlRGV0ZWN0b3IoCiAgICAgICAgZmFjZURldGVjdGlvbi5TdXBwb3J0ZWRNb2RlbHMuTWVkaWFQaXBlRmFjZURldGVjdG9yLAogICAgICAgIHsKICAgICAgICAgIHJ1bnRpbWU6ICJ0ZmpzIiwKICAgICAgICAgIG1vZGVsVHlwZTogInNob3J0IiwKICAgICAgICAgIG1heEZhY2VzOiAxMAogICAgICAgIH0KICAgICAgKTsKICAgIH0KCiAgICBhc3luYyBmdW5jdGlvbiBzdGFydERldGVjdGlvbigpIHsKICAgICAgc3RhcnRCdXR0b24uZGlzYWJsZWQgPSB0cnVlOwoKICAgICAgdHJ5IHsKICAgICAgICBpZiAoIWRldGVjdG9yKSB7CiAgICAgICAgICBhd2FpdCBsb2FkRGV0ZWN0b3IoKTsKICAgICAgICB9CgogICAgICAgIHN0cmVhbSA9IGF3YWl0IG5hdmlnYXRvci5tZWRpYURldmljZXMuZ2V0VXNlck1lZGlhKHsKICAgICAgICAgIHZpZGVvOiB7IHdpZHRoOiB7IGlkZWFsOiA2NDAgfSwgaGVpZ2h0OiB7IGlkZWFsOiA0ODAgfSB9LAogICAgICAgICAgYXVkaW86IGZhbHNlCiAgICAgICAgfSk7CgogICAgICAgIHZpZGVvLnNyY09iamVjdCA9IHN0cmVhbTsKICAgICAgICBhd2FpdCB2aWRlby5wbGF5KCk7CgogICAgICAgIGNhbnZhcy53aWR0aCA9IHZpZGVvLnZpZGVvV2lkdGg7CiAgICAgICAgY2FudmFzLmhlaWdodCA9IHZpZGVvLnZpZGVvSGVpZ2h0OwoKICAgICAgICBydW5uaW5nID0gdHJ1ZTsKICAgICAgICBzdG9wQnV0dG9uLmRpc2FibGVkID0gZmFsc2U7CiAgICAgICAgZGV0ZWN0RmFjZXMoKTsKICAgICAgfSBjYXRjaCAoZXJyb3IpIHsKICAgICAgICBzdGF0dXMudGV4dENvbnRlbnQgPSAiQ291bGQgbm90IHN0YXJ0OiAiICsgZXJyb3IubWVzc2FnZTsKICAgICAgICBzdGFydEJ1dHRvbi5kaXNhYmxlZCA9IGZhbHNlOwogICAgICB9CiAgICB9CgogICAgYXN5bmMgZnVuY3Rpb24gZGV0ZWN0RmFjZXMoKSB7CiAgICAgIGlmICghcnVubmluZykgcmV0dXJuOwoKICAgICAgY29uc3QgZmFjZXMgPSBhd2FpdCBkZXRlY3Rvci5lc3RpbWF0ZUZhY2VzKHZpZGVvLCB7CiAgICAgICAgZmxpcEhvcml6b250YWw6IGZhbHNlCiAgICAgIH0pOwoKICAgICAgY29udGV4dC5jbGVhclJlY3QoMCwgMCwgY2FudmFzLndpZHRoLCBjYW52YXMuaGVpZ2h0KTsKICAgICAgY29udGV4dC5zdHJva2VTdHlsZSA9ICIjMDBmZjY2IjsKICAgICAgY29udGV4dC5maWxsU3R5bGUgPSAiIzAwZmY2NiI7CiAgICAgIGNvbnRleHQubGluZVdpZHRoID0gMzsKICAgICAgY29udGV4dC5mb250ID0gIjE4cHggQXJpYWwiOwoKICAgICAgZmFjZXMuZm9yRWFjaCgoZmFjZSwgaW5kZXgpID0-IHsKICAgICAgICBjb25zdCBib3ggPSBmYWNlLmJveDsKICAgICAgICBjb250ZXh0LnN0cm9rZVJlY3QoYm94LnhNaW4sIGJveC55TWluLCBib3gud2lkdGgsIGJveC5oZWlnaHQpOwogICAgICAgIGNvbnRleHQuZmlsbFRleHQoIkZhY2UgIiArIChpbmRleCArIDEpLCBib3gueE1pbiwgTWF0aC5tYXgoMjAsIGJveC55TWluIC0gNikpOwogICAgICB9KTsKCiAgICAgIHN0YXR1cy50ZXh0Q29udGVudCA9CiAgICAgICAgIkZhY2VzIGRldGVjdGVkOiAiICsgZmFjZXMubGVuZ3RoICsgIiB8IEJhY2tlbmQ6ICIgKyB0Zi5nZXRCYWNrZW5kKCk7CgogICAgICBhbmltYXRpb25JZCA9IHJlcXVlc3RBbmltYXRpb25GcmFtZShkZXRlY3RGYWNlcyk7CiAgICB9CgogICAgZnVuY3Rpb24gc3RvcERldGVjdGlvbigpIHsKICAgICAgcnVubmluZyA9IGZhbHNlOwoKICAgICAgaWYgKGFuaW1hdGlvbklkKSB7CiAgICAgICAgY2FuY2VsQW5pbWF0aW9uRnJhbWUoYW5pbWF0aW9uSWQpOwogICAgICAgIGFuaW1hdGlvbklkID0gbnVsbDsKICAgICAgfQoKICAgICAgaWYgKHN0cmVhbSkgewogICAgICAgIHN0cmVhbS5nZXRUcmFja3MoKS5mb3JFYWNoKHRyYWNrID0-IHRyYWNrLnN0b3AoKSk7CiAgICAgICAgc3RyZWFtID0gbnVsbDsKICAgICAgfQoKICAgICAgdmlkZW8uc3JjT2JqZWN0ID0gbnVsbDsKICAgICAgY29udGV4dC5jbGVhclJlY3QoMCwgMCwgY2FudmFzLndpZHRoLCBjYW52YXMuaGVpZ2h0KTsKICAgICAgc3RhcnRCdXR0b24uZGlzYWJsZWQgPSBmYWxzZTsKICAgICAgc3RvcEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7CiAgICAgIHN0YXR1cy50ZXh0Q29udGVudCA9ICJGYWNlIGRldGVjdGlvbiBzdG9wcGVkLiI7CiAgICB9CgogICAgc3RhcnRCdXR0b24uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCBzdGFydERldGVjdGlvbik7CiAgICBzdG9wQnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgc3RvcERldGVjdGlvbik7CiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigiYmVmb3JldW5sb2FkIiwgc3RvcERldGVjdGlvbik7CiAgPC9zY3JpcHQ-CjwvYm9keT4KPC9odG1sPg"
+      loading="lazy"
+      allow="camera"
+    ></iframe>
+
+    <p>
+      <a href="https://editor.learnwithchampak.live/samples/html/preview/#code=PCFET0NUWVBFIGh0bWw-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ-CiAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPgogIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KICA8dGl0bGU-VGVuc29yRmxvdy5qcyBGYWNlIERldGVjdGlvbjwvdGl0bGU-CgogIDxzY3JpcHQgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL0B0ZW5zb3JmbG93L3RmanNANC4yMi4wL2Rpc3QvdGYubWluLmpzIj48L3NjcmlwdD4KICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9AdGVuc29yZmxvdy1tb2RlbHMvZmFjZS1kZXRlY3Rpb25AMS4wLjMvZGlzdC9mYWNlLWRldGVjdGlvbi5taW4uanMiPjwvc2NyaXB0PgoKICA8c3R5bGU-CiAgICBib2R5IHsKICAgICAgcGFkZGluZzogMjBweDsKICAgICAgZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOwogICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICB9CgogICAgLmNhbWVyYSB7CiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsKICAgICAgd2lkdGg6IG1pbig2NDBweCwgMTAwJSk7CiAgICAgIG1hcmdpbjogYXV0bzsKICAgICAgYmFja2dyb3VuZDogIzE3MjAzMzsKICAgIH0KCiAgICB2aWRlbywgY2FudmFzIHsKICAgICAgZGlzcGxheTogYmxvY2s7CiAgICAgIHdpZHRoOiAxMDAlOwogICAgICBoZWlnaHQ6IGF1dG87CiAgICB9CgogICAgY2FudmFzIHsKICAgICAgcG9zaXRpb246IGFic29sdXRlOwogICAgICBpbnNldDogMDsKICAgIH0KCiAgICBidXR0b24gewogICAgICBtYXJnaW46IDEycHggNHB4OwogICAgICBwYWRkaW5nOiAxMHB4IDE2cHg7CiAgICAgIGZvbnQtc2l6ZTogMTZweDsKICAgIH0KCiAgICAjc3RhdHVzIHsKICAgICAgcGFkZGluZzogMTJweDsKICAgICAgYmFja2dyb3VuZDogI2VlZjZmZjsKICAgICAgYm9yZGVyLXJhZGl1czogOHB4OwogICAgfQogIDwvc3R5bGU-CjwvaGVhZD4KCjxib2R5PgogIDxoMT5UZW5zb3JGbG93LmpzIEZhY2UgRGV0ZWN0aW9uPC9oMT4KCiAgPGRpdiBjbGFzcz0iY2FtZXJhIj4KICAgIDx2aWRlbyBpZD0idmlkZW8iIGF1dG9wbGF5IHBsYXlzaW5saW5lIG11dGVkPjwvdmlkZW8-CiAgICA8Y2FudmFzIGlkPSJjYW52YXMiPjwvY2FudmFzPgogIDwvZGl2PgoKICA8YnV0dG9uIGlkPSJzdGFydEJ1dHRvbiIgdHlwZT0iYnV0dG9uIj5TdGFydCBGYWNlIERldGVjdGlvbjwvYnV0dG9uPgogIDxidXR0b24gaWQ9InN0b3BCdXR0b24iIHR5cGU9ImJ1dHRvbiIgZGlzYWJsZWQ-U3RvcDwvYnV0dG9uPgoKICA8ZGl2IGlkPSJzdGF0dXMiPk1vZGVsIG5vdCBsb2FkZWQuPC9kaXY-CgogIDxzY3JpcHQ-CiAgICBjb25zdCB2aWRlbyA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJ2aWRlbyIpOwogICAgY29uc3QgY2FudmFzID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImNhbnZhcyIpOwogICAgY29uc3QgY29udGV4dCA9IGNhbnZhcy5nZXRDb250ZXh0KCIyZCIpOwogICAgY29uc3Qgc3RhcnRCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhcnRCdXR0b24iKTsKICAgIGNvbnN0IHN0b3BCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RvcEJ1dHRvbiIpOwogICAgY29uc3Qgc3RhdHVzID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInN0YXR1cyIpOwoKICAgIGxldCBkZXRlY3RvciA9IG51bGw7CiAgICBsZXQgc3RyZWFtID0gbnVsbDsKICAgIGxldCBhbmltYXRpb25JZCA9IG51bGw7CiAgICBsZXQgcnVubmluZyA9IGZhbHNlOwoKICAgIGFzeW5jIGZ1bmN0aW9uIGxvYWREZXRlY3RvcigpIHsKICAgICAgc3RhdHVzLnRleHRDb250ZW50ID0gIkxvYWRpbmcgZmFjZSBkZXRlY3Rvci4uLiI7CiAgICAgIGF3YWl0IHRmLnJlYWR5KCk7CgogICAgICBkZXRlY3RvciA9IGF3YWl0IGZhY2VEZXRlY3Rpb24uY3JlYXRlRGV0ZWN0b3IoCiAgICAgICAgZmFjZURldGVjdGlvbi5TdXBwb3J0ZWRNb2RlbHMuTWVkaWFQaXBlRmFjZURldGVjdG9yLAogICAgICAgIHsKICAgICAgICAgIHJ1bnRpbWU6ICJ0ZmpzIiwKICAgICAgICAgIG1vZGVsVHlwZTogInNob3J0IiwKICAgICAgICAgIG1heEZhY2VzOiAxMAogICAgICAgIH0KICAgICAgKTsKICAgIH0KCiAgICBhc3luYyBmdW5jdGlvbiBzdGFydERldGVjdGlvbigpIHsKICAgICAgc3RhcnRCdXR0b24uZGlzYWJsZWQgPSB0cnVlOwoKICAgICAgdHJ5IHsKICAgICAgICBpZiAoIWRldGVjdG9yKSB7CiAgICAgICAgICBhd2FpdCBsb2FkRGV0ZWN0b3IoKTsKICAgICAgICB9CgogICAgICAgIHN0cmVhbSA9IGF3YWl0IG5hdmlnYXRvci5tZWRpYURldmljZXMuZ2V0VXNlck1lZGlhKHsKICAgICAgICAgIHZpZGVvOiB7IHdpZHRoOiB7IGlkZWFsOiA2NDAgfSwgaGVpZ2h0OiB7IGlkZWFsOiA0ODAgfSB9LAogICAgICAgICAgYXVkaW86IGZhbHNlCiAgICAgICAgfSk7CgogICAgICAgIHZpZGVvLnNyY09iamVjdCA9IHN0cmVhbTsKICAgICAgICBhd2FpdCB2aWRlby5wbGF5KCk7CgogICAgICAgIGNhbnZhcy53aWR0aCA9IHZpZGVvLnZpZGVvV2lkdGg7CiAgICAgICAgY2FudmFzLmhlaWdodCA9IHZpZGVvLnZpZGVvSGVpZ2h0OwoKICAgICAgICBydW5uaW5nID0gdHJ1ZTsKICAgICAgICBzdG9wQnV0dG9uLmRpc2FibGVkID0gZmFsc2U7CiAgICAgICAgZGV0ZWN0RmFjZXMoKTsKICAgICAgfSBjYXRjaCAoZXJyb3IpIHsKICAgICAgICBzdGF0dXMudGV4dENvbnRlbnQgPSAiQ291bGQgbm90IHN0YXJ0OiAiICsgZXJyb3IubWVzc2FnZTsKICAgICAgICBzdGFydEJ1dHRvbi5kaXNhYmxlZCA9IGZhbHNlOwogICAgICB9CiAgICB9CgogICAgYXN5bmMgZnVuY3Rpb24gZGV0ZWN0RmFjZXMoKSB7CiAgICAgIGlmICghcnVubmluZykgcmV0dXJuOwoKICAgICAgY29uc3QgZmFjZXMgPSBhd2FpdCBkZXRlY3Rvci5lc3RpbWF0ZUZhY2VzKHZpZGVvLCB7CiAgICAgICAgZmxpcEhvcml6b250YWw6IGZhbHNlCiAgICAgIH0pOwoKICAgICAgY29udGV4dC5jbGVhclJlY3QoMCwgMCwgY2FudmFzLndpZHRoLCBjYW52YXMuaGVpZ2h0KTsKICAgICAgY29udGV4dC5zdHJva2VTdHlsZSA9ICIjMDBmZjY2IjsKICAgICAgY29udGV4dC5maWxsU3R5bGUgPSAiIzAwZmY2NiI7CiAgICAgIGNvbnRleHQubGluZVdpZHRoID0gMzsKICAgICAgY29udGV4dC5mb250ID0gIjE4cHggQXJpYWwiOwoKICAgICAgZmFjZXMuZm9yRWFjaCgoZmFjZSwgaW5kZXgpID0-IHsKICAgICAgICBjb25zdCBib3ggPSBmYWNlLmJveDsKICAgICAgICBjb250ZXh0LnN0cm9rZVJlY3QoYm94LnhNaW4sIGJveC55TWluLCBib3gud2lkdGgsIGJveC5oZWlnaHQpOwogICAgICAgIGNvbnRleHQuZmlsbFRleHQoIkZhY2UgIiArIChpbmRleCArIDEpLCBib3gueE1pbiwgTWF0aC5tYXgoMjAsIGJveC55TWluIC0gNikpOwogICAgICB9KTsKCiAgICAgIHN0YXR1cy50ZXh0Q29udGVudCA9CiAgICAgICAgIkZhY2VzIGRldGVjdGVkOiAiICsgZmFjZXMubGVuZ3RoICsgIiB8IEJhY2tlbmQ6ICIgKyB0Zi5nZXRCYWNrZW5kKCk7CgogICAgICBhbmltYXRpb25JZCA9IHJlcXVlc3RBbmltYXRpb25GcmFtZShkZXRlY3RGYWNlcyk7CiAgICB9CgogICAgZnVuY3Rpb24gc3RvcERldGVjdGlvbigpIHsKICAgICAgcnVubmluZyA9IGZhbHNlOwoKICAgICAgaWYgKGFuaW1hdGlvbklkKSB7CiAgICAgICAgY2FuY2VsQW5pbWF0aW9uRnJhbWUoYW5pbWF0aW9uSWQpOwogICAgICAgIGFuaW1hdGlvbklkID0gbnVsbDsKICAgICAgfQoKICAgICAgaWYgKHN0cmVhbSkgewogICAgICAgIHN0cmVhbS5nZXRUcmFja3MoKS5mb3JFYWNoKHRyYWNrID0-IHRyYWNrLnN0b3AoKSk7CiAgICAgICAgc3RyZWFtID0gbnVsbDsKICAgICAgfQoKICAgICAgdmlkZW8uc3JjT2JqZWN0ID0gbnVsbDsKICAgICAgY29udGV4dC5jbGVhclJlY3QoMCwgMCwgY2FudmFzLndpZHRoLCBjYW52YXMuaGVpZ2h0KTsKICAgICAgc3RhcnRCdXR0b24uZGlzYWJsZWQgPSBmYWxzZTsKICAgICAgc3RvcEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7CiAgICAgIHN0YXR1cy50ZXh0Q29udGVudCA9ICJGYWNlIGRldGVjdGlvbiBzdG9wcGVkLiI7CiAgICB9CgogICAgc3RhcnRCdXR0b24uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCBzdGFydERldGVjdGlvbik7CiAgICBzdG9wQnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgc3RvcERldGVjdGlvbik7CiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigiYmVmb3JldW5sb2FkIiwgc3RvcERldGVjdGlvbik7CiAgPC9zY3JpcHQ-CjwvYm9keT4KPC9odG1sPg" target="_blank" rel="noopener noreferrer">
+        Open the face detection example in a new tab
+      </a>
+    </p>
+
+    <h2>Checkpoint</h2>
+
+    <ul>
+      <li>How is face detection different from face recognition?</li>
+      <li>What is a pretrained model?</li>
+      <li>What does <code>estimateFaces()</code> return?</li>
+      <li>Why is a canvas placed over the video?</li>
+      <li>Why must canvas and video dimensions match?</li>
+      <li>Why do we await each prediction?</li>
+    </ul>
+
+    <h2>Practice</h2>
+
+    <ol>
+      <li>Test the application with one, two and three faces.</li>
+      <li>Change the rectangle colour and line width.</li>
+      <li>Display “No face detected” when the array is empty.</li>
+      <li>Display a numbered label above each face.</li>
+      <li>Measure the time taken by one prediction.</li>
+    </ol>
+
+    <h2>Privacy rules</h2>
+
+    <ul>
+      <li>Ask permission before starting the camera.</li>
+      <li>Clearly show when detection is running.</li>
+      <li>Do not save frames without informed consent.</li>
+      <li>Do not treat a detector result as proof of identity.</li>
+    </ul>
+
+    <h2>Official links</h2>
+
+    <ul class="links">
+      <li><a href="https://www.tensorflow.org/js/models" target="_blank" rel="noopener noreferrer">TensorFlow.js pretrained models</a></li>
+      <li><a href="https://github.com/tensorflow/tfjs-models" target="_blank" rel="noopener noreferrer">Official TensorFlow.js models repository</a></li>
+      <li><a href="https://www.jsdelivr.com/package/npm/%40tensorflow-models/face-detection" target="_blank" rel="noopener noreferrer">Face-detection package</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/strokeRect" target="_blank" rel="noopener noreferrer">Canvas strokeRect()</a></li>
+    </ul>
+
+    <h2>Next lesson</h2>
+
+    <p>
+      Lesson 6 will improve this application into a Face Counter with
+      stable counts, performance measurements and detection controls.
+    </p>
+  </main>
+
+  <script>
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const context = canvas.getContext("2d");
+    const startButton = document.getElementById("startButton");
+    const stopButton = document.getElementById("stopButton");
+    const status = document.getElementById("status");
+
+    let detector = null;
+    let stream = null;
+    let animationId = null;
+    let running = false;
+
+    async function loadDetector() {
+      status.textContent = "Loading face detector...";
+      await tf.ready();
+
+      detector = await faceDetection.createDetector(
+        faceDetection.SupportedModels.MediaPipeFaceDetector,
+        {
+          runtime: "tfjs",
+          modelType: "short",
+          maxFaces: 10
+        }
+      );
+    }
+
+    async function startDetection() {
+      startButton.disabled = true;
+
+      try {
+        if (!navigator.mediaDevices?.getUserMedia) {
+          throw new Error("Camera access requires HTTPS or localhost.");
+        }
+
+        if (!detector) {
+          await loadDetector();
+        }
+
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: { ideal: 640 }, height: { ideal: 480 } },
+          audio: false
+        });
+
+        video.srcObject = stream;
+        await video.play();
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        running = true;
+        stopButton.disabled = false;
+        detectFaces();
+      } catch (error) {
+        status.textContent = "Could not start: " + error.message;
+        startButton.disabled = false;
+      }
+    }
+
+    async function detectFaces() {
+      if (!running) return;
+
+      try {
+        const startedAt = performance.now();
+        const faces = await detector.estimateFaces(video, {
+          flipHorizontal: false
+        });
+        const elapsed = performance.now() - startedAt;
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.strokeStyle = "#00ff66";
+        context.fillStyle = "#00ff66";
+        context.lineWidth = 3;
+        context.font = "18px Arial";
+
+        faces.forEach((face, index) => {
+          const box = face.box;
+          context.strokeRect(box.xMin, box.yMin, box.width, box.height);
+          context.fillText(
+            "Face " + (index + 1),
+            box.xMin,
+            Math.max(20, box.yMin - 6)
+          );
+        });
+
+        status.textContent =
+          "Faces: " + faces.length +
+          " | Prediction: " + elapsed.toFixed(0) + " ms" +
+          " | Backend: " + tf.getBackend();
+      } catch (error) {
+        status.textContent = "Detection error: " + error.message;
+        stopDetection();
+        return;
+      }
+
+      if (running) {
+        animationId = requestAnimationFrame(detectFaces);
+      }
+    }
+
+    function stopDetection() {
+      running = false;
+
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+
+      video.srcObject = null;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      startButton.disabled = false;
+      stopButton.disabled = true;
+      status.textContent = "Face detection stopped.";
+    }
+
+    startButton.addEventListener("click", startDetection);
+    stopButton.addEventListener("click", stopDetection);
+    window.addEventListener("beforeunload", stopDetection);
+  </script>
+</body>
+</html>

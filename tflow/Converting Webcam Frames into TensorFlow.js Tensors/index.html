@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Convert live webcam frames into TensorFlow.js tensors using tf.browser.fromPixels().">
+  <meta name="author" content="Champak Roy">
+  <title>Lesson 4: Converting Webcam Frames into Tensors</title>
+
+  <!-- TensorFlow.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #eef6ff;
+      color: #172033;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+    }
+
+    .container {
+      width: min(900px, 100%);
+      margin: auto;
+      padding: 30px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(20, 70, 120, 0.12);
+    }
+
+    h1, h2 { color: #0d47a1; }
+    h1 { margin-top: 0; }
+
+    .note, .warning {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 6px;
+    }
+
+    .note {
+      background: #e3f2fd;
+      border-left: 5px solid #1976d2;
+    }
+
+    .warning {
+      background: #fff4df;
+      border-left: 5px solid #e18a00;
+    }
+
+    code {
+      padding: 2px 5px;
+      background: #e7eff8;
+      color: #0f3e70;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+    }
+
+    pre {
+      padding: 18px;
+      overflow-x: auto;
+      background: #101827;
+      color: #e8f4ff;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    .demo {
+      margin: 24px 0;
+      padding: 20px;
+      background: #f8fbff;
+      border: 1px solid #bdd6ee;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    video {
+      width: min(640px, 100%);
+      min-height: 260px;
+      background: #172033;
+      border-radius: 10px;
+    }
+
+    button {
+      margin: 14px 4px 0;
+      padding: 11px 17px;
+      border: 0;
+      border-radius: 7px;
+      background: #1565c0;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled) { background: #0d47a1; }
+    button:disabled { background: #8b9aaa; cursor: not-allowed; }
+
+    button:focus-visible, a:focus-visible {
+      outline: 4px solid #90caf9;
+      outline-offset: 3px;
+    }
+
+    #result {
+      margin-top: 16px;
+      padding: 14px;
+      background: #101827;
+      color: #d9f8dd;
+      border-radius: 8px;
+      font-family: Consolas, monospace;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+
+    table {
+      width: 100%;
+      margin: 18px 0;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 11px;
+      border: 1px solid #c9d9e8;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { background: #e3f2fd; }
+
+    .editor-frame {
+      width: 100%;
+      height: 650px;
+      border: 1px solid #9bbbd8;
+      border-radius: 10px;
+      background: white;
+    }
+
+    a { color: #0d47a1; text-underline-offset: 3px; }
+    .links li { margin-bottom: 8px; }
+
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      .container { padding: 20px 16px; }
+      .editor-frame { height: 560px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Lesson 4: Converting Webcam Frames into TensorFlow.js Tensors</h1>
+
+    <p>
+      Lesson 3 displayed live webcam video. TensorFlow cannot directly
+      understand what we see on the screen. It needs the current video
+      frame as a tensor containing numerical pixel values.
+    </p>
+
+    <h2>1. From live video to numbers</h2>
+
+    <p>A live camera application follows this sequence:</p>
+
+    <pre><code>Camera → Video element → Current frame → Tensor → Machine-learning model</code></pre>
+
+    <p>
+      The video element continuously displays new frames. TensorFlow.js
+      can read the pixels visible in the current frame.
+    </p>
+
+    <h2>2. Adding TensorFlow.js</h2>
+
+    <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"&gt;&lt;/script&gt;</code></pre>
+
+    <h2>3. Converting the current frame</h2>
+
+    <pre><code>const frameTensor = tf.browser.fromPixels(video);</code></pre>
+
+    <p>
+      <code>tf.browser.fromPixels()</code> reads the visible pixels and
+      creates a rank-3 tensor.
+    </p>
+
+    <div class="note">
+      If the live video is 640 pixels wide and 480 pixels high, the tensor
+      normally has the shape <code>[480, 640, 3]</code>. Height comes first.
+    </div>
+
+    <h2>4. Understanding the tensor</h2>
+
+    <table>
+      <thead>
+        <tr><th>Property</th><th>Typical result</th><th>Meaning</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>shape</code></td><td>[480, 640, 3]</td><td>Height, width and RGB channels</td></tr>
+        <tr><td><code>rank</code></td><td>3</td><td>Three dimensions</td></tr>
+        <tr><td><code>dtype</code></td><td>int32</td><td>Integer pixel values</td></tr>
+        <tr><td><code>size</code></td><td>921,600</td><td>Total numerical values</td></tr>
+      </tbody>
+    </table>
+
+    <p>The number of values is calculated as:</p>
+
+    <pre><code>480 × 640 × 3 = 921,600</code></pre>
+
+    <h2>5. Wait until the video is ready</h2>
+
+    <p>
+      Do not convert the frame before the video has received camera data.
+      A simple check is:
+    </p>
+
+    <pre><code>if (video.readyState &lt; 2) {
+  console.log("The video frame is not ready.");
+  return;
+}</code></pre>
+
+    <h2>6. Dispose of every frame tensor</h2>
+
+    <p>
+      Webcam processing creates tensors repeatedly. Tensor memory must be
+      released as soon as a frame has been processed.
+    </p>
+
+    <pre><code>const frameTensor = tf.browser.fromPixels(video);
+
+// Inspect or process the frame here.
+
+frameTensor.dispose();</code></pre>
+
+    <div class="warning">
+      If a program creates 30 tensors every second and never disposes them,
+      memory usage will grow continuously. This is called a memory leak.
+    </div>
+
+    <p>TensorFlow.js can report the number of active tensors:</p>
+
+    <pre><code>console.log(tf.memory().numTensors);</code></pre>
+
+    <h2>7. Live example</h2>
+
+    <div class="demo">
+      <video id="video" autoplay playsinline muted></video>
+
+      <div>
+        <button id="startButton" type="button">Start Camera</button>
+        <button id="captureButton" type="button" disabled>Convert Frame to Tensor</button>
+        <button id="stopButton" type="button" disabled>Stop Camera</button>
+      </div>
+
+      <div id="result" aria-live="polite">Start the camera first.</div>
+    </div>
+
+    <h2>8. What happens when the button is selected?</h2>
+
+    <ol>
+      <li>The program checks that a video frame is ready.</li>
+      <li><code>fromPixels()</code> copies the frame pixels into a tensor.</li>
+      <li>The tensor's shape, rank, type and size are displayed.</li>
+      <li><code>dispose()</code> releases the tensor.</li>
+      <li>The active tensor count returns to its earlier value.</li>
+    </ol>
+
+    <h2>9. Preparing images for a model</h2>
+
+    <p>
+      Models often require a fixed image size and decimal values between
+      0 and 1. A later lesson will explain this preprocessing in detail.
+      The basic idea is:
+    </p>
+
+    <pre><code>const preparedFrame = tf.tidy(() =&gt; {
+  const frame = tf.browser.fromPixels(video);
+  const resized = tf.image.resizeBilinear(frame, [224, 224]);
+  return resized.toFloat().div(255);
+});
+
+preparedFrame.dispose();</code></pre>
+
+    <div class="note">
+      <code>tf.tidy()</code> automatically disposes intermediate tensors
+      created inside its function, except for the tensor that is returned.
+    </div>
+
+    <h2>10. Try the complete code</h2>
+
+    <p>
+      The example is loaded in the editor below. If the embedded preview
+      cannot request camera permission, open it in a new tab.
+    </p>
+
+    <iframe
+      class="editor-frame"
+      title="Webcam frame to TensorFlow.js tensor example"
+      src="https://editor.learnwithchampak.live/samples/html/preview/#code=PCFET0NUWVBFIGh0bWw-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ-CiAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPgogIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KICA8dGl0bGU-V2ViY2FtIEZyYW1lIHRvIFRlbnNvcjwvdGl0bGU-CgogIDwhLS0gVGVuc29yRmxvdy5qcyBDRE4gLS0-CiAgPHNjcmlwdCBzcmM9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vQHRlbnNvcmZsb3cvdGZqc0A0LjIyLjAvZGlzdC90Zi5taW4uanMiPjwvc2NyaXB0PgoKICA8c3R5bGU-CiAgICBib2R5IHsKICAgICAgcGFkZGluZzogMjBweDsKICAgICAgZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOwogICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICB9CgogICAgdmlkZW8gewogICAgICB3aWR0aDogbWluKDY0MHB4LCAxMDAlKTsKICAgICAgbWluLWhlaWdodDogMjQwcHg7CiAgICAgIGJhY2tncm91bmQ6ICMxNzIwMzM7CiAgICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7CiAgICB9CgogICAgYnV0dG9uIHsKICAgICAgbWFyZ2luOiAxMnB4IDRweDsKICAgICAgcGFkZGluZzogMTBweCAxNnB4OwogICAgICBmb250LXNpemU6IDE2cHg7CiAgICAgIGN1cnNvcjogcG9pbnRlcjsKICAgIH0KCiAgICBidXR0b246ZGlzYWJsZWQgeyBjdXJzb3I6IG5vdC1hbGxvd2VkOyB9CgogICAgI3Jlc3VsdCB7CiAgICAgIHBhZGRpbmc6IDE0cHg7CiAgICAgIGJhY2tncm91bmQ6ICNlZWY2ZmY7CiAgICAgIGJvcmRlci1yYWRpdXM6IDhweDsKICAgICAgZm9udC1mYW1pbHk6IENvbnNvbGFzLCBtb25vc3BhY2U7CiAgICAgIHdoaXRlLXNwYWNlOiBwcmUtd3JhcDsKICAgIH0KICA8L3N0eWxlPgo8L2hlYWQ-Cgo8Ym9keT4KICA8aDE-V2ViY2FtIEZyYW1lIHRvIFRlbnNvcjwvaDE-CgogIDx2aWRlbyBpZD0idmlkZW8iIGF1dG9wbGF5IHBsYXlzaW5saW5lIG11dGVkPjwvdmlkZW8-CgogIDxkaXY-CiAgICA8YnV0dG9uIGlkPSJzdGFydEJ1dHRvbiIgdHlwZT0iYnV0dG9uIj5TdGFydCBDYW1lcmE8L2J1dHRvbj4KICAgIDxidXR0b24gaWQ9ImNhcHR1cmVCdXR0b24iIHR5cGU9ImJ1dHRvbiIgZGlzYWJsZWQ-Q29udmVydCBGcmFtZSB0byBUZW5zb3I8L2J1dHRvbj4KICAgIDxidXR0b24gaWQ9InN0b3BCdXR0b24iIHR5cGU9ImJ1dHRvbiIgZGlzYWJsZWQ-U3RvcCBDYW1lcmE8L2J1dHRvbj4KICA8L2Rpdj4KCiAgPGRpdiBpZD0icmVzdWx0Ij5TdGFydCB0aGUgY2FtZXJhIGZpcnN0LjwvZGl2PgoKICA8c2NyaXB0PgogICAgY29uc3QgdmlkZW8gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgidmlkZW8iKTsKICAgIGNvbnN0IHN0YXJ0QnV0dG9uID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInN0YXJ0QnV0dG9uIik7CiAgICBjb25zdCBjYXB0dXJlQnV0dG9uID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImNhcHR1cmVCdXR0b24iKTsKICAgIGNvbnN0IHN0b3BCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RvcEJ1dHRvbiIpOwogICAgY29uc3QgcmVzdWx0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInJlc3VsdCIpOwoKICAgIGxldCBzdHJlYW0gPSBudWxsOwoKICAgIGFzeW5jIGZ1bmN0aW9uIHN0YXJ0Q2FtZXJhKCkgewogICAgICBpZiAoIW5hdmlnYXRvci5tZWRpYURldmljZXM_LmdldFVzZXJNZWRpYSkgewogICAgICAgIHJlc3VsdC50ZXh0Q29udGVudCA9ICJDYW1lcmEgYWNjZXNzIHJlcXVpcmVzIEhUVFBTIG9yIGxvY2FsaG9zdC4iOwogICAgICAgIHJldHVybjsKICAgICAgfQoKICAgICAgdHJ5IHsKICAgICAgICBzdHJlYW0gPSBhd2FpdCBuYXZpZ2F0b3IubWVkaWFEZXZpY2VzLmdldFVzZXJNZWRpYSh7CiAgICAgICAgICB2aWRlbzogeyB3aWR0aDogeyBpZGVhbDogNjQwIH0sIGhlaWdodDogeyBpZGVhbDogNDgwIH0gfSwKICAgICAgICAgIGF1ZGlvOiBmYWxzZQogICAgICAgIH0pOwoKICAgICAgICB2aWRlby5zcmNPYmplY3QgPSBzdHJlYW07CiAgICAgICAgYXdhaXQgdmlkZW8ucGxheSgpOwoKICAgICAgICBzdGFydEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7CiAgICAgICAgY2FwdHVyZUJ1dHRvbi5kaXNhYmxlZCA9IGZhbHNlOwogICAgICAgIHN0b3BCdXR0b24uZGlzYWJsZWQgPSBmYWxzZTsKICAgICAgICByZXN1bHQudGV4dENvbnRlbnQgPSAiQ2FtZXJhIHJlYWR5LiBDb252ZXJ0IGEgZnJhbWUgdG8gYSB0ZW5zb3IuIjsKICAgICAgfSBjYXRjaCAoZXJyb3IpIHsKICAgICAgICByZXN1bHQudGV4dENvbnRlbnQgPSAiQ2FtZXJhIGVycm9yOiAiICsgZXJyb3IubWVzc2FnZTsKICAgICAgfQogICAgfQoKICAgIGZ1bmN0aW9uIGNvbnZlcnRGcmFtZVRvVGVuc29yKCkgewogICAgICBpZiAodmlkZW8ucmVhZHlTdGF0ZSA8IDIpIHsKICAgICAgICByZXN1bHQudGV4dENvbnRlbnQgPSAiVGhlIHZpZGVvIGZyYW1lIGlzIG5vdCByZWFkeSB5ZXQuIjsKICAgICAgICByZXR1cm47CiAgICAgIH0KCiAgICAgIGNvbnN0IHRlbnNvcnNCZWZvcmUgPSB0Zi5tZW1vcnkoKS5udW1UZW5zb3JzOwogICAgICBjb25zdCBmcmFtZVRlbnNvciA9IHRmLmJyb3dzZXIuZnJvbVBpeGVscyh2aWRlbyk7CiAgICAgIGNvbnN0IHRlbnNvcnNEdXJpbmcgPSB0Zi5tZW1vcnkoKS5udW1UZW5zb3JzOwoKICAgICAgcmVzdWx0LnRleHRDb250ZW50ID0KICAgICAgICAiU2hhcGU6IFsiICsgZnJhbWVUZW5zb3Iuc2hhcGUuam9pbigiLCAiKSArICJdXG4iICsKICAgICAgICAiUmFuazogIiArIGZyYW1lVGVuc29yLnJhbmsgKyAiXG4iICsKICAgICAgICAiRGF0YSB0eXBlOiAiICsgZnJhbWVUZW5zb3IuZHR5cGUgKyAiXG4iICsKICAgICAgICAiVmFsdWVzOiAiICsgZnJhbWVUZW5zb3Iuc2l6ZSArICJcblxuIiArCiAgICAgICAgIlRlbnNvcnMgYmVmb3JlOiAiICsgdGVuc29yc0JlZm9yZSArICJcbiIgKwogICAgICAgICJUZW5zb3JzIHdoaWxlIGZyYW1lIGV4aXN0czogIiArIHRlbnNvcnNEdXJpbmc7CgogICAgICBmcmFtZVRlbnNvci5kaXNwb3NlKCk7CgogICAgICByZXN1bHQudGV4dENvbnRlbnQgKz0KICAgICAgICAiXG5UZW5zb3JzIGFmdGVyIGRpc3Bvc2U6ICIgKyB0Zi5tZW1vcnkoKS5udW1UZW5zb3JzOwogICAgfQoKICAgIGZ1bmN0aW9uIHN0b3BDYW1lcmEoKSB7CiAgICAgIGlmIChzdHJlYW0pIHsKICAgICAgICBzdHJlYW0uZ2V0VHJhY2tzKCkuZm9yRWFjaCh0cmFjayA9PiB0cmFjay5zdG9wKCkpOwogICAgICAgIHN0cmVhbSA9IG51bGw7CiAgICAgIH0KCiAgICAgIHZpZGVvLnNyY09iamVjdCA9IG51bGw7CiAgICAgIHN0YXJ0QnV0dG9uLmRpc2FibGVkID0gZmFsc2U7CiAgICAgIGNhcHR1cmVCdXR0b24uZGlzYWJsZWQgPSB0cnVlOwogICAgICBzdG9wQnV0dG9uLmRpc2FibGVkID0gdHJ1ZTsKICAgICAgcmVzdWx0LnRleHRDb250ZW50ID0gIkNhbWVyYSBzdG9wcGVkLiI7CiAgICB9CgogICAgc3RhcnRCdXR0b24uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCBzdGFydENhbWVyYSk7CiAgICBjYXB0dXJlQnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgY29udmVydEZyYW1lVG9UZW5zb3IpOwogICAgc3RvcEJ1dHRvbi5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsIHN0b3BDYW1lcmEpOwogICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImJlZm9yZXVubG9hZCIsIHN0b3BDYW1lcmEpOwogIDwvc2NyaXB0Pgo8L2JvZHk-CjwvaHRtbD4"
+      loading="lazy"
+      allow="camera"
+    ></iframe>
+
+    <p>
+      <a href="https://editor.learnwithchampak.live/samples/html/preview/#code=PCFET0NUWVBFIGh0bWw-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ-CiAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPgogIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KICA8dGl0bGU-V2ViY2FtIEZyYW1lIHRvIFRlbnNvcjwvdGl0bGU-CgogIDwhLS0gVGVuc29yRmxvdy5qcyBDRE4gLS0-CiAgPHNjcmlwdCBzcmM9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vQHRlbnNvcmZsb3cvdGZqc0A0LjIyLjAvZGlzdC90Zi5taW4uanMiPjwvc2NyaXB0PgoKICA8c3R5bGU-CiAgICBib2R5IHsKICAgICAgcGFkZGluZzogMjBweDsKICAgICAgZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOwogICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICB9CgogICAgdmlkZW8gewogICAgICB3aWR0aDogbWluKDY0MHB4LCAxMDAlKTsKICAgICAgbWluLWhlaWdodDogMjQwcHg7CiAgICAgIGJhY2tncm91bmQ6ICMxNzIwMzM7CiAgICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7CiAgICB9CgogICAgYnV0dG9uIHsKICAgICAgbWFyZ2luOiAxMnB4IDRweDsKICAgICAgcGFkZGluZzogMTBweCAxNnB4OwogICAgICBmb250LXNpemU6IDE2cHg7CiAgICAgIGN1cnNvcjogcG9pbnRlcjsKICAgIH0KCiAgICBidXR0b246ZGlzYWJsZWQgeyBjdXJzb3I6IG5vdC1hbGxvd2VkOyB9CgogICAgI3Jlc3VsdCB7CiAgICAgIHBhZGRpbmc6IDE0cHg7CiAgICAgIGJhY2tncm91bmQ6ICNlZWY2ZmY7CiAgICAgIGJvcmRlci1yYWRpdXM6IDhweDsKICAgICAgZm9udC1mYW1pbHk6IENvbnNvbGFzLCBtb25vc3BhY2U7CiAgICAgIHdoaXRlLXNwYWNlOiBwcmUtd3JhcDsKICAgIH0KICA8L3N0eWxlPgo8L2hlYWQ-Cgo8Ym9keT4KICA8aDE-V2ViY2FtIEZyYW1lIHRvIFRlbnNvcjwvaDE-CgogIDx2aWRlbyBpZD0idmlkZW8iIGF1dG9wbGF5IHBsYXlzaW5saW5lIG11dGVkPjwvdmlkZW8-CgogIDxkaXY-CiAgICA8YnV0dG9uIGlkPSJzdGFydEJ1dHRvbiIgdHlwZT0iYnV0dG9uIj5TdGFydCBDYW1lcmE8L2J1dHRvbj4KICAgIDxidXR0b24gaWQ9ImNhcHR1cmVCdXR0b24iIHR5cGU9ImJ1dHRvbiIgZGlzYWJsZWQ-Q29udmVydCBGcmFtZSB0byBUZW5zb3I8L2J1dHRvbj4KICAgIDxidXR0b24gaWQ9InN0b3BCdXR0b24iIHR5cGU9ImJ1dHRvbiIgZGlzYWJsZWQ-U3RvcCBDYW1lcmE8L2J1dHRvbj4KICA8L2Rpdj4KCiAgPGRpdiBpZD0icmVzdWx0Ij5TdGFydCB0aGUgY2FtZXJhIGZpcnN0LjwvZGl2PgoKICA8c2NyaXB0PgogICAgY29uc3QgdmlkZW8gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgidmlkZW8iKTsKICAgIGNvbnN0IHN0YXJ0QnV0dG9uID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInN0YXJ0QnV0dG9uIik7CiAgICBjb25zdCBjYXB0dXJlQnV0dG9uID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImNhcHR1cmVCdXR0b24iKTsKICAgIGNvbnN0IHN0b3BCdXR0b24gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RvcEJ1dHRvbiIpOwogICAgY29uc3QgcmVzdWx0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInJlc3VsdCIpOwoKICAgIGxldCBzdHJlYW0gPSBudWxsOwoKICAgIGFzeW5jIGZ1bmN0aW9uIHN0YXJ0Q2FtZXJhKCkgewogICAgICBpZiAoIW5hdmlnYXRvci5tZWRpYURldmljZXM_LmdldFVzZXJNZWRpYSkgewogICAgICAgIHJlc3VsdC50ZXh0Q29udGVudCA9ICJDYW1lcmEgYWNjZXNzIHJlcXVpcmVzIEhUVFBTIG9yIGxvY2FsaG9zdC4iOwogICAgICAgIHJldHVybjsKICAgICAgfQoKICAgICAgdHJ5IHsKICAgICAgICBzdHJlYW0gPSBhd2FpdCBuYXZpZ2F0b3IubWVkaWFEZXZpY2VzLmdldFVzZXJNZWRpYSh7CiAgICAgICAgICB2aWRlbzogeyB3aWR0aDogeyBpZGVhbDogNjQwIH0sIGhlaWdodDogeyBpZGVhbDogNDgwIH0gfSwKICAgICAgICAgIGF1ZGlvOiBmYWxzZQogICAgICAgIH0pOwoKICAgICAgICB2aWRlby5zcmNPYmplY3QgPSBzdHJlYW07CiAgICAgICAgYXdhaXQgdmlkZW8ucGxheSgpOwoKICAgICAgICBzdGFydEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7CiAgICAgICAgY2FwdHVyZUJ1dHRvbi5kaXNhYmxlZCA9IGZhbHNlOwogICAgICAgIHN0b3BCdXR0b24uZGlzYWJsZWQgPSBmYWxzZTsKICAgICAgICByZXN1bHQudGV4dENvbnRlbnQgPSAiQ2FtZXJhIHJlYWR5LiBDb252ZXJ0IGEgZnJhbWUgdG8gYSB0ZW5zb3IuIjsKICAgICAgfSBjYXRjaCAoZXJyb3IpIHsKICAgICAgICByZXN1bHQudGV4dENvbnRlbnQgPSAiQ2FtZXJhIGVycm9yOiAiICsgZXJyb3IubWVzc2FnZTsKICAgICAgfQogICAgfQoKICAgIGZ1bmN0aW9uIGNvbnZlcnRGcmFtZVRvVGVuc29yKCkgewogICAgICBpZiAodmlkZW8ucmVhZHlTdGF0ZSA8IDIpIHsKICAgICAgICByZXN1bHQudGV4dENvbnRlbnQgPSAiVGhlIHZpZGVvIGZyYW1lIGlzIG5vdCByZWFkeSB5ZXQuIjsKICAgICAgICByZXR1cm47CiAgICAgIH0KCiAgICAgIGNvbnN0IHRlbnNvcnNCZWZvcmUgPSB0Zi5tZW1vcnkoKS5udW1UZW5zb3JzOwogICAgICBjb25zdCBmcmFtZVRlbnNvciA9IHRmLmJyb3dzZXIuZnJvbVBpeGVscyh2aWRlbyk7CiAgICAgIGNvbnN0IHRlbnNvcnNEdXJpbmcgPSB0Zi5tZW1vcnkoKS5udW1UZW5zb3JzOwoKICAgICAgcmVzdWx0LnRleHRDb250ZW50ID0KICAgICAgICAiU2hhcGU6IFsiICsgZnJhbWVUZW5zb3Iuc2hhcGUuam9pbigiLCAiKSArICJdXG4iICsKICAgICAgICAiUmFuazogIiArIGZyYW1lVGVuc29yLnJhbmsgKyAiXG4iICsKICAgICAgICAiRGF0YSB0eXBlOiAiICsgZnJhbWVUZW5zb3IuZHR5cGUgKyAiXG4iICsKICAgICAgICAiVmFsdWVzOiAiICsgZnJhbWVUZW5zb3Iuc2l6ZSArICJcblxuIiArCiAgICAgICAgIlRlbnNvcnMgYmVmb3JlOiAiICsgdGVuc29yc0JlZm9yZSArICJcbiIgKwogICAgICAgICJUZW5zb3JzIHdoaWxlIGZyYW1lIGV4aXN0czogIiArIHRlbnNvcnNEdXJpbmc7CgogICAgICBmcmFtZVRlbnNvci5kaXNwb3NlKCk7CgogICAgICByZXN1bHQudGV4dENvbnRlbnQgKz0KICAgICAgICAiXG5UZW5zb3JzIGFmdGVyIGRpc3Bvc2U6ICIgKyB0Zi5tZW1vcnkoKS5udW1UZW5zb3JzOwogICAgfQoKICAgIGZ1bmN0aW9uIHN0b3BDYW1lcmEoKSB7CiAgICAgIGlmIChzdHJlYW0pIHsKICAgICAgICBzdHJlYW0uZ2V0VHJhY2tzKCkuZm9yRWFjaCh0cmFjayA9PiB0cmFjay5zdG9wKCkpOwogICAgICAgIHN0cmVhbSA9IG51bGw7CiAgICAgIH0KCiAgICAgIHZpZGVvLnNyY09iamVjdCA9IG51bGw7CiAgICAgIHN0YXJ0QnV0dG9uLmRpc2FibGVkID0gZmFsc2U7CiAgICAgIGNhcHR1cmVCdXR0b24uZGlzYWJsZWQgPSB0cnVlOwogICAgICBzdG9wQnV0dG9uLmRpc2FibGVkID0gdHJ1ZTsKICAgICAgcmVzdWx0LnRleHRDb250ZW50ID0gIkNhbWVyYSBzdG9wcGVkLiI7CiAgICB9CgogICAgc3RhcnRCdXR0b24uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCBzdGFydENhbWVyYSk7CiAgICBjYXB0dXJlQnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgY29udmVydEZyYW1lVG9UZW5zb3IpOwogICAgc3RvcEJ1dHRvbi5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsIHN0b3BDYW1lcmEpOwogICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImJlZm9yZXVubG9hZCIsIHN0b3BDYW1lcmEpOwogIDwvc2NyaXB0Pgo8L2JvZHk-CjwvaHRtbD4" target="_blank" rel="noopener noreferrer">
+        Open the webcam tensor example in a new tab
+      </a>
+    </p>
+
+    <h2>Checkpoint</h2>
+
+    <ul>
+      <li>What does <code>tf.browser.fromPixels(video)</code> return?</li>
+      <li>Why does an RGB frame normally have rank 3?</li>
+      <li>Why is the shape written as height, width, channels?</li>
+      <li>Why must a frame tensor be disposed?</li>
+      <li>What does <code>tf.memory().numTensors</code> show?</li>
+      <li>Why should the program check <code>video.readyState</code>?</li>
+    </ul>
+
+    <h2>Practice</h2>
+
+    <ol>
+      <li>Start the camera and convert several different frames.</li>
+      <li>Check that the tensor count returns after every disposal.</li>
+      <li>Change the requested camera resolution and compare the tensor shape.</li>
+      <li>Calculate the expected tensor size before selecting the button.</li>
+      <li>Display the TensorFlow.js backend using <code>tf.getBackend()</code>.</li>
+    </ol>
+
+    <h2>Official links</h2>
+
+    <ul class="links">
+      <li><a href="https://js.tensorflow.org/api/latest/#browser.fromPixels" target="_blank" rel="noopener noreferrer">tf.browser.fromPixels()</a></li>
+      <li><a href="https://www.tensorflow.org/js/guide/tensors_operations" target="_blank" rel="noopener noreferrer">Tensors and operations</a></li>
+      <li><a href="https://www.tensorflow.org/js/guide/platform_environment" target="_blank" rel="noopener noreferrer">TensorFlow.js platform and memory management</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank" rel="noopener noreferrer">MediaDevices.getUserMedia()</a></li>
+    </ul>
+
+    <h2>Next lesson</h2>
+
+    <p>
+      Lesson 5 will use a pretrained model to detect faces in images and
+      webcam frames—the first complete computer-vision application in the series.
+    </p>
+  </main>
+
+  <script>
+    const video = document.getElementById("video");
+    const startButton = document.getElementById("startButton");
+    const captureButton = document.getElementById("captureButton");
+    const stopButton = document.getElementById("stopButton");
+    const result = document.getElementById("result");
+
+    let stream = null;
+
+    async function startCamera() {
+      if (!navigator.mediaDevices?.getUserMedia) {
+        result.textContent =
+          "Camera access is unavailable. Open this page through HTTPS or localhost.";
+        return;
+      }
+
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: { ideal: 640 }, height: { ideal: 480 } },
+          audio: false
+        });
+
+        video.srcObject = stream;
+        await video.play();
+
+        startButton.disabled = true;
+        captureButton.disabled = false;
+        stopButton.disabled = false;
+        result.textContent = "Camera ready. Convert a frame to a tensor.";
+      } catch (error) {
+        result.textContent =
+          "Camera could not start (" + error.name + "): " + error.message;
+      }
+    }
+
+    function convertFrameToTensor() {
+      if (video.readyState < 2) {
+        result.textContent = "The video frame is not ready yet.";
+        return;
+      }
+
+      const tensorsBefore = tf.memory().numTensors;
+      const frameTensor = tf.browser.fromPixels(video);
+      const tensorsDuring = tf.memory().numTensors;
+
+      result.textContent =
+        "Shape: [" + frameTensor.shape.join(", ") + "]\n" +
+        "Rank: " + frameTensor.rank + "\n" +
+        "Data type: " + frameTensor.dtype + "\n" +
+        "Number of values: " + frameTensor.size + "\n" +
+        "Backend: " + tf.getBackend() + "\n\n" +
+        "Tensors before: " + tensorsBefore + "\n" +
+        "Tensors while frame exists: " + tensorsDuring;
+
+      frameTensor.dispose();
+
+      result.textContent +=
+        "\nTensors after dispose: " + tf.memory().numTensors;
+    }
+
+    function stopCamera() {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+
+      video.srcObject = null;
+      startButton.disabled = false;
+      captureButton.disabled = true;
+      stopButton.disabled = true;
+      result.textContent = "Camera stopped.";
+    }
+
+    startButton.addEventListener("click", startCamera);
+    captureButton.addEventListener("click", convertFrameToTensor);
+    stopButton.addEventListener("click", stopCamera);
+    window.addEventListener("beforeunload", stopCamera);
+  </script>
+</body>
+</html>

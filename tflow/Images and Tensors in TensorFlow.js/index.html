@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how images become tensors in TensorFlow.js using pixels, RGB values and tf.browser.fromPixels().">
+  <meta name="author" content="Champak Roy">
+  <title>Lesson 2: Images and Tensors in TensorFlow.js</title>
+
+  <!-- TensorFlow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #eef6ff;
+      color: #172033;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+    }
+
+    .container {
+      width: min(850px, 100%);
+      margin: auto;
+      padding: 30px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(20, 70, 120, 0.12);
+    }
+
+    h1, h2 { color: #0d47a1; }
+    h1 { margin-top: 0; }
+
+    .note {
+      margin: 20px 0;
+      padding: 15px;
+      background: #e3f2fd;
+      border-left: 5px solid #1976d2;
+      border-radius: 6px;
+    }
+
+    code {
+      padding: 2px 5px;
+      background: #e7eff8;
+      color: #0f3e70;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+    }
+
+    pre {
+      padding: 18px;
+      overflow-x: auto;
+      background: #101827;
+      color: #e8f4ff;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    .demo {
+      margin: 24px 0;
+      padding: 20px;
+      background: #f8fbff;
+      border: 1px solid #bdd6ee;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    canvas {
+      width: 240px;
+      height: 240px;
+      max-width: 100%;
+      border: 3px solid #172033;
+      image-rendering: pixelated;
+    }
+
+    button {
+      display: block;
+      margin: 18px auto 0;
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 7px;
+      background: #1565c0;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #0d47a1; }
+
+    button:focus-visible {
+      outline: 4px solid #90caf9;
+      outline-offset: 3px;
+    }
+
+    #output {
+      margin-top: 18px;
+      padding: 16px;
+      background: #101827;
+      color: #d9f8dd;
+      border-radius: 8px;
+      text-align: left;
+      white-space: pre-wrap;
+      font-family: Consolas, monospace;
+    }
+
+    .editor-frame {
+      width: 100%;
+      height: 620px;
+      margin-top: 18px;
+      border: 1px solid #9bbbd8;
+      border-radius: 10px;
+      background: white;
+    }
+
+    table {
+      width: 100%;
+      margin: 18px 0;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 11px;
+      border: 1px solid #c9d9e8;
+      text-align: left;
+    }
+
+    th { background: #e3f2fd; }
+
+    .links li { margin-bottom: 8px; }
+
+    a {
+      color: #0d47a1;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      .container { padding: 20px 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Lesson 2: Images and Tensors in TensorFlow.js</h1>
+
+    <p>
+      In Lesson 1, we learned that a tensor is a container of numbers.
+      In this lesson, we will see how TensorFlow.js converts an image
+      into a tensor.
+    </p>
+
+    <h2>1. An image is made of pixels</h2>
+
+    <p>
+      A digital image is made of many small coloured squares called
+      <strong>pixels</strong>. Pixel means <strong>picture element</strong>.
+    </p>
+
+    <p>
+      An image that is 640 pixels wide and 480 pixels high contains:
+    </p>
+
+    <pre><code>640 × 480 = 307,200 pixels</code></pre>
+
+    <h2>2. RGB colour values</h2>
+
+    <p>
+      A colour pixel is commonly represented by three numbers:
+    </p>
+
+    <ul>
+      <li><strong>R</strong> — Red</li>
+      <li><strong>G</strong> — Green</li>
+      <li><strong>B</strong> — Blue</li>
+    </ul>
+
+    <p>
+      Each number is normally between <code>0</code> and <code>255</code>.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Colour</th>
+          <th>RGB value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Red</td><td>[255, 0, 0]</td></tr>
+        <tr><td>Green</td><td>[0, 255, 0]</td></tr>
+        <tr><td>Blue</td><td>[0, 0, 255]</td></tr>
+        <tr><td>White</td><td>[255, 255, 255]</td></tr>
+        <tr><td>Black</td><td>[0, 0, 0]</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <strong>Important:</strong> A computer does not see a face, eye or
+      smile in an image. It initially sees numbers representing pixels.
+    </div>
+
+    <h2>3. Image tensor shape</h2>
+
+    <p>
+      TensorFlow.js normally represents a colour image with this shape:
+    </p>
+
+    <pre><code>[height, width, 3]</code></pre>
+
+    <p>The final <code>3</code> represents the Red, Green and Blue channels.</p>
+
+    <p>For example, a 640 × 480 colour image has the tensor shape:</p>
+
+    <pre><code>[480, 640, 3]</code></pre>
+
+    <div class="note">
+      Height comes before width in the tensor shape.
+    </div>
+
+    <h2>4. Converting an image into a tensor</h2>
+
+    <p>
+      TensorFlow.js provides <code>tf.browser.fromPixels()</code> to read
+      pixels from an HTML image, video or canvas.
+    </p>
+
+    <pre><code>const imageTensor = tf.browser.fromPixels(image);</code></pre>
+
+    <p>
+      The following example uses a very small 3 × 3 image so that the
+      pixels are easy to understand.
+    </p>
+
+    <div class="demo">
+      <canvas
+        id="pixelImage"
+        width="3"
+        height="3"
+        aria-label="A three by three image containing coloured pixels">
+      </canvas>
+
+      <button id="convertButton" type="button">
+        Convert Image to Tensor
+      </button>
+
+      <div id="output" aria-live="polite">
+Select the button to inspect the image tensor.
+      </div>
+    </div>
+
+    <h2>5. The main JavaScript</h2>
+
+    <pre><code>const canvas = document.getElementById("pixelImage");
+
+const imageTensor = tf.browser.fromPixels(canvas);
+
+console.log(imageTensor.shape);
+console.log(imageTensor.rank);
+console.log(imageTensor.dtype);
+
+imageTensor.dispose();</code></pre>
+
+    <h2>6. Understanding the result</h2>
+
+    <p>The example produces:</p>
+
+    <pre><code>Shape: [3, 3, 3]
+Rank: 3
+Data type: int32</code></pre>
+
+    <ul>
+      <li>The first <code>3</code> is the image height.</li>
+      <li>The second <code>3</code> is the image width.</li>
+      <li>The third <code>3</code> represents RGB colour channels.</li>
+      <li>Rank 3 means that the tensor has three dimensions.</li>
+    </ul>
+
+    <h2>7. Try the code in the HTML editor</h2>
+
+    <p>
+      The complete example is loaded in the editor below. Change the
+      colours or the canvas size, run the program again and observe how
+      the tensor changes.
+    </p>
+
+    <iframe
+      id="lessonEditor"
+      class="editor-frame"
+      title="Interactive HTML editor containing the Lesson 2 TensorFlow.js example"
+      loading="lazy"
+      allow="clipboard-write"
+    ></iframe>
+
+    <p>
+      <a
+        id="openEditorLink"
+        href="https://editor.learnwithchampak.live/samples/html/preview/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open this example in a new tab
+      </a>
+    </p>
+
+    <h2>Checkpoint</h2>
+
+    <p>Before continuing, make sure you can explain:</p>
+
+    <ul>
+      <li>What a pixel is</li>
+      <li>What RGB means</li>
+      <li>Why pixel values are numbers</li>
+      <li>Why an image tensor has the shape [height, width, 3]</li>
+      <li>What <code>tf.browser.fromPixels()</code> does</li>
+    </ul>
+
+    <h2>Practice</h2>
+
+    <ol>
+      <li>Run the example and check its shape.</li>
+      <li>Change one of the pixel colours in the JavaScript.</li>
+      <li>Change the canvas to 4 × 4 and observe the new tensor shape.</li>
+    </ol>
+
+    <h2>Official links</h2>
+
+    <ul class="links">
+      <li>
+        <a href="https://www.tensorflow.org/js" target="_blank" rel="noopener noreferrer">
+          TensorFlow.js official website
+        </a>
+      </li>
+      <li>
+        <a href="https://js.tensorflow.org/api/latest/#browser.fromPixels" target="_blank" rel="noopener noreferrer">
+          tf.browser.fromPixels() documentation
+        </a>
+      </li>
+      <li>
+        <a href="https://www.tensorflow.org/js/tutorials" target="_blank" rel="noopener noreferrer">
+          TensorFlow.js tutorials
+        </a>
+      </li>
+    </ul>
+
+    <h2>Next lesson</h2>
+
+    <p>
+      In Lesson 3, we will learn how to access the webcam from an HTML
+      page and display its live video.
+    </p>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("pixelImage");
+    const context = canvas.getContext("2d");
+    const convertButton = document.getElementById("convertButton");
+    const output = document.getElementById("output");
+    const lessonEditor = document.getElementById("lessonEditor");
+    const openEditorLink = document.getElementById("openEditorLink");
+
+    const colours = [
+      ["red", "green", "blue"],
+      ["white", "black", "yellow"],
+      ["cyan", "magenta", "orange"]
+    ];
+
+    for (let row = 0; row < 3; row++) {
+      for (let column = 0; column < 3; column++) {
+        context.fillStyle = colours[row][column];
+        context.fillRect(column, row, 1, 1);
+      }
+    }
+
+    function convertImageToTensor() {
+      const imageTensor = tf.browser.fromPixels(canvas);
+
+      output.textContent =
+        "Image converted successfully!\n\n" +
+        "Shape: [" + imageTensor.shape.join(", ") + "]\n" +
+        "Rank: " + imageTensor.rank + "\n" +
+        "Data type: " + imageTensor.dtype + "\n" +
+        "Number of values: " + imageTensor.size;
+
+      imageTensor.dispose();
+    }
+
+    convertButton.addEventListener("click", convertImageToTensor);
+
+    const editorCode = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image to Tensor</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"><\/script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+
+    canvas {
+      width: 240px;
+      height: 240px;
+      border: 3px solid black;
+      image-rendering: pixelated;
+    }
+
+    button {
+      display: block;
+      margin: 18px auto;
+      padding: 10px 16px;
+      font-size: 16px;
+    }
+
+    #result {
+      white-space: pre-wrap;
+      font-family: Consolas, monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>Image to Tensor</h1>
+
+  <canvas id="image" width="3" height="3"></canvas>
+
+  <button id="convertButton">Convert Image to Tensor</button>
+
+  <div id="result">Select the button.</div>
+
+  <script>
+    const canvas = document.getElementById("image");
+    const context = canvas.getContext("2d");
+    const result = document.getElementById("result");
+
+    const colours = [
+      ["red", "green", "blue"],
+      ["white", "black", "yellow"],
+      ["cyan", "magenta", "orange"]
+    ];
+
+    for (let row = 0; row < 3; row++) {
+      for (let column = 0; column < 3; column++) {
+        context.fillStyle = colours[row][column];
+        context.fillRect(column, row, 1, 1);
+      }
+    }
+
+    document.getElementById("convertButton").addEventListener("click", () => {
+      const imageTensor = tf.browser.fromPixels(canvas);
+
+      result.textContent =
+        "Shape: [" + imageTensor.shape.join(", ") + "]\\n" +
+        "Rank: " + imageTensor.rank + "\\n" +
+        "Data type: " + imageTensor.dtype + "\\n" +
+        "Number of values: " + imageTensor.size;
+
+      imageTensor.dispose();
+    });
+  <\/script>
+</body>
+</html>`;
+
+    function toBase64Url(text) {
+      const bytes = new TextEncoder().encode(text);
+      let binary = "";
+
+      bytes.forEach((byte) => {
+        binary += String.fromCharCode(byte);
+      });
+
+      return btoa(binary)
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/g, "");
+    }
+
+    const editorUrl =
+      "https://editor.learnwithchampak.live/samples/html/preview/#code=PCFET0NUWVBFIGh0bWw-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ-CiAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPgoKICA8bWV0YQogICAgbmFtZT0idmlld3BvcnQiCiAgICBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIgogID4KCiAgPHRpdGxlPkltYWdlIHRvIFRlbnNvcjwvdGl0bGU-CgogIDwhLS0gVGVuc29yRmxvdy5qcyBDRE4gLS0-CiAgPHNjcmlwdCBzcmM9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vQHRlbnNvcmZsb3cvdGZqc0A0LjIyLjAvZGlzdC90Zi5taW4uanMiPjwvc2NyaXB0PgoKICA8c3R5bGU-CiAgICBib2R5IHsKICAgICAgcGFkZGluZzogMjBweDsKICAgICAgZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOwogICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7CiAgICB9CgogICAgY2FudmFzIHsKICAgICAgd2lkdGg6IDI0MHB4OwogICAgICBoZWlnaHQ6IDI0MHB4OwogICAgICBib3JkZXI6IDNweCBzb2xpZCBibGFjazsKICAgICAgaW1hZ2UtcmVuZGVyaW5nOiBwaXhlbGF0ZWQ7CiAgICB9CgogICAgYnV0dG9uIHsKICAgICAgZGlzcGxheTogYmxvY2s7CiAgICAgIG1hcmdpbjogMThweCBhdXRvOwogICAgICBwYWRkaW5nOiAxMHB4IDE2cHg7CiAgICAgIGZvbnQtc2l6ZTogMTZweDsKICAgICAgY3Vyc29yOiBwb2ludGVyOwogICAgfQoKICAgICNyZXN1bHQgewogICAgICBwYWRkaW5nOiAxNXB4OwogICAgICBiYWNrZ3JvdW5kOiAjZWVmNmZmOwogICAgICBib3JkZXItcmFkaXVzOiA4cHg7CiAgICAgIGZvbnQtZmFtaWx5OiBDb25zb2xhcywgbW9ub3NwYWNlOwogICAgICB3aGl0ZS1zcGFjZTogcHJlLXdyYXA7CiAgICB9CiAgPC9zdHlsZT4KPC9oZWFkPgoKPGJvZHk-CiAgPGgxPkltYWdlIHRvIFRlbnNvcjwvaDE-CgogIDxwPgogICAgVGhpcyBpcyBhIDMgw5cgMyBwaXhlbCBpbWFnZS4KICA8L3A-CgogIDxjYW52YXMKICAgIGlkPSJpbWFnZSIKICAgIHdpZHRoPSIzIgogICAgaGVpZ2h0PSIzIgogID48L2NhbnZhcz4KCiAgPGJ1dHRvbiBpZD0iY29udmVydEJ1dHRvbiIgdHlwZT0iYnV0dG9uIj4KICAgIENvbnZlcnQgSW1hZ2UgdG8gVGVuc29yCiAgPC9idXR0b24-CgogIDxkaXYgaWQ9InJlc3VsdCI-CiAgICBTZWxlY3QgdGhlIGJ1dHRvbi4KICA8L2Rpdj4KCiAgPHNjcmlwdD4KICAgIGNvbnN0IGNhbnZhcyA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJpbWFnZSIpOwogICAgY29uc3QgY29udGV4dCA9IGNhbnZhcy5nZXRDb250ZXh0KCIyZCIpOwogICAgY29uc3QgcmVzdWx0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInJlc3VsdCIpOwogICAgY29uc3QgY29udmVydEJ1dHRvbiA9CiAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJjb252ZXJ0QnV0dG9uIik7CgogICAgY29uc3QgY29sb3VycyA9IFsKICAgICAgWyJyZWQiLCAiZ3JlZW4iLCAiYmx1ZSJdLAogICAgICBbIndoaXRlIiwgImJsYWNrIiwgInllbGxvdyJdLAogICAgICBbImN5YW4iLCAibWFnZW50YSIsICJvcmFuZ2UiXQogICAgXTsKCiAgICAvLyBEcmF3IHRoZSAzIMOXIDMgcGl4ZWwgaW1hZ2UuCiAgICBmb3IgKGxldCByb3cgPSAwOyByb3cgPCAzOyByb3crKykgewogICAgICBmb3IgKGxldCBjb2x1bW4gPSAwOyBjb2x1bW4gPCAzOyBjb2x1bW4rKykgewogICAgICAgIGNvbnRleHQuZmlsbFN0eWxlID0gY29sb3Vyc1tyb3ddW2NvbHVtbl07CgogICAgICAgIGNvbnRleHQuZmlsbFJlY3QoCiAgICAgICAgICBjb2x1bW4sCiAgICAgICAgICByb3csCiAgICAgICAgICAxLAogICAgICAgICAgMQogICAgICAgICk7CiAgICAgIH0KICAgIH0KCiAgICBmdW5jdGlvbiBjb252ZXJ0SW1hZ2VUb1RlbnNvcigpIHsKICAgICAgLy8gQ29udmVydCB0aGUgY2FudmFzIHBpeGVscyBpbnRvIGEgdGVuc29yLgogICAgICBjb25zdCBpbWFnZVRlbnNvciA9CiAgICAgICAgdGYuYnJvd3Nlci5mcm9tUGl4ZWxzKGNhbnZhcyk7CgogICAgICByZXN1bHQudGV4dENvbnRlbnQgPQogICAgICAgICJTaGFwZTogWyIgKwogICAgICAgIGltYWdlVGVuc29yLnNoYXBlLmpvaW4oIiwgIikgKwogICAgICAgICJdXG4iICsKICAgICAgICAiUmFuazogIiArCiAgICAgICAgaW1hZ2VUZW5zb3IucmFuayArCiAgICAgICAgIlxuIiArCiAgICAgICAgIkRhdGEgdHlwZTogIiArCiAgICAgICAgaW1hZ2VUZW5zb3IuZHR5cGUgKwogICAgICAgICJcbiIgKwogICAgICAgICJOdW1iZXIgb2YgdmFsdWVzOiAiICsKICAgICAgICBpbWFnZVRlbnNvci5zaXplOwoKICAgICAgLy8gUmVsZWFzZSB0aGUgdGVuc29yIGZyb20gbWVtb3J5LgogICAgICBpbWFnZVRlbnNvci5kaXNwb3NlKCk7CiAgICB9CgogICAgY29udmVydEJ1dHRvbi5hZGRFdmVudExpc3RlbmVyKAogICAgICAiY2xpY2siLAogICAgICBjb252ZXJ0SW1hZ2VUb1RlbnNvcgogICAgKTsKICA8L3NjcmlwdD4KPC9ib2R5Pgo8L2h0bWw-";
+
+    lessonEditor.src = editorUrl;
+    openEditorLink.href = editorUrl;
+  </script>
+</body>
+</html>

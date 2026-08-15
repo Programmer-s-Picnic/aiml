@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn how to access, display, switch and stop a webcam using JavaScript getUserMedia().">
+  <meta name="author" content="Champak Roy">
+  <title>Lesson 3: Accessing the Webcam with JavaScript</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #eef6ff;
+      color: #172033;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+    }
+
+    .container {
+      width: min(900px, 100%);
+      margin: auto;
+      padding: 30px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(20, 70, 120, 0.12);
+    }
+
+    h1, h2 { color: #0d47a1; }
+    h1 { margin-top: 0; }
+
+    .note, .warning {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 6px;
+    }
+
+    .note {
+      background: #e3f2fd;
+      border-left: 5px solid #1976d2;
+    }
+
+    .warning {
+      background: #fff4df;
+      border-left: 5px solid #e18a00;
+    }
+
+    code {
+      padding: 2px 5px;
+      background: #e7eff8;
+      color: #0f3e70;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+    }
+
+    pre {
+      padding: 18px;
+      overflow-x: auto;
+      background: #101827;
+      color: #e8f4ff;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    .demo {
+      margin: 24px 0;
+      padding: 20px;
+      background: #f8fbff;
+      border: 1px solid #bdd6ee;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    video {
+      width: min(640px, 100%);
+      min-height: 260px;
+      background: #172033;
+      border-radius: 10px;
+    }
+
+    button {
+      margin: 14px 4px 0;
+      padding: 11px 17px;
+      border: 0;
+      border-radius: 7px;
+      background: #1565c0;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled) { background: #0d47a1; }
+    button:disabled { background: #8b9aaa; cursor: not-allowed; }
+
+    button:focus-visible, a:focus-visible {
+      outline: 4px solid #90caf9;
+      outline-offset: 3px;
+    }
+
+    #status {
+      margin-top: 16px;
+      padding: 13px;
+      background: #e3f2fd;
+      border-radius: 7px;
+    }
+
+    table {
+      width: 100%;
+      margin: 18px 0;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 11px;
+      border: 1px solid #c9d9e8;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th { background: #e3f2fd; }
+
+    .editor-frame {
+      width: 100%;
+      height: 650px;
+      border: 1px solid #9bbbd8;
+      border-radius: 10px;
+      background: white;
+    }
+
+    a { color: #0d47a1; text-underline-offset: 3px; }
+    .links li { margin-bottom: 8px; }
+
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      .container { padding: 20px 16px; }
+      .editor-frame { height: 560px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Lesson 3: Accessing the Webcam with JavaScript</h1>
+
+    <p>
+      In Lesson 2, we converted an image into a tensor. Before we can
+      process live images, we must learn how to access the webcam and
+      display its video in a webpage.
+    </p>
+
+    <div class="note">
+      This lesson uses ordinary JavaScript. TensorFlow.js will return in
+      Lesson 4, when we convert webcam frames into tensors.
+    </div>
+
+    <h2>1. The video element</h2>
+
+    <p>An HTML <code>video</code> element displays the camera stream:</p>
+
+    <pre><code>&lt;video id="video" autoplay playsinline muted&gt;&lt;/video&gt;</code></pre>
+
+    <table>
+      <thead>
+        <tr><th>Attribute</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>autoplay</code></td><td>Starts displaying the stream automatically.</td></tr>
+        <tr><td><code>playsinline</code></td><td>Keeps video inside the webpage on mobile devices.</td></tr>
+        <tr><td><code>muted</code></td><td>Prevents sound and helps autoplay rules; this lesson does not request audio.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>2. Requesting camera access</h2>
+
+    <p>
+      The browser provides connected media devices through
+      <code>navigator.mediaDevices</code>. We request the camera using
+      <code>getUserMedia()</code>.
+    </p>
+
+    <pre><code>const stream = await navigator.mediaDevices.getUserMedia({
+  video: true,
+  audio: false
+});
+
+video.srcObject = stream;</code></pre>
+
+    <p>
+      The browser asks the user for permission. If permission is granted,
+      the returned <code>MediaStream</code> is assigned to the video element.
+    </p>
+
+    <div class="warning">
+      <strong>Important:</strong> Camera access normally requires HTTPS or
+      localhost. The user must grant permission. A camera inside an iframe
+      must also be explicitly allowed by that iframe.
+    </div>
+
+    <h2>3. Front and rear cameras</h2>
+
+    <p>On devices with multiple cameras, <code>facingMode</code> expresses a preference:</p>
+
+    <pre><code>// Front or user-facing camera
+facingMode: "user"
+
+// Rear or outward-facing camera
+facingMode: "environment"</code></pre>
+
+    <p>
+      A desktop computer may have only one camera, so switching cameras
+      may simply reopen the same device.
+    </p>
+
+    <h2>4. Requesting a suitable resolution</h2>
+
+    <pre><code>video: {
+  width: { ideal: 640 },
+  height: { ideal: 480 },
+  facingMode: { ideal: "user" }
+}</code></pre>
+
+    <p>
+      The word <code>ideal</code> means that the browser should try to use
+      these values, but it may select another supported resolution.
+    </p>
+
+    <h2>5. Stopping the camera</h2>
+
+    <p>
+      A stream contains one or more tracks. We stop every track to release
+      the camera:
+    </p>
+
+    <pre><code>stream.getTracks().forEach(track =&gt; track.stop());
+video.srcObject = null;</code></pre>
+
+    <div class="note">
+      Always provide a visible Stop Camera button. Stopping the tracks is
+      better than merely hiding the video because it releases the device.
+    </div>
+
+    <h2>6. Live example</h2>
+
+    <div class="demo">
+      <video id="video" autoplay playsinline muted></video>
+
+      <div>
+        <button id="startButton" type="button">Start Camera</button>
+        <button id="switchButton" type="button" disabled>Switch Camera</button>
+        <button id="stopButton" type="button" disabled>Stop Camera</button>
+      </div>
+
+      <div id="status" aria-live="polite">Camera is stopped.</div>
+    </div>
+
+    <h2>7. Understanding common errors</h2>
+
+    <table>
+      <thead>
+        <tr><th>Error</th><th>Likely meaning</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>NotAllowedError</code></td><td>Permission was denied or camera access is blocked.</td></tr>
+        <tr><td><code>NotFoundError</code></td><td>No suitable camera was found.</td></tr>
+        <tr><td><code>NotReadableError</code></td><td>The camera may be busy or unavailable.</td></tr>
+        <tr><td><code>OverconstrainedError</code></td><td>The requested camera settings cannot be satisfied.</td></tr>
+        <tr><td><code>TypeError</code></td><td>The page may not be running in a secure context.</td></tr>
+      </tbody>
+    </table>
+
+    <h2>8. Try the complete code</h2>
+
+    <p>
+      The example is loaded in the editor below. Camera permission inside
+      an embedded preview depends on the editor's iframe permissions. If it
+      is blocked, use the new-tab link immediately below the editor.
+    </p>
+
+    <iframe
+      class="editor-frame"
+      title="JavaScript webcam example in the Learn With Champak editor"
+      src="https://editor.learnwithchampak.live/samples/html/preview/#code=PCFET0NUWVBFIGh0bWw-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ-CiAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPgogIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KICA8dGl0bGU-V2ViY2FtIHdpdGggSmF2YVNjcmlwdDwvdGl0bGU-CiAgPHN0eWxlPgogICAgYm9keSB7CiAgICAgIHBhZGRpbmc6IDIwcHg7CiAgICAgIGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsKICAgICAgdGV4dC1hbGlnbjogY2VudGVyOwogICAgfQoKICAgIHZpZGVvIHsKICAgICAgd2lkdGg6IG1pbig2NDBweCwgMTAwJSk7CiAgICAgIG1pbi1oZWlnaHQ6IDI0MHB4OwogICAgICBiYWNrZ3JvdW5kOiAjMTcyMDMzOwogICAgICBib3JkZXItcmFkaXVzOiAxMHB4OwogICAgfQoKICAgIGJ1dHRvbiB7CiAgICAgIG1hcmdpbjogMTJweCA1cHg7CiAgICAgIHBhZGRpbmc6IDEwcHggMTZweDsKICAgICAgZm9udC1zaXplOiAxNnB4OwogICAgICBjdXJzb3I6IHBvaW50ZXI7CiAgICB9CgogICAgI3N0YXR1cyB7CiAgICAgIHBhZGRpbmc6IDEycHg7CiAgICAgIGJhY2tncm91bmQ6ICNlZWY2ZmY7CiAgICAgIGJvcmRlci1yYWRpdXM6IDhweDsKICAgIH0KICA8L3N0eWxlPgo8L2hlYWQ-Cgo8Ym9keT4KICA8aDE-V2ViY2FtIHdpdGggSmF2YVNjcmlwdDwvaDE-CgogIDxwPkFsbG93IGNhbWVyYSBhY2Nlc3Mgd2hlbiB0aGUgYnJvd3NlciBhc2tzLjwvcD4KCiAgPHZpZGVvIGlkPSJ2aWRlbyIgYXV0b3BsYXkgcGxheXNpbmxpbmUgbXV0ZWQ-PC92aWRlbz4KCiAgPGRpdj4KICAgIDxidXR0b24gaWQ9InN0YXJ0QnV0dG9uIiB0eXBlPSJidXR0b24iPlN0YXJ0IENhbWVyYTwvYnV0dG9uPgogICAgPGJ1dHRvbiBpZD0ic3dpdGNoQnV0dG9uIiB0eXBlPSJidXR0b24iIGRpc2FibGVkPlN3aXRjaCBDYW1lcmE8L2J1dHRvbj4KICAgIDxidXR0b24gaWQ9InN0b3BCdXR0b24iIHR5cGU9ImJ1dHRvbiIgZGlzYWJsZWQ-U3RvcCBDYW1lcmE8L2J1dHRvbj4KICA8L2Rpdj4KCiAgPGRpdiBpZD0ic3RhdHVzIj5DYW1lcmEgaXMgc3RvcHBlZC48L2Rpdj4KCiAgPHNjcmlwdD4KICAgIGNvbnN0IHZpZGVvID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInZpZGVvIik7CiAgICBjb25zdCBzdGFydEJ1dHRvbiA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzdGFydEJ1dHRvbiIpOwogICAgY29uc3Qgc3dpdGNoQnV0dG9uID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInN3aXRjaEJ1dHRvbiIpOwogICAgY29uc3Qgc3RvcEJ1dHRvbiA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzdG9wQnV0dG9uIik7CiAgICBjb25zdCBzdGF0dXMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhdHVzIik7CgogICAgbGV0IHN0cmVhbSA9IG51bGw7CiAgICBsZXQgZmFjaW5nTW9kZSA9ICJ1c2VyIjsKCiAgICBhc3luYyBmdW5jdGlvbiBzdGFydENhbWVyYSgpIHsKICAgICAgc3RvcENhbWVyYSgpOwoKICAgICAgaWYgKCFuYXZpZ2F0b3IubWVkaWFEZXZpY2VzPy5nZXRVc2VyTWVkaWEpIHsKICAgICAgICBzdGF0dXMudGV4dENvbnRlbnQgPSAiQ2FtZXJhIGFjY2VzcyBpcyBub3Qgc3VwcG9ydGVkIGhlcmUuIFVzZSBIVFRQUyBvciBsb2NhbGhvc3QuIjsKICAgICAgICByZXR1cm47CiAgICAgIH0KCiAgICAgIHRyeSB7CiAgICAgICAgc3RhdHVzLnRleHRDb250ZW50ID0gIlJlcXVlc3RpbmcgY2FtZXJhIHBlcm1pc3Npb24uLi4iOwoKICAgICAgICBzdHJlYW0gPSBhd2FpdCBuYXZpZ2F0b3IubWVkaWFEZXZpY2VzLmdldFVzZXJNZWRpYSh7CiAgICAgICAgICB2aWRlbzogewogICAgICAgICAgICB3aWR0aDogeyBpZGVhbDogNjQwIH0sCiAgICAgICAgICAgIGhlaWdodDogeyBpZGVhbDogNDgwIH0sCiAgICAgICAgICAgIGZhY2luZ01vZGU6IHsgaWRlYWw6IGZhY2luZ01vZGUgfQogICAgICAgICAgfSwKICAgICAgICAgIGF1ZGlvOiBmYWxzZQogICAgICAgIH0pOwoKICAgICAgICB2aWRlby5zcmNPYmplY3QgPSBzdHJlYW07CiAgICAgICAgYXdhaXQgdmlkZW8ucGxheSgpOwoKICAgICAgICBzdGFydEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7CiAgICAgICAgc3dpdGNoQnV0dG9uLmRpc2FibGVkID0gZmFsc2U7CiAgICAgICAgc3RvcEJ1dHRvbi5kaXNhYmxlZCA9IGZhbHNlOwoKICAgICAgICBzdGF0dXMudGV4dENvbnRlbnQgPQogICAgICAgICAgIkNhbWVyYSBzdGFydGVkOiAiICsgdmlkZW8udmlkZW9XaWR0aCArICIgw5cgIiArIHZpZGVvLnZpZGVvSGVpZ2h0OwogICAgICB9IGNhdGNoIChlcnJvcikgewogICAgICAgIHN0YXR1cy50ZXh0Q29udGVudCA9ICJDYW1lcmEgY291bGQgbm90IHN0YXJ0OiAiICsgZXJyb3IubWVzc2FnZTsKICAgICAgfQogICAgfQoKICAgIGZ1bmN0aW9uIHN0b3BDYW1lcmEoKSB7CiAgICAgIGlmIChzdHJlYW0pIHsKICAgICAgICBzdHJlYW0uZ2V0VHJhY2tzKCkuZm9yRWFjaCh0cmFjayA9PiB0cmFjay5zdG9wKCkpOwogICAgICAgIHN0cmVhbSA9IG51bGw7CiAgICAgIH0KCiAgICAgIHZpZGVvLnNyY09iamVjdCA9IG51bGw7CiAgICAgIHN0YXJ0QnV0dG9uLmRpc2FibGVkID0gZmFsc2U7CiAgICAgIHN3aXRjaEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7CiAgICAgIHN0b3BCdXR0b24uZGlzYWJsZWQgPSB0cnVlOwogICAgICBzdGF0dXMudGV4dENvbnRlbnQgPSAiQ2FtZXJhIGlzIHN0b3BwZWQuIjsKICAgIH0KCiAgICBhc3luYyBmdW5jdGlvbiBzd2l0Y2hDYW1lcmEoKSB7CiAgICAgIGZhY2luZ01vZGUgPSBmYWNpbmdNb2RlID09PSAidXNlciIgPyAiZW52aXJvbm1lbnQiIDogInVzZXIiOwogICAgICBhd2FpdCBzdGFydENhbWVyYSgpOwogICAgfQoKICAgIHN0YXJ0QnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgc3RhcnRDYW1lcmEpOwogICAgc3dpdGNoQnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgc3dpdGNoQ2FtZXJhKTsKICAgIHN0b3BCdXR0b24uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCBzdG9wQ2FtZXJhKTsKICAgIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCJiZWZvcmV1bmxvYWQiLCBzdG9wQ2FtZXJhKTsKICA8L3NjcmlwdD4KPC9ib2R5Pgo8L2h0bWw-"
+      loading="lazy"
+      allow="camera"
+    ></iframe>
+
+    <p>
+      <a href="https://editor.learnwithchampak.live/samples/html/preview/#code=PCFET0NUWVBFIGh0bWw-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ-CiAgPG1ldGEgY2hhcnNldD0iVVRGLTgiPgogIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4KICA8dGl0bGU-V2ViY2FtIHdpdGggSmF2YVNjcmlwdDwvdGl0bGU-CiAgPHN0eWxlPgogICAgYm9keSB7CiAgICAgIHBhZGRpbmc6IDIwcHg7CiAgICAgIGZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsKICAgICAgdGV4dC1hbGlnbjogY2VudGVyOwogICAgfQoKICAgIHZpZGVvIHsKICAgICAgd2lkdGg6IG1pbig2NDBweCwgMTAwJSk7CiAgICAgIG1pbi1oZWlnaHQ6IDI0MHB4OwogICAgICBiYWNrZ3JvdW5kOiAjMTcyMDMzOwogICAgICBib3JkZXItcmFkaXVzOiAxMHB4OwogICAgfQoKICAgIGJ1dHRvbiB7CiAgICAgIG1hcmdpbjogMTJweCA1cHg7CiAgICAgIHBhZGRpbmc6IDEwcHggMTZweDsKICAgICAgZm9udC1zaXplOiAxNnB4OwogICAgICBjdXJzb3I6IHBvaW50ZXI7CiAgICB9CgogICAgI3N0YXR1cyB7CiAgICAgIHBhZGRpbmc6IDEycHg7CiAgICAgIGJhY2tncm91bmQ6ICNlZWY2ZmY7CiAgICAgIGJvcmRlci1yYWRpdXM6IDhweDsKICAgIH0KICA8L3N0eWxlPgo8L2hlYWQ-Cgo8Ym9keT4KICA8aDE-V2ViY2FtIHdpdGggSmF2YVNjcmlwdDwvaDE-CgogIDxwPkFsbG93IGNhbWVyYSBhY2Nlc3Mgd2hlbiB0aGUgYnJvd3NlciBhc2tzLjwvcD4KCiAgPHZpZGVvIGlkPSJ2aWRlbyIgYXV0b3BsYXkgcGxheXNpbmxpbmUgbXV0ZWQ-PC92aWRlbz4KCiAgPGRpdj4KICAgIDxidXR0b24gaWQ9InN0YXJ0QnV0dG9uIiB0eXBlPSJidXR0b24iPlN0YXJ0IENhbWVyYTwvYnV0dG9uPgogICAgPGJ1dHRvbiBpZD0ic3dpdGNoQnV0dG9uIiB0eXBlPSJidXR0b24iIGRpc2FibGVkPlN3aXRjaCBDYW1lcmE8L2J1dHRvbj4KICAgIDxidXR0b24gaWQ9InN0b3BCdXR0b24iIHR5cGU9ImJ1dHRvbiIgZGlzYWJsZWQ-U3RvcCBDYW1lcmE8L2J1dHRvbj4KICA8L2Rpdj4KCiAgPGRpdiBpZD0ic3RhdHVzIj5DYW1lcmEgaXMgc3RvcHBlZC48L2Rpdj4KCiAgPHNjcmlwdD4KICAgIGNvbnN0IHZpZGVvID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInZpZGVvIik7CiAgICBjb25zdCBzdGFydEJ1dHRvbiA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzdGFydEJ1dHRvbiIpOwogICAgY29uc3Qgc3dpdGNoQnV0dG9uID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInN3aXRjaEJ1dHRvbiIpOwogICAgY29uc3Qgc3RvcEJ1dHRvbiA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzdG9wQnV0dG9uIik7CiAgICBjb25zdCBzdGF0dXMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhdHVzIik7CgogICAgbGV0IHN0cmVhbSA9IG51bGw7CiAgICBsZXQgZmFjaW5nTW9kZSA9ICJ1c2VyIjsKCiAgICBhc3luYyBmdW5jdGlvbiBzdGFydENhbWVyYSgpIHsKICAgICAgc3RvcENhbWVyYSgpOwoKICAgICAgaWYgKCFuYXZpZ2F0b3IubWVkaWFEZXZpY2VzPy5nZXRVc2VyTWVkaWEpIHsKICAgICAgICBzdGF0dXMudGV4dENvbnRlbnQgPSAiQ2FtZXJhIGFjY2VzcyBpcyBub3Qgc3VwcG9ydGVkIGhlcmUuIFVzZSBIVFRQUyBvciBsb2NhbGhvc3QuIjsKICAgICAgICByZXR1cm47CiAgICAgIH0KCiAgICAgIHRyeSB7CiAgICAgICAgc3RhdHVzLnRleHRDb250ZW50ID0gIlJlcXVlc3RpbmcgY2FtZXJhIHBlcm1pc3Npb24uLi4iOwoKICAgICAgICBzdHJlYW0gPSBhd2FpdCBuYXZpZ2F0b3IubWVkaWFEZXZpY2VzLmdldFVzZXJNZWRpYSh7CiAgICAgICAgICB2aWRlbzogewogICAgICAgICAgICB3aWR0aDogeyBpZGVhbDogNjQwIH0sCiAgICAgICAgICAgIGhlaWdodDogeyBpZGVhbDogNDgwIH0sCiAgICAgICAgICAgIGZhY2luZ01vZGU6IHsgaWRlYWw6IGZhY2luZ01vZGUgfQogICAgICAgICAgfSwKICAgICAgICAgIGF1ZGlvOiBmYWxzZQogICAgICAgIH0pOwoKICAgICAgICB2aWRlby5zcmNPYmplY3QgPSBzdHJlYW07CiAgICAgICAgYXdhaXQgdmlkZW8ucGxheSgpOwoKICAgICAgICBzdGFydEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7CiAgICAgICAgc3dpdGNoQnV0dG9uLmRpc2FibGVkID0gZmFsc2U7CiAgICAgICAgc3RvcEJ1dHRvbi5kaXNhYmxlZCA9IGZhbHNlOwoKICAgICAgICBzdGF0dXMudGV4dENvbnRlbnQgPQogICAgICAgICAgIkNhbWVyYSBzdGFydGVkOiAiICsgdmlkZW8udmlkZW9XaWR0aCArICIgw5cgIiArIHZpZGVvLnZpZGVvSGVpZ2h0OwogICAgICB9IGNhdGNoIChlcnJvcikgewogICAgICAgIHN0YXR1cy50ZXh0Q29udGVudCA9ICJDYW1lcmEgY291bGQgbm90IHN0YXJ0OiAiICsgZXJyb3IubWVzc2FnZTsKICAgICAgfQogICAgfQoKICAgIGZ1bmN0aW9uIHN0b3BDYW1lcmEoKSB7CiAgICAgIGlmIChzdHJlYW0pIHsKICAgICAgICBzdHJlYW0uZ2V0VHJhY2tzKCkuZm9yRWFjaCh0cmFjayA9PiB0cmFjay5zdG9wKCkpOwogICAgICAgIHN0cmVhbSA9IG51bGw7CiAgICAgIH0KCiAgICAgIHZpZGVvLnNyY09iamVjdCA9IG51bGw7CiAgICAgIHN0YXJ0QnV0dG9uLmRpc2FibGVkID0gZmFsc2U7CiAgICAgIHN3aXRjaEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7CiAgICAgIHN0b3BCdXR0b24uZGlzYWJsZWQgPSB0cnVlOwogICAgICBzdGF0dXMudGV4dENvbnRlbnQgPSAiQ2FtZXJhIGlzIHN0b3BwZWQuIjsKICAgIH0KCiAgICBhc3luYyBmdW5jdGlvbiBzd2l0Y2hDYW1lcmEoKSB7CiAgICAgIGZhY2luZ01vZGUgPSBmYWNpbmdNb2RlID09PSAidXNlciIgPyAiZW52aXJvbm1lbnQiIDogInVzZXIiOwogICAgICBhd2FpdCBzdGFydENhbWVyYSgpOwogICAgfQoKICAgIHN0YXJ0QnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgc3RhcnRDYW1lcmEpOwogICAgc3dpdGNoQnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgc3dpdGNoQ2FtZXJhKTsKICAgIHN0b3BCdXR0b24uYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCBzdG9wQ2FtZXJhKTsKICAgIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCJiZWZvcmV1bmxvYWQiLCBzdG9wQ2FtZXJhKTsKICA8L3NjcmlwdD4KPC9ib2R5Pgo8L2h0bWw-" target="_blank" rel="noopener noreferrer">
+        Open the webcam example in a new tab
+      </a>
+    </p>
+
+    <h2>Checkpoint</h2>
+
+    <ul>
+      <li>What does <code>getUserMedia()</code> do?</li>
+      <li>Why does the browser ask for permission?</li>
+      <li>What is a <code>MediaStream</code>?</li>
+      <li>What is the purpose of <code>facingMode</code>?</li>
+      <li>How do we stop and release the camera?</li>
+      <li>Why should a camera page use HTTPS or localhost?</li>
+    </ul>
+
+    <h2>Practice</h2>
+
+    <ol>
+      <li>Start and stop the camera.</li>
+      <li>Try switching between front and rear cameras on a phone.</li>
+      <li>Change the ideal resolution to 1280 × 720.</li>
+      <li>Display the actual <code>videoWidth</code> and <code>videoHeight</code>.</li>
+      <li>Change the status message when permission is denied.</li>
+    </ol>
+
+    <h2>Privacy rules</h2>
+
+    <ul>
+      <li>Request the camera only after the user selects a button.</li>
+      <li>Clearly indicate when the camera is active.</li>
+      <li>Always provide a Stop Camera button.</li>
+      <li>Do not save or upload images without clear consent.</li>
+    </ul>
+
+    <h2>Official links</h2>
+
+    <ul class="links">
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank" rel="noopener noreferrer">MediaDevices.getUserMedia()</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video" target="_blank" rel="noopener noreferrer">HTML video element</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStream" target="_blank" rel="noopener noreferrer">MediaStream</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/stop" target="_blank" rel="noopener noreferrer">MediaStreamTrack.stop()</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints/facingMode" target="_blank" rel="noopener noreferrer">facingMode</a></li>
+    </ul>
+
+    <h2>Next lesson</h2>
+
+    <p>
+      Lesson 4 will convert a live webcam frame into a TensorFlow.js tensor
+      using <code>tf.browser.fromPixels(video)</code>.
+    </p>
+  </main>
+
+  <script>
+    const video = document.getElementById("video");
+    const startButton = document.getElementById("startButton");
+    const switchButton = document.getElementById("switchButton");
+    const stopButton = document.getElementById("stopButton");
+    const status = document.getElementById("status");
+
+    let stream = null;
+    let facingMode = "user";
+
+    async function startCamera() {
+      stopCamera(false);
+
+      if (!navigator.mediaDevices?.getUserMedia) {
+        status.textContent =
+          "Camera access is unavailable. Open this page through HTTPS or localhost.";
+        return;
+      }
+
+      try {
+        status.textContent = "Requesting camera permission...";
+
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            width: { ideal: 640 },
+            height: { ideal: 480 },
+            facingMode: { ideal: facingMode }
+          },
+          audio: false
+        });
+
+        video.srcObject = stream;
+        await video.play();
+
+        startButton.disabled = true;
+        switchButton.disabled = false;
+        stopButton.disabled = false;
+
+        status.textContent =
+          "Camera active: " + video.videoWidth + " × " + video.videoHeight;
+      } catch (error) {
+        status.textContent =
+          "Camera could not start (" + error.name + "): " + error.message;
+      }
+    }
+
+    function stopCamera(showMessage = true) {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+
+      video.srcObject = null;
+      startButton.disabled = false;
+      switchButton.disabled = true;
+      stopButton.disabled = true;
+
+      if (showMessage) {
+        status.textContent = "Camera is stopped.";
+      }
+    }
+
+    async function switchCamera() {
+      facingMode = facingMode === "user" ? "environment" : "user";
+      await startCamera();
+    }
+
+    startButton.addEventListener("click", startCamera);
+    switchButton.addEventListener("click", switchCamera);
+    stopButton.addEventListener("click", () => stopCamera());
+    window.addEventListener("beforeunload", () => stopCamera(false));
+  </script>
+</body>
+</html>
