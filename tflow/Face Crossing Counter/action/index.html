@@ -68,8 +68,8 @@
 
     const LINE_POSITION = 0.5;
     const DEAD_ZONE = 28;
-    const MAX_MATCH_DISTANCE = 120;
-    const MAX_MISSED_FRAMES = 12;
+    const MAX_MATCH_DISTANCE = 240;
+    const MAX_MISSED_FRAMES = 30;
 
     function sideOfLine(x, lineX) {
       if (x < lineX - DEAD_ZONE) return "left";
@@ -120,6 +120,9 @@
           else rightToLeft++;
           leftToRightText.textContent = leftToRight;
           rightToLeftText.textContent = rightToLeft;
+          statusText.textContent = bestTrack.stableSide === "left"
+            ? "Crossing recorded: Left → Right"
+            : "Crossing recorded: Right → Left";
         }
         if (newSide !== "middle") bestTrack.stableSide = newSide;
       }
@@ -130,12 +133,30 @@
 
     function draw(lineX) {
       context.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Keep the directional totals visible inside the camera view.
+      context.save();
+      context.fillStyle = "rgba(5, 22, 40, 0.82)";
+      context.fillRect(12, 12, 250, 76);
+      context.fillStyle = "white";
+      context.font = "bold 19px Arial";
+      context.fillText("Left → Right: " + leftToRight, 26, 42);
+      context.fillText("Right → Left: " + rightToLeft, 26, 72);
+      context.restore();
+
       context.strokeStyle = "#1e88e5";
       context.lineWidth = 4;
       context.beginPath();
       context.moveTo(lineX, 0);
       context.lineTo(lineX, canvas.height);
       context.stroke();
+
+      context.save();
+      context.fillStyle = "#ffffff";
+      context.font = "bold 16px Arial";
+      context.fillText("LEFT", Math.max(15, lineX - 70), canvas.height - 18);
+      context.fillText("RIGHT", lineX + 15, canvas.height - 18);
+      context.restore();
 
       context.font = "16px Arial";
       for (const track of tracks) {
@@ -144,7 +165,11 @@
         context.lineWidth = 3;
         context.strokeRect(box.xMin, box.yMin, box.width, box.height);
         context.fillStyle = "#00e676";
-        context.fillText("Face " + track.id, box.xMin, Math.max(18, box.yMin - 7));
+        context.fillText(
+          "Face " + track.id + " | " + sideOfLine(track.x, lineX).toUpperCase(),
+          box.xMin,
+          Math.max(18, box.yMin - 7)
+        );
         context.beginPath();
         context.arc(track.x, track.y, 5, 0, Math.PI * 2);
         context.fill();
