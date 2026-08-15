@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TensorFlow.js Face Detection</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection@1.0.3/dist/face-detection.min.js"></script>
+
+  <style>
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .camera {
+      position: relative;
+      width: min(640px, 100%);
+      margin: auto;
+      background: #172033;
+    }
+
+    video, canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    canvas {
+      position: absolute;
+      inset: 0;
+    }
+
+    button {
+      margin: 12px 4px;
+      padding: 10px 16px;
+      font-size: 16px;
+    }
+
+    #status {
+      padding: 12px;
+      background: #eef6ff;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>TensorFlow.js Face Detection</h1>
+
+  <div class="camera">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <button id="startButton" type="button">Start Face Detection</button>
+  <button id="stopButton" type="button" disabled>Stop</button>
+
+  <div id="status">Model not loaded.</div>
+
+  <script>
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const context = canvas.getContext("2d");
+    const startButton = document.getElementById("startButton");
+    const stopButton = document.getElementById("stopButton");
+    const status = document.getElementById("status");
+
+    let detector = null;
+    let stream = null;
+    let animationId = null;
+    let running = false;
+
+    async function loadDetector() {
+      status.textContent = "Loading face detector...";
+      await tf.ready();
+
+      detector = await faceDetection.createDetector(
+        faceDetection.SupportedModels.MediaPipeFaceDetector,
+        {
+          runtime: "tfjs",
+          modelType: "short",
+          maxFaces: 10
+        }
+      );
+    }
+
+    async function startDetection() {
+      startButton.disabled = true;
+
+      try {
+        if (!detector) {
+          await loadDetector();
+        }
+
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: { ideal: 640 }, height: { ideal: 480 } },
+          audio: false
+        });
+
+        video.srcObject = stream;
+        await video.play();
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        running = true;
+        stopButton.disabled = false;
+        detectFaces();
+      } catch (error) {
+        status.textContent = "Could not start: " + error.message;
+        startButton.disabled = false;
+      }
+    }
+
+    async function detectFaces() {
+      if (!running) return;
+
+      const faces = await detector.estimateFaces(video, {
+        flipHorizontal: false
+      });
+
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.strokeStyle = "#00ff66";
+      context.fillStyle = "#00ff66";
+      context.lineWidth = 3;
+      context.font = "18px Arial";
+
+      faces.forEach((face, index) => {
+        const box = face.box;
+        context.strokeRect(box.xMin, box.yMin, box.width, box.height);
+        context.fillText("Face " + (index + 1), box.xMin, Math.max(20, box.yMin - 6));
+      });
+
+      status.textContent =
+        "Faces detected: " + faces.length + " | Backend: " + tf.getBackend();
+
+      animationId = requestAnimationFrame(detectFaces);
+    }
+
+    function stopDetection() {
+      running = false;
+
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+
+      video.srcObject = null;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      startButton.disabled = false;
+      stopButton.disabled = true;
+      status.textContent = "Face detection stopped.";
+    }
+
+    startButton.addEventListener("click", startDetection);
+    stopButton.addEventListener("click", stopDetection);
+    window.addEventListener("beforeunload", stopDetection);
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>TensorFlow.js Hello World</title>
+
+  <!-- TensorFlow.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+
+  <style>
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    button {
+      margin: 18px auto;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #result {
+      padding: 15px;
+      background: #eef6ff;
+      border-radius: 8px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>TensorFlow.js Hello World</h1>
+
+  <p>
+    This example creates two tensors and adds them.
+  </p>
+
+  <button id="runButton" type="button">
+    Run TensorFlow
+  </button>
+
+  <div id="result">
+    Select the button.
+  </div>
+
+  <script>
+    const runButton =
+      document.getElementById("runButton");
+
+    const result =
+      document.getElementById("result");
+
+    function runTensorFlow() {
+      // Create two one-dimensional tensors.
+      const firstTensor =
+        tf.tensor1d([1, 2, 3]);
+
+      const secondTensor =
+        tf.tensor1d([10, 20, 30]);
+
+      // Add corresponding values.
+      const answerTensor =
+        firstTensor.add(secondTensor);
+
+      // Read the result.
+      const answer =
+        answerTensor.dataSync();
+
+      result.textContent =
+        "Hello, TensorFlow.js!\n\n" +
+        "First tensor: [1, 2, 3]\n" +
+        "Second tensor: [10, 20, 30]\n" +
+        "Answer: [" +
+        Array.from(answer).join(", ") +
+        "]";
+
+      // Release the tensors from memory.
+      firstTensor.dispose();
+      secondTensor.dispose();
+      answerTensor.dispose();
+    }
+
+    runButton.addEventListener(
+      "click",
+      runTensorFlow
+    );
+  </script>
+</body>
+</html>

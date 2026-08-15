@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webcam Frame to Tensor</title>
+
+  <!-- TensorFlow.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+
+  <style>
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    video {
+      width: min(640px, 100%);
+      min-height: 240px;
+      background: #172033;
+      border-radius: 10px;
+    }
+
+    button {
+      margin: 12px 4px;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:disabled { cursor: not-allowed; }
+
+    #result {
+      padding: 14px;
+      background: #eef6ff;
+      border-radius: 8px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Webcam Frame to Tensor</h1>
+
+  <video id="video" autoplay playsinline muted></video>
+
+  <div>
+    <button id="startButton" type="button">Start Camera</button>
+    <button id="captureButton" type="button" disabled>Convert Frame to Tensor</button>
+    <button id="stopButton" type="button" disabled>Stop Camera</button>
+  </div>
+
+  <div id="result">Start the camera first.</div>
+
+  <script>
+    const video = document.getElementById("video");
+    const startButton = document.getElementById("startButton");
+    const captureButton = document.getElementById("captureButton");
+    const stopButton = document.getElementById("stopButton");
+    const result = document.getElementById("result");
+
+    let stream = null;
+
+    async function startCamera() {
+      if (!navigator.mediaDevices?.getUserMedia) {
+        result.textContent = "Camera access requires HTTPS or localhost.";
+        return;
+      }
+
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: { ideal: 640 }, height: { ideal: 480 } },
+          audio: false
+        });
+
+        video.srcObject = stream;
+        await video.play();
+
+        startButton.disabled = true;
+        captureButton.disabled = false;
+        stopButton.disabled = false;
+        result.textContent = "Camera ready. Convert a frame to a tensor.";
+      } catch (error) {
+        result.textContent = "Camera error: " + error.message;
+      }
+    }
+
+    function convertFrameToTensor() {
+      if (video.readyState < 2) {
+        result.textContent = "The video frame is not ready yet.";
+        return;
+      }
+
+      const tensorsBefore = tf.memory().numTensors;
+      const frameTensor = tf.browser.fromPixels(video);
+      const tensorsDuring = tf.memory().numTensors;
+
+      result.textContent =
+        "Shape: [" + frameTensor.shape.join(", ") + "]\n" +
+        "Rank: " + frameTensor.rank + "\n" +
+        "Data type: " + frameTensor.dtype + "\n" +
+        "Values: " + frameTensor.size + "\n\n" +
+        "Tensors before: " + tensorsBefore + "\n" +
+        "Tensors while frame exists: " + tensorsDuring;
+
+      frameTensor.dispose();
+
+      result.textContent +=
+        "\nTensors after dispose: " + tf.memory().numTensors;
+    }
+
+    function stopCamera() {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+
+      video.srcObject = null;
+      startButton.disabled = false;
+      captureButton.disabled = true;
+      stopButton.disabled = true;
+      result.textContent = "Camera stopped.";
+    }
+
+    startButton.addEventListener("click", startCamera);
+    captureButton.addEventListener("click", convertFrameToTensor);
+    stopButton.addEventListener("click", stopCamera);
+    window.addEventListener("beforeunload", stopCamera);
+  </script>
+</body>
+</html>

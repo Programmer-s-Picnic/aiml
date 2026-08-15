@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TensorFlow.js Face Counter</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection@1.0.3/dist/face-detection.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 20px; background: #eef6ff; color: #172033; font-family: Arial, sans-serif; text-align: center; }
+    .app { width: min(760px, 100%); margin: auto; padding: 22px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(20,70,120,.14); }
+    h1 { margin-top: 0; color: #0d47a1; }
+    .stage { position: relative; width: 100%; aspect-ratio: 4/3; margin: 18px auto; overflow: hidden; border-radius: 12px; background: #101827; }
+    video, canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    video { object-fit: fill; }
+    .scores { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
+    .score { padding: 14px; border-radius: 10px; background: #e3f2fd; font-size: 1.1rem; }
+    .score strong { display: block; margin-top: 4px; color: #0d47a1; font-size: 1.8rem; }
+    button { margin: 5px; padding: 11px 18px; border: 0; border-radius: 8px; background: #1565c0; color: white; font-size: 1rem; cursor: pointer; }
+    button:disabled { background: #8ca6bf; cursor: not-allowed; }
+    #resetButton { background: #526477; }
+    #status { min-height: 24px; color: #38516b; }
+    .note { font-size: .9rem; color: #536779; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h1>Face Crossing Counter</h1>
+    <p>Cross the blue centre line. Move fully into the other side to be counted.</p>
+
+    <div class="scores">
+      <div class="score">Left to Right<strong id="leftToRight">0</strong></div>
+      <div class="score">Right to Left<strong id="rightToLeft">0</strong></div>
+    </div>
+
+    <div class="stage">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="overlay"></canvas>
+    </div>
+
+    <button id="startButton">Start Camera and Counter</button>
+    <button id="stopButton" disabled>Stop</button>
+    <button id="resetButton">Reset Counts</button>
+    <p id="status">Ready.</p>
+    <p class="note">For learning only. Camera frames stay in this page and are not uploaded by this code.</p>
+  </main>
+
+  <script>
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("overlay");
+    const context = canvas.getContext("2d");
+    const startButton = document.getElementById("startButton");
+    const stopButton = document.getElementById("stopButton");
+    const resetButton = document.getElementById("resetButton");
+    const statusText = document.getElementById("status");
+    const leftToRightText = document.getElementById("leftToRight");
+    const rightToLeftText = document.getElementById("rightToLeft");
+
+    let detector;
+    let stream;
+    let running = false;
+    let animationId;
+    let nextTrackId = 1;
+    let tracks = [];
+    let leftToRight = 0;
+    let rightToLeft = 0;
+
+    const LINE_POSITION = 0.5;
+    const DEAD_ZONE = 28;
+    const MAX_MATCH_DISTANCE = 120;
+    const MAX_MISSED_FRAMES = 12;
+
+    function sideOfLine(x, lineX) {
+      if (x < lineX - DEAD_ZONE) return "left";
+      if (x > lineX + DEAD_ZONE) return "right";
+      return "middle";
+    }
+
+    function distance(a, b) {
+      return Math.hypot(a.x - b.x, a.y - b.y);
+    }
+
+    function updateTracks(detections, lineX) {
+      const unusedTracks = new Set(tracks);
+
+      for (const detection of detections) {
+        let bestTrack = null;
+        let bestDistance = MAX_MATCH_DISTANCE;
+
+        for (const track of unusedTracks) {
+          const currentDistance = distance(track, detection);
+          if (currentDistance < bestDistance) {
+            bestDistance = currentDistance;
+            bestTrack = track;
+          }
+        }
+
+        if (!bestTrack) {
+          tracks.push({
+            id: nextTrackId++,
+            x: detection.x,
+            y: detection.y,
+            box: detection.box,
+            stableSide: sideOfLine(detection.x, lineX),
+            missed: 0
+          });
+          continue;
+        }
+
+        unusedTracks.delete(bestTrack);
+        bestTrack.x = detection.x;
+        bestTrack.y = detection.y;
+        bestTrack.box = detection.box;
+        bestTrack.missed = 0;
+
+        const newSide = sideOfLine(bestTrack.x, lineX);
+        if (newSide !== "middle" && bestTrack.stableSide !== "middle" && newSide !== bestTrack.stableSide) {
+          if (bestTrack.stableSide === "left") leftToRight++;
+          else rightToLeft++;
+          leftToRightText.textContent = leftToRight;
+          rightToLeftText.textContent = rightToLeft;
+        }
+        if (newSide !== "middle") bestTrack.stableSide = newSide;
+      }
+
+      for (const track of unusedTracks) track.missed++;
+      tracks = tracks.filter(track => track.missed <= MAX_MISSED_FRAMES);
+    }
+
+    function draw(lineX) {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.strokeStyle = "#1e88e5";
+      context.lineWidth = 4;
+      context.beginPath();
+      context.moveTo(lineX, 0);
+      context.lineTo(lineX, canvas.height);
+      context.stroke();
+
+      context.font = "16px Arial";
+      for (const track of tracks) {
+        const box = track.box;
+        context.strokeStyle = "#00e676";
+        context.lineWidth = 3;
+        context.strokeRect(box.xMin, box.yMin, box.width, box.height);
+        context.fillStyle = "#00e676";
+        context.fillText("Face " + track.id, box.xMin, Math.max(18, box.yMin - 7));
+        context.beginPath();
+        context.arc(track.x, track.y, 5, 0, Math.PI * 2);
+        context.fill();
+      }
+    }
+
+    async function detectLoop() {
+      if (!running) return;
+      try {
+        const faces = await detector.estimateFaces(video, { flipHorizontal: false });
+        const detections = faces.map(face => ({
+          x: face.box.xMin + face.box.width / 2,
+          y: face.box.yMin + face.box.height / 2,
+          box: face.box
+        }));
+        const lineX = canvas.width * LINE_POSITION;
+        updateTracks(detections, lineX);
+        draw(lineX);
+        statusText.textContent = "Faces visible: " + faces.length + " | Active tracks: " + tracks.length;
+      } catch (error) {
+        statusText.textContent = "Detection error: " + error.message;
+      }
+      if (running) animationId = requestAnimationFrame(detectLoop);
+    }
+
+    async function startCounter() {
+      startButton.disabled = true;
+      statusText.textContent = "Loading model and requesting camera...";
+      try {
+        await tf.ready();
+        if (!detector) {
+          detector = await faceDetection.createDetector(
+            faceDetection.SupportedModels.MediaPipeFaceDetector,
+            { runtime: "tfjs", modelType: "short", maxFaces: 10 }
+          );
+        }
+        stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
+        video.srcObject = stream;
+        await new Promise(resolve => video.addEventListener("loadeddata", resolve, { once: true }));
+        await video.play();
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        tracks = [];
+        running = true;
+        stopButton.disabled = false;
+        detectLoop();
+      } catch (error) {
+        statusText.textContent = "Could not start: " + error.message;
+        startButton.disabled = false;
+      }
+    }
+
+    function stopCounter() {
+      running = false;
+      cancelAnimationFrame(animationId);
+      if (stream) stream.getTracks().forEach(track => track.stop());
+      video.srcObject = null;
+      tracks = [];
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      startButton.disabled = false;
+      stopButton.disabled = true;
+      statusText.textContent = "Stopped.";
+    }
+
+    function resetCounts() {
+      leftToRight = 0;
+      rightToLeft = 0;
+      leftToRightText.textContent = "0";
+      rightToLeftText.textContent = "0";
+      tracks = [];
+      statusText.textContent = "Counts reset.";
+    }
+
+    startButton.addEventListener("click", startCounter);
+    stopButton.addEventListener("click", stopCounter);
+    resetButton.addEventListener("click", resetCounts);
+    window.addEventListener("beforeunload", stopCounter);
+  </script>
+</body>
+</html>

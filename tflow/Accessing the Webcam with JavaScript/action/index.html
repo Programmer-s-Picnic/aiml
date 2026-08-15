@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webcam with JavaScript</title>
+  <style>
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    video {
+      width: min(640px, 100%);
+      min-height: 240px;
+      background: #172033;
+      border-radius: 10px;
+    }
+
+    button {
+      margin: 12px 5px;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #status {
+      padding: 12px;
+      background: #eef6ff;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Webcam with JavaScript</h1>
+
+  <p>Allow camera access when the browser asks.</p>
+
+  <video id="video" autoplay playsinline muted></video>
+
+  <div>
+    <button id="startButton" type="button">Start Camera</button>
+    <button id="switchButton" type="button" disabled>Switch Camera</button>
+    <button id="stopButton" type="button" disabled>Stop Camera</button>
+  </div>
+
+  <div id="status">Camera is stopped.</div>
+
+  <script>
+    const video = document.getElementById("video");
+    const startButton = document.getElementById("startButton");
+    const switchButton = document.getElementById("switchButton");
+    const stopButton = document.getElementById("stopButton");
+    const status = document.getElementById("status");
+
+    let stream = null;
+    let facingMode = "user";
+
+    async function startCamera() {
+      stopCamera();
+
+      if (!navigator.mediaDevices?.getUserMedia) {
+        status.textContent = "Camera access is not supported here. Use HTTPS or localhost.";
+        return;
+      }
+
+      try {
+        status.textContent = "Requesting camera permission...";
+
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            width: { ideal: 640 },
+            height: { ideal: 480 },
+            facingMode: { ideal: facingMode }
+          },
+          audio: false
+        });
+
+        video.srcObject = stream;
+        await video.play();
+
+        startButton.disabled = true;
+        switchButton.disabled = false;
+        stopButton.disabled = false;
+
+        status.textContent =
+          "Camera started: " + video.videoWidth + " × " + video.videoHeight;
+      } catch (error) {
+        status.textContent = "Camera could not start: " + error.message;
+      }
+    }
+
+    function stopCamera() {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+
+      video.srcObject = null;
+      startButton.disabled = false;
+      switchButton.disabled = true;
+      stopButton.disabled = true;
+      status.textContent = "Camera is stopped.";
+    }
+
+    async function switchCamera() {
+      facingMode = facingMode === "user" ? "environment" : "user";
+      await startCamera();
+    }
+
+    startButton.addEventListener("click", startCamera);
+    switchButton.addEventListener("click", switchCamera);
+    stopButton.addEventListener("click", stopCamera);
+    window.addEventListener("beforeunload", stopCamera);
+  </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Image to Tensor</title>
+
+  <!-- TensorFlow.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+
+  <style>
+    body {
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    canvas {
+      width: 240px;
+      height: 240px;
+      border: 3px solid black;
+      image-rendering: pixelated;
+    }
+
+    button {
+      display: block;
+      margin: 18px auto;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #result {
+      padding: 15px;
+      background: #eef6ff;
+      border-radius: 8px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Image to Tensor</h1>
+
+  <p>
+    This is a 3 × 3 pixel image.
+  </p>
+
+  <canvas
+    id="image"
+    width="3"
+    height="3"
+  ></canvas>
+
+  <button id="convertButton" type="button">
+    Convert Image to Tensor
+  </button>
+
+  <div id="result">
+    Select the button.
+  </div>
+
+  <script>
+    const canvas = document.getElementById("image");
+    const context = canvas.getContext("2d");
+    const result = document.getElementById("result");
+    const convertButton =
+      document.getElementById("convertButton");
+
+    const colours = [
+      ["red", "green", "blue"],
+      ["white", "black", "yellow"],
+      ["cyan", "magenta", "orange"]
+    ];
+
+    // Draw the 3 × 3 pixel image.
+    for (let row = 0; row < 3; row++) {
+      for (let column = 0; column < 3; column++) {
+        context.fillStyle = colours[row][column];
+
+        context.fillRect(
+          column,
+          row,
+          1,
+          1
+        );
+      }
+    }
+
+    function convertImageToTensor() {
+      // Convert the canvas pixels into a tensor.
+      const imageTensor =
+        tf.browser.fromPixels(canvas);
+
+      result.textContent =
+        "Shape: [" +
+        imageTensor.shape.join(", ") +
+        "]\n" +
+        "Rank: " +
+        imageTensor.rank +
+        "\n" +
+        "Data type: " +
+        imageTensor.dtype +
+        "\n" +
+        "Number of values: " +
+        imageTensor.size;
+
+      // Release the tensor from memory.
+      imageTensor.dispose();
+    }
+
+    convertButton.addEventListener(
+      "click",
+      convertImageToTensor
+    );
+  </script>
+</body>
+</html>
