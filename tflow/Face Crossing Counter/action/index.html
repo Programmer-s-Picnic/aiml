@@ -8,12 +8,15 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>TensorFlow.js Face Crossing Counter</title>
+  <title>High-Speed Face Crossing Counter</title>
 
   <!-- TensorFlow.js -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
 
-  <!-- TensorFlow.js Face Detection Model -->
+  <!-- MediaPipe Face Detection runtime -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4.1646425229/face_detection.js"></script>
+
+  <!-- TensorFlow.js Face Detection API -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection@1.0.3/dist/face-detection.min.js"></script>
 
   <style>
@@ -31,12 +34,14 @@
     }
 
     .app {
-      width: min(760px, 100%);
+      width: min(800px, 100%);
       margin: auto;
       padding: 22px;
       background: white;
       border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(20, 70, 120, 0.14);
+      box-shadow:
+        0 10px 30px
+        rgba(20, 70, 120, 0.14);
     }
 
     h1 {
@@ -45,7 +50,7 @@
     }
 
     .instructions {
-      max-width: 620px;
+      max-width: 680px;
       margin: 0 auto 18px;
       color: #43566b;
       line-height: 1.6;
@@ -53,7 +58,8 @@
 
     .scores {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns:
+        repeat(2, 1fr);
       gap: 12px;
       margin: 16px 0;
     }
@@ -69,7 +75,7 @@
       display: block;
       margin-top: 4px;
       color: #0d47a1;
-      font-size: 1.8rem;
+      font-size: 1.9rem;
     }
 
     .stage {
@@ -116,9 +122,9 @@
 
     #status {
       min-height: 26px;
-      margin-top: 17px;
       color: #38516b;
       font-weight: 600;
+      line-height: 1.6;
     }
 
     .note {
@@ -130,11 +136,11 @@
 
     @media (max-width: 560px) {
       body {
-        padding: 12px;
+        padding: 10px;
       }
 
       .app {
-        padding: 18px 12px;
+        padding: 18px 10px;
       }
 
       .scores {
@@ -142,12 +148,12 @@
       }
 
       .score {
-        padding: 12px 8px;
+        padding: 12px 6px;
         font-size: 0.95rem;
       }
 
       button {
-        padding: 10px 14px;
+        padding: 10px 13px;
       }
     }
   </style>
@@ -155,23 +161,31 @@
 
 <body>
   <main class="app">
-    <h1>Face Crossing Counter</h1>
+    <h1>
+      High-Speed Face Crossing Counter
+    </h1>
 
     <p class="instructions">
-      Begin with your complete face on one side of the blue line.
-      Move steadily across the line until the centre of your face
-      reaches the other side.
+      Every detected face receives a temporary tracking ID.
+      Move completely across the blue centre line. Fast movement
+      is handled using velocity prediction and adaptive matching.
     </p>
 
     <div class="scores">
       <div class="score">
         Left to Right
-        <strong id="leftToRight">0</strong>
+
+        <strong id="leftToRight">
+          0
+        </strong>
       </div>
 
       <div class="score">
         Right to Left
-        <strong id="rightToLeft">0</strong>
+
+        <strong id="rightToLeft">
+          0
+        </strong>
       </div>
     </div>
 
@@ -187,107 +201,166 @@
     </div>
 
     <div>
-      <button id="startButton" type="button">
+      <button
+        id="startButton"
+        type="button"
+      >
         Start Camera and Counter
       </button>
 
-      <button id="stopButton" type="button" disabled>
+      <button
+        id="stopButton"
+        type="button"
+        disabled
+      >
         Stop
       </button>
 
-      <button id="resetButton" type="button">
+      <button
+        id="resetButton"
+        type="button"
+      >
         Reset Counts
       </button>
     </div>
 
-    <p id="status">Ready.</p>
+    <p id="status">
+      Ready.
+    </p>
 
     <p class="note">
-      For learning only. Camera frames remain inside this page and
-      are not intentionally uploaded by this code.
+      For learning purposes. Camera frames remain inside
+      this page and are not intentionally uploaded by this code.
     </p>
   </main>
 
   <script>
     const video =
-      document.getElementById("video");
+      document.getElementById(
+        "video"
+      );
 
     const canvas =
-      document.getElementById("overlay");
+      document.getElementById(
+        "overlay"
+      );
 
     const context =
       canvas.getContext("2d");
 
     const startButton =
-      document.getElementById("startButton");
+      document.getElementById(
+        "startButton"
+      );
 
     const stopButton =
-      document.getElementById("stopButton");
+      document.getElementById(
+        "stopButton"
+      );
 
     const resetButton =
-      document.getElementById("resetButton");
+      document.getElementById(
+        "resetButton"
+      );
 
     const statusText =
-      document.getElementById("status");
+      document.getElementById(
+        "status"
+      );
 
     const leftToRightText =
-      document.getElementById("leftToRight");
+      document.getElementById(
+        "leftToRight"
+      );
 
     const rightToLeftText =
-      document.getElementById("rightToLeft");
+      document.getElementById(
+        "rightToLeft"
+      );
 
     let detector = null;
     let stream = null;
     let running = false;
-    let animationId = null;
+    let loopTimer = null;
 
-    let nextTrackId = 1;
     let tracks = [];
+    let nextTrackId = 1;
 
     let leftToRight = 0;
     let rightToLeft = 0;
 
+    let inferenceCount = 0;
+    let fpsStartedAt =
+      performance.now();
+
+    let detectionFps = 0;
+
     /*
-     * Position of the vertical counting line.
-     *
-     * 0.5 means 50% of the video width.
+     * The blue line is positioned at
+     * 50% of the video width.
      */
     const LINE_POSITION = 0.5;
 
     /*
-     * Neutral area around the line.
+     * Neutral zone around the line.
      *
-     * A face must move completely beyond this area
-     * before a crossing is confirmed.
+     * This prevents one face from being
+     * counted repeatedly when it shakes
+     * close to the line.
      */
     const DEAD_ZONE = 28;
 
     /*
-     * Used when more than one face is visible.
+     * Maximum allowed matching distance.
+     *
+     * Fast-moving faces may travel a
+     * considerable distance between
+     * neural-network detections.
      */
-    const MAX_MATCH_DISTANCE = 240;
+    const MAX_MATCH_DISTANCE = 420;
 
     /*
-     * Keep a temporarily missing track alive.
+     * Retain temporarily missing tracks.
      */
-    const MAX_MISSED_FRAMES = 90;
+    const MAX_MISSED_FRAMES = 120;
 
-    function sideOfLine(x, lineX) {
-      if (x < lineX - DEAD_ZONE) {
+    /*
+     * Maximum number of faces requested
+     * from the detector.
+     */
+    const MAX_FACES = 20;
+
+    function sideOfLine(
+      x,
+      lineX
+    ) {
+      if (
+        x <
+        lineX - DEAD_ZONE
+      ) {
         return "left";
       }
 
-      if (x > lineX + DEAD_ZONE) {
+      if (
+        x >
+        lineX + DEAD_ZONE
+      ) {
         return "right";
       }
 
       return "middle";
     }
 
-    function distance(firstPoint, secondPoint) {
+    function pointDistance(
+      firstPoint,
+      secondPoint
+    ) {
       return Math.hypot(
-        firstPoint.x - secondPoint.x,
-        firstPoint.y - secondPoint.y
+        firstPoint.x -
+          secondPoint.x,
+
+        firstPoint.y -
+          secondPoint.y
       );
     }
 
@@ -299,27 +372,160 @@
         rightToLeft;
     }
 
-    function createTrack(detection, lineX) {
-      const newTrack = {
+    function createTrack(
+      detection,
+      lineX,
+      now
+    ) {
+      const track = {
         id: nextTrackId++,
+
         x: detection.x,
         y: detection.y,
+
+        previousX: detection.x,
+        previousY: detection.y,
+
+        vx: 0,
+        vy: 0,
+
         box: detection.box,
-        stableSide: sideOfLine(
-          detection.x,
-          lineX
-        ),
+
+        stableSide:
+          sideOfLine(
+            detection.x,
+            lineX
+          ),
+
+        lastSeen: now,
         missed: 0
       };
 
-      tracks.push(newTrack);
+      tracks.push(track);
 
-      return newTrack;
+      return track;
+    }
+
+    function predictTrackPosition(
+      track,
+      now
+    ) {
+      /*
+       * Restrict prediction to half a second.
+       * Longer predictions become unreliable.
+       */
+      const elapsed =
+        Math.min(
+          0.5,
+          Math.max(
+            0,
+            (
+              now -
+              track.lastSeen
+            ) / 1000
+          )
+        );
+
+      return {
+        x:
+          track.x +
+          track.vx * elapsed,
+
+        y:
+          track.y +
+          track.vy * elapsed,
+
+        elapsed
+      };
+    }
+
+    function calculateAllowedDistance(
+      track,
+      detection,
+      elapsed
+    ) {
+      const faceSize =
+        Math.max(
+          detection.box.width,
+          detection.box.height
+        );
+
+      const speed =
+        Math.hypot(
+          track.vx,
+          track.vy
+        );
+
+      /*
+       * Large faces and fast faces receive
+       * a larger matching area.
+       */
+      const adaptiveDistance =
+        faceSize * 1.8 +
+        speed *
+        elapsed *
+        1.5;
+
+      return Math.min(
+        MAX_MATCH_DISTANCE,
+        Math.max(
+          150,
+          adaptiveDistance
+        )
+      );
+    }
+
+    function findBestTrack(
+      detection,
+      unusedTracks,
+      now
+    ) {
+      let bestTrack = null;
+      let bestDistance = Infinity;
+
+      for (
+        const track
+        of unusedTracks
+      ) {
+        const prediction =
+          predictTrackPosition(
+            track,
+            now
+          );
+
+        const currentDistance =
+          pointDistance(
+            prediction,
+            detection
+          );
+
+        const allowedDistance =
+          calculateAllowedDistance(
+            track,
+            detection,
+            prediction.elapsed
+          );
+
+        if (
+          currentDistance <
+            bestDistance &&
+          currentDistance <=
+            allowedDistance
+        ) {
+          bestDistance =
+            currentDistance;
+
+          bestTrack = track;
+        }
+      }
+
+      return bestTrack;
     }
 
     function registerCrossing(
       previousSide,
-      newSide
+      newSide,
+      trackId
     ) {
       if (
         previousSide === "left" &&
@@ -328,7 +534,9 @@
         leftToRight++;
 
         statusText.textContent =
-          "Crossing recorded: Left → Right";
+          "Face " +
+          trackId +
+          " crossed Left → Right";
       }
 
       if (
@@ -338,155 +546,208 @@
         rightToLeft++;
 
         statusText.textContent =
-          "Crossing recorded: Right → Left";
+          "Face " +
+          trackId +
+          " crossed Right → Left";
       }
 
       updateCounterDisplay();
     }
 
+    function updateTrackPosition(
+      track,
+      detection,
+      now,
+      lineX
+    ) {
+      const elapsed =
+        Math.max(
+          0.001,
+          (
+            now -
+            track.lastSeen
+          ) / 1000
+        );
+
+      const measuredVx =
+        (
+          detection.x -
+          track.x
+        ) / elapsed;
+
+      const measuredVy =
+        (
+          detection.y -
+          track.y
+        ) / elapsed;
+
+      /*
+       * Smooth the velocity.
+       *
+       * This prevents one noisy detection
+       * from creating an extreme prediction.
+       */
+      track.vx =
+        track.vx * 0.55 +
+        measuredVx * 0.45;
+
+      track.vy =
+        track.vy * 0.55 +
+        measuredVy * 0.45;
+
+      track.previousX =
+        track.x;
+
+      track.previousY =
+        track.y;
+
+      track.x =
+        detection.x;
+
+      track.y =
+        detection.y;
+
+      track.box =
+        detection.box;
+
+      track.lastSeen = now;
+      track.missed = 0;
+
+      const newSide =
+        sideOfLine(
+          track.x,
+          lineX
+        );
+
+      /*
+       * The face does not need to be
+       * detected directly on the line.
+       *
+       * If it jumps from one stable side
+       * to the other between detections,
+       * the crossing is still counted.
+       */
+      if (
+        newSide !== "middle" &&
+        track.stableSide !==
+          "middle" &&
+        newSide !==
+          track.stableSide
+      ) {
+        registerCrossing(
+          track.stableSide,
+          newSide,
+          track.id
+        );
+      }
+
+      /*
+       * Do not replace the stable side
+       * with "middle".
+       */
+      if (
+        newSide !== "middle"
+      ) {
+        track.stableSide =
+          newSide;
+      }
+    }
+
     function updateTracks(
       detections,
-      lineX
+      lineX,
+      now
     ) {
       const unusedTracks =
         new Set(tracks);
 
-      for (const detection of detections) {
+      for (
+        const detection
+        of detections
+      ) {
         let bestTrack = null;
-        let bestDistance =
-          MAX_MATCH_DISTANCE;
 
         /*
-         * Important fix:
-         *
-         * When exactly one face and one track exist,
-         * always keep the same track ID.
-         *
-         * This prevents Face 1, Face 2, Face 3...
-         * being created for the same person when
-         * detection is slow or movement is large.
+         * When one face and one track exist,
+         * preserve the ID even after a large
+         * movement between detections.
          */
         if (
           detections.length === 1 &&
           tracks.length === 1
         ) {
-          bestTrack = tracks[0];
+          bestTrack =
+            tracks[0];
         } else {
-          /*
-           * When several faces are visible,
-           * match each detection to the nearest
-           * unused track.
-           */
-          for (const track of unusedTracks) {
-            const currentDistance =
-              distance(track, detection);
-
-            if (
-              currentDistance <
-              bestDistance
-            ) {
-              bestDistance =
-                currentDistance;
-
-              bestTrack = track;
-            }
-          }
+          bestTrack =
+            findBestTrack(
+              detection,
+              unusedTracks,
+              now
+            );
         }
 
-        /*
-         * No suitable track was found.
-         * Create a new temporary face ID.
-         */
         if (!bestTrack) {
           createTrack(
             detection,
-            lineX
+            lineX,
+            now
           );
 
           continue;
         }
 
-        unusedTracks.delete(bestTrack);
+        unusedTracks.delete(
+          bestTrack
+        );
 
-        bestTrack.x =
-          detection.x;
-
-        bestTrack.y =
-          detection.y;
-
-        bestTrack.box =
-          detection.box;
-
-        bestTrack.missed = 0;
-
-        const newSide =
-          sideOfLine(
-            bestTrack.x,
-            lineX
-          );
-
-        /*
-         * Count only when the face moves from
-         * one stable side to the other.
-         *
-         * Movement inside the middle dead zone
-         * does not change the stable side.
-         */
-        if (
-          newSide !== "middle" &&
-          bestTrack.stableSide !== "middle" &&
-          newSide !== bestTrack.stableSide
-        ) {
-          registerCrossing(
-            bestTrack.stableSide,
-            newSide
-          );
-        }
-
-        /*
-         * Do not replace a stable side with
-         * "middle". Wait until the face reaches
-         * the opposite stable side.
-         */
-        if (newSide !== "middle") {
-          bestTrack.stableSide =
-            newSide;
-        }
+        updateTrackPosition(
+          bestTrack,
+          detection,
+          now,
+          lineX
+        );
       }
 
       /*
-       * Increase the missed-frame count for
-       * unmatched tracks.
+       * Tracks not matched in the current
+       * detection cycle are marked missing.
        */
-      for (const track of unusedTracks) {
+      for (
+        const track
+        of unusedTracks
+      ) {
         track.missed++;
       }
 
       /*
-       * Remove tracks that have been missing
-       * for too long.
+       * Remove tracks that have remained
+       * missing for too long.
        */
-      tracks = tracks.filter(
-        track =>
-          track.missed <=
-          MAX_MISSED_FRAMES
-      );
+      tracks =
+        tracks.filter(
+          track =>
+            track.missed <=
+            MAX_MISSED_FRAMES
+        );
     }
 
     function drawCounterPanel() {
       context.save();
 
       context.fillStyle =
-        "rgba(5, 22, 40, 0.82)";
+        "rgba(5, 22, 40, 0.84)";
 
       context.fillRect(
         12,
         12,
-        250,
-        76
+        265,
+        78
       );
 
-      context.fillStyle = "white";
+      context.fillStyle =
+        "#ffffff";
+
       context.font =
         "bold 19px Arial";
 
@@ -494,24 +755,26 @@
         "Left → Right: " +
           leftToRight,
         26,
-        42
+        43
       );
 
       context.fillText(
         "Right → Left: " +
           rightToLeft,
         26,
-        72
+        73
       );
 
       context.restore();
     }
 
-    function drawCountingLine(lineX) {
+    function drawCountingLine(
+      lineX
+    ) {
       context.save();
 
       context.strokeStyle =
-        "#1e88e5";
+        "#2196f3";
 
       context.lineWidth = 4;
 
@@ -529,7 +792,9 @@
 
       context.stroke();
 
-      context.fillStyle = "white";
+      context.fillStyle =
+        "#ffffff";
+
       context.font =
         "bold 16px Arial";
 
@@ -555,7 +820,8 @@
       track,
       lineX
     ) {
-      const box = track.box;
+      const box =
+        track.box;
 
       const currentSide =
         sideOfLine(
@@ -572,8 +838,9 @@
         "#00e676";
 
       context.lineWidth = 3;
+
       context.font =
-        "16px Arial";
+        "bold 16px Arial";
 
       context.strokeRect(
         box.xMin,
@@ -589,14 +856,13 @@
           currentSide.toUpperCase(),
         box.xMin,
         Math.max(
-          18,
+          20,
           box.yMin - 7
         )
       );
 
       /*
-       * Draw the centre point used for
-       * deciding the side of the line.
+       * Draw the current face centre.
        */
       context.beginPath();
 
@@ -610,10 +876,41 @@
 
       context.fill();
 
+      /*
+       * Draw the movement direction.
+       */
+      const velocityScale = 0.05;
+
+      context.strokeStyle =
+        "#ffeb3b";
+
+      context.lineWidth = 3;
+
+      context.beginPath();
+
+      context.moveTo(
+        track.x,
+        track.y
+      );
+
+      context.lineTo(
+        track.x +
+          track.vx *
+          velocityScale,
+
+        track.y +
+          track.vy *
+          velocityScale
+      );
+
+      context.stroke();
+
       context.restore();
     }
 
-    function draw(lineX) {
+    function draw(
+      lineX
+    ) {
       context.clearRect(
         0,
         0,
@@ -624,11 +921,38 @@
       drawCounterPanel();
       drawCountingLine(lineX);
 
-      for (const track of tracks) {
+      for (
+        const track
+        of tracks
+      ) {
         drawTrack(
           track,
           lineX
         );
+      }
+    }
+
+    function updateFps() {
+      inferenceCount++;
+
+      const elapsed =
+        performance.now() -
+        fpsStartedAt;
+
+      if (
+        elapsed >= 1000
+      ) {
+        detectionFps =
+          Math.round(
+            inferenceCount *
+            10000 /
+            elapsed
+          ) / 10;
+
+        inferenceCount = 0;
+
+        fpsStartedAt =
+          performance.now();
       }
     }
 
@@ -638,6 +962,11 @@
       }
 
       try {
+        /*
+         * Wait only for the current inference.
+         * The next inference begins immediately
+         * when this one finishes.
+         */
         const faces =
           await detector.estimateFaces(
             video,
@@ -663,12 +992,17 @@
           canvas.width *
           LINE_POSITION;
 
+        const now =
+          performance.now();
+
         updateTracks(
           detections,
-          lineX
+          lineX,
+          now
         );
 
         draw(lineX);
+        updateFps();
 
         const activeIds =
           tracks
@@ -677,20 +1011,29 @@
           "none";
 
         statusText.textContent =
-          "Faces visible: " +
+          "Visible faces: " +
           faces.length +
-          " | Active track IDs: " +
-          activeIds;
+          " | Track IDs: " +
+          activeIds +
+          " | Detection FPS: " +
+          detectionFps;
       } catch (error) {
         statusText.textContent =
           "Detection error: " +
           error.message;
       }
 
+      /*
+       * Start the next inference immediately.
+       *
+       * setTimeout(0) allows the browser to
+       * process interface and camera events.
+       */
       if (running) {
-        animationId =
-          requestAnimationFrame(
-            detectLoop
+        loopTimer =
+          setTimeout(
+            detectLoop,
+            0
           );
       }
     }
@@ -701,21 +1044,28 @@
       }
 
       statusText.textContent =
-        "Loading the face detector...";
-
-      await tf.ready();
+        "Loading the high-speed face detector...";
 
       detector =
-        await faceDetection.createDetector(
-          faceDetection
-            .SupportedModels
-            .MediaPipeFaceDetector,
-          {
-            runtime: "tfjs",
-            modelType: "short",
-            maxFaces: 10
-          }
-        );
+        await faceDetection
+          .createDetector(
+            faceDetection
+              .SupportedModels
+              .MediaPipeFaceDetector,
+            {
+              runtime:
+                "mediapipe",
+
+              solutionPath:
+                "https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4.1646425229",
+
+              modelType:
+                "short",
+
+              maxFaces:
+                MAX_FACES
+            }
+          );
     }
 
     async function startCounter() {
@@ -723,7 +1073,8 @@
         return;
       }
 
-      startButton.disabled = true;
+      startButton.disabled =
+        true;
 
       statusText.textContent =
         "Loading model and requesting camera...";
@@ -741,6 +1092,11 @@
 
         await loadDetector();
 
+        /*
+         * 640 × 480 provides a practical
+         * compromise between face detail
+         * and detection speed.
+         */
         stream =
           await navigator
             .mediaDevices
@@ -749,25 +1105,37 @@
                 width: {
                   ideal: 640
                 },
+
                 height: {
                   ideal: 480
                 },
-                facingMode: "user"
+
+                frameRate: {
+                  ideal: 30,
+                  max: 60
+                },
+
+                facingMode:
+                  "user"
               },
+
               audio: false
             });
 
-        video.srcObject = stream;
+        video.srcObject =
+          stream;
 
-        await new Promise(resolve => {
-          video.addEventListener(
-            "loadeddata",
-            resolve,
-            {
-              once: true
-            }
-          );
-        });
+        await new Promise(
+          resolve => {
+            video.addEventListener(
+              "loadeddata",
+              resolve,
+              {
+                once: true
+              }
+            );
+          }
+        );
 
         await video.play();
 
@@ -780,12 +1148,19 @@
         tracks = [];
         nextTrackId = 1;
 
+        inferenceCount = 0;
+        detectionFps = 0;
+
+        fpsStartedAt =
+          performance.now();
+
         running = true;
 
-        stopButton.disabled = false;
+        stopButton.disabled =
+          false;
 
         statusText.textContent =
-          "Counter started. Begin completely on one side.";
+          "Counter started.";
 
         detectLoop();
       } catch (error) {
@@ -793,19 +1168,20 @@
           "Could not start: " +
           error.message;
 
-        startButton.disabled = false;
+        startButton.disabled =
+          false;
       }
     }
 
     function stopCounter() {
       running = false;
 
-      if (animationId) {
-        cancelAnimationFrame(
-          animationId
+      if (loopTimer) {
+        clearTimeout(
+          loopTimer
         );
 
-        animationId = null;
+        loopTimer = null;
       }
 
       if (stream) {
@@ -829,8 +1205,11 @@
         canvas.height
       );
 
-      startButton.disabled = false;
-      stopButton.disabled = true;
+      startButton.disabled =
+        false;
+
+      stopButton.disabled =
+        true;
 
       statusText.textContent =
         "Counter stopped.";
@@ -842,6 +1221,12 @@
 
       tracks = [];
       nextTrackId = 1;
+
+      inferenceCount = 0;
+      detectionFps = 0;
+
+      fpsStartedAt =
+        performance.now();
 
       updateCounterDisplay();
 
