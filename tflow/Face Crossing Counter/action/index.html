@@ -2,251 +2,1268 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TensorFlow.js Face Counter</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>High-Speed Face Crossing Counter</title>
+
+  <!-- TensorFlow.js -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+
+  <!-- MediaPipe Face Detection runtime -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4.1646425229/face_detection.js"></script>
+
+  <!-- TensorFlow.js Face Detection API -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection@1.0.3/dist/face-detection.min.js"></script>
+
   <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; padding: 20px; background: #eef6ff; color: #172033; font-family: Arial, sans-serif; text-align: center; }
-    .app { width: min(760px, 100%); margin: auto; padding: 22px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(20,70,120,.14); }
-    h1 { margin-top: 0; color: #0d47a1; }
-    .stage { position: relative; width: 100%; aspect-ratio: 4/3; margin: 18px auto; overflow: hidden; border-radius: 12px; background: #101827; }
-    video, canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-    video { object-fit: fill; }
-    .scores { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
-    .score { padding: 14px; border-radius: 10px; background: #e3f2fd; font-size: 1.1rem; }
-    .score strong { display: block; margin-top: 4px; color: #0d47a1; font-size: 1.8rem; }
-    button { margin: 5px; padding: 11px 18px; border: 0; border-radius: 8px; background: #1565c0; color: white; font-size: 1rem; cursor: pointer; }
-    button:disabled { background: #8ca6bf; cursor: not-allowed; }
-    #resetButton { background: #526477; }
-    #status { min-height: 24px; color: #38516b; }
-    .note { font-size: .9rem; color: #536779; }
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #eef6ff;
+      color: #172033;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .app {
+      width: min(800px, 100%);
+      margin: auto;
+      padding: 22px;
+      background: white;
+      border-radius: 16px;
+      box-shadow:
+        0 10px 30px
+        rgba(20, 70, 120, 0.14);
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #0d47a1;
+    }
+
+    .instructions {
+      max-width: 680px;
+      margin: 0 auto 18px;
+      color: #43566b;
+      line-height: 1.6;
+    }
+
+    .scores {
+      display: grid;
+      grid-template-columns:
+        repeat(2, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .score {
+      padding: 14px;
+      border-radius: 10px;
+      background: #e3f2fd;
+      font-size: 1.1rem;
+    }
+
+    .score strong {
+      display: block;
+      margin-top: 4px;
+      color: #0d47a1;
+      font-size: 1.9rem;
+    }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      margin: 18px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #101827;
+    }
+
+    video,
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    video {
+      object-fit: fill;
+    }
+
+    button {
+      margin: 5px;
+      padding: 11px 18px;
+      border: 0;
+      border-radius: 8px;
+      background: #1565c0;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #8ca6bf;
+      cursor: not-allowed;
+    }
+
+    #resetButton {
+      background: #526477;
+    }
+
+    #status {
+      min-height: 26px;
+      color: #38516b;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    .note {
+      margin-bottom: 0;
+      color: #536779;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 10px;
+      }
+
+      .app {
+        padding: 18px 10px;
+      }
+
+      .scores {
+        gap: 8px;
+      }
+
+      .score {
+        padding: 12px 6px;
+        font-size: 0.95rem;
+      }
+
+      button {
+        padding: 10px 13px;
+      }
+    }
   </style>
 </head>
+
 <body>
   <main class="app">
-    <h1>Face Crossing Counter</h1>
-    <p>Cross the blue centre line. Move fully into the other side to be counted.</p>
+    <h1>
+       Face Crossing Counter
+    </h1>
+
+    <p class="instructions">
+      Every detected face receives a temporary tracking ID.
+      Move completely across the blue centre line. Fast movement
+      is handled using velocity prediction and adaptive matching.
+    </p>
 
     <div class="scores">
-      <div class="score">Left to Right<strong id="leftToRight">0</strong></div>
-      <div class="score">Right to Left<strong id="rightToLeft">0</strong></div>
+      <div class="score">
+        Left to Right
+
+        <strong id="leftToRight">
+          0
+        </strong>
+      </div>
+
+      <div class="score">
+        Right to Left
+
+        <strong id="rightToLeft">
+          0
+        </strong>
+      </div>
     </div>
 
     <div class="stage">
-      <video id="video" autoplay playsinline muted></video>
+      <video
+        id="video"
+        autoplay
+        playsinline
+        muted
+      ></video>
+
       <canvas id="overlay"></canvas>
     </div>
 
-    <button id="startButton">Start Camera and Counter</button>
-    <button id="stopButton" disabled>Stop</button>
-    <button id="resetButton">Reset Counts</button>
-    <p id="status">Ready.</p>
-    <p class="note">For learning only. Camera frames stay in this page and are not uploaded by this code.</p>
+    <div>
+      <button
+        id="startButton"
+        type="button"
+      >
+        Start Camera and Counter
+      </button>
+
+      <button
+        id="stopButton"
+        type="button"
+        disabled
+      >
+        Stop
+      </button>
+
+      <button
+        id="resetButton"
+        type="button"
+      >
+        Reset Counts
+      </button>
+    </div>
+
+    <p id="status">
+      Ready.
+    </p>
+
+    <p class="note">
+      For learning purposes. Camera frames remain inside
+      this page and are not intentionally uploaded by this code.
+    </p>
   </main>
 
   <script>
-    const video = document.getElementById("video");
-    const canvas = document.getElementById("overlay");
-    const context = canvas.getContext("2d");
-    const startButton = document.getElementById("startButton");
-    const stopButton = document.getElementById("stopButton");
-    const resetButton = document.getElementById("resetButton");
-    const statusText = document.getElementById("status");
-    const leftToRightText = document.getElementById("leftToRight");
-    const rightToLeftText = document.getElementById("rightToLeft");
+    const video =
+      document.getElementById(
+        "video"
+      );
 
-    let detector;
-    let stream;
+    const canvas =
+      document.getElementById(
+        "overlay"
+      );
+
+    const context =
+      canvas.getContext("2d");
+
+    const startButton =
+      document.getElementById(
+        "startButton"
+      );
+
+    const stopButton =
+      document.getElementById(
+        "stopButton"
+      );
+
+    const resetButton =
+      document.getElementById(
+        "resetButton"
+      );
+
+    const statusText =
+      document.getElementById(
+        "status"
+      );
+
+    const leftToRightText =
+      document.getElementById(
+        "leftToRight"
+      );
+
+    const rightToLeftText =
+      document.getElementById(
+        "rightToLeft"
+      );
+
+    let detector = null;
+    let stream = null;
     let running = false;
-    let animationId;
-    let nextTrackId = 1;
+    let loopTimer = null;
+
     let tracks = [];
+    let nextTrackId = 1;
+
     let leftToRight = 0;
     let rightToLeft = 0;
 
-    const LINE_POSITION = 0.5;
-    const DEAD_ZONE = 28;
-    const MAX_MATCH_DISTANCE = 240;
-    const MAX_MISSED_FRAMES = 30;
+    let inferenceCount = 0;
+    let fpsStartedAt =
+      performance.now();
 
-    function sideOfLine(x, lineX) {
-      if (x < lineX - DEAD_ZONE) return "left";
-      if (x > lineX + DEAD_ZONE) return "right";
+    let detectionFps = 0;
+
+    /*
+     * The blue line is positioned at
+     * 50% of the video width.
+     */
+    const LINE_POSITION = 0.5;
+
+    /*
+     * Neutral zone around the line.
+     *
+     * This prevents one face from being
+     * counted repeatedly when it shakes
+     * close to the line.
+     */
+    const DEAD_ZONE = 28;
+
+    /*
+     * Maximum allowed matching distance.
+     *
+     * Fast-moving faces may travel a
+     * considerable distance between
+     * neural-network detections.
+     */
+    const MAX_MATCH_DISTANCE = 420;
+
+    /*
+     * Retain temporarily missing tracks.
+     */
+    const MAX_MISSED_FRAMES = 120;
+
+    /*
+     * Maximum number of faces requested
+     * from the detector.
+     */
+    const MAX_FACES = 20;
+
+    function sideOfLine(
+      x,
+      lineX
+    ) {
+      if (
+        x <
+        lineX - DEAD_ZONE
+      ) {
+        return "left";
+      }
+
+      if (
+        x >
+        lineX + DEAD_ZONE
+      ) {
+        return "right";
+      }
+
       return "middle";
     }
 
-    function distance(a, b) {
-      return Math.hypot(a.x - b.x, a.y - b.y);
+    function pointDistance(
+      firstPoint,
+      secondPoint
+    ) {
+      return Math.hypot(
+        firstPoint.x -
+          secondPoint.x,
+
+        firstPoint.y -
+          secondPoint.y
+      );
     }
 
-    function updateTracks(detections, lineX) {
-      const unusedTracks = new Set(tracks);
+    function updateCounterDisplay() {
+      leftToRightText.textContent =
+        leftToRight;
 
-      for (const detection of detections) {
+      rightToLeftText.textContent =
+        rightToLeft;
+    }
+
+    function createTrack(
+      detection,
+      lineX,
+      now
+    ) {
+      const track = {
+        id: nextTrackId++,
+
+        x: detection.x,
+        y: detection.y,
+
+        previousX: detection.x,
+        previousY: detection.y,
+
+        vx: 0,
+        vy: 0,
+
+        box: detection.box,
+
+        stableSide:
+          sideOfLine(
+            detection.x,
+            lineX
+          ),
+
+        lastSeen: now,
+        missed: 0
+      };
+
+      tracks.push(track);
+
+      return track;
+    }
+
+    function predictTrackPosition(
+      track,
+      now
+    ) {
+      /*
+       * Restrict prediction to half a second.
+       * Longer predictions become unreliable.
+       */
+      const elapsed =
+        Math.min(
+          0.5,
+          Math.max(
+            0,
+            (
+              now -
+              track.lastSeen
+            ) / 1000
+          )
+        );
+
+      return {
+        x:
+          track.x +
+          track.vx * elapsed,
+
+        y:
+          track.y +
+          track.vy * elapsed,
+
+        elapsed
+      };
+    }
+
+    function calculateAllowedDistance(
+      track,
+      detection,
+      elapsed
+    ) {
+      const faceSize =
+        Math.max(
+          detection.box.width,
+          detection.box.height
+        );
+
+      const speed =
+        Math.hypot(
+          track.vx,
+          track.vy
+        );
+
+      /*
+       * Large faces and fast faces receive
+       * a larger matching area.
+       */
+      const adaptiveDistance =
+        faceSize * 1.8 +
+        speed *
+        elapsed *
+        1.5;
+
+      return Math.min(
+        MAX_MATCH_DISTANCE,
+        Math.max(
+          150,
+          adaptiveDistance
+        )
+      );
+    }
+
+    function findBestTrack(
+      detection,
+      unusedTracks,
+      now
+    ) {
+      let bestTrack = null;
+      let bestDistance = Infinity;
+
+      for (
+        const track
+        of unusedTracks
+      ) {
+        const prediction =
+          predictTrackPosition(
+            track,
+            now
+          );
+
+        const currentDistance =
+          pointDistance(
+            prediction,
+            detection
+          );
+
+        const allowedDistance =
+          calculateAllowedDistance(
+            track,
+            detection,
+            prediction.elapsed
+          );
+
+        if (
+          currentDistance <
+            bestDistance &&
+          currentDistance <=
+            allowedDistance
+        ) {
+          bestDistance =
+            currentDistance;
+
+          bestTrack = track;
+        }
+      }
+
+      return bestTrack;
+    }
+
+    function registerCrossing(
+      previousSide,
+      newSide,
+      trackId
+    ) {
+      if (
+        previousSide === "left" &&
+        newSide === "right"
+      ) {
+        leftToRight++;
+
+        statusText.textContent =
+          "Face " +
+          trackId +
+          " crossed Left → Right";
+      }
+
+      if (
+        previousSide === "right" &&
+        newSide === "left"
+      ) {
+        rightToLeft++;
+
+        statusText.textContent =
+          "Face " +
+          trackId +
+          " crossed Right → Left";
+      }
+
+      updateCounterDisplay();
+    }
+
+    function updateTrackPosition(
+      track,
+      detection,
+      now,
+      lineX
+    ) {
+      const elapsed =
+        Math.max(
+          0.001,
+          (
+            now -
+            track.lastSeen
+          ) / 1000
+        );
+
+      const measuredVx =
+        (
+          detection.x -
+          track.x
+        ) / elapsed;
+
+      const measuredVy =
+        (
+          detection.y -
+          track.y
+        ) / elapsed;
+
+      /*
+       * Smooth the velocity.
+       *
+       * This prevents one noisy detection
+       * from creating an extreme prediction.
+       */
+      track.vx =
+        track.vx * 0.55 +
+        measuredVx * 0.45;
+
+      track.vy =
+        track.vy * 0.55 +
+        measuredVy * 0.45;
+
+      track.previousX =
+        track.x;
+
+      track.previousY =
+        track.y;
+
+      track.x =
+        detection.x;
+
+      track.y =
+        detection.y;
+
+      track.box =
+        detection.box;
+
+      track.lastSeen = now;
+      track.missed = 0;
+
+      const newSide =
+        sideOfLine(
+          track.x,
+          lineX
+        );
+
+      /*
+       * The face does not need to be
+       * detected directly on the line.
+       *
+       * If it jumps from one stable side
+       * to the other between detections,
+       * the crossing is still counted.
+       */
+      if (
+        newSide !== "middle" &&
+        track.stableSide !==
+          "middle" &&
+        newSide !==
+          track.stableSide
+      ) {
+        registerCrossing(
+          track.stableSide,
+          newSide,
+          track.id
+        );
+      }
+
+      /*
+       * Do not replace the stable side
+       * with "middle".
+       */
+      if (
+        newSide !== "middle"
+      ) {
+        track.stableSide =
+          newSide;
+      }
+    }
+
+    function updateTracks(
+      detections,
+      lineX,
+      now
+    ) {
+      const unusedTracks =
+        new Set(tracks);
+
+      for (
+        const detection
+        of detections
+      ) {
         let bestTrack = null;
-        let bestDistance = MAX_MATCH_DISTANCE;
 
-        for (const track of unusedTracks) {
-          const currentDistance = distance(track, detection);
-          if (currentDistance < bestDistance) {
-            bestDistance = currentDistance;
-            bestTrack = track;
-          }
+        /*
+         * When one face and one track exist,
+         * preserve the ID even after a large
+         * movement between detections.
+         */
+        if (
+          detections.length === 1 &&
+          tracks.length === 1
+        ) {
+          bestTrack =
+            tracks[0];
+        } else {
+          bestTrack =
+            findBestTrack(
+              detection,
+              unusedTracks,
+              now
+            );
         }
 
         if (!bestTrack) {
-          tracks.push({
-            id: nextTrackId++,
-            x: detection.x,
-            y: detection.y,
-            box: detection.box,
-            stableSide: sideOfLine(detection.x, lineX),
-            missed: 0
-          });
+          createTrack(
+            detection,
+            lineX,
+            now
+          );
+
           continue;
         }
 
-        unusedTracks.delete(bestTrack);
-        bestTrack.x = detection.x;
-        bestTrack.y = detection.y;
-        bestTrack.box = detection.box;
-        bestTrack.missed = 0;
+        unusedTracks.delete(
+          bestTrack
+        );
 
-        const newSide = sideOfLine(bestTrack.x, lineX);
-        if (newSide !== "middle" && bestTrack.stableSide !== "middle" && newSide !== bestTrack.stableSide) {
-          if (bestTrack.stableSide === "left") leftToRight++;
-          else rightToLeft++;
-          leftToRightText.textContent = leftToRight;
-          rightToLeftText.textContent = rightToLeft;
-          statusText.textContent = bestTrack.stableSide === "left"
-            ? "Crossing recorded: Left → Right"
-            : "Crossing recorded: Right → Left";
-        }
-        if (newSide !== "middle") bestTrack.stableSide = newSide;
+        updateTrackPosition(
+          bestTrack,
+          detection,
+          now,
+          lineX
+        );
       }
 
-      for (const track of unusedTracks) track.missed++;
-      tracks = tracks.filter(track => track.missed <= MAX_MISSED_FRAMES);
+      /*
+       * Tracks not matched in the current
+       * detection cycle are marked missing.
+       */
+      for (
+        const track
+        of unusedTracks
+      ) {
+        track.missed++;
+      }
+
+      /*
+       * Remove tracks that have remained
+       * missing for too long.
+       */
+      tracks =
+        tracks.filter(
+          track =>
+            track.missed <=
+            MAX_MISSED_FRAMES
+        );
     }
 
-    function draw(lineX) {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Keep the directional totals visible inside the camera view.
+    function drawCounterPanel() {
       context.save();
-      context.fillStyle = "rgba(5, 22, 40, 0.82)";
-      context.fillRect(12, 12, 250, 76);
-      context.fillStyle = "white";
-      context.font = "bold 19px Arial";
-      context.fillText("Left → Right: " + leftToRight, 26, 42);
-      context.fillText("Right → Left: " + rightToLeft, 26, 72);
-      context.restore();
 
-      context.strokeStyle = "#1e88e5";
+      context.fillStyle =
+        "rgba(5, 22, 40, 0.84)";
+
+      context.fillRect(
+        12,
+        12,
+        265,
+        78
+      );
+
+      context.fillStyle =
+        "#ffffff";
+
+      context.font =
+        "bold 19px Arial";
+
+      context.fillText(
+        "Left → Right: " +
+          leftToRight,
+        26,
+        43
+      );
+
+      context.fillText(
+        "Right → Left: " +
+          rightToLeft,
+        26,
+        73
+      );
+
+      context.restore();
+    }
+
+    function drawCountingLine(
+      lineX
+    ) {
+      context.save();
+
+      context.strokeStyle =
+        "#2196f3";
+
       context.lineWidth = 4;
+
       context.beginPath();
-      context.moveTo(lineX, 0);
-      context.lineTo(lineX, canvas.height);
+
+      context.moveTo(
+        lineX,
+        0
+      );
+
+      context.lineTo(
+        lineX,
+        canvas.height
+      );
+
       context.stroke();
 
-      context.save();
-      context.fillStyle = "#ffffff";
-      context.font = "bold 16px Arial";
-      context.fillText("LEFT", Math.max(15, lineX - 70), canvas.height - 18);
-      context.fillText("RIGHT", lineX + 15, canvas.height - 18);
-      context.restore();
+      context.fillStyle =
+        "#ffffff";
 
-      context.font = "16px Arial";
-      for (const track of tracks) {
-        const box = track.box;
-        context.strokeStyle = "#00e676";
-        context.lineWidth = 3;
-        context.strokeRect(box.xMin, box.yMin, box.width, box.height);
-        context.fillStyle = "#00e676";
-        context.fillText(
-          "Face " + track.id + " | " + sideOfLine(track.x, lineX).toUpperCase(),
-          box.xMin,
-          Math.max(18, box.yMin - 7)
+      context.font =
+        "bold 16px Arial";
+
+      context.fillText(
+        "LEFT",
+        Math.max(
+          15,
+          lineX - 70
+        ),
+        canvas.height - 18
+      );
+
+      context.fillText(
+        "RIGHT",
+        lineX + 15,
+        canvas.height - 18
+      );
+
+      context.restore();
+    }
+
+    function drawTrack(
+      track,
+      lineX
+    ) {
+      const box =
+        track.box;
+
+      const currentSide =
+        sideOfLine(
+          track.x,
+          lineX
         );
-        context.beginPath();
-        context.arc(track.x, track.y, 5, 0, Math.PI * 2);
-        context.fill();
+
+      context.save();
+
+      context.strokeStyle =
+        "#00e676";
+
+      context.fillStyle =
+        "#00e676";
+
+      context.lineWidth = 3;
+
+      context.font =
+        "bold 16px Arial";
+
+      context.strokeRect(
+        box.xMin,
+        box.yMin,
+        box.width,
+        box.height
+      );
+
+      context.fillText(
+        "Face " +
+          track.id +
+          " | " +
+          currentSide.toUpperCase(),
+        box.xMin,
+        Math.max(
+          20,
+          box.yMin - 7
+        )
+      );
+
+      /*
+       * Draw the current face centre.
+       */
+      context.beginPath();
+
+      context.arc(
+        track.x,
+        track.y,
+        6,
+        0,
+        Math.PI * 2
+      );
+
+      context.fill();
+
+      /*
+       * Draw the movement direction.
+       */
+      const velocityScale = 0.05;
+
+      context.strokeStyle =
+        "#ffeb3b";
+
+      context.lineWidth = 3;
+
+      context.beginPath();
+
+      context.moveTo(
+        track.x,
+        track.y
+      );
+
+      context.lineTo(
+        track.x +
+          track.vx *
+          velocityScale,
+
+        track.y +
+          track.vy *
+          velocityScale
+      );
+
+      context.stroke();
+
+      context.restore();
+    }
+
+    function draw(
+      lineX
+    ) {
+      context.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      drawCounterPanel();
+      drawCountingLine(lineX);
+
+      for (
+        const track
+        of tracks
+      ) {
+        drawTrack(
+          track,
+          lineX
+        );
+      }
+    }
+
+    function updateFps() {
+      inferenceCount++;
+
+      const elapsed =
+        performance.now() -
+        fpsStartedAt;
+
+      if (
+        elapsed >= 1000
+      ) {
+        detectionFps =
+          Math.round(
+            inferenceCount *
+            10000 /
+            elapsed
+          ) / 10;
+
+        inferenceCount = 0;
+
+        fpsStartedAt =
+          performance.now();
       }
     }
 
     async function detectLoop() {
-      if (!running) return;
-      try {
-        const faces = await detector.estimateFaces(video, { flipHorizontal: false });
-        const detections = faces.map(face => ({
-          x: face.box.xMin + face.box.width / 2,
-          y: face.box.yMin + face.box.height / 2,
-          box: face.box
-        }));
-        const lineX = canvas.width * LINE_POSITION;
-        updateTracks(detections, lineX);
-        draw(lineX);
-        statusText.textContent = "Faces visible: " + faces.length + " | Active tracks: " + tracks.length;
-      } catch (error) {
-        statusText.textContent = "Detection error: " + error.message;
+      if (!running) {
+        return;
       }
-      if (running) animationId = requestAnimationFrame(detectLoop);
+
+      try {
+        /*
+         * Wait only for the current inference.
+         * The next inference begins immediately
+         * when this one finishes.
+         */
+        const faces =
+          await detector.estimateFaces(
+            video,
+            {
+              flipHorizontal: false
+            }
+          );
+
+        const detections =
+          faces.map(face => ({
+            x:
+              face.box.xMin +
+              face.box.width / 2,
+
+            y:
+              face.box.yMin +
+              face.box.height / 2,
+
+            box: face.box
+          }));
+
+        const lineX =
+          canvas.width *
+          LINE_POSITION;
+
+        const now =
+          performance.now();
+
+        updateTracks(
+          detections,
+          lineX,
+          now
+        );
+
+        draw(lineX);
+        updateFps();
+
+        const activeIds =
+          tracks
+            .map(track => track.id)
+            .join(", ") ||
+          "none";
+
+        statusText.textContent =
+          "Visible faces: " +
+          faces.length +
+          " | Track IDs: " +
+          activeIds +
+          " | Detection FPS: " +
+          detectionFps;
+      } catch (error) {
+        statusText.textContent =
+          "Detection error: " +
+          error.message;
+      }
+
+      /*
+       * Start the next inference immediately.
+       *
+       * setTimeout(0) allows the browser to
+       * process interface and camera events.
+       */
+      if (running) {
+        loopTimer =
+          setTimeout(
+            detectLoop,
+            0
+          );
+      }
+    }
+
+    async function loadDetector() {
+      if (detector) {
+        return;
+      }
+
+      statusText.textContent =
+        "Loading the high-speed face detector...";
+
+      detector =
+        await faceDetection
+          .createDetector(
+            faceDetection
+              .SupportedModels
+              .MediaPipeFaceDetector,
+            {
+              runtime:
+                "mediapipe",
+
+              solutionPath:
+                "https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4.1646425229",
+
+              modelType:
+                "short",
+
+              maxFaces:
+                MAX_FACES
+            }
+          );
     }
 
     async function startCounter() {
-      startButton.disabled = true;
-      statusText.textContent = "Loading model and requesting camera...";
+      if (running) {
+        return;
+      }
+
+      startButton.disabled =
+        true;
+
+      statusText.textContent =
+        "Loading model and requesting camera...";
+
       try {
-        await tf.ready();
-        if (!detector) {
-          detector = await faceDetection.createDetector(
-            faceDetection.SupportedModels.MediaPipeFaceDetector,
-            { runtime: "tfjs", modelType: "short", maxFaces: 10 }
+        if (
+          !navigator.mediaDevices ||
+          !navigator.mediaDevices
+            .getUserMedia
+        ) {
+          throw new Error(
+            "Camera access requires HTTPS or localhost."
           );
         }
-        stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
-        video.srcObject = stream;
-        await new Promise(resolve => video.addEventListener("loadeddata", resolve, { once: true }));
+
+        await loadDetector();
+
+        /*
+         * 640 × 480 provides a practical
+         * compromise between face detail
+         * and detection speed.
+         */
+        stream =
+          await navigator
+            .mediaDevices
+            .getUserMedia({
+              video: {
+                width: {
+                  ideal: 640
+                },
+
+                height: {
+                  ideal: 480
+                },
+
+                frameRate: {
+                  ideal: 30,
+                  max: 60
+                },
+
+                facingMode:
+                  "user"
+              },
+
+              audio: false
+            });
+
+        video.srcObject =
+          stream;
+
+        await new Promise(
+          resolve => {
+            video.addEventListener(
+              "loadeddata",
+              resolve,
+              {
+                once: true
+              }
+            );
+          }
+        );
+
         await video.play();
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+
+        canvas.width =
+          video.videoWidth;
+
+        canvas.height =
+          video.videoHeight;
+
         tracks = [];
+        nextTrackId = 1;
+
+        inferenceCount = 0;
+        detectionFps = 0;
+
+        fpsStartedAt =
+          performance.now();
+
         running = true;
-        stopButton.disabled = false;
+
+        stopButton.disabled =
+          false;
+
+        statusText.textContent =
+          "Counter started.";
+
         detectLoop();
       } catch (error) {
-        statusText.textContent = "Could not start: " + error.message;
-        startButton.disabled = false;
+        statusText.textContent =
+          "Could not start: " +
+          error.message;
+
+        startButton.disabled =
+          false;
       }
     }
 
     function stopCounter() {
       running = false;
-      cancelAnimationFrame(animationId);
-      if (stream) stream.getTracks().forEach(track => track.stop());
+
+      if (loopTimer) {
+        clearTimeout(
+          loopTimer
+        );
+
+        loopTimer = null;
+      }
+
+      if (stream) {
+        stream
+          .getTracks()
+          .forEach(track =>
+            track.stop()
+          );
+
+        stream = null;
+      }
+
       video.srcObject = null;
+
       tracks = [];
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      startButton.disabled = false;
-      stopButton.disabled = true;
-      statusText.textContent = "Stopped.";
+
+      context.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      startButton.disabled =
+        false;
+
+      stopButton.disabled =
+        true;
+
+      statusText.textContent =
+        "Counter stopped.";
     }
 
     function resetCounts() {
       leftToRight = 0;
       rightToLeft = 0;
-      leftToRightText.textContent = "0";
-      rightToLeftText.textContent = "0";
+
       tracks = [];
-      statusText.textContent = "Counts reset.";
+      nextTrackId = 1;
+
+      inferenceCount = 0;
+      detectionFps = 0;
+
+      fpsStartedAt =
+        performance.now();
+
+      updateCounterDisplay();
+
+      if (
+        running &&
+        canvas.width
+      ) {
+        const lineX =
+          canvas.width *
+          LINE_POSITION;
+
+        draw(lineX);
+      }
+
+      statusText.textContent =
+        "Counts and tracking IDs reset.";
     }
 
-    startButton.addEventListener("click", startCounter);
-    stopButton.addEventListener("click", stopCounter);
-    resetButton.addEventListener("click", resetCounts);
-    window.addEventListener("beforeunload", stopCounter);
+    startButton.addEventListener(
+      "click",
+      startCounter
+    );
+
+    stopButton.addEventListener(
+      "click",
+      stopCounter
+    );
+
+    resetButton.addEventListener(
+      "click",
+      resetCounts
+    );
+
+    window.addEventListener(
+      "beforeunload",
+      stopCounter
+    );
   </script>
 </body>
 </html>
