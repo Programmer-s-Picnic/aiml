@@ -1,5 +1,329 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Lesson 10: Emotion Recognition with TensorFlow.js."><title>Lesson 10: Emotion Recognition</title><style>*{box-sizing:border-box}body{margin:0;background:#eef6ff;color:#172033;font:17px/1.7 Arial}.page{width:min(1050px,calc(100% - 24px));margin:20px auto;background:white;border-radius:18px;overflow:hidden;box-shadow:0 12px 36px #12497d22}header{padding:42px clamp(22px,6vw,62px);color:white;background:linear-gradient(135deg,#0d47a1,#1976d2)}header h1{margin:.25em 0;color:white}article{padding:30px clamp(20px,6vw,62px)}h2{margin-top:38px;color:#0d47a1}pre{padding:18px;overflow:auto;background:#102033;color:#eaf4ff;border-left:5px solid #42a5f5;border-radius:8px}.card,.check,.warn{padding:17px 20px;margin:18px 0;border-radius:9px}.card{background:#f3f9ff;border:1px solid #c8e2fa}.check{background:#e8f5e9;border-left:5px solid #2e7d32}.warn{background:#fff8e1;border-left:5px solid #f9a825}table{width:100%;border-collapse:collapse}th,td{padding:10px;border:1px solid #bdd5e8;text-align:left}th{background:#e3f2fd}iframe{width:100%;height:700px;border:1px solid #bdd5e8;border-radius:10px}a{color:#0b5fbd}</style></head><body><main class="page"><header><strong>Lesson 10</strong><h1>Emotion Recognition</h1><p>Expression recognition estimates visible facial patterns; it cannot know a person’s true inner emotion.</p></header><article><section class="card"><strong>By the end of this lesson, you should be able to explain the complete pipeline—not merely run the code.</strong></section><h2>Why this lesson matters</h2><p>After detecting and aligning a face, an expression model returns a score for each learned category. The largest score is simply the model’s current best estimate. Scores can change with pose, lighting, culture, disability, masking and ordinary individual differences.</p><h2>The pipeline</h2><ol><li>Detect faces</li><li>Locate landmarks</li><li>Run the expression classifier</li><li>Receive category scores</li><li>Display scores with uncertainty</li><li>Avoid unsupported conclusions</li></ol><h2>Important terms</h2><table><tbody><tr><th>Expression score</th><td>Model output for a visible-expression category.</td></tr><tr><th>Dominant label</th><td>The category with the largest score, not necessarily a fact.</td></tr><tr><th>Confidence threshold</th><td>A rule for withholding a label when no score is strong enough.</td></tr><tr><th>Smoothing</th><td>Averaging several frames to reduce rapid label changes.</td></tr><tr><th>Bias</th><td>Systematic performance differences across people or conditions.</td></tr></tbody></table><h2>Key code</h2><pre><code>const results = await faceapi.detectAllFaces(video, options)
-  .withFaceLandmarks()
-  .withFaceExpressions();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Lesson 10: Live expression recognition using TensorFlow.js Face Landmarks Detection.">
+<title>Lesson 10: Expression Recognition with TensorFlow.js</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#eef6ff;color:#172033;font:17px/1.7 Arial}
+.page{width:min(1050px,calc(100% - 24px));margin:20px auto;background:white;border-radius:18px;overflow:hidden;box-shadow:0 12px 36px #12497d22}
+header{padding:42px clamp(22px,6vw,62px);color:white;background:linear-gradient(135deg,#0d47a1,#1976d2)}
+header h1{margin:.25em 0;color:white}
+article{padding:30px clamp(20px,6vw,62px)}
+h2{margin-top:38px;color:#0d47a1}
+pre{padding:18px;overflow:auto;background:#102033;color:#eaf4ff;border-left:5px solid #42a5f5;border-radius:8px}
+.card,.check,.warn{padding:17px 20px;margin:18px 0;border-radius:9px}
+.card{background:#f3f9ff;border:1px solid #c8e2fa}
+.check{background:#e8f5e9;border-left:5px solid #2e7d32}
+.warn{background:#fff8e1;border-left:5px solid #f9a825}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border:1px solid #bdd5e8;text-align:left}
+th{background:#e3f2fd}
+iframe{width:100%;height:760px;border:1px solid #bdd5e8;border-radius:10px}
+a{color:#0b5fbd}
+code{font-family:Consolas,monospace}
+</style>
+</head>
+<body>
+<main class="page">
+<header>
+<strong>Lesson 10</strong>
+<h1>Expression Recognition with TensorFlow.js</h1>
+<p>Use live facial landmarks to study visible expression patterns in the browser.</p>
+</header>
 
-console.log(results[0].expressions);</code></pre><p>Read the chain from left to right: each stage adds information required by the next stage. A failure early in the chain affects every later result.</p><section class="check"><strong>Checkpoints</strong><ol><li>Why are scores estimates rather than facts?</li><li>Can a smile prove happiness? No.</li><li>Why is this unsuitable for discipline, hiring, diagnosis or lie detection?</li></ol></section><h2>Run the action</h2><ol><li>Open the action and select Load Models.</li><li>Wait for the “Models ready” message.</li><li>Provide the requested image or camera permission.</li><li>Observe both the output and the status message.</li></ol><iframe src="../action/index.html" title="Emotion Recognition action" allow="camera"></iframe><p><a href="../action/index.html" target="_blank">Open action in a new tab</a></p><h2>Troubleshooting</h2><ul><li>Labels flicker: average several frames or add a threshold.</li><li>No face detected: improve light and face the camera.</li><li>Confident but wrong label: confidence is not correctness.</li></ul><h2>Practice and assessment</h2><ol><li>Show only the highest score when it exceeds 0.60.</li><li>Plot scores over ten frames.</li><li>Add a clear “No confident estimate” result.</li></ol><section class="warn"><strong>Responsible use:</strong> obtain informed consent, minimize retention, secure biometric data, allow deletion and correction, provide a non-biometric alternative, and do not use experimental output as proof about identity, attendance, feelings, intent, health or honesty.</section><h2>Next lesson</h2><p>Course complete. Combine components only for transparent, consent-based projects with human oversight.</p><h2>References</h2><ul><li><a href="https://www.tensorflow.org/js/models">TensorFlow.js pretrained models</a></li><li><a href="https://github.com/vladmandic/face-api">TensorFlow.js-powered FaceAPI documentation</a></li></ul></article></main></body></html>
+<article>
+
+<section class="card">
+<strong>By the end of this lesson, you should be able to explain the complete pipeline—not merely run the code.</strong>
+</section>
+
+<h2>What are we building?</h2>
+
+<p>
+The browser receives live video from the webcam. TensorFlow.js detects a face and estimates
+hundreds of facial landmarks. We then measure a few visible geometric features such as
+mouth opening, mouth-corner position and eyebrow position.
+</p>
+
+<p>
+Those measurements are used to demonstrate simple categories such as
+<strong>smile-like</strong>, <strong>surprise-like</strong>, and <strong>neutral-like</strong>.
+</p>
+
+<section class="warn">
+<strong>Important:</strong> visible facial patterns are not reliable evidence of a person's
+true feelings, intent, honesty, health, personality or mental state.
+</section>
+
+<h2>The pipeline</h2>
+
+<ol>
+<li>Load TensorFlow.js.</li>
+<li>Load the TensorFlow.js BlazeFace detector.</li>
+<li>Load the TensorFlow.js FaceMesh landmark model.</li>
+<li>Start the webcam.</li>
+<li>Detect each visible face with BlazeFace.</li>
+<li>Run FaceMesh only when a face is detected.</li>
+<li>Measure landmark geometry.</li>
+<li>Create visible-expression estimates.</li>
+<li>Draw the result over the camera image.</li>
+</ol>
+
+<h2>Load TensorFlow.js and both models</h2>
+
+<pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface@0.0.5"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh@0.0.5"&gt;&lt;/script&gt;</code></pre>
+
+<p>
+This lesson deliberately separates face detection from landmark estimation.
+<strong>BlazeFace</strong> first answers, “Where is the face?”.
+Only when a face is found do we run <strong>FaceMesh</strong> to estimate detailed landmarks.
+Both models run with TensorFlow.js in the browser.
+</p>
+
+<h2>Load the models</h2>
+
+<pre><code>await tf.setBackend("webgl");
+await tf.ready();
+
+const faceDetector =
+  await window.blazeface.load();
+
+const faceMeshModel =
+  await window.facemesh.load({
+    maxFaces: 5
+  });</code></pre>
+
+<h2>Start the camera</h2>
+
+<pre><code>const stream =
+  await navigator.mediaDevices.getUserMedia({
+    video: {
+      facingMode: "user",
+      width: { ideal: 640 },
+      height: { ideal: 480 }
+    },
+    audio: false
+  });
+
+video.srcObject = stream;
+await video.play();</code></pre>
+
+<h2>Stage 1 — Detect the face</h2>
+
+<pre><code>const detections =
+  await faceDetector.estimateFaces(
+    video,
+    false
+  );</code></pre>
+
+<p>
+BlazeFace is a lightweight TensorFlow.js face detector. If this stage returns zero faces,
+there is no reason to run the more expensive landmark model for that frame.
+</p>
+
+<h2>Stage 2 — Estimate landmarks</h2>
+
+<pre><code>let meshFaces = [];
+
+if (detections.length &gt; 0) {
+  meshFaces =
+    await faceMeshModel.estimateFaces(
+      video,
+      false,
+      false
+    );
+}</code></pre>
+
+<p>
+FaceMesh returns a detailed facial mesh. The action displays both counts separately:
+<strong>Faces detected</strong> and <strong>Landmark faces</strong>. This makes debugging much easier.
+</p>
+
+<h2>What does a detected face contain?</h2>
+
+<table>
+<tbody>
+<tr><th>box</th><td>The rectangular region containing the detected face.</td></tr>
+<tr><th>keypoints</th><td>Hundreds of x, y and z coordinates describing facial geometry.</td></tr>
+<tr><th>x and y</th><td>The position of each landmark in the image.</td></tr>
+<tr><th>z</th><td>An approximate depth-related coordinate for the landmark.</td></tr>
+</tbody>
+</table>
+
+<h2>Useful FaceMesh landmarks</h2>
+
+<table>
+<tbody>
+<tr><th>33</th><td>Outer point of one eye</td></tr>
+<tr><th>263</th><td>Outer point of the other eye</td></tr>
+<tr><th>61</th><td>Left mouth corner</td></tr>
+<tr><th>291</th><td>Right mouth corner</td></tr>
+<tr><th>13</th><td>Upper inner lip</td></tr>
+<tr><th>14</th><td>Lower inner lip</td></tr>
+<tr><th>105</th><td>Left eyebrow area</td></tr>
+<tr><th>334</th><td>Right eyebrow area</td></tr>
+</tbody>
+</table>
+
+<h2>Normalize measurements</h2>
+
+<p>
+Measurements change when the face moves closer to or farther from the camera.
+To reduce this effect, we divide measurements by the distance between the eyes.
+</p>
+
+<pre><code>const eyeDistance =
+  distance(points[33], points[263]);
+
+const mouthOpen =
+  distance(points[13], points[14])
+  / eyeDistance;</code></pre>
+
+<p>
+This produces a relative measurement instead of a raw pixel measurement.
+</p>
+
+<h2>Build transparent expression estimates</h2>
+
+<p>
+A simple educational rule can combine normalized measurements.
+</p>
+
+<pre><code>const smile =
+  clamp(
+    (cornerLift + 0.015) * 9 +
+    (mouthWidth - 0.75) * 0.8
+  );
+
+const surprise =
+  clamp(
+    (mouthOpen - 0.055) * 7 +
+    (browDistance - 0.20) * 1.2
+  );</code></pre>
+
+<p>
+These rules are intentionally visible. Students can change a threshold, run the camera again,
+and immediately see how the behaviour changes.
+</p>
+
+<section class="check">
+<strong>Checkpoints</strong>
+<ol>
+<li>What is the difference between face detection and facial landmark estimation?</li>
+<li>Why do we normalize geometric measurements?</li>
+<li>Why is <code>staticImageMode: false</code> useful for video?</li>
+<li>Why is it useful to separate BlazeFace detection from FaceMesh landmarks?</li>
+<li>Can a smile-like pattern prove that someone is happy? No.</li>
+</ol>
+</section>
+
+<h2>Run the action</h2>
+
+<ol>
+<li>Select <strong>Load TensorFlow Model</strong>.</li>
+<li>Wait for the “Model ready” message.</li>
+<li>Select <strong>Start Camera</strong>.</li>
+<li>Allow camera permission.</li>
+<li>Look for the face rectangle and landmark points.</li>
+<li>Observe how the displayed estimates change as the visible facial geometry changes.</li>
+</ol>
+
+<iframe src="../action/index.html" title="TensorFlow.js expression recognition action" allow="camera"></iframe>
+
+<p><a href="../action/index.html" target="_blank">Open action in a new tab</a></p>
+
+
+<h2>Save the analysed image</h2>
+
+<p>
+The action includes a <strong>Save Image</strong> button. It combines the live webcam frame
+with the TensorFlow.js overlay so the saved PNG contains the face box, landmarks and current
+visible-expression estimate.
+</p>
+
+<pre><code>capture.toBlob(blob =&gt; {
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "tensorflow-expression.png";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}, "image/png");</code></pre>
+
+<p>
+The webcam is mirrored on screen, so the save routine mirrors the video before drawing the
+overlay. This makes the downloaded image match what the user sees in the browser.
+</p>
+
+<h2>Troubleshooting</h2>
+
+<ul>
+<li><strong>Model loading failed:</strong> check the browser console and internet connection.</li>
+<li><strong>Camera does not start:</strong> allow camera permission and use HTTPS or localhost.</li>
+<li><strong>No face detected:</strong> improve lighting, keep the whole face visible and face the camera.</li>
+<li><strong>Detection is slow:</strong> reduce <code>maxFaces</code> to the number of faces actually expected.</li>
+<li><strong>Labels change rapidly:</strong> average measurements across several frames.</li>
+</ul>
+
+<h2>Practice and assessment</h2>
+
+<ol>
+<li>Display mouth opening as a number.</li>
+<li>Display eye distance and explain why it is useful.</li>
+<li>Show only the face rectangle and then add landmarks.</li>
+<li>Average the last ten frames before displaying an estimate.</li>
+<li>Change one threshold and document what happens.</li>
+<li>Replace the simple rule stage with a TensorFlow.js classifier that you train yourself.</li>
+</ol>
+
+<h2>From landmarks to a trained classifier</h2>
+
+<p>
+The next step is to train a separate TensorFlow model. The face detector can crop the detected face,
+resize it, convert it to a tensor and pass it to that classifier.
+</p>
+
+<pre><code>const model =
+  await tf.loadLayersModel(
+    "./model/model.json"
+  );
+
+const prediction =
+  model.predict(faceTensor);</code></pre>
+
+<p>
+This separates two machine-learning problems clearly:
+<strong>where is the face?</strong> and <strong>how should this face image be classified?</strong>
+</p>
+
+<section class="warn">
+<strong>Responsible use:</strong> obtain informed consent, minimize retention, secure biometric data,
+provide non-biometric alternatives, and never use experimental facial analysis as proof for discipline,
+hiring, diagnosis, lie detection or other high-impact decisions.
+</section>
+
+<h2>What you learned</h2>
+
+<p>
+You built a live TensorFlow.js pipeline using webcam input, face detection, facial landmarks,
+normalized geometry, canvas drawing and transparent visible-expression estimates.
+</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://www.tensorflow.org/js" target="_blank">TensorFlow.js</a></li>
+<li><a href="https://github.com/tensorflow/tfjs-models/tree/master/face-landmarks-detection" target="_blank">TensorFlow.js Face Landmarks Detection</a></li>
+</ul>
+
+</article>
+</main>
+</body>
+</html>
