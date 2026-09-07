@@ -1,242 +1,1344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Two Images Pass Fail - Learn With Champak</title>
+  <meta charset="UTF-8">
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<style>
-*{box-sizing:border-box}
-body{margin:0;padding:24px;font-family:Arial,sans-serif;background:#f4f8fb;color:#111827}
-.app{width:min(960px,100%);margin:auto;background:white;padding:24px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
-.brand{color:#075985;font-weight:bold;margin-bottom:8px}
-h1{color:#075985;margin-top:0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:20px 0}
-.card{background:#eef6ff;border-radius:12px;padding:16px}
-label{display:block;font-weight:bold;margin-bottom:8px}
-input,button{width:100%;padding:11px;font-size:16px;margin-top:8px}
-button{border:0;border-radius:8px;background:#075985;color:white;cursor:pointer}
-button:disabled{opacity:.5;cursor:not-allowed}
-img{max-width:100%;display:block;margin:12px auto 0;border-radius:10px;border:2px solid #111827}
-.result{margin-top:20px;padding:18px;border-radius:12px;background:#fef3c7}
-.big{font-size:34px;font-weight:bold;color:#065f46}
-pre{background:#111827;color:white;padding:14px;border-radius:10px;white-space:pre-wrap;word-break:break-word}
-</style>
+  <title>
+    Train AI on Two Images - Learn With Champak
+  </title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: #f4f8fb;
+      color: #111827;
+    }
+
+    .app {
+      width: min(1000px, 100%);
+      margin: auto;
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .brand {
+      font-weight: bold;
+      color: #075985;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      color: #075985;
+      margin-top: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(240px, 1fr)
+      );
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .card {
+      background: #eef6ff;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input,
+    button {
+      width: 100%;
+      padding: 11px;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      background: #075985;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      margin: 12px auto 0;
+      border-radius: 10px;
+      border: 2px solid #111827;
+    }
+
+    .status {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fef3c7;
+      white-space: pre-wrap;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #ecfdf5;
+    }
+
+    .big {
+      font-size: 36px;
+      font-weight: bold;
+      color: #065f46;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+  </style>
 </head>
 
 <body>
-<div class="app">
 
-<div class="brand">Learn With Champak</div>
+  <div class="app">
 
-<h1>Two Images + Pass / Fail AI</h1>
+    <div class="brand">
+      Learn With Champak
+    </div>
 
-<p>
-Upload one image for FAIL and one image for PASS.
-The TensorFlow.js model predicts from marks and displays the matching image.
-</p>
+    <h1>
+      Train AI on Two Images
+    </h1>
 
-<div class="grid">
+    <p>
+      Image 1 is labelled FAIL.
+      Image 2 is labelled PASS.
+      The model trains on pixel tensors from these two images,
+      then classifies a separate test image.
+    </p>
 
-<div class="card">
-<label for="failInput">Image 1 = FAIL</label>
-<input id="failInput" type="file" accept="image/*">
-<img id="failPreview" alt="Fail preview" hidden>
-</div>
+    <div class="grid">
 
-<div class="card">
-<label for="passInput">Image 2 = PASS</label>
-<input id="passInput" type="file" accept="image/*">
-<img id="passPreview" alt="Pass preview" hidden>
-</div>
+      <div class="card">
 
-</div>
+        <label for="failInput">
+          Image 1 = FAIL
+        </label>
 
-<div class="grid">
+        <input
+          id="failInput"
+          type="file"
+          accept="image/*"
+        >
 
-<div class="card">
-<label for="marksInput">Enter marks</label>
-<input id="marksInput" type="number" min="0" max="100" value="50">
+        <img
+          id="failPreview"
+          alt="Fail training image"
+          hidden
+        >
 
-<button id="predictButton" disabled>
-Predict and Show Image
-</button>
-</div>
+      </div>
 
-<div class="card">
-<strong>Model status</strong>
-<pre id="status">Training model...</pre>
-</div>
+      <div class="card">
 
-</div>
+        <label for="passInput">
+          Image 2 = PASS
+        </label>
 
-<div id="resultBox" class="result" hidden>
-<div>Prediction:</div>
-<div id="predictionText" class="big">-</div>
-<div id="probabilityText">-</div>
-<img id="selectedImage" alt="Selected result">
-</div>
+        <input
+          id="passInput"
+          type="file"
+          accept="image/*"
+        >
 
-</div>
+        <img
+          id="passPreview"
+          alt="Pass training image"
+          hidden
+        >
 
-<script>
-let model = null;
-let failUrl = "";
-let passUrl = "";
-let failReady = false;
-let passReady = false;
-let modelReady = false;
+      </div>
 
-const failInput = document.getElementById("failInput");
-const passInput = document.getElementById("passInput");
-const failPreview = document.getElementById("failPreview");
-const passPreview = document.getElementById("passPreview");
-const marksInput = document.getElementById("marksInput");
-const predictButton = document.getElementById("predictButton");
-const status = document.getElementById("status");
-const resultBox = document.getElementById("resultBox");
-const predictionText = document.getElementById("predictionText");
-const probabilityText = document.getElementById("probabilityText");
-const selectedImage = document.getElementById("selectedImage");
+    </div>
 
-function updateButton(){
-  predictButton.disabled = !(failReady && passReady && modelReady);
-}
+    <button
+      id="trainButton"
+      disabled
+    >
+      Train Model on These Images
+    </button>
 
-function loadImage(input, preview, kind){
-  const file = input.files[0];
+    <div
+      id="status"
+      class="status"
+    >
+      Upload Image 1 and Image 2.
+    </div>
 
-  if(!file){
-    return;
-  }
+    <div class="grid">
 
-  const url = URL.createObjectURL(file);
+      <div class="card">
 
-  preview.src = url;
-  preview.hidden = false;
+        <label for="testInput">
+          Test Image
+        </label>
 
-  if(kind === "fail"){
-    if(failUrl){
-      URL.revokeObjectURL(failUrl);
+        <input
+          id="testInput"
+          type="file"
+          accept="image/*"
+          disabled
+        >
+
+        <img
+          id="testPreview"
+          alt="Test image"
+          hidden
+        >
+
+      </div>
+
+      <div class="card">
+
+        <button
+          id="predictButton"
+          disabled
+        >
+          Predict PASS or FAIL
+        </button>
+
+        <div
+          id="resultBox"
+          class="result"
+          hidden
+        >
+
+          <div>
+            Prediction
+          </div>
+
+          <div
+            id="predictionText"
+            class="big"
+          >
+            -
+          </div>
+
+          <div id="probabilityText">
+            -
+          </div>
+
+          <div>
+            Matched training class:
+          </div>
+
+          <img
+            id="matchedImage"
+            alt="Matched training image"
+          >
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <p class="note">
+      This is a teaching demo.
+      Augmentation creates variants of the two originals,
+      but a reliable real-world classifier requires many
+      genuinely different images per class.
+    </p>
+
+  </div>
+
+
+  <script>
+
+    const SIZE = 96;
+    const COPIES_PER_CLASS = 60;
+    const EPOCHS = 25;
+
+
+    let failImage = null;
+    let passImage = null;
+    let testImage = null;
+
+
+    let failUrl = "";
+    let passUrl = "";
+    let testUrl = "";
+
+
+    let model = null;
+    let trained = false;
+
+
+    const failInput =
+      document.getElementById(
+        "failInput"
+      );
+
+
+    const passInput =
+      document.getElementById(
+        "passInput"
+      );
+
+
+    const testInput =
+      document.getElementById(
+        "testInput"
+      );
+
+
+    const failPreview =
+      document.getElementById(
+        "failPreview"
+      );
+
+
+    const passPreview =
+      document.getElementById(
+        "passPreview"
+      );
+
+
+    const testPreview =
+      document.getElementById(
+        "testPreview"
+      );
+
+
+    const trainButton =
+      document.getElementById(
+        "trainButton"
+      );
+
+
+    const predictButton =
+      document.getElementById(
+        "predictButton"
+      );
+
+
+    const status =
+      document.getElementById(
+        "status"
+      );
+
+
+    const resultBox =
+      document.getElementById(
+        "resultBox"
+      );
+
+
+    const predictionText =
+      document.getElementById(
+        "predictionText"
+      );
+
+
+    const probabilityText =
+      document.getElementById(
+        "probabilityText"
+      );
+
+
+    const matchedImage =
+      document.getElementById(
+        "matchedImage"
+      );
+
+
+    /*
+     * -------------------------------------------------
+     * LOAD AN IMAGE FILE
+     * -------------------------------------------------
+     */
+
+    function loadImageFile(
+      input,
+      preview,
+      kind
+    ) {
+
+      return new Promise(
+        function(resolve, reject) {
+
+          const file =
+            input.files[0];
+
+
+          if (!file) {
+
+            reject(
+              new Error(
+                "No file selected"
+              )
+            );
+
+            return;
+
+          }
+
+
+          const url =
+            URL.createObjectURL(
+              file
+            );
+
+
+          const image =
+            new Image();
+
+
+          image.onload =
+            function() {
+
+
+              preview.src =
+                url;
+
+
+              preview.hidden =
+                false;
+
+
+              if (
+                kind === "fail"
+              ) {
+
+
+                if (failUrl) {
+
+                  URL.revokeObjectURL(
+                    failUrl
+                  );
+
+                }
+
+
+                failUrl =
+                  url;
+
+
+                failImage =
+                  image;
+
+              }
+
+
+              else if (
+                kind === "pass"
+              ) {
+
+
+                if (passUrl) {
+
+                  URL.revokeObjectURL(
+                    passUrl
+                  );
+
+                }
+
+
+                passUrl =
+                  url;
+
+
+                passImage =
+                  image;
+
+              }
+
+
+              else {
+
+
+                if (testUrl) {
+
+                  URL.revokeObjectURL(
+                    testUrl
+                  );
+
+                }
+
+
+                testUrl =
+                  url;
+
+
+                testImage =
+                  image;
+
+              }
+
+
+              resolve();
+
+            };
+
+
+          image.onerror =
+            function() {
+
+
+              URL.revokeObjectURL(
+                url
+              );
+
+
+              reject(
+                new Error(
+                  "Could not load image"
+                )
+              );
+
+            };
+
+
+          image.src =
+            url;
+
+        }
+      );
+
     }
 
-    failUrl = url;
-    failReady = true;
-  }else{
-    if(passUrl){
-      URL.revokeObjectURL(passUrl);
-    }
 
-    passUrl = url;
-    passReady = true;
-  }
+    /*
+     * -------------------------------------------------
+     * ENABLE TRAIN BUTTON
+     * -------------------------------------------------
+     */
 
-  updateButton();
-}
+    function updateTrainButton() {
 
-failInput.addEventListener(
-  "change",
-  () => loadImage(failInput, failPreview, "fail")
-);
-
-passInput.addEventListener(
-  "change",
-  () => loadImage(passInput, passPreview, "pass")
-);
-
-async function trainModel(){
-  status.textContent = "Creating TensorFlow.js model...";
-
-  model = tf.sequential();
-
-  model.add(
-    tf.layers.dense({
-      units: 1,
-      inputShape: [1],
-      activation: "sigmoid"
-    })
-  );
-
-  model.compile({
-    optimizer: "adam",
-    loss: "binaryCrossentropy",
-    metrics: ["accuracy"]
-  });
-
-  const xs = tf.tensor2d(
-    [
-      0.10,0.20,0.30,0.35,0.39,
-      0.40,0.45,0.50,0.60,0.80,0.90
-    ],
-    [11,1]
-  );
-
-  const ys = tf.tensor2d(
-    [0,0,0,0,0,1,1,1,1,1,1],
-    [11,1]
-  );
-
-  status.textContent = "Training model...";
-
-  await model.fit(
-    xs,
-    ys,
-    {
-      epochs: 1000,
-      verbose: 0
-    }
-  );
-
-  xs.dispose();
-  ys.dispose();
-
-  modelReady = true;
-  status.textContent = "Model ready. Upload both images.";
-  updateButton();
-}
-
-predictButton.addEventListener(
-  "click",
-  () => {
-    let marks = Number(marksInput.value);
-
-    if(!Number.isFinite(marks)){
-      marks = 0;
-    }
-
-    marks = Math.max(0, Math.min(100, marks));
-    marksInput.value = marks;
-
-    const probability = tf.tidy(
-      () => {
-        const input = tf.tensor2d(
-          [marks / 100],
-          [1,1]
+      trainButton.disabled =
+        !(
+          failImage &&
+          passImage
         );
 
-        const output = model.predict(input);
+    }
 
-        return output.dataSync()[0];
+
+    /*
+     * -------------------------------------------------
+     * IMAGE 1 = FAIL
+     * -------------------------------------------------
+     */
+
+    failInput.addEventListener(
+      "change",
+      async function() {
+
+        await loadImageFile(
+          failInput,
+          failPreview,
+          "fail"
+        );
+
+
+        updateTrainButton();
+
       }
     );
 
-    const passed = probability >= 0.5;
 
-    predictionText.textContent = passed ? "PASS" : "FAIL";
+    /*
+     * -------------------------------------------------
+     * IMAGE 2 = PASS
+     * -------------------------------------------------
+     */
 
-    probabilityText.textContent =
-      "Probability: " + probability.toFixed(4);
+    passInput.addEventListener(
+      "change",
+      async function() {
 
-    selectedImage.src = passed ? passUrl : failUrl;
+        await loadImageFile(
+          passInput,
+          passPreview,
+          "pass"
+        );
 
-    resultBox.hidden = false;
-  }
-);
 
-trainModel();
-</script>
+        updateTrainButton();
+
+      }
+    );
+
+
+    /*
+     * -------------------------------------------------
+     * TEST IMAGE
+     * -------------------------------------------------
+     */
+
+    testInput.addEventListener(
+      "change",
+      async function() {
+
+        await loadImageFile(
+          testInput,
+          testPreview,
+          "test"
+        );
+
+
+        predictButton.disabled =
+          !(
+            trained &&
+            testImage
+          );
+
+      }
+    );
+
+
+    /*
+     * -------------------------------------------------
+     * IMAGE -> TENSOR
+     * -------------------------------------------------
+     */
+
+    function imageToTensor(
+      image
+    ) {
+
+      return tf.tidy(
+        function() {
+
+
+          const pixels =
+            tf.browser.fromPixels(
+              image
+            );
+
+
+          const resized =
+            tf.image.resizeBilinear(
+              pixels,
+              [
+                SIZE,
+                SIZE
+              ]
+            );
+
+
+          /*
+           * Normalize
+           *
+           * 0..255
+           *
+           * becomes
+           *
+           * 0..1
+           */
+
+          return resized
+            .toFloat()
+            .div(255)
+            .clone();
+
+        }
+      );
+
+    }
+
+
+    /*
+     * -------------------------------------------------
+     * DATA AUGMENTATION
+     *
+     * We only have two original images.
+     *
+     * So we create slightly different versions
+     * of each one.
+     * -------------------------------------------------
+     */
+
+    function augment(
+      base
+    ) {
+
+      return tf.tidy(
+        function() {
+
+
+          let image =
+            base.clone();
+
+
+          /*
+           * Random horizontal flip
+           */
+
+          if (
+            Math.random() >
+            0.5
+          ) {
+
+            image =
+              tf.reverse(
+                image,
+                [1]
+              );
+
+          }
+
+
+          /*
+           * Random brightness
+           */
+
+          const brightness =
+            (
+              Math.random() -
+              0.5
+            ) *
+            0.18;
+
+
+          image =
+            image.add(
+              brightness
+            );
+
+
+          /*
+           * Random pixel noise
+           */
+
+          const noise =
+            tf.randomNormal(
+              image.shape,
+              0,
+              0.025
+            );
+
+
+          image =
+            image.add(
+              noise
+            );
+
+
+          /*
+           * Keep values between 0 and 1
+           */
+
+          return image
+            .clipByValue(
+              0,
+              1
+            )
+            .clone();
+
+        }
+      );
+
+    }
+
+
+    /*
+     * -------------------------------------------------
+     * CREATE TRAINING DATA
+     *
+     * Image 1 -> label 0
+     *
+     * Image 2 -> label 1
+     * -------------------------------------------------
+     */
+
+    function buildTrainingData() {
+
+
+      const failBase =
+        imageToTensor(
+          failImage
+        );
+
+
+      const passBase =
+        imageToTensor(
+          passImage
+        );
+
+
+      const samples =
+        [];
+
+
+      const labels =
+        [];
+
+
+      for (
+        let i = 0;
+        i < COPIES_PER_CLASS;
+        i++
+      ) {
+
+
+        /*
+         * FAIL sample
+         */
+
+        samples.push(
+          augment(
+            failBase
+          )
+        );
+
+
+        labels.push(
+          0
+        );
+
+
+        /*
+         * PASS sample
+         */
+
+        samples.push(
+          augment(
+            passBase
+          )
+        );
+
+
+        labels.push(
+          1
+        );
+
+      }
+
+
+      failBase.dispose();
+
+      passBase.dispose();
+
+
+      /*
+       * Stack all images into
+       * one training tensor
+       */
+
+      const xs =
+        tf.stack(
+          samples
+        );
+
+
+      /*
+       * Dispose individual tensors
+       */
+
+      samples.forEach(
+        function(tensor) {
+
+          tensor.dispose();
+
+        }
+      );
+
+
+      /*
+       * Labels tensor
+       */
+
+      const ys =
+        tf.tensor2d(
+          labels,
+          [
+            labels.length,
+            1
+          ]
+        );
+
+
+      return {
+        xs,
+        ys
+      };
+
+    }
+
+
+    /*
+     * -------------------------------------------------
+     * CREATE CNN MODEL
+     * -------------------------------------------------
+     */
+
+    function createModel() {
+
+
+      const newModel =
+        tf.sequential();
+
+
+      /*
+       * First convolution layer
+       */
+
+      newModel.add(
+        tf.layers.conv2d({
+
+          inputShape:
+            [
+              SIZE,
+              SIZE,
+              3
+            ],
+
+          filters:
+            16,
+
+          kernelSize:
+            3,
+
+          activation:
+            "relu"
+
+        })
+      );
+
+
+      /*
+       * Reduce image size
+       */
+
+      newModel.add(
+        tf.layers.maxPooling2d({
+
+          poolSize:
+            2
+
+        })
+      );
+
+
+      /*
+       * Second convolution layer
+       */
+
+      newModel.add(
+        tf.layers.conv2d({
+
+          filters:
+            32,
+
+          kernelSize:
+            3,
+
+          activation:
+            "relu"
+
+        })
+      );
+
+
+      newModel.add(
+        tf.layers.maxPooling2d({
+
+          poolSize:
+            2
+
+        })
+      );
+
+
+      /*
+       * Convert feature maps
+       * into one feature vector
+       */
+
+      newModel.add(
+        tf.layers.globalAveragePooling2d()
+      );
+
+
+      /*
+       * Hidden layer
+       */
+
+      newModel.add(
+        tf.layers.dense({
+
+          units:
+            24,
+
+          activation:
+            "relu"
+
+        })
+      );
+
+
+      /*
+       * Output neuron
+       *
+       * 0 = FAIL
+       * 1 = PASS
+       */
+
+      newModel.add(
+        tf.layers.dense({
+
+          units:
+            1,
+
+          activation:
+            "sigmoid"
+
+        })
+      );
+
+
+      /*
+       * Compile model
+       */
+
+      newModel.compile({
+
+        optimizer:
+          "adam",
+
+        loss:
+          "binaryCrossentropy",
+
+        metrics:
+          [
+            "accuracy"
+          ]
+
+      });
+
+
+      return newModel;
+
+    }
+
+
+    /*
+     * -------------------------------------------------
+     * TRAIN MODEL
+     * -------------------------------------------------
+     */
+
+    trainButton.addEventListener(
+      "click",
+      async function() {
+
+
+        trainButton.disabled =
+          true;
+
+
+        testInput.disabled =
+          true;
+
+
+        predictButton.disabled =
+          true;
+
+
+        resultBox.hidden =
+          true;
+
+
+        status.textContent =
+          "Creating image tensors and augmented samples...";
+
+
+        /*
+         * Dispose previous model
+         */
+
+        if (model) {
+
+          model.dispose();
+
+        }
+
+
+        model =
+          createModel();
+
+
+        /*
+         * Build image training tensors
+         */
+
+        const training =
+          buildTrainingData();
+
+
+        status.textContent =
+          "Training CNN on Image 1 = FAIL and Image 2 = PASS...";
+
+
+        /*
+         * Train the neural network
+         */
+
+        await model.fit(
+
+          training.xs,
+
+          training.ys,
+
+          {
+
+            epochs:
+              EPOCHS,
+
+            batchSize:
+              12,
+
+            shuffle:
+              true,
+
+            verbose:
+              0,
+
+
+            callbacks: {
+
+
+              onEpochEnd:
+                async function(
+                  epoch,
+                  logs
+                ) {
+
+
+                  status.textContent =
+
+                    "Epoch " +
+
+                    (
+                      epoch +
+                      1
+                    ) +
+
+                    " / " +
+
+                    EPOCHS +
+
+                    " | Loss: " +
+
+                    logs.loss.toFixed(
+                      4
+                    );
+
+
+                  /*
+                   * Allow browser to update UI
+                   */
+
+                  await tf.nextFrame();
+
+                }
+
+            }
+
+          }
+
+        );
+
+
+        /*
+         * Dispose training tensors
+         */
+
+        training.xs.dispose();
+
+        training.ys.dispose();
+
+
+        trained =
+          true;
+
+
+        status.textContent =
+          "Training complete. Choose a test image.";
+
+
+        testInput.disabled =
+          false;
+
+
+        trainButton.disabled =
+          false;
+
+
+        predictButton.disabled =
+          !testImage;
+
+      }
+    );
+
+
+    /*
+     * -------------------------------------------------
+     * PREDICT TEST IMAGE
+     * -------------------------------------------------
+     */
+
+    predictButton.addEventListener(
+      "click",
+      function() {
+
+
+        if (
+          !trained ||
+          !testImage
+        ) {
+
+          return;
+
+        }
+
+
+        const probability =
+          tf.tidy(
+            function() {
+
+
+              /*
+               * Convert test image
+               * into tensor
+               */
+
+              const tensor =
+                imageToTensor(
+                  testImage
+                );
+
+
+              /*
+               * Add batch dimension
+               *
+               * [96,96,3]
+               *
+               * becomes
+               *
+               * [1,96,96,3]
+               */
+
+              const batch =
+                tensor.expandDims(
+                  0
+                );
+
+
+              /*
+               * Predict
+               */
+
+              const output =
+                model.predict(
+                  batch
+                );
+
+
+              /*
+               * Return probability
+               */
+
+              return output
+                .dataSync()[0];
+
+            }
+          );
+
+
+        /*
+         * Apply threshold
+         */
+
+        const passed =
+          probability >=
+          0.5;
+
+
+        /*
+         * Show result
+         */
+
+        predictionText.textContent =
+
+          passed
+            ? "PASS"
+            : "FAIL";
+
+
+        /*
+         * Show probability
+         */
+
+        probabilityText.textContent =
+
+          "PASS probability: " +
+
+          probability.toFixed(
+            4
+          );
+
+
+        /*
+         * Show the training image
+         * corresponding to predicted class
+         */
+
+        matchedImage.src =
+
+          passed
+            ? passUrl
+            : failUrl;
+
+
+        resultBox.hidden =
+          false;
+
+      }
+    );
+
+  </script>
 
 </body>
 </html>
