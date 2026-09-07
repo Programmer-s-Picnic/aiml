@@ -9,7 +9,7 @@
   >
 
   <title>
-    Train AI on Two Images - Learn With Champak
+    Marks to Image with TensorFlow.js - Learn With Champak
   </title>
 
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
@@ -28,17 +28,17 @@
     }
 
     .app {
-      width: min(1000px, 100%);
+      width: min(980px, 100%);
       margin: auto;
       background: white;
-      padding: 24px;
       border-radius: 16px;
+      padding: 24px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
 
     .brand {
-      font-weight: bold;
       color: #075985;
+      font-weight: bold;
       margin-bottom: 8px;
     }
 
@@ -91,7 +91,8 @@
     }
 
     img {
-      max-width: 100%;
+      width: 100%;
+      max-width: 320px;
       display: block;
       margin: 12px auto 0;
       border-radius: 10px;
@@ -119,10 +120,10 @@
       color: #065f46;
     }
 
-    .note {
-      font-size: 14px;
-      color: #4b5563;
-      line-height: 1.5;
+    .probabilities {
+      margin-top: 12px;
+      line-height: 1.8;
+      font-family: Consolas, monospace;
     }
   </style>
 </head>
@@ -136,14 +137,14 @@
     </div>
 
     <h1>
-      Train AI on Two Images
+      Marks → Image
     </h1>
 
     <p>
-      Image 1 is labelled FAIL.
-      Image 2 is labelled PASS.
-      The model trains on pixel tensors from these two images,
-      then classifies a separate test image.
+      The input is marks.
+      TensorFlow.js predicts one of two output classes:
+      FAIL or PASS.
+      The corresponding image is then displayed.
     </p>
 
     <div class="grid">
@@ -162,11 +163,12 @@
 
         <img
           id="failPreview"
-          alt="Fail training image"
+          alt="Fail output image"
           hidden
         >
 
       </div>
+
 
       <div class="card">
 
@@ -182,7 +184,7 @@
 
         <img
           id="passPreview"
-          alt="Pass training image"
+          alt="Pass output image"
           hidden
         >
 
@@ -190,51 +192,42 @@
 
     </div>
 
-    <button
-      id="trainButton"
-      disabled
-    >
-      Train Model on These Images
-    </button>
 
     <div
       id="status"
       class="status"
     >
-      Upload Image 1 and Image 2.
+      Training model...
     </div>
+
 
     <div class="grid">
 
       <div class="card">
 
-        <label for="testInput">
-          Test Image
+        <label for="marksInput">
+          Enter marks
         </label>
 
         <input
-          id="testInput"
-          type="file"
-          accept="image/*"
-          disabled
+          id="marksInput"
+          type="number"
+          min="0"
+          max="100"
+          value="50"
         >
-
-        <img
-          id="testPreview"
-          alt="Test image"
-          hidden
-        >
-
-      </div>
-
-      <div class="card">
 
         <button
           id="predictButton"
           disabled
         >
-          Predict PASS or FAIL
+          Predict and Show Image
         </button>
+
+      </div>
+
+
+      <div class="card">
 
         <div
           id="resultBox"
@@ -253,17 +246,16 @@
             -
           </div>
 
-          <div id="probabilityText">
+          <div
+            id="probabilityText"
+            class="probabilities"
+          >
             -
           </div>
 
-          <div>
-            Matched training class:
-          </div>
-
           <img
-            id="matchedImage"
-            alt="Matched training image"
+            id="selectedImage"
+            alt="Selected output image"
           >
 
         </div>
@@ -272,35 +264,22 @@
 
     </div>
 
-    <p class="note">
-      This is a teaching demo.
-      Augmentation creates variants of the two originals,
-      but a reliable real-world classifier requires many
-      genuinely different images per class.
-    </p>
-
   </div>
 
 
   <script>
 
-    const SIZE = 96;
-    const COPIES_PER_CLASS = 60;
-    const EPOCHS = 25;
+    let model = null;
 
-
-    let failImage = null;
-    let passImage = null;
-    let testImage = null;
-
+    let modelReady = false;
 
     let failUrl = "";
+
     let passUrl = "";
-    let testUrl = "";
 
+    let failReady = false;
 
-    let model = null;
-    let trained = false;
+    let passReady = false;
 
 
     const failInput =
@@ -312,12 +291,6 @@
     const passInput =
       document.getElementById(
         "passInput"
-      );
-
-
-    const testInput =
-      document.getElementById(
-        "testInput"
       );
 
 
@@ -333,15 +306,9 @@
       );
 
 
-    const testPreview =
+    const marksInput =
       document.getElementById(
-        "testPreview"
-      );
-
-
-    const trainButton =
-      document.getElementById(
-        "trainButton"
+        "marksInput"
       );
 
 
@@ -375,631 +342,170 @@
       );
 
 
-    const matchedImage =
+    const selectedImage =
       document.getElementById(
-        "matchedImage"
+        "selectedImage"
       );
 
 
-    /*
-     * -------------------------------------------------
-     * LOAD AN IMAGE FILE
-     * -------------------------------------------------
-     */
+    function updateButton() {
 
-    function loadImageFile(
-      input,
-      preview,
-      kind
-    ) {
-
-      return new Promise(
-        function(resolve, reject) {
-
-          const file =
-            input.files[0];
-
-
-          if (!file) {
-
-            reject(
-              new Error(
-                "No file selected"
-              )
-            );
-
-            return;
-
-          }
-
-
-          const url =
-            URL.createObjectURL(
-              file
-            );
-
-
-          const image =
-            new Image();
-
-
-          image.onload =
-            function() {
-
-
-              preview.src =
-                url;
-
-
-              preview.hidden =
-                false;
-
-
-              if (
-                kind === "fail"
-              ) {
-
-
-                if (failUrl) {
-
-                  URL.revokeObjectURL(
-                    failUrl
-                  );
-
-                }
-
-
-                failUrl =
-                  url;
-
-
-                failImage =
-                  image;
-
-              }
-
-
-              else if (
-                kind === "pass"
-              ) {
-
-
-                if (passUrl) {
-
-                  URL.revokeObjectURL(
-                    passUrl
-                  );
-
-                }
-
-
-                passUrl =
-                  url;
-
-
-                passImage =
-                  image;
-
-              }
-
-
-              else {
-
-
-                if (testUrl) {
-
-                  URL.revokeObjectURL(
-                    testUrl
-                  );
-
-                }
-
-
-                testUrl =
-                  url;
-
-
-                testImage =
-                  image;
-
-              }
-
-
-              resolve();
-
-            };
-
-
-          image.onerror =
-            function() {
-
-
-              URL.revokeObjectURL(
-                url
-              );
-
-
-              reject(
-                new Error(
-                  "Could not load image"
-                )
-              );
-
-            };
-
-
-          image.src =
-            url;
-
-        }
-      );
-
-    }
-
-
-    /*
-     * -------------------------------------------------
-     * ENABLE TRAIN BUTTON
-     * -------------------------------------------------
-     */
-
-    function updateTrainButton() {
-
-      trainButton.disabled =
+      predictButton.disabled =
         !(
-          failImage &&
-          passImage
+          modelReady &&
+          failReady &&
+          passReady
         );
 
     }
 
 
-    /*
-     * -------------------------------------------------
-     * IMAGE 1 = FAIL
-     * -------------------------------------------------
-     */
+    function loadOutputImage(
+      input,
+      preview,
+      type
+    ) {
+
+      const file =
+        input.files[0];
+
+
+      if (!file) {
+        return;
+      }
+
+
+      const url =
+        URL.createObjectURL(
+          file
+        );
+
+
+      preview.src =
+        url;
+
+
+      preview.hidden =
+        false;
+
+
+      if (
+        type === "fail"
+      ) {
+
+
+        if (failUrl) {
+
+          URL.revokeObjectURL(
+            failUrl
+          );
+
+        }
+
+
+        failUrl =
+          url;
+
+
+        failReady =
+          true;
+
+      }
+
+
+      else {
+
+
+        if (passUrl) {
+
+          URL.revokeObjectURL(
+            passUrl
+          );
+
+        }
+
+
+        passUrl =
+          url;
+
+
+        passReady =
+          true;
+
+      }
+
+
+      updateButton();
+
+    }
+
 
     failInput.addEventListener(
       "change",
-      async function() {
+      function() {
 
-        await loadImageFile(
+        loadOutputImage(
           failInput,
           failPreview,
           "fail"
         );
 
-
-        updateTrainButton();
-
       }
     );
 
 
-    /*
-     * -------------------------------------------------
-     * IMAGE 2 = PASS
-     * -------------------------------------------------
-     */
-
     passInput.addEventListener(
       "change",
-      async function() {
+      function() {
 
-        await loadImageFile(
+        loadOutputImage(
           passInput,
           passPreview,
           "pass"
         );
 
-
-        updateTrainButton();
-
       }
     );
 
 
     /*
-     * -------------------------------------------------
-     * TEST IMAGE
-     * -------------------------------------------------
-     */
-
-    testInput.addEventListener(
-      "change",
-      async function() {
-
-        await loadImageFile(
-          testInput,
-          testPreview,
-          "test"
-        );
-
-
-        predictButton.disabled =
-          !(
-            trained &&
-            testImage
-          );
-
-      }
-    );
-
-
-    /*
-     * -------------------------------------------------
-     * IMAGE -> TENSOR
-     * -------------------------------------------------
-     */
-
-    function imageToTensor(
-      image
-    ) {
-
-      return tf.tidy(
-        function() {
-
-
-          const pixels =
-            tf.browser.fromPixels(
-              image
-            );
-
-
-          const resized =
-            tf.image.resizeBilinear(
-              pixels,
-              [
-                SIZE,
-                SIZE
-              ]
-            );
-
-
-          /*
-           * Normalize
-           *
-           * 0..255
-           *
-           * becomes
-           *
-           * 0..1
-           */
-
-          return resized
-            .toFloat()
-            .div(255)
-            .clone();
-
-        }
-      );
-
-    }
-
-
-    /*
-     * -------------------------------------------------
-     * DATA AUGMENTATION
+     * ----------------------------------------
+     * BUILD MODEL
      *
-     * We only have two original images.
+     * Input:
+     * one number = marks
      *
-     * So we create slightly different versions
-     * of each one.
-     * -------------------------------------------------
+     * Output:
+     * two probabilities
+     *
+     * output[0] = FAIL
+     * output[1] = PASS
+     * ----------------------------------------
      */
 
-    function augment(
-      base
-    ) {
+    async function trainModel() {
 
-      return tf.tidy(
-        function() {
 
+      status.textContent =
+        "Creating marks → image-class model...";
 
-          let image =
-            base.clone();
 
-
-          /*
-           * Random horizontal flip
-           */
-
-          if (
-            Math.random() >
-            0.5
-          ) {
-
-            image =
-              tf.reverse(
-                image,
-                [1]
-              );
-
-          }
-
-
-          /*
-           * Random brightness
-           */
-
-          const brightness =
-            (
-              Math.random() -
-              0.5
-            ) *
-            0.18;
-
-
-          image =
-            image.add(
-              brightness
-            );
-
-
-          /*
-           * Random pixel noise
-           */
-
-          const noise =
-            tf.randomNormal(
-              image.shape,
-              0,
-              0.025
-            );
-
-
-          image =
-            image.add(
-              noise
-            );
-
-
-          /*
-           * Keep values between 0 and 1
-           */
-
-          return image
-            .clipByValue(
-              0,
-              1
-            )
-            .clone();
-
-        }
-      );
-
-    }
-
-
-    /*
-     * -------------------------------------------------
-     * CREATE TRAINING DATA
-     *
-     * Image 1 -> label 0
-     *
-     * Image 2 -> label 1
-     * -------------------------------------------------
-     */
-
-    function buildTrainingData() {
-
-
-      const failBase =
-        imageToTensor(
-          failImage
-        );
-
-
-      const passBase =
-        imageToTensor(
-          passImage
-        );
-
-
-      const samples =
-        [];
-
-
-      const labels =
-        [];
-
-
-      for (
-        let i = 0;
-        i < COPIES_PER_CLASS;
-        i++
-      ) {
-
-
-        /*
-         * FAIL sample
-         */
-
-        samples.push(
-          augment(
-            failBase
-          )
-        );
-
-
-        labels.push(
-          0
-        );
-
-
-        /*
-         * PASS sample
-         */
-
-        samples.push(
-          augment(
-            passBase
-          )
-        );
-
-
-        labels.push(
-          1
-        );
-
-      }
-
-
-      failBase.dispose();
-
-      passBase.dispose();
-
-
-      /*
-       * Stack all images into
-       * one training tensor
-       */
-
-      const xs =
-        tf.stack(
-          samples
-        );
-
-
-      /*
-       * Dispose individual tensors
-       */
-
-      samples.forEach(
-        function(tensor) {
-
-          tensor.dispose();
-
-        }
-      );
-
-
-      /*
-       * Labels tensor
-       */
-
-      const ys =
-        tf.tensor2d(
-          labels,
-          [
-            labels.length,
-            1
-          ]
-        );
-
-
-      return {
-        xs,
-        ys
-      };
-
-    }
-
-
-    /*
-     * -------------------------------------------------
-     * CREATE CNN MODEL
-     * -------------------------------------------------
-     */
-
-    function createModel() {
-
-
-      const newModel =
+      model =
         tf.sequential();
-
-
-      /*
-       * First convolution layer
-       */
-
-      newModel.add(
-        tf.layers.conv2d({
-
-          inputShape:
-            [
-              SIZE,
-              SIZE,
-              3
-            ],
-
-          filters:
-            16,
-
-          kernelSize:
-            3,
-
-          activation:
-            "relu"
-
-        })
-      );
-
-
-      /*
-       * Reduce image size
-       */
-
-      newModel.add(
-        tf.layers.maxPooling2d({
-
-          poolSize:
-            2
-
-        })
-      );
-
-
-      /*
-       * Second convolution layer
-       */
-
-      newModel.add(
-        tf.layers.conv2d({
-
-          filters:
-            32,
-
-          kernelSize:
-            3,
-
-          activation:
-            "relu"
-
-        })
-      );
-
-
-      newModel.add(
-        tf.layers.maxPooling2d({
-
-          poolSize:
-            2
-
-        })
-      );
-
-
-      /*
-       * Convert feature maps
-       * into one feature vector
-       */
-
-      newModel.add(
-        tf.layers.globalAveragePooling2d()
-      );
 
 
       /*
        * Hidden layer
        */
 
-      newModel.add(
+      model.add(
         tf.layers.dense({
 
+          inputShape:
+            [1],
+
           units:
-            24,
+            8,
 
           activation:
             "relu"
@@ -1009,20 +515,20 @@
 
 
       /*
-       * Output neuron
+       * Two output neurons
        *
-       * 0 = FAIL
-       * 1 = PASS
+       * Neuron 0 = FAIL
+       * Neuron 1 = PASS
        */
 
-      newModel.add(
+      model.add(
         tf.layers.dense({
 
           units:
-            1,
+            2,
 
           activation:
-            "sigmoid"
+            "softmax"
 
         })
       );
@@ -1032,13 +538,13 @@
        * Compile model
        */
 
-      newModel.compile({
+      model.compile({
 
         optimizer:
           "adam",
 
         loss:
-          "binaryCrossentropy",
+          "categoricalCrossentropy",
 
         metrics:
           [
@@ -1048,101 +554,109 @@
       });
 
 
-      return newModel;
+      /*
+       * ----------------------------------------
+       * TRAINING INPUT
+       *
+       * Marks are normalized
+       * from 0..100
+       * to 0..1
+       * ----------------------------------------
+       */
 
-    }
+      const xs =
+        tf.tensor2d(
+          [
+            0.10,
+            0.20,
+            0.30,
+            0.35,
+            0.39,
 
+            0.40,
+            0.45,
+            0.50,
+            0.60,
+            0.80,
+            0.90
+          ],
 
-    /*
-     * -------------------------------------------------
-     * TRAIN MODEL
-     * -------------------------------------------------
-     */
-
-    trainButton.addEventListener(
-      "click",
-      async function() {
-
-
-        trainButton.disabled =
-          true;
-
-
-        testInput.disabled =
-          true;
-
-
-        predictButton.disabled =
-          true;
-
-
-        resultBox.hidden =
-          true;
-
-
-        status.textContent =
-          "Creating image tensors and augmented samples...";
+          [
+            11,
+            1
+          ]
+        );
 
 
-        /*
-         * Dispose previous model
-         */
+      /*
+       * ----------------------------------------
+       * TRAINING OUTPUT
+       *
+       * FAIL = [1, 0]
+       *
+       * PASS = [0, 1]
+       * ----------------------------------------
+       */
 
-        if (model) {
+      const ys =
+        tf.tensor2d(
+          [
+            1,0,
+            1,0,
+            1,0,
+            1,0,
+            1,0,
 
-          model.dispose();
+            0,1,
+            0,1,
+            0,1,
+            0,1,
+            0,1,
+            0,1
+          ],
 
-        }
-
-
-        model =
-          createModel();
-
-
-        /*
-         * Build image training tensors
-         */
-
-        const training =
-          buildTrainingData();
-
-
-        status.textContent =
-          "Training CNN on Image 1 = FAIL and Image 2 = PASS...";
-
-
-        /*
-         * Train the neural network
-         */
-
-        await model.fit(
-
-          training.xs,
-
-          training.ys,
-
-          {
-
-            epochs:
-              EPOCHS,
-
-            batchSize:
-              12,
-
-            shuffle:
-              true,
-
-            verbose:
-              0,
+          [
+            11,
+            2
+          ]
+        );
 
 
-            callbacks: {
+      status.textContent =
+        "Training model...";
 
 
-              onEpochEnd:
-                async function(
-                  epoch,
-                  logs
+      /*
+       * ----------------------------------------
+       * TRAIN MODEL
+       * ----------------------------------------
+       */
+
+      await model.fit(
+        xs,
+        ys,
+        {
+
+          epochs:
+            1200,
+
+          verbose:
+            0,
+
+          callbacks: {
+
+            onEpochEnd:
+              async function(
+                epoch,
+                logs
+              ) {
+
+
+                if (
+                  epoch === 0 ||
+                  (
+                    epoch + 1
+                  ) % 200 === 0
                 ) {
 
 
@@ -1155,9 +669,7 @@
                       1
                     ) +
 
-                    " / " +
-
-                    EPOCHS +
+                    " / 1200" +
 
                     " | Loss: " +
 
@@ -1166,57 +678,47 @@
                     );
 
 
-                  /*
-                   * Allow browser to update UI
-                   */
-
                   await tf.nextFrame();
 
                 }
 
-            }
+              }
 
           }
 
-        );
+        }
+      );
 
 
-        /*
-         * Dispose training tensors
-         */
+      /*
+       * Training tensors
+       * no longer required
+       */
 
-        training.xs.dispose();
+      xs.dispose();
 
-        training.ys.dispose();
-
-
-        trained =
-          true;
+      ys.dispose();
 
 
-        status.textContent =
-          "Training complete. Choose a test image.";
+      modelReady =
+        true;
 
 
-        testInput.disabled =
-          false;
+      status.textContent =
+        "Model ready. Upload Image 1 and Image 2.";
 
 
-        trainButton.disabled =
-          false;
+      updateButton();
 
-
-        predictButton.disabled =
-          !testImage;
-
-      }
-    );
+    }
 
 
     /*
-     * -------------------------------------------------
-     * PREDICT TEST IMAGE
-     * -------------------------------------------------
+     * ----------------------------------------
+     * INPUT MARKS
+     *
+     * PREDICT OUTPUT IMAGE
+     * ----------------------------------------
      */
 
     predictButton.addEventListener(
@@ -1224,76 +726,122 @@
       function() {
 
 
+        let marks =
+          Number(
+            marksInput.value
+          );
+
+
+        /*
+         * Validate marks
+         */
+
         if (
-          !trained ||
-          !testImage
+          !Number.isFinite(
+            marks
+          )
         ) {
 
-          return;
+          marks =
+            0;
 
         }
 
 
-        const probability =
+        marks =
+          Math.max(
+            0,
+            Math.min(
+              100,
+              marks
+            )
+          );
+
+
+        marksInput.value =
+          marks;
+
+
+        /*
+         * ----------------------------------------
+         * INPUT TENSOR
+         *
+         * Example:
+         *
+         * marks = 50
+         *
+         * input = 0.50
+         * ----------------------------------------
+         */
+
+        const probabilities =
           tf.tidy(
             function() {
 
 
-              /*
-               * Convert test image
-               * into tensor
-               */
+              const input =
+                tf.tensor2d(
+                  [
+                    marks / 100
+                  ],
 
-              const tensor =
-                imageToTensor(
-                  testImage
+                  [
+                    1,
+                    1
+                  ]
                 );
 
 
               /*
-               * Add batch dimension
+               * Model output:
                *
-               * [96,96,3]
-               *
-               * becomes
-               *
-               * [1,96,96,3]
-               */
-
-              const batch =
-                tensor.expandDims(
-                  0
-                );
-
-
-              /*
-               * Predict
+               * [
+               *   FAIL probability,
+               *   PASS probability
+               * ]
                */
 
               const output =
                 model.predict(
-                  batch
+                  input
                 );
 
 
-              /*
-               * Return probability
-               */
-
-              return output
-                .dataSync()[0];
+              return Array.from(
+                output.dataSync()
+              );
 
             }
           );
 
 
         /*
-         * Apply threshold
+         * Get two probabilities
+         */
+
+        const failProbability =
+          probabilities[0];
+
+
+        const passProbability =
+          probabilities[1];
+
+
+        /*
+         * ----------------------------------------
+         * FIND WINNING OUTPUT
+         * ----------------------------------------
          */
 
         const passed =
-          probability >=
-          0.5;
+          passProbability >
+          failProbability;
+
+
+        const result =
+          passed
+            ? "PASS"
+            : "FAIL";
 
 
         /*
@@ -1301,32 +849,45 @@
          */
 
         predictionText.textContent =
-
-          passed
-            ? "PASS"
-            : "FAIL";
+          result;
 
 
         /*
-         * Show probability
+         * Show probabilities
          */
 
         probabilityText.textContent =
 
-          "PASS probability: " +
+          "FAIL: " +
 
-          probability.toFixed(
-            4
-          );
+          (
+            failProbability *
+            100
+          ).toFixed(
+            2
+          ) +
+
+          "%\n" +
+
+          "PASS: " +
+
+          (
+            passProbability *
+            100
+          ).toFixed(
+            2
+          ) +
+
+          "%";
 
 
         /*
-         * Show the training image
-         * corresponding to predicted class
+         * ----------------------------------------
+         * OUTPUT ONE OF THE TWO IMAGES
+         * ----------------------------------------
          */
 
-        matchedImage.src =
-
+        selectedImage.src =
           passed
             ? passUrl
             : failUrl;
@@ -1337,6 +898,13 @@
 
       }
     );
+
+
+    /*
+     * Start training
+     */
+
+    trainModel();
 
   </script>
 
