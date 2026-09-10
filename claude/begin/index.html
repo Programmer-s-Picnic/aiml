@@ -17,7 +17,9 @@
   <meta name="keywords"
         content="Claude AI, Python, Claude tutorial, Python beginners, Learn With Champak, AI for beginners, online Python editor, Hello World Python" />
 
-  <meta name="author" content="Learn With Champak" />
+  <meta name="author" content="Champak Roy, Learn With Champak" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://aiml.learnwithchampak.live/claude/begin/" />
 
   <meta property="og:title"
         content="Claude AI: Zero to Hello World with Python" />
@@ -26,6 +28,10 @@
         content="A complete beginner lesson: understand Claude, create your first Python program and run Hello World online." />
 
   <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://aiml.learnwithchampak.live/claude/begin/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Claude AI — Zero to Hello World with Python" />
+  <meta name="twitter:description" content="Learn Claude, prompts and Python from absolute zero with Champak Roy." />
 
   <style>
     * {
@@ -34,6 +40,36 @@
 
     html {
       scroll-behavior: smooth;
+    }
+
+    :focus-visible {
+      outline: 3px solid #f4c542;
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      left: -9999px;
+      top: 10px;
+      z-index: 1000001;
+      background: white;
+      color: #084c91;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .skip-link:focus {
+      left: 10px;
+    }
+
+    .reading-progress {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 1000000;
+      height: 5px;
+      background: linear-gradient(90deg, #f4c542 var(--read-progress, 0%), transparent 0);
+      pointer-events: none;
     }
 
     body {
@@ -389,6 +425,8 @@
 </head>
 
 <body>
+<a class="skip-link" href="#lesson-content">Skip to lesson</a>
+<div class="reading-progress" aria-hidden="true"></div>
 
 <a class="sticky-editor-link"
    href="#python-editor">
@@ -396,7 +434,7 @@
 </a>
 
 
-<main class="lwc-page">
+<main class="lwc-page" id="lesson-content">
 
   <!-- HERO -->
   <header class="hero">
@@ -534,8 +572,20 @@
 
     <p>
       Claude is an artificial intelligence
-      assistant created by Anthropic.
+      assistant created by Anthropic. You can talk
+      to it in ordinary language and ask it to
+      explain ideas, help you learn, or help you
+      understand and write computer code.
     </p>
+
+    <div class="important">
+      <strong>Remember:</strong>
+      Claude can sometimes make mistakes. Check
+      important information, read the code it gives
+      you, and always run and test that code.
+      Never share passwords, OTPs, banking details,
+      or private student information in an AI chat.
+    </div>
 
     <p>
       We can communicate with Claude using
@@ -607,6 +657,19 @@
          target="_blank"
          rel="noopener">
         https://console.anthropic.com/
+      </a>
+
+    </div>
+
+
+    <div class="link-card">
+
+      <strong>Official Anthropic Introduction to Claude</strong><br>
+
+      <a href="https://docs.anthropic.com/en/docs/intro-to-claude"
+         target="_blank"
+         rel="noopener">
+        https://docs.anthropic.com/en/docs/intro-to-claude
       </a>
 
     </div>
@@ -1356,6 +1419,8 @@ print("Hello, World!")</code></pre>
 
     <h2>16. Quick Test</h2>
 
+    <p>Answer from memory first. Open the answer panel only after completing all ten questions.</p>
+
     <div class="quiz-question">
       <strong>1.</strong>
       Who created Claude?
@@ -1640,5 +1705,19 @@ I am learning with Champak.</code></pre>
 
 </main>
 
+<script>
+  (function () {
+    const root = document.documentElement;
+    function updateReadingProgress() {
+      const maximum = root.scrollHeight - root.clientHeight;
+      const percentage = maximum > 0
+        ? Math.round((root.scrollTop / maximum) * 100)
+        : 0;
+      root.style.setProperty("--read-progress", percentage + "%");
+    }
+    window.addEventListener("scroll", updateReadingProgress, { passive: true });
+    updateReadingProgress();
+  }());
+</script>
 </body>
 </html>
