@@ -1,7 +1,7 @@
 {
   "brand": {
-    "title": "AI-ML Classes",
-    "subtitle": "Programmer's Picnic by Champak Roy",
+    "title": "Learn AI & Machine Learning",
+    "subtitle": "Learn With Champak • Programmer’s Picnic",
     "badge": "AI"
   },
   "items": [
@@ -10,20 +10,38 @@
       "href": "index.html"
     },
     {
-      "label": "Course Map",
-      "href": "coursemap/index.html"
+      "label": "Start Here",
+      "href": "start/index.html"
     },
     {
-      "label": "Lessons",
-      "href": "lessons/index.html",
+      "label": "12-Week Course",
+      "href": "course/week01/lesson.html",
+      "children": [
+        {
+          "label": "Course Map",
+          "href": "course/course-map.html"
+        },
+        {
+          "label": "Week 1",
+          "href": "course/week01/lesson.html"
+        },
+        {
+          "label": "Week 2",
+          "href": "course/week02/lesson.html"
+        },
+        {
+          "label": "Week 3",
+          "href": "course/week03/lesson.html"
+        }
+      ]
+    },
+    {
+      "label": "ML Fundamentals",
+      "href": "regression/index.html",
       "children": [
         {
           "label": "Statistics",
           "href": "lessons/stats/index.html"
-        },
-        {
-          "label": "Terms",
-          "href": "lessons/terms/index.html"
         },
         {
           "label": "Regression",
@@ -31,64 +49,42 @@
         },
         {
           "label": "Classification",
-          "href": "classification/index.html"
+          "href": "classification/picture/index.html"
         },
         {
           "label": "NLP",
-          "href": "nlp/index.html"
-        },
-        {
-          "label": "Matplotlib 3D",
-          "href": "matplotlib/3d/0/index.html"
+          "href": "nlp/begin/index.html"
         }
       ]
     },
     {
       "label": "Practice",
-      "href": "assignments/week1.txt",
+      "href": "code/pandas/projects/index.html",
       "children": [
         {
-          "label": "Assignments",
-          "href": "assignments/week1.txt"
-        },
-        {
-          "label": "Projects",
-          "href": "projects/index.html"
+          "label": "Pandas Projects",
+          "href": "code/pandas/projects/index.html"
         },
         {
           "label": "Datasets",
           "href": "datasets/index.html"
+        },
+        {
+          "label": "TensorFlow.js",
+          "href": "tflow/intro/index.html"
+        },
+        {
+          "label": "Python Editor",
+          "href": "https://editor.learnwithchampak.live/python-starter/editor/super/"
         }
       ]
     },
     {
       "label": "Tools",
-      "href": "tools/index.html",
-      "children": [
-        {
-          "label": "Python Editor",
-          "href": "https://editor.learnwithchampak.live/python-starter/editor/super/?tmode=1"
-        },
-        {
-          "label": "SQL Editor",
-          "href": "https://editor.learnwithchampak.live/sql/premium/"
-        },
-        {
-          "label": "Whiteboard",
-          "href": "https://editor.learnwithchampak.live/whiteboard/"
-        }
-      ]
+      "href": "tools/index.html"
     },
     {
-      "label": "Student",
-      "href": "student/index.html"
-    },
-    {
-      "label": "Teacher",
-      "href": "teacher/index.html"
-    },
-    {
-      "label": "Contact",
+      "label": "About",
       "href": "https://www.learnwithchampak.live/p/champak.html"
     }
   ]
