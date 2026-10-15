@@ -124,9 +124,16 @@ let displayPose=null,animationFrame=0,previousPose=null;
   function paintHumanoid(pose, mesh) {
     const {poly, path, project, depth, box, disc, g, scale} = mesh;
     const x=pose.x,y=pose.y,a=pose.a,ca=Math.cos(a),sa=Math.sin(a);
+    // Biomechanics-inspired gait: controlled centre-of-mass sway, mostly level head,
+    // 60% stance (planted foot) / 40% swing (toes clear the floor). No cartoon hops.
     const walking=Math.max(0,Math.min(1,pose.walk||0));
-    const phase=pose.gait||0, bob=walking*.045*Math.sin(phase*2);
-    const at=(front,side,z)=>[x+ca*front-sa*side,y+sa*front+ca*side,z+bob];
+    const phase=pose.gait||0, cycle=phase/(2*Math.PI);
+    const clamp01=t=>Math.max(0,Math.min(1,t));
+    const ease=t=>{t=clamp01(t);return t*t*(3-2*t)};
+    const wrap=t=>((t%1)+1)%1;
+    const bob=walking*(.008+.008*Math.cos(2*phase));
+    const weightShift=walking*.013*Math.sin(phase);
+    const at=(front,side,z)=>[x+ca*front-sa*(side+weightShift),y+sa*front+ca*(side+weightShift),z+bob];
     const colors={limb:['#9cd7ef','#4289b1','#26618f','#7ac4e3','#245985'],
       shin:['#d7eaf7','#79adcf','#4a85ad','#b9d8ec','#568bb0'],
       suit:['#75d9f5','#167dc7','#075c9f','#3dabe0','#1970af'],
@@ -160,22 +167,48 @@ let displayPose=null,animationFrame=0,previousPose=null;
     disc(x+.1,y+.12,.018,.44,'rgba(30,75,106,.17)');
     const hip={},knee={},ankle={},shoulder={},elbow={},wrist={};
     for(const side of [-1,1]){
-      const swing=walking*.29*Math.sin(phase+(side===1?0:Math.PI));
-      const lift=walking*.18*Math.max(0,Math.sin(phase+(side===1?0:Math.PI)));
-      hip[side]=at(-.02,side*.21,.84);
-      knee[side]=at(.05+swing*.55,side*.22,.47+lift*.55);
-      ankle[side]=at(.07+swing,side*.22,.14+lift);
-      shoulder[side]=at(-.005,side*.39,1.34);
-      elbow[side]=at(-.09-swing*.56,side*.43,1.055);
-      wrist[side]=at(-.14-swing*.9,side*.43,.79);
+      // The support foot travels rearward relative to the moving pelvis, while
+      // the swing foot lifts smoothly and lands heel first. Legs use 2-bone IK:
+      // the knees bend naturally instead of following an arbitrary sine wave.
+      const u=wrap(cycle+(side===1?0:.5)), stance=.60;
+      let footForward,clearance=0;
+      if(u<stance){
+        footForward=.20-.40*(u/stance);
+      }else{
+        const q=(u-stance)/(1-stance),s=ease(q);
+        footForward=-.20+.40*s;
+        clearance=.145*Math.pow(Math.sin(Math.PI*q),1.5);
+      }
+      footForward*=walking;
+      clearance*=walking;
+      const hipForward=-.018,hipZ=.915+bob;
+      const footZ=.135+clearance;
+      const fx=footForward-hipForward,fz=footZ-hipZ;
+      const upper=.445,lower=.435;
+      const dist=Math.max(.001,Math.min(upper+lower-.002,Math.hypot(fx,fz)));
+      const ux=fx/Math.hypot(fx,fz),uz=fz/Math.hypot(fx,fz);
+      const along=(upper*upper-lower*lower+dist*dist)/(2*dist);
+      const bend=Math.sqrt(Math.max(0,upper*upper-along*along));
+      const kneeForward=hipForward+ux*along-uz*bend;
+      const kneeZ=hipZ+uz*along+ux*bend;
+      hip[side]=at(hipForward,side*.205,.915);
+      knee[side]=at(kneeForward,side*.21,kneeZ-bob);
+      // Subtract pelvis bob here: contact feet remain at floor height.
+      ankle[side]=at(footForward,side*.21,footZ-bob);
+      shoulder[side]=at(-.015,side*.39,1.35);
+      // Opposite arm/leg swing is intentionally subtle, elbows slightly flexed.
+      const arm=-walking*.095*Math.cos(phase+(side===1?0:Math.PI));
+      elbow[side]=at(.018+arm*.62,side*.44,1.085);
+      wrist[side]=at(.045+arm,side*.44,.865);
     }
     // Far limbs first, then torso, then near arms and head; self-contained draw order.
     for(const side of [-1,1]){
       tube(hip[side],knee[side],.115,colors.limb);tube(knee[side],ankle[side],.092,colors.shin);
-      joint(knee[side],.105);joint(ankle[side],.095);
+      joint(hip[side],.10);joint(knee[side],.092);joint(ankle[side],.082);
       const foot=ankle[side];
-      const forward=.12, fcenter=[foot[0]+ca*forward,foot[1]+sa*forward];
-      box(fcenter,.34,.20,foot[2]-.105,.135,a,colors.foot);
+      const forward=.085, fcenter=[foot[0]+ca*forward,foot[1]+sa*forward];
+      // Soles touch the arena in stance; toes stay level during swing.
+      box(fcenter,.32,.20,foot[2]-.045,.18,a,colors.foot);
     }
     tube(shoulder[-1],elbow[-1],.092,colors.limb);
     tube(elbow[-1],wrist[-1],.073,colors.shin);joint(elbow[-1],.08);
@@ -282,7 +315,7 @@ function beginAnimation(before,after){
  const t0=performance.now(),duration=Math.min(420,Math.max(110,Number($('speed').value)*.9));
  const diff=Math.atan2(Math.sin(after.a-before.a),Math.cos(after.a-before.a));
  function tick(now){const t=clamp((now-t0)/duration,0,1),smooth=t*t*(3-2*t);
- displayPose={...after,x:before.x+(after.x-before.x)*smooth,y:before.y+(after.y-before.y)*smooth,a:before.a+diff*smooth,walk:Math.min(1,Math.hypot(after.x-before.x,after.y-before.y)*1.7+Math.abs(diff)*.9),gait:t*Math.PI*4};draw();
+ displayPose={...after,x:before.x+(after.x-before.x)*smooth,y:before.y+(after.y-before.y)*smooth,a:before.a+diff*smooth,walk:Math.min(1,Math.hypot(after.x-before.x,after.y-before.y)*1.7+Math.abs(diff)*.9)*Math.min(1,Math.sin(Math.PI*t)*5),gait:t*Math.PI*2};draw();
  if(t<1)animationFrame=requestAnimationFrame(tick);else{animationFrame=0;displayPose=null;draw();}
  }
  animationFrame=requestAnimationFrame(tick);
@@ -317,7 +350,7 @@ $('run').addEventListener('click',run);$('step').addEventListener('click',step);
 $('code').addEventListener('input',()=>{drafts[current]=$('code').value;save();if(!running)iterator=null});$('code').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run()}if(e.key==='Tab'){e.preventDefault();const t=e.target;t.setRangeText('    ',t.selectionStart,t.selectionEnd,'end');t.dispatchEvent(new Event('input'))}});document.querySelectorAll('[data-insert]').forEach(btn=>btn.addEventListener('click',()=>{const t=$('code'),s=btn.getAttribute('data-insert').replace(/\\n/g,'\n');t.setRangeText((t.selectionStart&&t.value[t.selectionStart-1]!=='\n'?'\n':'')+s+'\n',t.selectionStart,t.selectionEnd,'end');t.focus();t.dispatchEvent(new Event('input'))}));
 function setCamera(az,el){camera.az=az;camera.el=clamp(el,.32,Math.PI/2);$('view3d').classList.toggle('active',camera.el<1.45);$('viewTop').classList.toggle('active',camera.el>=1.45);draw()}
 function setHumanoidFocus(on){
-  if(on&&!camera.follow){camera.previousZoom=camera.zoom;camera.zoom=2.1;}
+  if(on&&!camera.follow){camera.previousZoom=camera.zoom;camera.zoom=3.25;}
   else if(!on&&camera.follow){camera.zoom=camera.previousZoom;}
   camera.follow=on;
   $('focusRobot').textContent=on?'▦ Whole board':'🎯 Follow';
@@ -326,7 +359,7 @@ function setHumanoidFocus(on){
   draw();
 }
 $('focusRobot').addEventListener('click',()=>setHumanoidFocus(!camera.follow));
-$('zoomIn').addEventListener('click',()=>{camera.zoom=Math.min(2.3,camera.zoom+.22);draw()});
+$('zoomIn').addEventListener('click',()=>{camera.zoom=Math.min(4.2,camera.zoom+.22);draw()});
 $('zoomOut').addEventListener('click',()=>{camera.zoom=Math.max(.7,camera.zoom-.22);draw()});
 $('orbitLeft').addEventListener('click',()=>setCamera(camera.az-.26,camera.el));
 $('orbitRight').addEventListener('click',()=>setCamera(camera.az+.26,camera.el));
@@ -373,10 +406,11 @@ sceneCanvas.addEventListener('pointerup',releaseOrbit);sceneCanvas.addEventListe
       if(running)stop();
       if(animationFrame)cancelAnimationFrame(animationFrame);animationFrame=0;displayPose=null;previousPose=null;
       if(!camera.follow)setHumanoidFocus(true);
+      setCamera(.72,.58); // side/front eye-level view makes leg motion visible
       demoStart=performance.now();
       demoButton.textContent='■ Stop demo';demoButton.classList.add('is-playing');
       function tick(now){
-        const t=(now-demoStart)*.012;
+        const t=(now-demoStart)*.0085;
         if(!robot){demoFrame=0;return;}displayPose={...robot,walk:1,gait:t,braked:false};
         drawTheater();
         demoFrame=requestAnimationFrame(tick);
