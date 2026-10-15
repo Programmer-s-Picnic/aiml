@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#eef7ff">
-<title>RoboLab Level 2 — Motors, Sensors & Line Following | Learn With Champak</title>
-<meta name="description" content="Learn intermediate robotics programming interactively. Drive two wheel motors, read a distance sensor, avoid obstacles, and follow a line in six guided RoboLab missions.">
+<title>RoboLab Level 2 — Humanoid Walking, Sensors & Line Following | Learn With Champak</title>
+<meta name="description" content="Learn intermediate robotics programming interactively. Drive two simplified leg-drive controls, read a distance sensor, avoid obstacles, and follow a line in six guided RoboLab missions.">
 <meta name="author" content="Champak Roy">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://aiml.learnwithchampak.live/robolab/level2/">
 <link rel="icon" type="image/jpeg" href="/me.jpg">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Learn With Champak — RoboLab">
-<meta property="og:title" content="RoboLab Level 2 — Program Motors & Sensors">
-<meta property="og:description" content="Explore a rotatable 3D robot simulator with side-by-side controls, differential drive, range sensing, obstacle avoidance and guided line tracking.">
+<meta property="og:title" content="RoboLab Level 2 — Program Humanoid Walking & Sensors">
+<meta property="og:description" content="Explore a rotatable 3D walking humanoid simulator with side-by-side controls, gait-drive steering, range sensing, obstacle avoidance and guided line tracking.">
 <meta property="og:url" content="https://aiml.learnwithchampak.live/robolab/level2/">
 <meta property="og:image" content="https://aiml.learnwithchampak.live/assets/images/og-ai-ml-champak-roy-varanasi.png">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"RoboLab Level 2: Motors, Sensors and Line Following","description":"Six interactive robotics missions with a differential-drive simulator, range sensor, conditions, obstacles and guided line tracking.","url":"https://aiml.learnwithchampak.live/robolab/level2/","learningResourceType":"Interactive coding simulator","educationalLevel":"Intermediate beginner","inLanguage":"en","isAccessibleForFree":true,"author":{"@type":"Person","name":"Champak Roy"},"publisher":{"@type":"Organization","name":"Learn With Champak","url":"https://www.learnwithchampak.live/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"RoboLab Level 2: Humanoid Walking, Sensors and Line Following","description":"Six interactive robotics missions with a gait-drive humanoid simulator, range sensor, conditions, obstacles and guided line tracking.","url":"https://aiml.learnwithchampak.live/robolab/level2/","learningResourceType":"Interactive coding simulator","educationalLevel":"Intermediate beginner","inLanguage":"en","isAccessibleForFree":true,"author":{"@type":"Person","name":"Champak Roy"},"publisher":{"@type":"Organization","name":"Learn With Champak","url":"https://www.learnwithchampak.live/"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494" crossorigin="anonymous"></script>
 <style>
 :root{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#14304c;background:#f0f7fd;--line:#d8e6f3;--ink:#14304c;--muted:#55738f;--blue:#176cd2;--soft:#e8f3ff;--shadow:0 9px 30px #164f8e10}
@@ -27,7 +27,7 @@ header{background:#fffdfef5;border-bottom:1px solid var(--line);position:sticky;
 @media(max-width:470px){.mission-list,.cards{grid-template-columns:1fr}.nav{padding:10px 0}.actions .btn{flex:1}.speed{width:100%}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
-/* Side-by-side execution and self-contained orbitable 3D simulator */
+/* Side-by-side execution and self-contained orbitable 3D walking humanoid simulator */
 .stage-layout{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:10px;align-items:stretch}
 .stage-visual{min-width:0;border:1px solid #c8dcec;border-radius:13px;overflow:hidden;background:linear-gradient(165deg,#e9f5ff,#d5ebfd)}
 .stage-visual canvas{border:0;border-radius:0;background:#dceeff;aspect-ratio:20/13;cursor:grab;touch-action:pan-y}
@@ -53,19 +53,20 @@ header{background:#fffdfef5;border-bottom:1px solid var(--line);position:sticky;
 <body>
 <header><div class="wrap nav"><a href="/robolab/" class="brand">🤖 RoboLab <span style="color:#2078cb">Level 2</span></a><nav aria-label="Main navigation"><a href="/robolab/">← Level 1</a><a href="#lab">Simulator</a><a href="#reference">Motor commands</a><a href="/">AI/ML Home</a></nav></div></header>
 <main class="wrap">
-<section class="hero"><div><span class="eyebrow">LEVEL 2 • HANDS-ON ROBOTICS</span><h1>Motors, sensors &amp; <span>autonomous navigation.</span></h1><p>Learn how two wheels turn a robot, how it measures obstacles, and how feedback makes it follow a track. Change the code, run it beside the rotatable 3D arena, and watch every robot movement across six progressive challenges.</p></div><div class="progress"><b id="progressLabel">0 / 6 missions completed</b><div class="bar"><span id="progressBar"></span></div><small>Saved on this device • Complete missions in any order</small></div></section>
+<section class="hero"><div><span class="eyebrow">LEVEL 2 • HANDS-ON ROBOTICS</span><h1>Motors, sensors &amp; <span>autonomous navigation.</span></h1><p>Learn how a humanoid steers through simplified left/right gait drives, how it measures obstacles, and how feedback makes it follow a track. Change the code, run it beside the rotatable 3D arena, and watch every robot movement across six progressive challenges.</p></div><div class="progress"><b id="progressLabel">0 / 6 missions completed</b><div class="bar"><span id="progressBar"></span></div><small>Saved on this device • Complete missions in any order</small></div></section>
 <section id="lab" class="layout" aria-label="Interactive robotics coding lab">
 <aside class="panel"><div class="panel-head"><h2>Six learning missions</h2><p>Select any challenge to practise.</p></div><div class="mission-list" id="missionList"></div><div class="lesson"><strong id="lessonTitle">How this works</strong><p id="lessonText">Program the robot and experiment with its motors and sensors.</p></div></aside>
-<section class="panel simulator-panel"><div class="panel-head"><h2>Live 3D robot simulator</h2><p>Rotatable 3D arena • Real-time differential drive • Run controls beside the robot</p></div>
+<section class="panel simulator-panel"><div class="panel-head"><h2>Live 3D robot simulator</h2><p>Rotatable 3D arena • Animated walking and simplified gait-drive steering • Run controls beside the robot</p></div>
 <div class="sim-area"><h3 class="goal" id="goalTitle">Mission goal</h3><p class="desc" id="goalDescription">Move carefully towards the green target.</p>
-<div class="stage-layout"><div class="stage-visual"><div class="camera-toolbar" aria-label="3D camera controls"><span class="camera-label">✦ 3D CAMERA</span><button id="orbitLeft" type="button" class="camera-btn" title="Rotate left" aria-label="Rotate camera left">⟲</button><button id="orbitRight" type="button" class="camera-btn" title="Rotate right" aria-label="Rotate camera right">⟳</button><button id="view3d" type="button" class="camera-btn active">3D</button><button id="viewTop" type="button" class="camera-btn">Top</button><span class="camera-hint">Drag to orbit</span></div>
+<div class="stage-layout"><div class="stage-visual"><div class="camera-toolbar" aria-label="3D camera controls"><span class="camera-label">✦ 3D CAMERA</span><button id="orbitLeft" type="button" class="camera-btn" title="Rotate left" aria-label="Rotate camera left">⟲</button><button id="orbitRight" type="button" class="camera-btn" title="Rotate right" aria-label="Rotate camera right">⟳</button><button id="view3d" type="button" class="camera-btn active">3D</button><button id="viewTop" type="button" class="camera-btn">Top</button><button id="zoomIn" type="button" class="camera-btn" aria-label="Zoom in on humanoid" title="Zoom in">＋</button><button id="zoomOut" type="button" class="camera-btn" aria-label="Zoom out from humanoid" title="Zoom out">－</button><span class="camera-hint">Drag to orbit • ＋ to inspect gait</span></div>
 <canvas id="world" width="1000" height="650" role="img" aria-label="Rotatable 3D robot arena with a raised track, robot, targets and solid obstacles"></canvas>
-</div><aside class="stage-controls" aria-label="Simulator execution controls"><span class="control-label">ROBOT CONTROLS</span><button id="run" class="btn primary run-main" type="button">▶ Run</button><button id="step" class="btn" type="button">↷ Step</button><button id="stop" class="btn danger" type="button" disabled>■ Stop</button><button id="reset" class="btn" type="button">↺ Reset</button><label class="speed" for="speed">Speed <select id="speed"><option value="500">Slow</option><option value="220" selected>Normal</option><option value="65">Fast</option></select></label><small class="control-help">Watch every wheel movement here. No need to scroll back to the editor.</small></aside></div>
-<div class="telemetry"><div><strong id="position">—</strong><small>Position (x,y)</small></div><div><strong id="heading">—</strong><small>Heading</small></div><div><strong id="distance">—</strong><small>Front distance</small></div><div><strong id="wheels">—</strong><small>Left / Right</small></div></div><p id="status" role="status" aria-live="polite" class="status">Choose a mission and press Run or Step.</p><div class="log" id="log" aria-label="Robot execution log"></div><button class="btn primary next" id="next" type="button">Next mission →</button></div></section>
+</div><aside class="stage-controls" aria-label="Simulator execution controls"><span class="control-label">ROBOT CONTROLS</span><button id="run" class="btn primary run-main" type="button">▶ Run</button><button id="step" class="btn" type="button">↷ Step</button><button id="stop" class="btn danger" type="button" disabled>■ Stop</button><button id="reset" class="btn" type="button">↺ Reset</button><label class="speed" for="speed">Speed <select id="speed"><option value="500">Slow</option><option value="220" selected>Normal</option><option value="65">Fast</option></select></label><small class="control-help">Watch the humanoid take steps here. No need to scroll back to the editor.</small></aside></div>
+<div class="telemetry"><div><strong id="position">—</strong><small>Position (x,y)</small></div><div><strong id="heading">—</strong><small>Heading</small></div><div><strong id="distance">—</strong><small>Front distance</small></div><div><strong id="wheels">—</strong><small>Left / Right leg drive</small></div></div><p id="status" role="status" aria-live="polite" class="status">Choose a mission and press Run or Step.</p><div class="log" id="log" aria-label="Robot execution log"></div><button class="btn primary next" id="next" type="button">Next mission →</button></div></section>
 <section class="panel editor-panel"><div class="panel-head"><h2>Your robot program</h2><p>Safe Python-style training commands • No external code execution</p></div><div class="editor-area"><label for="code">Write and modify your commands</label><textarea id="code" spellcheck="false" aria-label="Robot program editor"></textarea><p class="detail">Use <b>Run / Step / Stop / Reset beside the 3D board</b> above. You can keep watching the robot throughout each mission. <b>Ctrl+Enter</b> also runs the program.</p><div class="chips" aria-label="Insert command snippets"><button class="chip" data-insert="motors(70,70,1)" type="button">motors()</button><button class="chip" data-insert="scan()" type="button">scan()</button><button class="chip" data-insert="brake()" type="button">brake()</button><button class="chip" data-insert="follow_line(8)" type="button">follow_line()</button><button class="chip" data-insert="repeat 8:\n    motors(70,70,1)" type="button">repeat</button><button class="chip" data-insert="if distance_cm() &lt; 28:\n    brake()\nelse:\n    motors(70,70,1)" type="button">if / else</button></div><p class="detail">Motors range from −100 to +100. Each tick is a small simulated interval. Indentation uses 4 spaces. <b>Ctrl+Enter</b> runs your program.</p><div class="actions"><button id="hintBtn" class="btn small" type="button">💡 Hint</button><button id="solutionBtn" class="btn small" type="button">Show example</button><button id="copy" class="btn small" type="button">Copy code</button></div><p class="hint" id="hint"></p></div></section>
 </section>
-<div class="cards" aria-label="Topics you will learn"><article class="card"><h3>⚙️ Differential drive</h3><p>Each wheel has its own speed. Equal speeds drive straight; unequal speeds produce curved motion or a turn on the spot.</p></article><article class="card"><h3>📡 Distance sensor</h3><p>Cast a forward sensing ray and use distance readings to decide when to slow, stop or turn away from obstacles.</p></article><article class="card"><h3>🧠 Feedback logic</h3><p>Use conditions inside repeating control loops. The robot reacts to sensor readings as its surroundings change.</p></article><article class="card"><h3>〰️ Line tracking</h3><p>Explore the left and right line detectors and a reference line-tracking controller that steers toward a route.</p></article></div>
-<section class="guide" id="reference"><h2>Command reference &amp; what comes next</h2><ul><li><code>motors(left, right, ticks)</code> — wheel power percentage; negative means reverse. Example: <code>motors(50,-50,4)</code> rotates clockwise or counterclockwise depending on coordinate direction (in this arena, rightward is 0°).</li><li><code>distance_cm()</code> — simulated forward range to the first obstacle or arena boundary. Use inside <code>if distance_cm() &lt; 28:</code>, not as standalone Python.</li><li><code>obstacle_ahead()</code> — true when front range is under 35 simulated centimetres. <code>line_left()</code> and <code>line_right()</code> check two virtual downward-facing detectors.</li><li><code>scan()</code> — write the distance and line detector readings to the console.</li><li><code>repeat 12:</code>, <code>if ...:</code> and <code>else:</code> — use a four-space indentation to group instructions.</li><li><code>follow_line(ticks)</code> — a <b>waypoint-assisted reference controller</b> for learning closed-loop motion. It automatically adjusts motor powers. This is an educational helper, not a full physical sensor-only line-following algorithm.</li><li><code>brake()</code> — stop the robot and finish execution.</li></ul><p><b>Simulation note:</b> Motor speeds, sensor ranges and robot movement are simplified learning models. They do not represent verified real-world hardware. Level 3 can introduce PID, wheel encoders, hardware calibration, Arduino/ESP32 and safe physical robot control.</p></section>
+<div class="cards" aria-label="Topics you will learn"><article class="card"><h3>🚶 Gait-drive steering</h3><p>The learning model gives each leg drive a speed. Equal values walk forward; unequal values steer or turn the humanoid.</p></article><article class="card"><h3>📡 Distance sensor</h3><p>Cast a forward sensing ray and use distance readings to decide when to slow, stop or turn away from obstacles.</p></article><article class="card"><h3>🧠 Feedback logic</h3><p>Use conditions inside repeating control loops. The robot reacts to sensor readings as its surroundings change.</p></article><article class="card"><h3>〰️ Line tracking</h3><p>Explore the left and right line detectors and a reference line-tracking controller that steers toward a route.</p></article></div>
+<p class="detail"><strong>Humanoid learning model:</strong> <code>motors(left,right,ticks)</code> controls simplified left/right gait drives to demonstrate steering and sensing. Walking animation is illustrative; it does not model humanoid balance, joint torques or real walking hardware.</p>
+<section class="guide" id="reference"><h2>Command reference &amp; what comes next</h2><ul><li><code>motors(left, right, ticks)</code> — simulated left/right gait-drive percentage; negative means reverse. Example: <code>motors(50,-50,4)</code> rotates clockwise or counterclockwise depending on coordinate direction (in this arena, rightward is 0°).</li><li><code>distance_cm()</code> — simulated forward range to the first obstacle or arena boundary. Use inside <code>if distance_cm() &lt; 28:</code>, not as standalone Python.</li><li><code>obstacle_ahead()</code> — true when front range is under 35 simulated centimetres. <code>line_left()</code> and <code>line_right()</code> check two virtual downward-facing detectors.</li><li><code>scan()</code> — write the distance and line detector readings to the console.</li><li><code>repeat 12:</code>, <code>if ...:</code> and <code>else:</code> — use a four-space indentation to group instructions.</li><li><code>follow_line(ticks)</code> — a <b>waypoint-assisted reference controller</b> for learning closed-loop motion. It automatically adjusts motor powers. This is an educational helper, not a full physical sensor-only line-following algorithm.</li><li><code>brake()</code> — stop the robot and finish execution.</li></ul><p><b>Simulation note:</b> Motor speeds, sensor ranges and robot movement are simplified learning models. They do not represent verified real-world hardware. Level 3 can introduce PID, joint encoders, balance control, hardware calibration, Arduino/ESP32 and safe physical robot control.</p></section>
 </main>
 <footer><div class="wrap"><span>Learn With Champak · Programmer's Picnic — Developed and maintained by Champak Roy</span><span><a href="/robolab/">Level 1</a> · <a href="/">AI/ML Home</a> · <a href="https://github.com/Programmer-s-Picnic/aiml">Source repository</a></span></div></footer>
 <script>
@@ -73,8 +74,8 @@ header{background:#fffdfef5;border-bottom:1px solid var(--line);position:sticky;
 'use strict';
 const $=id=>document.getElementById(id),TAU=2*Math.PI,W=16,H=10,deg=r=>Math.round(((r*180/Math.PI)%360+360)%360),clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
 const missions=[
-{title:'Two motors, one direction',topic:'Motor basics',lesson:'Equal positive powers on both wheels move straight. Changing both to a smaller power reduces the distance travelled per tick.',goal:'Drive from the start pad to the green target with equal wheel speeds.',start:[2,5,0],target:[9.2,5],obstacles:[],line:[],sample:'motors(80,80,9)',hint:'Both wheels must have equal positive power. At 80% for nine ticks, travel about 7.2 units.',solution:'motors(80,80,9)',require:'motors'},
-{title:'Turn using wheel speeds',topic:'Differential steering',lesson:'Opposite wheel powers rotate the robot almost in place. Motors (50,-50,4) turn about 96° upward on this screen.',goal:'Rotate the robot, then drive north to the target.',start:[3,7,0],target:[2.55,2.85],obstacles:[],line:[],sample:'motors(50,-50,4)\nmotors(60,60,7)',hint:'Try motors(50,-50,4), followed by motors(60,60,7).',solution:'motors(50,-50,4)\nmotors(60,60,7)',require:'motors'},
+{title:'Two motors, one direction',topic:'Motor basics',lesson:'Equal positive powers on both leg drives move straight. Changing both to a smaller power reduces the distance travelled per tick.',goal:'Drive from the start pad to the green target with equal leg-drive speeds.',start:[2,5,0],target:[9.2,5],obstacles:[],line:[],sample:'motors(80,80,9)',hint:'Both wheels must have equal positive power. At 80% for nine ticks, travel about 7.2 units.',solution:'motors(80,80,9)',require:'motors'},
+{title:'Turn using leg-drive speeds',topic:'Differential steering',lesson:'Opposite leg-drive powers rotate the robot almost in place. Motors (50,-50,4) turn about 96° upward on this screen.',goal:'Rotate the robot, then drive north to the target.',start:[3,7,0],target:[2.55,2.85],obstacles:[],line:[],sample:'motors(50,-50,4)\nmotors(60,60,7)',hint:'Try motors(50,-50,4), followed by motors(60,60,7).',solution:'motors(50,-50,4)\nmotors(60,60,7)',require:'motors'},
 {title:'Stop when danger is near',topic:'Range sensor & conditions',lesson:'The simulated front sensor checks the obstacle distance just before each if condition. Repeating this check is the start of feedback control.',goal:'Approach the obstacle and brake before touching it.',start:[2,5,0],target:[6.9,5],stopRequired:true,obstacles:[[10.2,5,.55]],line:[],sample:'repeat 14:\n    if distance_cm() < 28:\n        brake()\n    else:\n        motors(70,70,1)',hint:'The obstacle is ahead. Drive 0.7 unit per tick and brake once range drops below 28 cm.',solution:'repeat 14:\n    if distance_cm() < 28:\n        brake()\n    else:\n        motors(70,70,1)',require:'if'},
 {title:'Navigate around a barrier',topic:'Obstacle avoidance',lesson:'Before driving, check your sensor. Plan a route up, past the barrier, and down to the goal; avoid collision while turning.',goal:'Read the front sensor, go around the circular obstacle and reach the green target.',start:[2,6,0],target:[11.05,5.9],obstacles:[[7,6,.85]],line:[],sample:'scan()\nif distance_cm() < 60:\n    motors(50,-50,4)\n    motors(70,70,3)\n    motors(-50,50,4)\n    motors(80,80,12)\n    motors(-50,50,4)\n    motors(70,70,4)',hint:'First face upward. Go above the obstacle, face east, cross, then descend to the target.',solution:'scan()\nif distance_cm() < 60:\n    motors(50,-50,4)\n    motors(70,70,3)\n    motors(-50,50,4)\n    motors(80,80,12)\n    motors(-50,50,4)\n    motors(70,70,4)',require:'if'},
 {title:'Follow the painted route',topic:'Line-following controller',lesson:'Observe how the line tracking helper continually changes both motor values as it approaches waypoints. Use scan() to inspect the two simulated line detectors.',goal:'Use the guided line controller to follow all three bends and reach the end.',start:[2,7,0],target:[12,3],obstacles:[],line:[[2,7],[6,7],[6,3],[12,3]],sample:'scan()\nfollow_line(45)\nscan()',hint:'The helper follow_line(45) updates steering every tick. Inspect left/right powers while running.',solution:'scan()\nfollow_line(45)',require:'follow_line'},
@@ -88,6 +89,96 @@ function status(text,kind=''){const el=$('status');el.className='status '+kind;e
 // Self-contained projected 3D geometry: no external rendering library required.
 const camera={az:-.36,el:.97,zoom:1},DEFAULT_CAMERA={az:-.36,el:.97,zoom:1};
 let displayPose=null,animationFrame=0,previousPose=null;
+
+  // Educational kinematic humanoid: independently articulated hips, knees, ankles,
+  // shoulders and elbows. Each motor command animates an alternating step cycle.
+  function paintHumanoid(pose, mesh) {
+    const {poly, path, project, depth, box, disc, g, scale} = mesh;
+    const x=pose.x,y=pose.y,a=pose.a,ca=Math.cos(a),sa=Math.sin(a);
+    const walking=Math.max(0,Math.min(1,pose.walk||0));
+    const phase=pose.gait||0, bob=walking*.045*Math.sin(phase*2);
+    const at=(front,side,z)=>[x+ca*front-sa*side,y+sa*front+ca*side,z+bob];
+    const colors={limb:['#9cd7ef','#4289b1','#26618f','#7ac4e3','#245985'],
+      shin:['#d7eaf7','#79adcf','#4a85ad','#b9d8ec','#568bb0'],
+      suit:['#75d9f5','#167dc7','#075c9f','#3dabe0','#1970af'],
+      core:['#cceeff','#368ad2','#1c68aa','#88cefa','#3479b8'],
+      head:['#f4faff','#cadfec','#9bc1dd','#ffffff','#b4cfe5'],
+      foot:['#243f64','#101f3a','#152b4e','#375c81','#142847']};
+    // Build a shaded 3D cylinder between joint coordinates instead of flat 2D limbs.
+    const tube=(start,end,r,palette)=>{
+      const d=end.map((v,i)=>v-start[i]);let len=Math.hypot(...d);if(len<.001)return;
+      const axis=d.map(v=>v/len);
+      let e=[-axis[1],axis[0],0];let el=Math.hypot(...e);
+      if(el<.03){e=[ca,sa,0];el=1}
+      e=e.map(v=>v/el);
+      const f=[axis[1]*e[2]-axis[2]*e[1],axis[2]*e[0]-axis[0]*e[2],axis[0]*e[1]-axis[1]*e[0]];
+      const around=(center,t)=>center.map((v,i)=>v+r*(Math.cos(t)*e[i]+Math.sin(t)*f[i]));
+      const strips=[];
+      for(let i=0;i<8;i++){
+        const b0=2*Math.PI*i/8,b1=2*Math.PI*(i+1)/8;
+        const pts=[around(start,b0),around(start,b1),around(end,b1),around(end,b0)];
+        strips.push({pts,depth:pts.reduce((sum,p)=>sum+depth(...p),0)/4,color:palette[i%palette.length]});
+      }
+      strips.sort((l,r)=>l.depth-r.depth).forEach(f=>poly(f.pts,f.color,'#17385345',.65));
+    };
+    const joint=(point,r,colour='#214b7b')=>{
+      const [px,py]=project(...point),rad=Math.max(2.3,r*scale*.83);
+      g.beginPath();g.arc(px,py,rad,0,2*Math.PI);
+      const grad=g.createRadialGradient(px-rad*.25,py-rad*.3,rad*.08,px,py,rad);
+      grad.addColorStop(0,'#bdeeff');grad.addColorStop(.48,colour);grad.addColorStop(1,'#102b51');
+      g.fillStyle=grad;g.fill();g.strokeStyle='#d8f7ff';g.lineWidth=Math.max(.8,rad*.12);g.stroke();
+    };
+    disc(x+.1,y+.12,.018,.44,'rgba(30,75,106,.17)');
+    const hip={},knee={},ankle={},shoulder={},elbow={},wrist={};
+    for(const side of [-1,1]){
+      const swing=walking*.29*Math.sin(phase+(side===1?0:Math.PI));
+      const lift=walking*.18*Math.max(0,Math.sin(phase+(side===1?0:Math.PI)));
+      hip[side]=at(-.02,side*.21,.84);
+      knee[side]=at(.05+swing*.55,side*.22,.47+lift*.55);
+      ankle[side]=at(.07+swing,side*.22,.14+lift);
+      shoulder[side]=at(-.005,side*.39,1.34);
+      elbow[side]=at(-.09-swing*.56,side*.43,1.055);
+      wrist[side]=at(-.14-swing*.9,side*.43,.79);
+    }
+    // Far limbs first, then torso, then near arms and head; self-contained draw order.
+    for(const side of [-1,1]){
+      tube(hip[side],knee[side],.115,colors.limb);tube(knee[side],ankle[side],.092,colors.shin);
+      joint(knee[side],.105);joint(ankle[side],.095);
+      const foot=ankle[side];
+      const forward=.12, fcenter=[foot[0]+ca*forward,foot[1]+sa*forward];
+      box(fcenter,.34,.20,foot[2]-.105,.135,a,colors.foot);
+    }
+    tube(shoulder[-1],elbow[-1],.092,colors.limb);
+    tube(elbow[-1],wrist[-1],.073,colors.shin);joint(elbow[-1],.08);
+    const mid=at(0,0,0);
+    box([mid[0],mid[1]],.31,.49,.78+bob,.22,a,colors.core);
+    box([mid[0],mid[1]],.46,.67,.98+bob,.5,a,colors.suit);
+    // Chest power core: three-dimensional front-facing panel.
+    const panel=[at(.245,-.22,1.20),at(.245,.22,1.20),at(.245,.22,1.38),at(.245,-.22,1.38)];
+    if(depth(...at(.27,0,1.29))>=depth(...at(0,0,1.29))){
+      poly(panel,'#073f77','#82e7fb',1.5);
+      const c=project(...at(.258,0,1.29));g.beginPath();g.arc(c[0],c[1],Math.max(3,scale*.064),0,2*Math.PI);g.fillStyle='#43f1cd';g.fill();
+    }
+    tube(shoulder[1],elbow[1],.092,colors.limb);
+    tube(elbow[1],wrist[1],.074,colors.shin);joint(elbow[1],.08);
+    for(const side of [-1,1]){joint(shoulder[side],.105);joint(wrist[side],.086,'#3c97c6')}
+    box([mid[0],mid[1]],.17,.19,1.45+bob,.16,a,colors.core);
+    const head=at(.04,0,0);
+    box([head[0],head[1]],.40,.44,1.57+bob,.37,a,colors.head);
+    // Visor and two luminous eyes on the forward-facing side of the head.
+    const face=[at(.258,-.18,1.66),at(.258,.18,1.66),at(.258,.18,1.83),at(.258,-.18,1.83)];
+    if(depth(...at(.265,0,1.73))>=depth(...at(.04,0,1.73))){
+      poly(face,'#133e68','#56d3f0',1.5);
+      for(const side of [-1,1]){
+        const [px,py]=project(...at(.271,side*.086,1.756));
+        g.beginPath();g.arc(px,py,Math.max(2.3,scale*.037),0,2*Math.PI);g.fillStyle='#65fff0';g.fill();
+      }
+    }
+    const crown=at(.045,0,1.98),[cx,cy]=project(...crown);
+    g.beginPath();g.arc(cx,cy,Math.max(2.1,scale*.037),0,2*Math.PI);g.fillStyle=pose.braked?'#ffa443':'#25dbb3';g.fill();
+    if(pose.cargo){const item=at(.08,0,1.48);const [bx,by]=project(...item);g.beginPath();g.arc(bx,by,Math.max(4,scale*.10),0,2*Math.PI);g.fillStyle='#ffd069';g.fill();g.strokeStyle='#986c24';g.stroke()}
+  }
+
 function draw(){
  const c=$('world'),g=c.getContext('2d'),m=missions[current];
  const cw=c.width,ch=c.height,ca=Math.cos(camera.az),sa=Math.sin(camera.az),ce=Math.cos(camera.el),se=Math.sin(camera.el);
@@ -96,7 +187,7 @@ function draw(){
  const local=(x,y,z=0)=>{const dx=x-W/2,dy=y-H/2;return [ca*dx-sa*dy,se*(sa*dx+ca*dy)-ce*z,sa*dx+ca*dy]};
  const extremes=[[0,0,0],[W,0,0],[W,H,0],[0,H,0],[0,0,-.28],[W,H,-.28]].map(p=>local(...p));
  const minx=Math.min(...extremes.map(p=>p[0])),maxx=Math.max(...extremes.map(p=>p[0]));
- const miny=Math.min(...extremes.map(p=>p[1]))-1.25,maxy=Math.max(...extremes.map(p=>p[1]))+.9;
+ const miny=Math.min(...extremes.map(p=>p[1]))-2.25,maxy=Math.max(...extremes.map(p=>p[1]))+.9;
  const scale=camera.zoom*Math.min((cw-52)/(maxx-minx),(ch-66)/(maxy-miny));
  const offsetX=cw/2-(minx+maxx)*scale/2,offsetY=ch/2-(miny+maxy)*scale/2;
  const p=(x,y,z=0)=>{const [u,v]=local(x,y,z);return [offsetX+u*scale,offsetY+v*scale]};
@@ -144,32 +235,21 @@ function draw(){
    const [tx,ty]=p(x,y,h+.02);g.fillStyle='#96502d';g.font='bold '+Math.max(13,Math.round(scale*.42))+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('!',tx,ty);
  }
  function drawRobot(v){
-   const x=v.x,y=v.y,a=v.a;
-   disc(x+.11,y+.13,.07,.56,'rgba(40,68,87,.19)');
-   // Wheeled differential-drive chassis with independent left/right tyres.
-   cuboid([x,y],.77,.55,.12,.32,a,['#218fe5','#1058ac','#0d4a85','#2075b9','#1769aa']);
-   const cos=Math.cos(a),sin=Math.sin(a),side=(amount)=>[x-sin*amount,y+cos*amount];
-   cuboid(side(.39),.56,.19,.09,.35,a,['#273548','#1b2634','#334a5b','#22384e','#1b3048']);
-   cuboid(side(-.39),.56,.19,.09,.35,a,['#273548','#1b2634','#334a5b','#22384e','#1b3048']);
-   cuboid([x,y],.55,.42,.44,.17,a,['#5dd3fb','#197cc8','#126eae','#237fba','#1d71b8']);
-   const face=[x+cos*.30,y+sin*.30,.63],frontLeft=[face[0]-sin*.135,face[1]+cos*.135,.63],frontRight=[face[0]+sin*.135,face[1]-cos*.135,.63];
-   poly([frontLeft,frontRight,[x+cos*.49,y+sin*.49,.63]],'#f3fbff','#bce8ff',1.5);
-   const antenna=[[x-cos*.2,y-sin*.2,.59],[x-cos*.2,y-sin*.2,1.01]];path(antenna,'#223d5c',3.5);
-   const led=p(x-cos*.2,y-sin*.2,1.06);g.fillStyle=v.braked?'#f38943':'#2fcaa1';g.beginPath();g.arc(led[0],led[1],5.2,0,TAU);g.fill();
+   paintHumanoid(v,{poly,path,project:p,depth:(x,y,z)=>local(x,y,z)[2],box:cuboid,disc,g,scale});
  }
  const objects=[...m.obstacles.map(o=>({depth:local(o[0],o[1],0)[2],draw:()=>cylinder(o[0],o[1],o[2],.76)}))];
  if(robot){const vr=displayPose||robot;objects.push({depth:local(vr.x,vr.y,0)[2],draw:()=>drawRobot(vr)});}
  objects.sort((a,b)=>a.depth-b.depth).forEach(o=>o.draw());
  // Lightweight HUD inside the canvas.
- g.fillStyle='rgba(14,43,72,.82)';g.beginPath();g.roundRect(16,16,145,28,8);g.fill();
- g.fillStyle='#d7f4ff';g.font='bold 15px system-ui';g.textAlign='left';g.textBaseline='middle';g.fillText('●  3D LIVE VIEW',27,30);
+ g.fillStyle='rgba(14,43,72,.82)';g.beginPath();g.roundRect(16,16,181,28,8);g.fill();
+ g.fillStyle='#d7f4ff';g.font='bold 15px system-ui';g.textAlign='left';g.textBaseline='middle';g.fillText('●  HUMANOID 3D',27,30);
 }
 function beginAnimation(before,after){
  if(animationFrame)cancelAnimationFrame(animationFrame);
- const t0=performance.now(),duration=Math.min(340,Math.max(70,Number($('speed').value)*.86));
+ const t0=performance.now(),duration=Math.min(420,Math.max(110,Number($('speed').value)*.9));
  const diff=Math.atan2(Math.sin(after.a-before.a),Math.cos(after.a-before.a));
  function tick(now){const t=clamp((now-t0)/duration,0,1),smooth=t*t*(3-2*t);
- displayPose={...after,x:before.x+(after.x-before.x)*smooth,y:before.y+(after.y-before.y)*smooth,a:before.a+diff*smooth};draw();
+ displayPose={...after,x:before.x+(after.x-before.x)*smooth,y:before.y+(after.y-before.y)*smooth,a:before.a+diff*smooth,walk:Math.min(1,Math.hypot(after.x-before.x,after.y-before.y)*1.7+Math.abs(diff)*.9),gait:t*Math.PI*4};draw();
  if(t<1)animationFrame=requestAnimationFrame(tick);else{animationFrame=0;displayPose=null;draw();}
  }
  animationFrame=requestAnimationFrame(tick);
@@ -185,7 +265,7 @@ function stop(){running=false;epoch++;previousPose=null;$('run').disabled=false;
 function selectMission(i){if(i<0||i>=missions.length)return;stop();current=i;const m=missions[i];$('goalTitle').textContent=(i+1)+'. '+m.title;$('goalDescription').textContent=m.goal;$('lessonTitle').textContent=m.topic;$('lessonText').textContent=m.lesson;$('code').value=typeof drafts[i]==='string'?drafts[i]:m.sample;$('hint').classList.remove('show');resetWorld();renderMissions()}
 function parseCode(src){if(src.length>6000)throw Error('Code is too long (maximum 6,000 characters).');const lines=src.replace(/\r/g,'').split('\n').map((s,i)=>({raw:s.replace(/\s+#.*$/,''),n:i+1})).filter(x=>x.raw.trim()&&!x.raw.trim().startsWith('#'));if(lines.length>120)throw Error('Use at most 120 lines of commands.');let pos=0;function parseBlock(indent){const out=[];while(pos<lines.length){const row=lines[pos],len=(row.raw.match(/^ */)||[''])[0].length;if(row.raw.includes('\t'))throw Error('Line '+row.n+': use spaces instead of tabs.');if(len%4)throw Error('Line '+row.n+': indentation must be a multiple of four spaces.');if(len<indent)break;if(len>indent)throw Error('Line '+row.n+': unexpected indentation.');const s=row.raw.trim();if(s==='else:')break;pos++;let match;if((match=s.match(/^repeat\s+(\d+)\s*:\s*$/))){const count=Number(match[1]);if(count<1||count>120)throw Error('Line '+row.n+': repeat count must be 1 to 120.');if(!lines[pos]||(lines[pos].raw.match(/^ */)||[''])[0].length!==indent+4)throw Error('Line '+row.n+': expected an indented block.');const body=parseBlock(indent+4);out.push({kind:'repeat',count,body,line:row.n});continue}
 if((match=s.match(/^if\s+(distance_cm\(\)\s*(?:<|>|<=|>=)\s*\d+(?:\.\d+)?|obstacle_ahead\(\)|line_left\(\)|line_right\(\))\s*:\s*$/))){if(!lines[pos]||(lines[pos].raw.match(/^ */)||[''])[0].length!==indent+4)throw Error('Line '+row.n+': expected an indented if block.');const body=parseBlock(indent+4);let otherwise=[];if(lines[pos]&&lines[pos].raw.trim()==='else:'&&(lines[pos].raw.match(/^ */)||[''])[0].length===indent){const elseLine=lines[pos++];if(!lines[pos]||(lines[pos].raw.match(/^ */)||[''])[0].length!==indent+4)throw Error('Line '+elseLine.n+': else requires an indented block.');otherwise=parseBlock(indent+4)}out.push({kind:'if',test:match[1],body,otherwise,line:row.n});continue}
-if((match=s.match(/^motors\(\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(\d+)\s*\)$/))){const l=Number(match[1]),r=Number(match[2]),ticks=Number(match[3]);if(Math.abs(l)>100||Math.abs(r)>100||ticks<1||ticks>120)throw Error('Line '+row.n+': wheel powers must be between -100 and 100 and ticks between 1 and 120.');out.push({kind:'motors',l,r,ticks,line:row.n});continue}
+if((match=s.match(/^motors\(\s*(-?\d+)\s*,\s*(-?\d+)\s*,\s*(\d+)\s*\)$/))){const l=Number(match[1]),r=Number(match[2]),ticks=Number(match[3]);if(Math.abs(l)>100||Math.abs(r)>100||ticks<1||ticks>120)throw Error('Line '+row.n+': leg drive powers must be between -100 and 100 and ticks between 1 and 120.');out.push({kind:'motors',l,r,ticks,line:row.n});continue}
 if((match=s.match(/^follow_line\(\s*(\d+)\s*\)$/))){const ticks=Number(match[1]);if(ticks<1||ticks>120)throw Error('Line '+row.n+': follow_line ticks must be 1 to 120.');out.push({kind:'follow_line',ticks,line:row.n});continue}
 if(s==='scan()'||s==='brake()'){out.push({kind:s.slice(0,-2),line:row.n});continue}throw Error('Line '+row.n+': unrecognised command: '+s)}return out}const ast=parseBlock(0);if(pos<lines.length)throw Error('Line '+lines[pos].n+': unexpected else or indentation.');if(!ast.length)throw Error('Write at least one robot command.');return ast}
 function checkCondition(s){if(s==='obstacle_ahead()')return distanceCm()<35;if(s==='line_left()')return lineSensor(-1);if(s==='line_right()')return lineSensor(1);const m=s.match(/^distance_cm\(\)\s*(<=|>=|<|>)\s*(\d+(?:\.\d+)?)$/);if(!m)throw Error('Unknown condition '+s);const x=distanceCm(),n=Number(m[2]);return m[1]==='<'?x<n:m[1]==='>'?x>n:m[1]==='<='?x<=n:x>=n}
@@ -203,6 +283,8 @@ function step(){if(running)return;try{if(!iterator)prepare();advance()}catch(e){
 $('run').addEventListener('click',run);$('step').addEventListener('click',step);$('stop').addEventListener('click',()=>{stop();status('Stopped. Step or Run starts again from the beginning.');write('■ Stopped by learner.')});$('reset').addEventListener('click',()=>{stop();resetWorld()});$('next').addEventListener('click',()=>selectMission(current+1));$('hintBtn').addEventListener('click',()=>{$('hint').textContent='💡 '+missions[current].hint;$('hint').classList.add('show')});$('solutionBtn').addEventListener('click',()=>{if(!confirm('Reveal the example solution? Try the hint first if you want a challenge.'))return;$('code').value=missions[current].solution;$('code').dispatchEvent(new Event('input'));$('hint').textContent='Example loaded. Run it, inspect the motor changes, then rewrite it yourself.';$('hint').classList.add('show')});$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('code').value);$('copy').textContent='✓ Copied'}catch(e){$('code').focus();$('code').select();$('copy').textContent='Select and copy'}setTimeout(()=>$('copy').textContent='Copy code',1500)});
 $('code').addEventListener('input',()=>{drafts[current]=$('code').value;save();if(!running)iterator=null});$('code').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run()}if(e.key==='Tab'){e.preventDefault();const t=e.target;t.setRangeText('    ',t.selectionStart,t.selectionEnd,'end');t.dispatchEvent(new Event('input'))}});document.querySelectorAll('[data-insert]').forEach(btn=>btn.addEventListener('click',()=>{const t=$('code'),s=btn.getAttribute('data-insert').replace(/\\n/g,'\n');t.setRangeText((t.selectionStart&&t.value[t.selectionStart-1]!=='\n'?'\n':'')+s+'\n',t.selectionStart,t.selectionEnd,'end');t.focus();t.dispatchEvent(new Event('input'))}));
 function setCamera(az,el){camera.az=az;camera.el=clamp(el,.32,Math.PI/2);$('view3d').classList.toggle('active',camera.el<1.45);$('viewTop').classList.toggle('active',camera.el>=1.45);draw()}
+$('zoomIn').addEventListener('click',()=>{camera.zoom=Math.min(2.3,camera.zoom+.22);draw()});
+$('zoomOut').addEventListener('click',()=>{camera.zoom=Math.max(.7,camera.zoom-.22);draw()});
 $('orbitLeft').addEventListener('click',()=>setCamera(camera.az-.26,camera.el));
 $('orbitRight').addEventListener('click',()=>setCamera(camera.az+.26,camera.el));
 $('view3d').addEventListener('click',()=>setCamera(DEFAULT_CAMERA.az,DEFAULT_CAMERA.el));
