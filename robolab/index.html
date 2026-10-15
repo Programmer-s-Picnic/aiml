@@ -151,6 +151,35 @@
 @media(max-width:1270px){.lab{grid-template-columns:210px minmax(0,1fr)}.code-side{grid-column:2}.sim-side{grid-column:2;grid-row:1}.mission-side{grid-row:1 / span 2}}
 @media(max-width:760px){.lab{grid-template-columns:1fr}.mission-side,.sim-side,.code-side{grid-column:1;grid-row:auto}.camera-hint{display:none}}
 @media(max-width:540px){.arena-layout{grid-template-columns:1fr}.arena-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px;align-items:center}.arena-controls .btn{padding:9px 2px;font-size:.73rem}.arena-controls .run-main{padding:9px 2px;font-size:.9rem}.controls-label{grid-column:1/-1;text-align:left}.speed-picker{grid-column:1/3;white-space:nowrap;font-size:.72rem}.speed-picker select{width:auto;max-width:99px;margin:0 0 0 4px}.controls-hint{grid-column:3/5;text-align:left}.arena-view canvas{aspect-ratio:20/13}}
+
+/* Immersive, accessible robot theatre. Native Fullscreen API with CSS fallback. */
+.sim-theater{position:relative}
+.sim-theater .fs-toggle{margin-left:auto;background:#145d9b;color:white;border-color:#145d9b;white-space:nowrap}
+.sim-theater .fs-toggle:hover{background:#0e477a}
+.sim-theater .walk-demo{background:#d9f7ef;color:#12654e;border:1px solid #a5e4cb;font-weight:850}
+.sim-theater .walk-demo.is-playing{background:#fff0d7;color:#86511a;border-color:#ffcd82}
+.sim-theater .theater-mission{display:none;font-size:.8rem;font-weight:750;color:#d3eaff;line-height:1.4;text-align:center}
+.sim-theater .theater-footnote{font-size:.7rem;color:#d4e8f8;line-height:1.45;text-align:center;display:none}
+body.theater-lock{overflow:hidden!important}
+.sim-theater.theater-on{position:fixed!important;inset:0!important;z-index:2147483000!important;width:100vw!important;height:100vh!important;height:100dvh!important;box-sizing:border-box!important;margin:0!important;padding:clamp(8px,1.3vw,18px)!important;background:#071a2b!important;display:grid!important;grid-template-columns:minmax(0,1fr) clamp(140px,16vw,225px)!important;gap:clamp(7px,1vw,16px)!important;align-items:stretch!important;border:0!important;border-radius:0!important;overflow:hidden!important}
+.sim-theater.theater-on .arena-view,.sim-theater.theater-on .stage-visual{min-width:0;min-height:0;display:flex;flex-direction:column;background:#103552;border-color:#365e80;border-radius:15px}
+.sim-theater.theater-on .camera-toolbar{flex:0 0 auto;background:#123854;border-color:#305877;padding:clamp(5px,.7vw,10px);gap:6px}
+.sim-theater.theater-on .camera-label{color:#b2dfff}
+.sim-theater.theater-on .camera-btn:not(.fs-toggle){background:#225477;border-color:#42799b;color:#fff}
+.sim-theater.theater-on .camera-btn.active:not(.fs-toggle){background:#23a7e3;color:#08283b}
+.sim-theater.theater-on .camera-hint{color:#a8d1ec}
+.sim-theater.theater-on canvas{display:block!important;flex:1 1 auto!important;width:100%!important;height:0!important;min-height:0!important;max-height:none!important;aspect-ratio:auto!important;border:0!important;border-radius:0!important;touch-action:none!important}
+.sim-theater.theater-on .arena-controls,.sim-theater.theater-on .stage-controls{display:flex!important;flex-direction:column!important;gap:clamp(7px,.9vw,12px)!important;min-width:0;min-height:0;overflow-y:auto;background:#12344f;border:1px solid #376484;border-radius:14px;padding:clamp(9px,1vw,16px)}
+.sim-theater.theater-on .controls-label,.sim-theater.theater-on .control-label{font-size:.75rem;color:#a6d9fa}
+.sim-theater.theater-on .arena-controls .btn,.sim-theater.theater-on .stage-controls .btn{font-size:clamp(.84rem,1.2vw,1.08rem)!important;padding:clamp(10px,1.3vw,17px) 8px!important;min-height:43px}
+.sim-theater.theater-on .run-main{background:#176ed5!important;color:#fff!important}
+.sim-theater.theater-on .theater-mission,.sim-theater.theater-on .theater-footnote{display:block}
+.sim-theater.theater-on .controls-hint,.sim-theater.theater-on .control-help{color:#b0cee1}
+.sim-theater.theater-on .speed-picker,.sim-theater.theater-on .speed{color:#d2e9fa}
+.sim-theater.theater-on .speed-picker select,.sim-theater.theater-on .speed select{color:#153a59;background:#fff;width:100%;max-width:100%;margin-top:5px}
+@media(max-width:720px){.sim-theater.theater-on{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr) auto!important;padding:6px!important;gap:6px!important}.sim-theater.theater-on .arena-controls,.sim-theater.theater-on .stage-controls{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:5px!important;align-items:center!important;padding:7px!important;overflow:visible!important}.sim-theater.theater-on .arena-controls .btn,.sim-theater.theater-on .stage-controls .btn{min-height:40px!important;padding:8px 2px!important;font-size:.78rem!important}.sim-theater.theater-on .controls-label,.sim-theater.theater-on .control-label,.sim-theater.theater-on .theater-mission{grid-column:span 2;text-align:left}.sim-theater.theater-on .speed-picker,.sim-theater.theater-on .speed{grid-column:1/3!important;font-size:.7rem!important;text-align:left!important}.sim-theater.theater-on .speed-picker select,.sim-theater.theater-on .speed select{width:auto;max-width:90px;margin:0 0 0 5px}.sim-theater.theater-on .walk-demo{grid-column:3/5}.sim-theater.theater-on .controls-hint,.sim-theater.theater-on .control-help,.sim-theater.theater-on .theater-footnote{display:none!important}.sim-theater.theater-on .camera-toolbar{gap:3px;padding:5px}.sim-theater.theater-on .camera-btn{padding:5px 7px;font-size:.7rem}.sim-theater.theater-on .camera-label{display:none}}
+@media(max-width:380px){.sim-theater.theater-on .camera-hint{display:none}.sim-theater.theater-on .camera-btn{padding:5px;font-size:.68rem}}
+
 </style>
   <meta name="author" content="Champak Roy">
   <meta name="robots" content="index,follow,max-image-preview:large">
@@ -204,7 +233,7 @@
             <h3 class="goal-title" id="missionTitle">Mission 1</h3>
             <p class="sim-caption" id="missionDescription"></p>
             <div class="sim-meta"><span id="robotPosition">Position: –</span><span id="robotDirection">Facing: –</span><span id="robotSteps">Commands: 0</span><span id="robotCargo">Cargo: none</span></div>
-            <div class="arena-layout"><div class="arena-view"><div class="camera-toolbar" aria-label="3D camera controls"><span class="camera-label">✦ 3D CAMERA</span><button class="camera-btn" type="button" id="orbitLeft" aria-label="Rotate view left" title="Rotate left">⟲</button><button class="camera-btn" type="button" id="orbitRight" aria-label="Rotate view right" title="Rotate right">⟳</button><button class="camera-btn active" type="button" id="view3d">3D</button><button class="camera-btn" type="button" id="viewTop">Top</button><button class="camera-btn" type="button" id="zoomIn" aria-label="Zoom in on humanoid" title="Zoom in">＋</button><button class="camera-btn" type="button" id="zoomOut" aria-label="Zoom out from humanoid" title="Zoom out">－</button><span class="camera-hint">Drag to orbit • ＋ to inspect gait</span></div><canvas id="world3d" width="1000" height="650" role="img" aria-label="Rotatable three-dimensional robotic programming arena, with a walking humanoid, raised blocks, mission targets and optional samples"></canvas></div><aside class="arena-controls" aria-label="Robot execution controls beside simulator"><span class="controls-label">ROBOT CONTROLS</span><button class="btn primary run-main" id="runButton" type="button">▶ Run</button><button class="btn secondary" id="stepButton" type="button">↷ Step</button><button class="btn danger" id="stopButton" type="button" disabled>■ Stop</button><button class="btn secondary" id="resetButton" type="button">↺ Reset</button><label class="speed-picker" for="speedSelect">Speed <select id="speedSelect"><option value="600">Slow</option><option value="340" selected>Normal</option><option value="110">Fast</option></select></label><small class="controls-hint">Watch the humanoid walk as your code runs.</small></aside></div><div id="board" class="board" hidden aria-hidden="true"></div>
+            <div class="arena-layout sim-theater"><div class="arena-view"><div class="camera-toolbar" aria-label="3D camera controls"><span class="camera-label">✦ 3D CAMERA</span><button class="camera-btn" type="button" id="orbitLeft" aria-label="Rotate view left" title="Rotate left">⟲</button><button class="camera-btn" type="button" id="orbitRight" aria-label="Rotate view right" title="Rotate right">⟳</button><button class="camera-btn active" type="button" id="view3d">3D</button><button class="camera-btn" type="button" id="viewTop">Top</button><button class="camera-btn" type="button" id="zoomIn" aria-label="Zoom in on humanoid" title="Zoom in">＋</button><button class="camera-btn" type="button" id="zoomOut" aria-label="Zoom out from humanoid" title="Zoom out">－</button><button id="fullscreenToggle" class="camera-btn fs-toggle" type="button" aria-pressed="false" aria-label="Toggle full screen simulator">⛶ Full screen</button><button id="focusRobot" class="camera-btn" type="button" aria-pressed="false" title="Follow the humanoid with a closer camera">🎯 Follow</button><span class="camera-hint">Drag to orbit • ＋ to inspect gait</span></div><canvas id="world3d" width="1000" height="650" role="img" aria-label="Rotatable three-dimensional robotic programming arena, with a walking humanoid, raised blocks, mission targets and optional samples"></canvas></div><aside class="arena-controls" aria-label="Robot execution controls beside simulator"><span class="controls-label">ROBOT CONTROLS</span><button class="btn primary run-main" id="runButton" type="button">▶ Run</button><button class="btn secondary" id="stepButton" type="button">↷ Step</button><button class="btn danger" id="stopButton" type="button" disabled>■ Stop</button><button class="btn secondary" id="resetButton" type="button">↺ Reset</button><label class="speed-picker" for="speedSelect">Speed <select id="speedSelect"><option value="600">Slow</option><option value="340" selected>Normal</option><option value="110">Fast</option></select></label><button id="walkDemo" class="btn walk-demo" type="button">🚶 Walk demo</button><small id="theaterMission" class="theater-mission"></small><small class="theater-footnote">Drag to rotate • Zoom • Run your own code • Esc to exit</small><small class="controls-hint">Watch the humanoid walk as your code runs.</small></aside></div><div id="board" class="board" hidden aria-hidden="true"></div>
             <div class="legend"><span>🚶 Humanoid</span><span>🎯 Goal</span><span>🧱 Wall</span><span>🧪 Sample</span><span>📦 Drop zone</span></div>
             <div id="outcome" class="outcome" role="status" aria-live="polite">Ready to run your program.</div>
             <div id="consoleOutput" class="console" role="log" aria-label="Robot execution log" aria-live="polite">&gt; Robot ready.</div>
@@ -275,7 +304,7 @@
     function isWall(x,y) { return x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT || world.walls.some(p => equal(p,[x,y])); }
     function sensor(name) { if (name==='wall_ahead') return isWall(world.x+dx[world.dir],world.y+dy[world.dir]); if (name==='sample_here') return !!world.sample && equal(world.sample,[world.x,world.y]); throw Error('Unknown sensor: '+name); }
     let renderPose=null,poseBefore=null,frame3d=0;
-    const camera3d={az:-.44,el:.97,zoom:1};
+    const camera3d={az:-.44,el:.97,zoom:1,follow:false,previousZoom:1};
     function stopFrame(){if(frame3d)cancelAnimationFrame(frame3d);frame3d=0;renderPose=null;poseBefore=null;}
     function resetWorld() {stopFrame();
       const l = levels[currentLevel];
@@ -569,7 +598,12 @@
       const minX=Math.min(...ext.map(q=>q[0])),maxX=Math.max(...ext.map(q=>q[0]));
       const minY=Math.min(...ext.map(q=>q[1]))-2.05,maxY=Math.max(...ext.map(q=>q[1]))+.7;
       const sc=camera3d.zoom*Math.min((CW-56)/(maxX-minX),(CH-65)/(maxY-minY));
-      const ox=CW/2-(minX+maxX)*sc/2,oy=CH/2-(minY+maxY)*sc/2;
+      let ox=CW/2-(minX+maxX)*sc/2,oy=CH/2-(minY+maxY)*sc/2;
+      if(camera3d.follow){
+        const robotTarget=renderPose||{x:world.x+.5,y:world.y+.5};
+        const target=loc(robotTarget.x,robotTarget.y,1);
+        ox=CW/2-target[0]*sc;oy=CH/2-target[1]*sc;
+      }
       const project=(x,y,z=0)=>{const q=loc(x,y,z);return [ox+q[0]*sc,oy+q[1]*sc]};
       const polygon=(pts,fill,stroke,width=1)=>{g.beginPath();pts.forEach((q,i)=>{const [x,y]=project(...q);i?g.lineTo(x,y):g.moveTo(x,y)});g.closePath();if(fill){g.fillStyle=fill;g.fill()}if(stroke){g.strokeStyle=stroke;g.lineWidth=width;g.stroke()}};
       const path=(pts,stroke,width=2)=>{if(pts.length<2)return;g.beginPath();pts.forEach((q,i)=>{const [x,y]=project(...q);i?g.lineTo(x,y):g.moveTo(x,y)});g.lineWidth=width;g.lineCap='round';g.lineJoin='round';g.strokeStyle=stroke;g.stroke()};
@@ -627,6 +661,16 @@
       frame3d=requestAnimationFrame(frame);
     }
     function changeCamera(az,el){camera3d.az=az;camera3d.el=Math.max(.32,Math.min(Math.PI/2,el));$('view3d').classList.toggle('active',camera3d.el<1.45);$('viewTop').classList.toggle('active',camera3d.el>=1.45);drawWorld3D();}
+    function setHumanoidFocus(on){
+      if(on&&!camera3d.follow){camera3d.previousZoom=camera3d.zoom;camera3d.zoom=2.1;}
+      else if(!on&&camera3d.follow){camera3d.zoom=camera3d.previousZoom;}
+      camera3d.follow=on;
+      $('focusRobot').textContent=on?'▦ Whole board':'🎯 Follow';
+      $('focusRobot').classList.toggle('active',on);
+      $('focusRobot').setAttribute('aria-pressed',String(on));
+      drawWorld3D();
+    }
+    $('focusRobot').addEventListener('click',()=>setHumanoidFocus(!camera3d.follow));
     $('zoomIn').addEventListener('click',()=>{camera3d.zoom=Math.min(2.3,camera3d.zoom+.22);drawWorld3D()});
     $('zoomOut').addEventListener('click',()=>{camera3d.zoom=Math.max(.7,camera3d.zoom-.22);drawWorld3D()});
     $('orbitLeft').addEventListener('click',()=>changeCamera(camera3d.az-.26,camera3d.el));
@@ -638,6 +682,85 @@
     sceneCanvas.addEventListener('pointermove',e=>{if(e.pointerId!==activePointer)return;const mx=e.clientX-lastPX,my=e.clientY-lastPY;lastPX=e.clientX;lastPY=e.clientY;if(Math.abs(mx)+Math.abs(my)>0)changeCamera(camera3d.az+mx*.012,camera3d.el-my*.009)});
     function releaseCamera(e){if(e.pointerId===activePointer){activePointer=null;sceneCanvas.classList.remove('dragging')}}
     sceneCanvas.addEventListener('pointerup',releaseCamera);sceneCanvas.addEventListener('pointercancel',releaseCamera);sceneCanvas.addEventListener('lostpointercapture',()=>{activePointer=null;sceneCanvas.classList.remove('dragging')});
+
+    // Full-screen robot theatre: existing mission buttons remain operational.
+    // Walking preview is visual only and never mutates simulation state or progress.
+    const theater=document.querySelector('.arena-layout');
+    const theaterCanvas=$('world3d');
+    const theaterToggle=$('fullscreenToggle');
+    const demoButton=$('walkDemo');
+    const theaterName=$('theaterMission');
+    let nativeTheater=false, demoFrame=0, demoStart=0;
+    function drawTheater(){drawWorld3D();}
+    function sizeTheaterCanvas(){
+      const rect=theaterCanvas.getBoundingClientRect();
+      if(rect.width<10||rect.height<10)return;
+      const ratio=Math.min(window.devicePixelRatio||1,1.6);
+      const w=Math.min(2000,Math.max(320,Math.round(rect.width*ratio)));
+      const h=Math.min(1400,Math.max(220,Math.round(rect.height*ratio)));
+      if(theaterCanvas.width!==w||theaterCanvas.height!==h){theaterCanvas.width=w;theaterCanvas.height=h;}
+      drawTheater();
+    }
+    let theaterResize=0;
+    function resizeTheaterSoon(){cancelAnimationFrame(theaterResize);theaterResize=requestAnimationFrame(sizeTheaterCanvas);}
+    function updateTheaterName(){theaterName.textContent=$('missionTitle').textContent;}
+    const missionTitleObserver=new MutationObserver(updateTheaterName);
+    missionTitleObserver.observe($('missionTitle'),{childList:true,characterData:true,subtree:true});
+    updateTheaterName();
+    function endDemo(){
+      if(demoFrame)cancelAnimationFrame(demoFrame);
+      demoFrame=0;demoStart=0;
+      demoButton.textContent='🚶 Walk demo';demoButton.classList.remove('is-playing');
+      renderPose=null;
+      drawTheater();
+    }
+    function startDemo(){
+      if(running)stop();
+      stopFrame();
+      if(!camera3d.follow)setHumanoidFocus(true);
+      demoStart=performance.now();
+      demoButton.textContent='■ Stop demo';demoButton.classList.add('is-playing');
+      function tick(now){
+        const t=(now-demoStart)*.012;
+        if(!world){demoFrame=0;return;}renderPose={x:world.x+.5,y:world.y+.5,a:(world.dir-1)*Math.PI/2,cargo:world.cargo,walk:1,gait:t,braked:false};
+        drawTheater();
+        demoFrame=requestAnimationFrame(tick);
+      }
+      demoFrame=requestAnimationFrame(tick);
+    }
+    demoButton.addEventListener('click',()=>demoFrame?endDemo():startDemo());
+    ['runButton','stepButton','resetButton','stopButton'].forEach(id=>$(id).addEventListener('click',()=>{if(demoFrame)endDemo()},true));
+    function leaveTheater(){
+      theater.classList.remove('theater-on');
+      document.body.classList.remove('theater-lock');
+      theaterToggle.textContent='⛶ Full screen';theaterToggle.setAttribute('aria-pressed','false');
+      nativeTheater=false;resizeTheaterSoon();
+    }
+    async function toggleTheater(){
+      if(theater.classList.contains('theater-on')){
+        if(document.fullscreenElement===theater){try{await document.exitFullscreen()}catch(e){}}
+        leaveTheater();return;
+      }
+      theater.classList.add('theater-on');document.body.classList.add('theater-lock');
+      theaterToggle.textContent='✕ Exit full screen';theaterToggle.setAttribute('aria-pressed','true');
+      updateTheaterName();resizeTheaterSoon();
+      try{if(theater.requestFullscreen){await theater.requestFullscreen({navigationUI:'hide'});nativeTheater=true;}}
+      catch(e){/* CSS immersive fallback for browsers that disallow native fullscreen. */}
+      resizeTheaterSoon();
+    }
+    theaterToggle.addEventListener('click',toggleTheater);
+    document.addEventListener('fullscreenchange',()=>{
+      if(document.fullscreenElement===theater){nativeTheater=true;resizeTheaterSoon()}
+      else if(nativeTheater)leaveTheater();
+    });
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape'&&theater.classList.contains('theater-on')&&!document.fullscreenElement)leaveTheater();
+    });
+    document.addEventListener('visibilitychange',()=>{if(document.hidden&&demoFrame)endDemo()});
+    window.addEventListener('resize',resizeTheaterSoon);
+    if(typeof ResizeObserver!=='undefined')new ResizeObserver(resizeTheaterSoon).observe(theater);
+    requestAnimationFrame(resizeTheaterSoon);
+
     window.RoboLabTest = {parseCode, selectMission, getWorld:()=>({...world}), getProgress:()=>[...solved], advance, prepareProgram, getCamera:()=>({...camera3d}), changeCamera};
   </script>
 </body>
