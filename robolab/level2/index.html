@@ -12,7 +12,7 @@
 <link rel="icon" type="image/jpeg" href="/me.jpg">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Learn With Champak — RoboLab">
 <meta property="og:title" content="RoboLab Level 2 — Program Motors & Sensors">
-<meta property="og:description" content="Drive a simulated robot with real differential-drive principles, range sensing, obstacle avoidance and guided line tracking.">
+<meta property="og:description" content="Explore a rotatable 3D robot simulator with side-by-side controls, differential drive, range sensing, obstacle avoidance and guided line tracking.">
 <meta property="og:url" content="https://aiml.learnwithchampak.live/robolab/level2/">
 <meta property="og:image" content="https://aiml.learnwithchampak.live/assets/images/og-ai-ml-champak-roy-varanasi.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -26,16 +26,43 @@ header{background:#fffdfef5;border-bottom:1px solid var(--line);position:sticky;
 @media(max-width:760px){header{position:static}.wrap{padding:0 12px}.layout{grid-template-columns:1fr}.editor-panel{grid-column:auto}.mission-list{grid-template-columns:repeat(2,1fr)}.hero{padding-top:20px}.progress{width:100%}.telemetry{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr 1fr}}
 @media(max-width:470px){.mission-list,.cards{grid-template-columns:1fr}.nav{padding:10px 0}.actions .btn{flex:1}.speed{width:100%}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Side-by-side execution and self-contained orbitable 3D simulator */
+.stage-layout{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:10px;align-items:stretch}
+.stage-visual{min-width:0;border:1px solid #c8dcec;border-radius:13px;overflow:hidden;background:linear-gradient(165deg,#e9f5ff,#d5ebfd)}
+.stage-visual canvas{border:0;border-radius:0;background:#dceeff;aspect-ratio:20/13;cursor:grab;touch-action:pan-y}
+.stage-visual canvas.dragging{cursor:grabbing}
+.camera-toolbar{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:7px;background:#eff8ff;border-bottom:1px solid #cedfeb}
+.camera-label{font-size:.65rem;font-weight:900;letter-spacing:.055em;color:#236fa9;margin-right:auto}
+.camera-btn{border:1px solid #ccdfef;border-radius:7px;background:white;color:#25577c;padding:4px 8px;font-size:.76rem;font-weight:800;line-height:1.4;cursor:pointer}
+.camera-btn.active{color:white;background:#2078cf;border-color:#2078cf}.camera-btn:focus-visible{outline:2px solid #ffb936}
+.camera-hint{color:#6a869f;font-size:.64rem;white-space:nowrap}
+.stage-controls{display:flex;flex-direction:column;gap:9px;align-items:stretch;padding:12px 8px;border-radius:12px;background:#edf6ff;border:1px solid #d5e7f7;min-width:0}
+.stage-controls .btn{padding:11px 5px;font-size:.84rem;width:100%;box-shadow:0 3px 10px #2d719411}
+.stage-controls .run-main{padding:15px 5px;background:#1674d5;box-shadow:0 6px 15px #2278cd33;font-size:1.05rem}
+.control-label{text-align:center;font-size:.59rem;letter-spacing:.055em;font-weight:900;color:#497392}
+.stage-controls .speed{display:block;margin-top:4px;text-align:center;font-size:.72rem}
+.stage-controls select{width:100%;margin-top:5px;font-size:.74rem;padding:7px 2px}
+.control-help{font-size:.66rem;color:#557994;text-align:center;line-height:1.45}
+.layout{grid-template-columns:215px minmax(480px,1.24fr) minmax(300px,.95fr)}
+@media(max-width:1270px){.layout{grid-template-columns:210px minmax(0,1fr)}.editor-panel{grid-column:2}}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.editor-panel{grid-column:auto}.camera-hint{display:none}}
+@media(max-width:540px){.stage-layout{grid-template-columns:1fr}.stage-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;align-items:stretch;padding:8px}.stage-controls .btn{font-size:.76rem;padding:10px 3px}.stage-controls .run-main{padding:10px 3px;font-size:.91rem}.control-label{grid-column:1/-1;text-align:left}.stage-controls .speed{grid-column:1/3;margin:0;text-align:left}.stage-controls .speed select{width:auto;margin:0 0 0 4px}.control-help{grid-column:3/5;text-align:left;font-size:.63rem;align-self:center}.stage-visual canvas{aspect-ratio:20/13}}
 </style>
 </head>
 <body>
 <header><div class="wrap nav"><a href="/robolab/" class="brand">🤖 RoboLab <span style="color:#2078cb">Level 2</span></a><nav aria-label="Main navigation"><a href="/robolab/">← Level 1</a><a href="#lab">Simulator</a><a href="#reference">Motor commands</a><a href="/">AI/ML Home</a></nav></div></header>
 <main class="wrap">
-<section class="hero"><div><span class="eyebrow">LEVEL 2 • HANDS-ON ROBOTICS</span><h1>Motors, sensors &amp; <span>autonomous navigation.</span></h1><p>Learn how two wheels turn a robot, how it measures obstacles, and how feedback makes it follow a track. Change the code, watch the robot, and solve six progressively harder challenges.</p></div><div class="progress"><b id="progressLabel">0 / 6 missions completed</b><div class="bar"><span id="progressBar"></span></div><small>Saved on this device • Complete missions in any order</small></div></section>
+<section class="hero"><div><span class="eyebrow">LEVEL 2 • HANDS-ON ROBOTICS</span><h1>Motors, sensors &amp; <span>autonomous navigation.</span></h1><p>Learn how two wheels turn a robot, how it measures obstacles, and how feedback makes it follow a track. Change the code, run it beside the rotatable 3D arena, and watch every robot movement across six progressive challenges.</p></div><div class="progress"><b id="progressLabel">0 / 6 missions completed</b><div class="bar"><span id="progressBar"></span></div><small>Saved on this device • Complete missions in any order</small></div></section>
 <section id="lab" class="layout" aria-label="Interactive robotics coding lab">
 <aside class="panel"><div class="panel-head"><h2>Six learning missions</h2><p>Select any challenge to practise.</p></div><div class="mission-list" id="missionList"></div><div class="lesson"><strong id="lessonTitle">How this works</strong><p id="lessonText">Program the robot and experiment with its motors and sensors.</p></div></aside>
-<section class="panel"><div class="panel-head"><h2>Live two-wheel robot simulator</h2><p>Canvas world • Top-down view • Wheel commands in %</p></div><div class="sim-area"><h3 class="goal" id="goalTitle">Mission goal</h3><p class="desc" id="goalDescription">Move carefully towards the green target.</p><canvas id="world" width="800" height="500" role="img" aria-label="Top-down robot arena with targets, line markings and obstacles"></canvas><div class="telemetry"><div><strong id="position">—</strong><small>Position (x,y)</small></div><div><strong id="heading">—</strong><small>Heading</small></div><div><strong id="distance">—</strong><small>Front distance</small></div><div><strong id="wheels">—</strong><small>Left / Right</small></div></div><p id="status" role="status" aria-live="polite" class="status">Choose a mission and press Run or Step.</p><div class="log" id="log" aria-label="Robot execution log"></div><button class="btn primary next" id="next" type="button">Next mission →</button></div></section>
-<section class="panel editor-panel"><div class="panel-head"><h2>Your robot program</h2><p>Safe Python-style training commands • No external code execution</p></div><div class="editor-area"><label for="code">Write and modify your commands</label><textarea id="code" spellcheck="false" aria-label="Robot program editor"></textarea><div class="actions"><button id="run" class="btn primary" type="button">▶ Run</button><button id="step" class="btn" type="button">↷ Step</button><button id="stop" class="btn danger" type="button" disabled>■ Stop</button><button id="reset" class="btn" type="button">↺ Reset</button><label class="speed" for="speed">Speed <select id="speed"><option value="500">Slow</option><option value="220" selected>Normal</option><option value="65">Fast</option></select></label></div><div class="chips" aria-label="Insert command snippets"><button class="chip" data-insert="motors(70,70,1)" type="button">motors()</button><button class="chip" data-insert="scan()" type="button">scan()</button><button class="chip" data-insert="brake()" type="button">brake()</button><button class="chip" data-insert="follow_line(8)" type="button">follow_line()</button><button class="chip" data-insert="repeat 8:\n    motors(70,70,1)" type="button">repeat</button><button class="chip" data-insert="if distance_cm() &lt; 28:\n    brake()\nelse:\n    motors(70,70,1)" type="button">if / else</button></div><p class="detail">Motors range from −100 to +100. Each tick is a small simulated interval. Indentation uses 4 spaces. <b>Ctrl+Enter</b> runs your program.</p><div class="actions"><button id="hintBtn" class="btn small" type="button">💡 Hint</button><button id="solutionBtn" class="btn small" type="button">Show example</button><button id="copy" class="btn small" type="button">Copy code</button></div><p class="hint" id="hint"></p></div></section>
+<section class="panel simulator-panel"><div class="panel-head"><h2>Live 3D robot simulator</h2><p>Rotatable 3D arena • Real-time differential drive • Run controls beside the robot</p></div>
+<div class="sim-area"><h3 class="goal" id="goalTitle">Mission goal</h3><p class="desc" id="goalDescription">Move carefully towards the green target.</p>
+<div class="stage-layout"><div class="stage-visual"><div class="camera-toolbar" aria-label="3D camera controls"><span class="camera-label">✦ 3D CAMERA</span><button id="orbitLeft" type="button" class="camera-btn" title="Rotate left" aria-label="Rotate camera left">⟲</button><button id="orbitRight" type="button" class="camera-btn" title="Rotate right" aria-label="Rotate camera right">⟳</button><button id="view3d" type="button" class="camera-btn active">3D</button><button id="viewTop" type="button" class="camera-btn">Top</button><span class="camera-hint">Drag to orbit</span></div>
+<canvas id="world" width="1000" height="650" role="img" aria-label="Rotatable 3D robot arena with a raised track, robot, targets and solid obstacles"></canvas>
+</div><aside class="stage-controls" aria-label="Simulator execution controls"><span class="control-label">ROBOT CONTROLS</span><button id="run" class="btn primary run-main" type="button">▶ Run</button><button id="step" class="btn" type="button">↷ Step</button><button id="stop" class="btn danger" type="button" disabled>■ Stop</button><button id="reset" class="btn" type="button">↺ Reset</button><label class="speed" for="speed">Speed <select id="speed"><option value="500">Slow</option><option value="220" selected>Normal</option><option value="65">Fast</option></select></label><small class="control-help">Watch every wheel movement here. No need to scroll back to the editor.</small></aside></div>
+<div class="telemetry"><div><strong id="position">—</strong><small>Position (x,y)</small></div><div><strong id="heading">—</strong><small>Heading</small></div><div><strong id="distance">—</strong><small>Front distance</small></div><div><strong id="wheels">—</strong><small>Left / Right</small></div></div><p id="status" role="status" aria-live="polite" class="status">Choose a mission and press Run or Step.</p><div class="log" id="log" aria-label="Robot execution log"></div><button class="btn primary next" id="next" type="button">Next mission →</button></div></section>
+<section class="panel editor-panel"><div class="panel-head"><h2>Your robot program</h2><p>Safe Python-style training commands • No external code execution</p></div><div class="editor-area"><label for="code">Write and modify your commands</label><textarea id="code" spellcheck="false" aria-label="Robot program editor"></textarea><p class="detail">Use <b>Run / Step / Stop / Reset beside the 3D board</b> above. You can keep watching the robot throughout each mission. <b>Ctrl+Enter</b> also runs the program.</p><div class="chips" aria-label="Insert command snippets"><button class="chip" data-insert="motors(70,70,1)" type="button">motors()</button><button class="chip" data-insert="scan()" type="button">scan()</button><button class="chip" data-insert="brake()" type="button">brake()</button><button class="chip" data-insert="follow_line(8)" type="button">follow_line()</button><button class="chip" data-insert="repeat 8:\n    motors(70,70,1)" type="button">repeat</button><button class="chip" data-insert="if distance_cm() &lt; 28:\n    brake()\nelse:\n    motors(70,70,1)" type="button">if / else</button></div><p class="detail">Motors range from −100 to +100. Each tick is a small simulated interval. Indentation uses 4 spaces. <b>Ctrl+Enter</b> runs your program.</p><div class="actions"><button id="hintBtn" class="btn small" type="button">💡 Hint</button><button id="solutionBtn" class="btn small" type="button">Show example</button><button id="copy" class="btn small" type="button">Copy code</button></div><p class="hint" id="hint"></p></div></section>
 </section>
 <div class="cards" aria-label="Topics you will learn"><article class="card"><h3>⚙️ Differential drive</h3><p>Each wheel has its own speed. Equal speeds drive straight; unequal speeds produce curved motion or a turn on the spot.</p></article><article class="card"><h3>📡 Distance sensor</h3><p>Cast a forward sensing ray and use distance readings to decide when to slow, stop or turn away from obstacles.</p></article><article class="card"><h3>🧠 Feedback logic</h3><p>Use conditions inside repeating control loops. The robot reacts to sensor readings as its surroundings change.</p></article><article class="card"><h3>〰️ Line tracking</h3><p>Explore the left and right line detectors and a reference line-tracking controller that steers toward a route.</p></article></div>
 <section class="guide" id="reference"><h2>Command reference &amp; what comes next</h2><ul><li><code>motors(left, right, ticks)</code> — wheel power percentage; negative means reverse. Example: <code>motors(50,-50,4)</code> rotates clockwise or counterclockwise depending on coordinate direction (in this arena, rightward is 0°).</li><li><code>distance_cm()</code> — simulated forward range to the first obstacle or arena boundary. Use inside <code>if distance_cm() &lt; 28:</code>, not as standalone Python.</li><li><code>obstacle_ahead()</code> — true when front range is under 35 simulated centimetres. <code>line_left()</code> and <code>line_right()</code> check two virtual downward-facing detectors.</li><li><code>scan()</code> — write the distance and line detector readings to the console.</li><li><code>repeat 12:</code>, <code>if ...:</code> and <code>else:</code> — use a four-space indentation to group instructions.</li><li><code>follow_line(ticks)</code> — a <b>waypoint-assisted reference controller</b> for learning closed-loop motion. It automatically adjusts motor powers. This is an educational helper, not a full physical sensor-only line-following algorithm.</li><li><code>brake()</code> — stop the robot and finish execution.</li></ul><p><b>Simulation note:</b> Motor speeds, sensor ranges and robot movement are simplified learning models. They do not represent verified real-world hardware. Level 3 can introduce PID, wheel encoders, hardware calibration, Arduino/ESP32 and safe physical robot control.</p></section>
@@ -58,21 +85,103 @@ try{const data=JSON.parse(localStorage.getItem('robolab-l2-2026')||'{}');complet
 function save(){try{localStorage.setItem('robolab-l2-2026',JSON.stringify({completed:[...completed],drafts}))}catch(e){}}
 function write(text){const log=$('log');log.textContent+=(log.textContent?'\n':'')+text;const lines=log.textContent.split('\n');if(lines.length>90)log.textContent=lines.slice(-90).join('\n');log.scrollTop=log.scrollHeight;logCount++}
 function status(text,kind=''){const el=$('status');el.className='status '+kind;el.textContent=text}
-function draw(){const c=$('world'),g=c.getContext('2d'),sx=c.width/W,sy=c.height/H,px=x=>x*sx,py=y=>y*sy;g.clearRect(0,0,c.width,c.height);g.fillStyle='#f7fbff';g.fillRect(0,0,c.width,c.height);g.strokeStyle='#e2effa';g.lineWidth=1;for(let x=0;x<=W;x++) {g.beginPath();g.moveTo(px(x),0);g.lineTo(px(x),c.height);g.stroke()}for(let y=0;y<=H;y++){g.beginPath();g.moveTo(0,py(y));g.lineTo(c.width,py(y));g.stroke()}
-const m=missions[current];if(m.line.length>1){g.lineCap='round';g.lineJoin='round';g.lineWidth=13;g.strokeStyle='#252f40';g.beginPath();m.line.forEach((p,i)=>i?g.lineTo(px(p[0]),py(p[1])):g.moveTo(px(p[0]),py(p[1])));g.stroke();g.lineWidth=3;g.strokeStyle='#cbe8ff';g.stroke()}
-for(const o of m.obstacles){g.fillStyle='#d18d50';g.strokeStyle='#9c5424';g.lineWidth=3;g.beginPath();g.arc(px(o[0]),py(o[1]),o[2]*sx,0,TAU);g.fill();g.stroke();g.fillStyle='#fff';g.font='bold 18px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('!',px(o[0]),py(o[1]))}
-g.fillStyle='#cff5df';g.strokeStyle='#25a779';g.lineWidth=3;g.beginPath();g.arc(px(m.target[0]),py(m.target[1]),.64*sx,0,TAU);g.fill();g.stroke();g.fillStyle='#13714d';g.font='bold 13px sans-serif';g.textAlign='center';g.fillText('GOAL',px(m.target[0]),py(m.target[1]));
-if(trace.length>1){g.beginPath();trace.forEach((p,i)=>i?g.lineTo(px(p[0]),py(p[1])):g.moveTo(px(p[0]),py(p[1])));g.strokeStyle='#44a0d480';g.lineWidth=4;g.stroke()}
-if(!robot)return;const dist=distanceCm(),length=Math.min(dist,150)/10;g.beginPath();g.moveTo(px(robot.x),py(robot.y));g.lineTo(px(robot.x+Math.cos(robot.a)*length),py(robot.y+Math.sin(robot.a)*length));g.strokeStyle='#ec9125';g.lineWidth=3;g.setLineDash([6,5]);g.stroke();g.setLineDash([]);
-g.save();g.translate(px(robot.x),py(robot.y));g.rotate(robot.a);g.fillStyle='#123a70';g.fillRect(-19,-16,11,32);g.fillRect(9,-16,11,32);g.fillStyle='#1575d2';g.strokeStyle='#0a4c91';g.lineWidth=3;g.beginPath();g.roundRect(-16,-14,32,28,7);g.fill();g.stroke();g.fillStyle='#c9ebff';g.beginPath();g.moveTo(20,0);g.lineTo(5,-8);g.lineTo(5,8);g.closePath();g.fill();g.fillStyle='#b8e7ff';for(const side of [-1,1]){g.beginPath();g.arc(13,side*9,3,0,TAU);g.fill()}g.restore()}
+// Self-contained projected 3D geometry: no external rendering library required.
+const camera={az:-.36,el:.97,zoom:1},DEFAULT_CAMERA={az:-.36,el:.97,zoom:1};
+let displayPose=null,animationFrame=0,previousPose=null;
+function draw(){
+ const c=$('world'),g=c.getContext('2d'),m=missions[current];
+ const cw=c.width,ch=c.height,ca=Math.cos(camera.az),sa=Math.sin(camera.az),ce=Math.cos(camera.el),se=Math.sin(camera.el);
+ g.clearRect(0,0,cw,ch);
+ const background=g.createLinearGradient(0,0,0,ch);background.addColorStop(0,'#cbe5fc');background.addColorStop(.6,'#e7f4ff');background.addColorStop(1,'#f2f8fc');g.fillStyle=background;g.fillRect(0,0,cw,ch);
+ const local=(x,y,z=0)=>{const dx=x-W/2,dy=y-H/2;return [ca*dx-sa*dy,se*(sa*dx+ca*dy)-ce*z,sa*dx+ca*dy]};
+ const extremes=[[0,0,0],[W,0,0],[W,H,0],[0,H,0],[0,0,-.28],[W,H,-.28]].map(p=>local(...p));
+ const minx=Math.min(...extremes.map(p=>p[0])),maxx=Math.max(...extremes.map(p=>p[0]));
+ const miny=Math.min(...extremes.map(p=>p[1]))-1.25,maxy=Math.max(...extremes.map(p=>p[1]))+.9;
+ const scale=camera.zoom*Math.min((cw-52)/(maxx-minx),(ch-66)/(maxy-miny));
+ const offsetX=cw/2-(minx+maxx)*scale/2,offsetY=ch/2-(miny+maxy)*scale/2;
+ const p=(x,y,z=0)=>{const [u,v]=local(x,y,z);return [offsetX+u*scale,offsetY+v*scale]};
+ const poly=(points,fill,stroke=null,width=1)=>{g.beginPath();points.forEach(([x,y,z],i)=>{const [sx,sy]=p(x,y,z);i?g.lineTo(sx,sy):g.moveTo(sx,sy)});g.closePath();if(fill){g.fillStyle=fill;g.fill()}if(stroke){g.lineWidth=width;g.strokeStyle=stroke;g.stroke()}};
+ const path=(points,color,width=2,dash=[])=>{if(points.length<2)return;g.beginPath();points.forEach(([x,y,z],i)=>{const [sx,sy]=p(x,y,z||0);i?g.lineTo(sx,sy):g.moveTo(sx,sy)});g.lineCap='round';g.lineJoin='round';g.lineWidth=width;g.strokeStyle=color;g.setLineDash(dash);g.stroke();g.setLineDash([])};
+ const disc=(x,y,z,r,fill,stroke)=>{const pp=[];for(let i=0;i<=32;i++){const t=i*TAU/32;pp.push([x+r*Math.cos(t),y+r*Math.sin(t),z])}poly(pp,fill,stroke,stroke?2:1)};
+ // A solid raised arena, not a flat raster image.
+ const base=[[0,0,-.3],[W,0,-.3],[W,H,-.3],[0,H,-.3]];
+ poly([base[0],base[1],[W,0,0],[0,0,0]],'#8aa8bc');
+ poly([base[1],base[2],[W,H,0],[W,0,0]],'#638ba8');
+ poly([base[2],base[3],[0,H,0],[W,H,0]],'#6c9cb8');
+ poly([base[3],base[0],[0,0,0],[0,H,0]],'#a4bfd0');
+ poly([[0,0,0],[W,0,0],[W,H,0],[0,H,0]],'#f8fbff','#7299b9',3);
+ for(let x=0;x<W;x++)for(let y=0;y<H;y++)if((x+y)%2===0)poly([[x,y,.001],[x+1,y,.001],[x+1,y+1,.001],[x,y+1,.001]],'#e5f2fd');
+ for(let x=0;x<=W;x++)path([[x,0,.008],[x,H,.008]],'#c6ddef',.95);
+ for(let y=0;y<=H;y++)path([[0,y,.008],[W,y,.008]],'#c6ddef',.95);
+ // The track and finish zone sit on the raised board.
+ if(m.line.length>1){path(m.line.map(q=>[q[0],q[1],.025]),'#24394f',Math.max(4,scale*.21));path(m.line.map(q=>[q[0],q[1],.03]),'#a8d6f7',Math.max(1,scale*.035));}
+ disc(m.target[0],m.target[1],.038,.72,'#bff4d9','#229d72');disc(m.target[0],m.target[1],.043,.51,'#4ecb92','#e8fff4');
+ const label=p(m.target[0],m.target[1],.054);g.fillStyle='#12543c';g.font='900 '+Math.max(10,Math.round(scale*.22))+'px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillText('GOAL',label[0],label[1]);
+ if(trace.length>1)path(trace.map(q=>[q[0],q[1],.068]),'rgba(27,120,209,.64)',Math.max(2,scale*.065));
+ // Cast a forward ray on the arena floor; sensor math is unchanged.
+ if(robot){const v=displayPose||robot,dist=distanceCm(),length=Math.min(dist,150)/10;path([[v.x,v.y,.08],[v.x+Math.cos(v.a)*length,v.y+Math.sin(v.a)*length,.08]],'#f5a33d',2.5,[8,6]);}
+ function cuboid(center,length,width,z0,height,angle,colors){
+   const ca2=Math.cos(angle),sa2=Math.sin(angle);
+   const v=(a,b,z)=>[center[0]+ca2*a-sa2*b,center[1]+sa2*a+ca2*b,z];
+   const b=[v(-length/2,-width/2,z0),v(length/2,-width/2,z0),v(length/2,width/2,z0),v(-length/2,width/2,z0)];
+   const t=b.map(u=>[u[0],u[1],z0+height]);
+   const faces=[{p:[b[0],b[1],t[1],t[0]],c:colors[1]},{p:[b[1],b[2],t[2],t[1]],c:colors[2]},{p:[b[2],b[3],t[3],t[2]],c:colors[3]},{p:[b[3],b[0],t[0],t[3]],c:colors[4]}];
+   faces.sort((a,b)=>a.p.reduce((s,u)=>s+local(...u)[2],0)-b.p.reduce((s,u)=>s+local(...u)[2],0));
+   for(const f of faces)poly(f.p,f.c,'#143e6350',1);
+   poly(t,colors[0],'#0c527d',1.5);
+ }
+ function cylinder(x,y,r,h){
+   const count=24,seg=[];
+   disc(x+.11,y+.15,.07,r*1.1,'rgba(44,57,74,.19)');
+   for(let j=0;j<count;j++){
+    const a=j*TAU/count,b=(j+1)*TAU/count;
+    const pts=[[x+r*Math.cos(a),y+r*Math.sin(a),.075],[x+r*Math.cos(b),y+r*Math.sin(b),.075],[x+r*Math.cos(b),y+r*Math.sin(b),h],[x+r*Math.cos(a),y+r*Math.sin(a),h]];
+    const mid=(a+b)/2;
+    seg.push({depth:local(x+r*Math.cos(mid),y+r*Math.sin(mid),0)[2],pts,color:j%4===0?'#cb8250':j%2===0?'#b96737':'#dc945c'});
+   }
+   seg.sort((a,b)=>a.depth-b.depth).forEach(f=>poly(f.pts,f.color,'#8c4c31',.65));
+   disc(x,y,h,r,'#f1b77e','#854e2b');disc(x,y,h+.006,r*.54,'#ffe0b1');
+   const [tx,ty]=p(x,y,h+.02);g.fillStyle='#96502d';g.font='bold '+Math.max(13,Math.round(scale*.42))+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('!',tx,ty);
+ }
+ function drawRobot(v){
+   const x=v.x,y=v.y,a=v.a;
+   disc(x+.11,y+.13,.07,.56,'rgba(40,68,87,.19)');
+   // Wheeled differential-drive chassis with independent left/right tyres.
+   cuboid([x,y],.77,.55,.12,.32,a,['#218fe5','#1058ac','#0d4a85','#2075b9','#1769aa']);
+   const cos=Math.cos(a),sin=Math.sin(a),side=(amount)=>[x-sin*amount,y+cos*amount];
+   cuboid(side(.39),.56,.19,.09,.35,a,['#273548','#1b2634','#334a5b','#22384e','#1b3048']);
+   cuboid(side(-.39),.56,.19,.09,.35,a,['#273548','#1b2634','#334a5b','#22384e','#1b3048']);
+   cuboid([x,y],.55,.42,.44,.17,a,['#5dd3fb','#197cc8','#126eae','#237fba','#1d71b8']);
+   const face=[x+cos*.30,y+sin*.30,.63],frontLeft=[face[0]-sin*.135,face[1]+cos*.135,.63],frontRight=[face[0]+sin*.135,face[1]-cos*.135,.63];
+   poly([frontLeft,frontRight,[x+cos*.49,y+sin*.49,.63]],'#f3fbff','#bce8ff',1.5);
+   const antenna=[[x-cos*.2,y-sin*.2,.59],[x-cos*.2,y-sin*.2,1.01]];path(antenna,'#223d5c',3.5);
+   const led=p(x-cos*.2,y-sin*.2,1.06);g.fillStyle=v.braked?'#f38943':'#2fcaa1';g.beginPath();g.arc(led[0],led[1],5.2,0,TAU);g.fill();
+ }
+ const objects=[...m.obstacles.map(o=>({depth:local(o[0],o[1],0)[2],draw:()=>cylinder(o[0],o[1],o[2],.76)}))];
+ if(robot){const vr=displayPose||robot;objects.push({depth:local(vr.x,vr.y,0)[2],draw:()=>drawRobot(vr)});}
+ objects.sort((a,b)=>a.depth-b.depth).forEach(o=>o.draw());
+ // Lightweight HUD inside the canvas.
+ g.fillStyle='rgba(14,43,72,.82)';g.beginPath();g.roundRect(16,16,145,28,8);g.fill();
+ g.fillStyle='#d7f4ff';g.font='bold 15px system-ui';g.textAlign='left';g.textBaseline='middle';g.fillText('●  3D LIVE VIEW',27,30);
+}
+function beginAnimation(before,after){
+ if(animationFrame)cancelAnimationFrame(animationFrame);
+ const t0=performance.now(),duration=Math.min(340,Math.max(70,Number($('speed').value)*.86));
+ const diff=Math.atan2(Math.sin(after.a-before.a),Math.cos(after.a-before.a));
+ function tick(now){const t=clamp((now-t0)/duration,0,1),smooth=t*t*(3-2*t);
+ displayPose={...after,x:before.x+(after.x-before.x)*smooth,y:before.y+(after.y-before.y)*smooth,a:before.a+diff*smooth};draw();
+ if(t<1)animationFrame=requestAnimationFrame(tick);else{animationFrame=0;displayPose=null;draw();}
+ }
+ animationFrame=requestAnimationFrame(tick);
+}
 function distLine(point,path){let best=Infinity;for(let i=1;i<path.length;i++){const a=path[i-1],b=path[i],dx=b[0]-a[0],dy=b[1]-a[1],t=clamp(((point[0]-a[0])*dx+(point[1]-a[1])*dy)/(dx*dx+dy*dy||1),0,1),x=a[0]+t*dx,y=a[1]+t*dy;best=Math.min(best,Math.hypot(x-point[0],y-point[1]))}return best}
 function lineSensor(side){const path=missions[current].line;if(path.length<2)return false;const x=robot.x+Math.cos(robot.a)*.55-Math.sin(robot.a)*side*.33,y=robot.y+Math.sin(robot.a)*.55+Math.cos(robot.a)*side*.33;return distLine([x,y],path)<.31}
 function distanceCm(){if(!robot)return 150;const vx=Math.cos(robot.a),vy=Math.sin(robot.a),x=robot.x,y=robot.y;let best=15;for(const o of missions[current].obstacles){const dx=x-o[0],dy=y-o[1],B=2*(dx*vx+dy*vy),C=dx*dx+dy*dy-o[2]*o[2],D=B*B-4*C;if(D>=0){const t=(-B-Math.sqrt(D))/2;if(t>=0)best=Math.min(best,t)}}for(const t of [(vx>0?(W-.35-x)/vx:Infinity),(vx<0?(.35-x)/vx:Infinity),(vy>0?(H-.35-y)/vy:Infinity),(vy<0?(.35-y)/vy:Infinity)])if(t>=0)best=Math.min(best,t);return Math.round(clamp(best*10,0,150)*10)/10}
 function headingDiff(target,a){return Math.atan2(Math.sin(target-a),Math.cos(target-a))}
-function resetWorld(){const [x,y,a]=missions[current].start;robot={x,y,a,l:0,r:0,braked:false,trackIndex:1};trace=[[x,y]];steps=0;iterator=null;currentAST=null;$('log').textContent='';$('next').classList.remove('show');status('Ready. Run the program or step through it.');write('● Mission '+(current+1)+' — '+missions[current].title);render()}
-function render(){draw();$('position').textContent=robot.x.toFixed(1)+', '+robot.y.toFixed(1);$('heading').textContent=deg(robot.a)+'°';$('distance').textContent=distanceCm().toFixed(1)+' cm';$('wheels').textContent=robot.l+' / '+robot.r}
+function resetWorld(){if(animationFrame)cancelAnimationFrame(animationFrame);animationFrame=0;displayPose=null;const [x,y,a]=missions[current].start;robot={x,y,a,l:0,r:0,braked:false,trackIndex:1};trace=[[x,y]];steps=0;iterator=null;currentAST=null;$('log').textContent='';$('next').classList.remove('show');status('Ready. Run the program or step through it.');write('● Mission '+(current+1)+' — '+missions[current].title);render()}
+function render(){if(running&&previousPose){beginAnimation(previousPose,{...robot});previousPose=null;}else if(!animationFrame)draw();$('position').textContent=robot.x.toFixed(1)+', '+robot.y.toFixed(1);$('heading').textContent=deg(robot.a)+'°';$('distance').textContent=distanceCm().toFixed(1)+' cm';$('wheels').textContent=robot.l+' / '+robot.r}
 function renderMissions(){const el=$('missionList');el.textContent='';missions.forEach((m,i)=>{const b=document.createElement('button');b.className='mission'+(i===current?' active':'')+(completed.has(i)?' done':'');b.type='button';b.innerHTML='<span class="number">'+(completed.has(i)?'✓':i+1)+'</span><span><strong></strong><small></small></span>';b.querySelector('strong').textContent=m.title;b.querySelector('small').textContent=m.topic;b.addEventListener('click',()=>selectMission(i));el.appendChild(b)});$('progressLabel').textContent=completed.size+' / '+missions.length+' missions completed';$('progressBar').style.width=(completed.size/missions.length*100)+'%'}
-function stop(){running=false;epoch++;$('run').disabled=false;$('step').disabled=false;$('stop').disabled=true;iterator=null}
+function stop(){running=false;epoch++;previousPose=null;$('run').disabled=false;$('step').disabled=false;$('stop').disabled=true;iterator=null}
 function selectMission(i){if(i<0||i>=missions.length)return;stop();current=i;const m=missions[i];$('goalTitle').textContent=(i+1)+'. '+m.title;$('goalDescription').textContent=m.goal;$('lessonTitle').textContent=m.topic;$('lessonText').textContent=m.lesson;$('code').value=typeof drafts[i]==='string'?drafts[i]:m.sample;$('hint').classList.remove('show');resetWorld();renderMissions()}
 function parseCode(src){if(src.length>6000)throw Error('Code is too long (maximum 6,000 characters).');const lines=src.replace(/\r/g,'').split('\n').map((s,i)=>({raw:s.replace(/\s+#.*$/,''),n:i+1})).filter(x=>x.raw.trim()&&!x.raw.trim().startsWith('#'));if(lines.length>120)throw Error('Use at most 120 lines of commands.');let pos=0;function parseBlock(indent){const out=[];while(pos<lines.length){const row=lines[pos],len=(row.raw.match(/^ */)||[''])[0].length;if(row.raw.includes('\t'))throw Error('Line '+row.n+': use spaces instead of tabs.');if(len%4)throw Error('Line '+row.n+': indentation must be a multiple of four spaces.');if(len<indent)break;if(len>indent)throw Error('Line '+row.n+': unexpected indentation.');const s=row.raw.trim();if(s==='else:')break;pos++;let match;if((match=s.match(/^repeat\s+(\d+)\s*:\s*$/))){const count=Number(match[1]);if(count<1||count>120)throw Error('Line '+row.n+': repeat count must be 1 to 120.');if(!lines[pos]||(lines[pos].raw.match(/^ */)||[''])[0].length!==indent+4)throw Error('Line '+row.n+': expected an indented block.');const body=parseBlock(indent+4);out.push({kind:'repeat',count,body,line:row.n});continue}
 if((match=s.match(/^if\s+(distance_cm\(\)\s*(?:<|>|<=|>=)\s*\d+(?:\.\d+)?|obstacle_ahead\(\)|line_left\(\)|line_right\(\))\s*:\s*$/))){if(!lines[pos]||(lines[pos].raw.match(/^ */)||[''])[0].length!==indent+4)throw Error('Line '+row.n+': expected an indented if block.');const body=parseBlock(indent+4);let otherwise=[];if(lines[pos]&&lines[pos].raw.trim()==='else:'&&(lines[pos].raw.match(/^ */)||[''])[0].length===indent){const elseLine=lines[pos++];if(!lines[pos]||(lines[pos].raw.match(/^ */)||[''])[0].length!==indent+4)throw Error('Line '+elseLine.n+': else requires an indented block.');otherwise=parseBlock(indent+4)}out.push({kind:'if',test:match[1],body,otherwise,line:row.n});continue}
@@ -84,7 +193,7 @@ function* execute(ast){for(const node of ast){if(node.kind==='repeat'){for(let i
 function hasNode(ast,type){return ast.some(n=>n.kind===type||hasNode(n.body||[],type)||hasNode(n.otherwise||[],type))}
 function prepare(){const src=$('code').value;drafts[current]=src;save();currentAST=parseCode(src);const req=missions[current].require;if(req&&!hasNode(currentAST,req))throw Error('Mission requires using '+req+' in your program.');resetWorld();currentAST=parseCode(src);iterator=execute(currentAST)}
 function trackedMotors(){const path=missions[current].line;if(path.length<2)throw Error('This mission does not have a line to follow.');let index=robot.trackIndex;if(index>=path.length)return[0,0];let target=path[index],d=Math.hypot(target[0]-robot.x,target[1]-robot.y);if(d<.82&&index<path.length-1){robot.trackIndex=++index;target=path[index];d=Math.hypot(target[0]-robot.x,target[1]-robot.y)}const want=Math.atan2(target[1]-robot.y,target[0]-robot.x),diff=headingDiff(want,robot.a),turn=clamp(diff,-.28,.28),delta=turn*100/.42,base=Math.abs(diff)>.36?0:Math.min(65,Math.max(35,d*56));return[Math.round(clamp(base-delta/2,-100,100)),Math.round(clamp(base+delta/2,-100,100))]}
-function move(l,r,line){const oldx=robot.x,oldy=robot.y;const distance=(l+r)/200,delta=(r-l)/100*.42;const amid=robot.a+delta/2;const nx=robot.x+Math.cos(amid)*distance,ny=robot.y+Math.sin(amid)*distance;const radius=.25;if(nx<radius||nx>W-radius||ny<radius||ny>H-radius)throw Error('Line '+line+': arena boundary collision.');for(const o of missions[current].obstacles){const dx=nx-oldx,dy=ny-oldy,t=clamp(((o[0]-oldx)*dx+(o[1]-oldy)*dy)/(dx*dx+dy*dy||1),0,1),cx=oldx+t*dx,cy=oldy+t*dy;if(Math.hypot(cx-o[0],cy-o[1])<o[2]+radius)throw Error('Line '+line+': collision with obstacle.')}robot.x=nx;robot.y=ny;robot.a+=delta;robot.l=l;robot.r=r;trace.push([nx,ny]);if(trace.length>260)trace.shift()}
+function move(l,r,line){previousPose={...robot};const oldx=robot.x,oldy=robot.y;const distance=(l+r)/200,delta=(r-l)/100*.42;const amid=robot.a+delta/2;const nx=robot.x+Math.cos(amid)*distance,ny=robot.y+Math.sin(amid)*distance;const radius=.25;if(nx<radius||nx>W-radius||ny<radius||ny>H-radius)throw Error('Line '+line+': arena boundary collision.');for(const o of missions[current].obstacles){const dx=nx-oldx,dy=ny-oldy,t=clamp(((o[0]-oldx)*dx+(o[1]-oldy)*dy)/(dx*dx+dy*dy||1),0,1),cx=oldx+t*dx,cy=oldy+t*dy;if(Math.hypot(cx-o[0],cy-o[1])<o[2]+radius)throw Error('Line '+line+': collision with obstacle.')}robot.x=nx;robot.y=ny;robot.a+=delta;robot.l=l;robot.r=r;trace.push([nx,ny]);if(trace.length>260)trace.shift()}
 function atGoal(){const m=missions[current];return Math.hypot(robot.x-m.target[0],robot.y-m.target[1])<.82}
 function missionSuccess(){const i=current;completed.add(i);save();renderMissions();status('🎉 Mission '+(i+1)+' completed! '+steps+' execution steps.','success');write('✓ Success — target reached safely.');if(i<missions.length-1)$('next').classList.add('show');stop()}
 function advance(){if(!iterator)return false;const node=iterator.next();if(node.done){if(atGoal()){missionSuccess()}else{status('Program finished before reaching the goal. Inspect the route and try again.');write('End of program — mission incomplete.');stop()}return false}if(++steps>350)throw Error('Safety limit reached: maximum 350 execution steps.');const n=node.value;if(n.kind==='sense'){write('L'+n.line+': '+n.test+' is '+(n.value?'TRUE':'FALSE'));render();return true}if(n.kind==='scan'){write('L'+n.line+': '+distanceCm().toFixed(1)+' cm ahead, left line '+lineSensor(-1)+', right line '+lineSensor(1));render();return true}if(n.kind==='brake'){robot.l=robot.r=0;robot.braked=true;write('L'+n.line+': BRAKE');render();if(atGoal())missionSuccess();else{status('Brake applied, but robot is not inside the target zone.');stop()}return false}let l=n.l,r=n.r;if(n.kind==='follow_line'){[l,r]=trackedMotors()}move(l,r,n.line);if(steps<=18||steps%5===0)write('L'+n.line+': '+n.kind+' → L'+l+' R'+r+' • '+distanceCm().toFixed(1)+' cm');render();if(!missions[current].stopRequired&&atGoal()){missionSuccess();return false}return true}
@@ -93,7 +202,17 @@ async function run(){if(running)return;stop();try{prepare()}catch(e){error(e);re
 function step(){if(running)return;try{if(!iterator)prepare();advance()}catch(e){error(e)}}
 $('run').addEventListener('click',run);$('step').addEventListener('click',step);$('stop').addEventListener('click',()=>{stop();status('Stopped. Step or Run starts again from the beginning.');write('■ Stopped by learner.')});$('reset').addEventListener('click',()=>{stop();resetWorld()});$('next').addEventListener('click',()=>selectMission(current+1));$('hintBtn').addEventListener('click',()=>{$('hint').textContent='💡 '+missions[current].hint;$('hint').classList.add('show')});$('solutionBtn').addEventListener('click',()=>{if(!confirm('Reveal the example solution? Try the hint first if you want a challenge.'))return;$('code').value=missions[current].solution;$('code').dispatchEvent(new Event('input'));$('hint').textContent='Example loaded. Run it, inspect the motor changes, then rewrite it yourself.';$('hint').classList.add('show')});$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('code').value);$('copy').textContent='✓ Copied'}catch(e){$('code').focus();$('code').select();$('copy').textContent='Select and copy'}setTimeout(()=>$('copy').textContent='Copy code',1500)});
 $('code').addEventListener('input',()=>{drafts[current]=$('code').value;save();if(!running)iterator=null});$('code').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run()}if(e.key==='Tab'){e.preventDefault();const t=e.target;t.setRangeText('    ',t.selectionStart,t.selectionEnd,'end');t.dispatchEvent(new Event('input'))}});document.querySelectorAll('[data-insert]').forEach(btn=>btn.addEventListener('click',()=>{const t=$('code'),s=btn.getAttribute('data-insert').replace(/\\n/g,'\n');t.setRangeText((t.selectionStart&&t.value[t.selectionStart-1]!=='\n'?'\n':'')+s+'\n',t.selectionStart,t.selectionEnd,'end');t.focus();t.dispatchEvent(new Event('input'))}));
-window.RoboLab2Test={parseCode,selectMission,missions,prepare,advance,robot:()=>({...robot}),isComplete:i=>completed.has(i),distanceCm,lineSensor,trackedMotors,atGoal};
+function setCamera(az,el){camera.az=az;camera.el=clamp(el,.32,Math.PI/2);$('view3d').classList.toggle('active',camera.el<1.45);$('viewTop').classList.toggle('active',camera.el>=1.45);draw()}
+$('orbitLeft').addEventListener('click',()=>setCamera(camera.az-.26,camera.el));
+$('orbitRight').addEventListener('click',()=>setCamera(camera.az+.26,camera.el));
+$('view3d').addEventListener('click',()=>setCamera(DEFAULT_CAMERA.az,DEFAULT_CAMERA.el));
+$('viewTop').addEventListener('click',()=>setCamera(0,Math.PI/2));
+const sceneCanvas=$('world');let dragX=0,dragY=0,dragPointer=null;
+sceneCanvas.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;dragPointer=e.pointerId;dragX=e.clientX;dragY=e.clientY;sceneCanvas.classList.add('dragging');sceneCanvas.setPointerCapture(e.pointerId)});
+sceneCanvas.addEventListener('pointermove',e=>{if(dragPointer!==e.pointerId)return;const dx=e.clientX-dragX,dy=e.clientY-dragY;dragX=e.clientX;dragY=e.clientY;if(Math.abs(dx)+Math.abs(dy)>0)setCamera(camera.az+dx*.012,camera.el-dy*.009)});
+function releaseOrbit(e){if(dragPointer===e.pointerId){dragPointer=null;sceneCanvas.classList.remove('dragging')}}
+sceneCanvas.addEventListener('pointerup',releaseOrbit);sceneCanvas.addEventListener('pointercancel',releaseOrbit);sceneCanvas.addEventListener('lostpointercapture',()=>{dragPointer=null;sceneCanvas.classList.remove('dragging')});
+window.RoboLab2Test={parseCode,selectMission,missions,prepare,advance,robot:()=>({...robot}),isComplete:i=>completed.has(i),distanceCm,lineSensor,trackedMotors,atGoal,getCamera:()=>({...camera}),setCamera};
 selectMission(0);
 })();
 </script>
