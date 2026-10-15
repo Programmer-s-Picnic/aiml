@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf7ff">
+  <meta name="description" content="Learn robotics programming from zero with interactive robot missions, a safe Python-style coding editor, sensors, loops and a live grid simulator. No robot kit needed.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RoboLab — Learn Robotics by Coding">
+  <meta property="og:description" content="Write robot commands, watch a robot move, solve missions and learn robotics from your browser.">
+  <title>RoboLab — Learn Robotics by Coding | Learn With Champak</title>
+  <style>
+    :root { color-scheme: light; --ink:#112741; --muted:#58728c; --blue:#1570da; --blue2:#0b4e9b; --soft:#edf7ff; --sky:#dceeff; --line:#d7e5f2; --green:#087a52; --orange:#a85d0a; --white:#fff; --shadow:0 18px 46px rgba(30,93,154,.08); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:linear-gradient(180deg,#f1f9ff 0,#fff 450px); font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); line-height:1.55; }
+    a { color:var(--blue2); }
+    button,textarea,select { font:inherit; }
+    button { cursor:pointer; }
+    button:focus-visible,a:focus-visible,textarea:focus-visible,select:focus-visible { outline:3px solid #f4b74d; outline-offset:3px; }
+    .wrap { width:min(1350px,calc(100% - 40px)); margin:auto; }
+    header { position:sticky; top:0; z-index:20; background:rgba(255,255,255,.94); backdrop-filter:blur(15px); border-bottom:1px solid var(--line); }
+    .topnav { display:flex; align-items:center; gap:20px; min-height:72px; justify-content:space-between; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:850; font-size:1.27rem; text-decoration:none; color:var(--ink); letter-spacing:-.04em; }
+    .brand-mark { display:grid; place-items:center; width:42px; height:42px; border-radius:13px; background:linear-gradient(140deg,#1264c4,#58b9ec); color:#fff; font-size:25px; box-shadow:0 8px 16px #bedbfa; }
+    nav { display:flex; flex-wrap:wrap; gap:20px; align-items:center; }
+    nav a { font-size:.91rem; color:#345271; text-decoration:none; font-weight:650; }
+    nav a:hover { color:var(--blue); }
+    .pill { display:inline-flex; align-items:center; gap:8px; padding:7px 12px; border-radius:100px; font-size:.77rem; font-weight:760; color:#1458ab; background:#e1f1ff; border:1px solid #c7e5ff; }
+    .hero { padding:55px 0 40px; display:grid; grid-template-columns:1.3fr .7fr; gap:34px; align-items:center; }
+    h1 { font-size:clamp(2.2rem,4.5vw,4.2rem); line-height:1.12; letter-spacing:-.059em; max-width:800px; margin:19px 0 16px; }
+    h1 span { color:var(--blue); }
+    .lead { max-width:700px; color:var(--muted); font-size:1.1rem; margin:0 0 24px; }
+    .hero-actions, .tool-row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .btn { border:1px solid transparent; border-radius:11px; font-weight:760; font-size:.91rem; padding:11px 16px; background:#f2f7fd; color:#254868; transition:transform .13s,background .13s; }
+    .btn:hover { transform:translateY(-1px); }
+    .btn.primary { background:var(--blue); color:white; box-shadow:0 8px 15px rgba(21,112,218,.18); }
+    .btn.primary:hover { background:var(--blue2); }
+    .btn.secondary { background:white; border-color:#c9dfef; color:#19528b; }
+    .btn.danger { color:#94451d; background:#fff6eb; border-color:#f5d7bd; }
+    .btn:disabled { opacity:.55; cursor:not-allowed; transform:none; }
+    .hero-card { padding:27px; background:white; border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow); }
+    .hero-card h2 { margin:0 0 3px; font-size:1.1rem; }
+    .muted { color:var(--muted); }
+    .small { font-size:.82rem; }
+    .progress-track { margin:17px 0 9px; height:11px; background:#e8f1fa; border-radius:20px; overflow:hidden; }
+    .progress-track span { display:block; background:linear-gradient(90deg,#1587d8,#10b693); height:100%; width:0; transition:width .3s; }
+    .hero-features { display:flex; flex-wrap:wrap; gap:9px; margin-top:22px; }
+    .mini-stat { display:flex; align-items:center; gap:10px; margin-top:15px; padding:11px 0; border-top:1px solid #e7eef6; font-size:.88rem; }
+    .mini-stat strong { color:#1763b7; font-size:1.22rem; }
+    section { scroll-margin-top:95px; }
+    .section-head { margin:22px 0 19px; display:flex; align-items:end; justify-content:space-between; gap:20px; }
+    .section-head h2 { margin:0; font-size:clamp(1.55rem,2.6vw,2.1rem); letter-spacing:-.04em; }
+    .section-head p { margin:5px 0 0; color:var(--muted); }
+    .lab { display:grid; grid-template-columns:255px minmax(0,1.05fr) minmax(340px,1fr); gap:14px; align-items:start; }
+    .panel { background:white; border:1px solid var(--line); border-radius:17px; box-shadow:var(--shadow); overflow:hidden; }
+    .panel-header { padding:18px 18px 13px; border-bottom:1px solid #e9f0f7; }
+    .panel-header h3 { margin:0; font-size:1rem; }
+    .panel-header p { color:var(--muted); margin:4px 0 0; font-size:.8rem; }
+    .missions-list { padding:10px; display:grid; gap:6px; }
+    .mission { text-align:left; border:1px solid transparent; background:transparent; border-radius:11px; padding:11px; display:flex; gap:10px; width:100%; color:var(--ink); }
+    .mission:hover { background:#f5f9fe; }
+    .mission.active { border-color:#b4d9fb; background:#eaf5ff; }
+    .mission-num { flex:none; border-radius:10px; width:31px; height:31px; display:grid; place-items:center; color:#2870b8; background:#e9f3fd; font-weight:800; }
+    .mission.active .mission-num { background:var(--blue); color:white; }
+    .mission.done .mission-num { background:#d5f5e8; color:#067b52; }
+    .mission strong,.mission small { display:block; }
+    .mission strong { font-size:.86rem; }
+    .mission small { color:var(--muted); font-size:.73rem; }
+    .lesson-card { margin:13px; padding:15px; background:#f3f9ff; border:1px solid #dcebf9; border-radius:13px; }
+    .lesson-card h4 { margin:0 0 5px; font-size:.92rem; }
+    .lesson-card p { margin:0; font-size:.82rem; color:#486780; }
+    .lesson-card code, .intro-commands code, .reference code { font-size:.85em; background:#dceafa; padding:2px 5px; border-radius:5px; }
+    .simulator-body { padding:16px; }
+    .goal-title { margin:0 0 5px; font-weight:850; font-size:1.1rem; }
+    .sim-caption { margin:0 0 13px; color:var(--muted); font-size:.86rem; min-height:42px; }
+    .sim-meta { display:flex; justify-content:space-between; flex-wrap:wrap; gap:7px; margin-bottom:12px; font-size:.75rem; font-weight:700; }
+    .sim-meta span { padding:4px 9px; background:#f0f7ff; color:#30648f; border:1px solid #dfedfb; border-radius:8px; }
+    .board { display:grid; grid-template-columns:repeat(9,minmax(0,1fr)); border:2px solid #cfdfec; background:#cfdfec; gap:2px; border-radius:12px; overflow:hidden; aspect-ratio:9/7; width:100%; margin:auto; user-select:none; }
+    .cell { display:grid; place-items:center; position:relative; background:#f7fbff; min-width:0; min-height:0; }
+    .cell:nth-child(even) { background:#f0f7ff; }
+    .cell.visited { background:#deeffe; }
+    .cell.wall { background:repeating-linear-gradient(135deg,#a8bbce 0px,#a8bbce 5px,#c0ccdb 6px,#c0ccdb 11px); }
+    .cell.target { background:#e4faed; }
+    .cell.sample { background:#fff5db; }
+    .cell.dropzone { background:#f7eaff; }
+    .cell .symbol { font-size:clamp(13px,2vw,25px); line-height:1; }
+    .cell .robot { position:absolute; z-index:2; display:grid; place-items:center; width:79%; height:79%; border-radius:13px; background:linear-gradient(145deg,#1572d4,#56bded); box-shadow:0 3px 9px #4688bc66; font-size:clamp(16px,2.5vw,29px); }
+    .cell .heading { position:absolute; right:-4px; top:-7px; font-size:clamp(9px,1.1vw,14px); color:white; background:#0a3d86; border-radius:100px; width:18px; height:18px; display:grid; place-items:center; }
+    .legend { display:flex; gap:12px; flex-wrap:wrap; font-size:.74rem; color:#55728c; margin:12px 0; }
+    .legend span { white-space:nowrap; }
+    .outcome { min-height:43px; border-radius:10px; padding:10px 12px; background:#eff7ff; color:#335e80; border:1px solid #dcecfb; font-size:.82rem; }
+    .outcome.success { background:#e9f9ef; border-color:#b5edcc; color:#07633e; }
+    .outcome.error { background:#fff1ef; border-color:#ffd0cb; color:#974036; }
+    .console { background:#10273f; color:#cbe8f6; min-height:88px; max-height:150px; overflow:auto; border-radius:10px; padding:11px 12px; font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; white-space:pre-wrap; word-break:break-word; margin-top:10px; }
+    .code-panel { padding:16px; }
+    .tip { background:#eff7ff; border:1px solid #d9eafb; padding:11px 12px; margin:0 0 13px; border-radius:10px; font-size:.84rem; color:#405f7f; }
+    .editor-label { display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 7px; }
+    .editor-label strong { font-size:.9rem; }
+    .editor-label span { color:var(--muted); font-size:.75rem; }
+    textarea { width:100%; resize:vertical; min-height:266px; background:#10273f; color:#effaff; border:1px solid #294862; padding:16px; font:14px/1.75 ui-monospace,SFMono-Regular,Consolas,monospace; border-radius:12px; tab-size:4; }
+    .tool-row { margin:12px 0; }
+    .tool-row .btn { padding:9px 12px; }
+    .insert-label { font-size:.76rem; color:#58728c; font-weight:750; display:block; margin-top:13px; }
+    .chips { display:flex; flex-wrap:wrap; gap:7px; margin:8px 0 0; }
+    .chip { border:1px solid #d4e4f4; background:#f4f9ff; color:#2263a4; font:12px/1.3 ui-monospace,monospace; border-radius:7px; padding:7px 8px; }
+    .chip:hover { background:#e3f1ff; }
+    .hint { padding:12px; border-radius:10px; background:#fff9e9; color:#7c5918; border:1px solid #f6e8bd; font-size:.84rem; margin-top:12px; }
+    .next { margin-top:10px; width:100%; display:none; }
+    .next.visible { display:block; }
+    .notice { color:#6b8296; font-size:.75rem; margin:14px 0 0; }
+    .curriculum { margin:50px 0 25px; }
+    .learning-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    .learning-card { background:white; border:1px solid var(--line); border-radius:16px; padding:21px; }
+    .learning-card .stage { display:inline-block; margin-bottom:12px; color:#1268b7; background:#eaf6ff; font-weight:800; font-size:.76rem; padding:5px 9px; border-radius:7px; }
+    .learning-card h3 { margin:0 0 10px; font-size:1.03rem; }
+    .learning-card p { color:var(--muted); font-size:.85rem; margin:0 0 10px; }
+    .learning-card ul { padding-left:18px; margin:0; color:#365770; font-size:.82rem; }
+    .reference { margin:20px 0 40px; background:white; border:1px solid var(--line); border-radius:16px; padding:21px; }
+    .reference h2 { margin:0 0 12px; font-size:1.35rem; }
+    .ref-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .ref-grid article { padding:10px 0; border-top:1px solid #e5edf5; }
+    .ref-grid p { font-size:.8rem; color:var(--muted); margin:5px 0 0; }
+    footer { padding:25px 0 45px; border-top:1px solid var(--line); color:#657d92; font-size:.84rem; }
+    footer .wrap { display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+    @media(max-width:1160px) { .lab { grid-template-columns:240px minmax(0,1fr); } .code-side { grid-column:2; } .sim-side { grid-column:2; grid-row:1; } .mission-side { grid-row:1 / span 2; } .learning-grid { grid-template-columns:repeat(2,1fr); } }
+    @media(max-width:760px) { .wrap { width:min(100% - 24px,670px); } header { position:static; } .topnav { gap:10px; padding:10px 0; flex-wrap:wrap; } nav { gap:13px; } nav a { font-size:.81rem; } .hero { padding:30px 0; grid-template-columns:1fr; gap:16px; } .lab { grid-template-columns:1fr; } .mission-side,.sim-side,.code-side { grid-column:1; grid-row:auto; } .missions-list { grid-template-columns:repeat(2,minmax(0,1fr)); } .learning-grid,.ref-grid { grid-template-columns:1fr; } .board { max-width:600px; } .cell .heading { width:15px; height:15px; right:-3px; top:-5px; } }
+    @media(max-width:420px) { .missions-list { grid-template-columns:1fr; } .hero-actions .btn { width:100%; } .cell .robot { border-radius:6px; } }
+    @media(prefers-reduced-motion:reduce) { *,*:before,*:after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
+  </style>
+  <meta name="author" content="Champak Roy">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://aiml.learnwithchampak.live/robolab/">
+  <link rel="icon" href="/me.jpg" type="image/jpeg">
+  <meta property="og:site_name" content="Learn With Champak · AI/ML">
+  <meta property="og:url" content="https://aiml.learnwithchampak.live/robolab/">
+  <meta property="og:image" content="https://aiml.learnwithchampak.live/assets/images/og-ai-ml-champak-roy-varanasi.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"RoboLab — Learn Robotics by Coding","description":"Interactive virtual robotics programming simulator with six missions, commands, loops, obstacle detection and sensors.","url":"https://aiml.learnwithchampak.live/robolab/","educationalLevel":"Beginner","learningResourceType":"Interactive coding simulator","inLanguage":"en","isAccessibleForFree":true,"author":{"@type":"Person","name":"Champak Roy"},"publisher":{"@type":"Organization","name":"Learn With Champak","url":"https://www.learnwithchampak.live/"}}</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8321261883090494" crossorigin="anonymous"></script>
+</head>
+<body>
+  <header>
+    <div class="topnav wrap">
+      <a class="brand" href="#home" aria-label="RoboLab home"><span class="brand-mark" aria-hidden="true">🤖</span> RoboLab <span class="small muted" style="font-weight:600;letter-spacing:0">by Learn With Champak</span></a>
+      <nav aria-label="Main navigation"><a href="#lab">Coding Lab</a><a href="#curriculum">Learning Path</a><a href="#reference">Commands</a><a href="/">AI/ML Home</a><a href="https://www.learnwithchampak.live/" target="_blank" rel="noopener noreferrer">Main Website ↗</a></nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="hero" id="home">
+      <div>
+        <span class="pill">✦ Hands-on robotics learning • No hardware needed</span>
+        <h1>Don't just study robots. <span>Program one.</span></h1>
+        <p class="lead">Write simple robot instructions, run them in a live simulator and solve real programming challenges. Start with movement, then learn loops, sensors, decisions and autonomous behaviour.</p>
+        <div class="hero-actions"><a class="btn primary" href="#lab" style="text-decoration:none">Start coding →</a><a class="btn secondary" href="#curriculum" style="text-decoration:none">Explore the course</a></div>
+        <div class="hero-features"><span class="pill">🐣 Beginner friendly</span><span class="pill">⌨️ Python-style commands</span><span class="pill">🎮 6 interactive missions</span></div>
+      </div>
+      <aside class="hero-card" aria-label="Your progress">
+        <span class="pill">YOUR LEARNING JOURNEY</span>
+        <h2 style="margin-top:13px">Robotics fundamentals</h2>
+        <p class="muted small" style="margin:5px 0 0">Your progress is saved on this device.</p>
+        <div class="progress-track" role="progressbar" aria-label="Mission progress" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" id="progressTrack"><span id="progressBar"></span></div>
+        <div style="display:flex;justify-content:space-between;font-size:.82rem;font-weight:750"><span id="progressCaption">0 of 6 missions</span><span id="progressPercent">0%</span></div>
+        <div class="mini-stat"><strong>01</strong><span>Start with one command. Grow into robot decision-making.</span></div>
+        <div class="mini-stat"><strong>∞</strong><span>Expandable curriculum: virtual robots first, real robots next.</span></div>
+      </aside>
+    </section>
+
+    <section id="lab" aria-labelledby="lab-heading">
+      <div class="section-head"><div><span class="pill">INTERACTIVE LAB • FOUNDATION</span><h2 id="lab-heading">Your robotics programming lab</h2><p>Choose a mission, write instructions and watch what happens.</p></div></div>
+      <div class="lab">
+        <aside class="panel mission-side">
+          <div class="panel-header"><h3>Learning missions</h3><p>Six guided exercises, from zero to sensors</p></div>
+          <div id="missionList" class="missions-list" aria-label="Choose a mission"></div>
+          <div class="lesson-card"><h4>💡 How to learn</h4><p>Read the challenge, change the code, press <strong>Run</strong> and study the trace. Mistakes are part of learning.</p></div>
+        </aside>
+        <div class="panel sim-side">
+          <div class="panel-header"><h3>Robot simulator <span class="pill" style="margin-left:7px">2D virtual robot</span></h3><p>Blue robot • Green target • Grey obstacles</p></div>
+          <div class="simulator-body">
+            <h3 class="goal-title" id="missionTitle">Mission 1</h3>
+            <p class="sim-caption" id="missionDescription"></p>
+            <div class="sim-meta"><span id="robotPosition">Position: –</span><span id="robotDirection">Facing: –</span><span id="robotSteps">Commands: 0</span><span id="robotCargo">Cargo: none</span></div>
+            <div id="board" class="board" role="img" aria-label="Robot simulation grid, 9 columns by 7 rows"></div>
+            <div class="legend"><span>🤖 Robot</span><span>🎯 Goal</span><span>🧱 Wall</span><span>🧪 Sample</span><span>📦 Drop zone</span></div>
+            <div id="outcome" class="outcome" role="status" aria-live="polite">Ready to run your program.</div>
+            <div id="consoleOutput" class="console" role="log" aria-label="Robot execution log" aria-live="polite">&gt; Robot ready.</div>
+            <button class="btn primary next" id="nextMission" type="button">Continue to next mission →</button>
+          </div>
+        </div>
+        <div class="panel code-side">
+          <div class="panel-header"><h3>Robot code editor</h3><p>A small, safe Python-style teaching language — no software installation</p></div>
+          <div class="code-panel">
+            <p class="tip" id="lessonExplanation"></p>
+            <label class="editor-label" for="codeEditor"><strong>robot_program.py</strong><span>Ctrl / Cmd + Enter to run</span></label>
+            <textarea id="codeEditor" spellcheck="false" aria-label="Robot programming code editor" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+            <div class="tool-row"><button class="btn primary" id="runButton" type="button">▶ Run program</button><button class="btn secondary" id="stepButton" type="button">→ Step</button><button class="btn secondary" id="resetButton" type="button">↺ Reset</button><button class="btn danger" id="stopButton" type="button" disabled>■ Stop</button></div>
+            <div class="tool-row"><label class="small muted" for="speedSelect">Animation speed</label><select id="speedSelect" aria-label="Animation speed" class="btn secondary"><option value="600">Slow</option><option value="340" selected>Normal</option><option value="110">Fast</option></select><button class="btn secondary" id="hintButton" type="button">💡 Hint</button><button class="btn secondary" id="solutionButton" type="button">Show example</button><button class="btn secondary" id="copyButton" type="button">Copy code</button></div>
+            <span class="insert-label">INSERT COMMAND (AT CURSOR)</span>
+            <div class="chips"><button class="chip" data-insert="move()" type="button">move()</button><button class="chip" data-insert="turn_left()" type="button">turn_left()</button><button class="chip" data-insert="turn_right()" type="button">turn_right()</button><button class="chip" data-insert="pick()" type="button">pick()</button><button class="chip" data-insert="drop()" type="button">drop()</button><button class="chip" data-insert="repeat(3):\n    move()" type="button">repeat(3):</button><button class="chip" data-insert="if wall_ahead():\n    turn_left()" type="button">if wall_ahead():</button><button class="chip" data-insert="scan()" type="button">scan()</button></div>
+            <div class="hint" id="hintBox" hidden></div>
+            <p class="notice">This first version uses a deliberately limited Python-like interpreter, not full Python or a hardware controller. Later phases will introduce actual Python, visual blocks and supported robot boards.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="curriculum" id="curriculum">
+      <div class="section-head"><div><span class="pill">FROM ZERO TO REAL ROBOTS</span><h2>A structured robotics journey</h2><p>Today's six missions form the first interactive module. Here's where the course grows next.</p></div></div>
+      <div class="learning-grid">
+        <article class="learning-card"><span class="stage">LEVEL 1 • AVAILABLE</span><h3>Robot logic</h3><p>Learn what a robot does and how to command it.</p><ul><li>Position and direction</li><li>Motion and turns</li><li>Loops and repetition</li><li>Obstacles and sensors</li></ul></article>
+        <article class="learning-card"><span class="stage">LEVEL 2 • PLANNED</span><h3>Python for robots</h3><p>Use real Python syntax and develop smarter behaviour.</p><ul><li>Functions and variables</li><li>Conditions and sensor data</li><li>Debugging and testing</li><li>Reusable robot routines</li></ul></article>
+        <article class="learning-card"><span class="stage">LEVEL 3 • PLANNED</span><h3>Electronics & control</h3><p>Meet the physical components used in robots.</p><ul><li>Motors and servos</li><li>Distance and line sensors</li><li>Microcontrollers</li><li>MicroPython and Arduino</li></ul></article>
+        <article class="learning-card"><span class="stage">LEVEL 4 • PLANNED</span><h3>Autonomous robotics</h3><p>Make systems plan routes and respond to their environment.</p><ul><li>Grid pathfinding</li><li>Robot state machines</li><li>ROS 2 concepts</li><li>Capstone projects</li></ul></article>
+      </div>
+    </section>
+    <section class="reference" id="reference">
+      <h2>Quick robot command reference</h2>
+      <div class="ref-grid">
+        <article><strong><code>move()</code></strong><p>Move forward exactly one square.</p></article>
+        <article><strong><code>turn_left()</code></strong><p>Rotate 90° counter-clockwise.</p></article>
+        <article><strong><code>turn_right()</code></strong><p>Rotate 90° clockwise.</p></article>
+        <article><strong><code>repeat(3):</code></strong><p>Repeat the indented code three times (maximum 30).</p></article>
+        <article><strong><code>if wall_ahead():</code></strong><p>Run the indented commands only when a wall is ahead.</p></article>
+        <article><strong><code>scan()</code></strong><p>Report whether a wall is in front of the robot.</p></article>
+        <article><strong><code>pick()</code></strong><p>Pick up a sample beneath the robot.</p></article>
+        <article><strong><code>drop()</code></strong><p>Put down the carried sample.</p></article>
+        <article><strong><code># comment</code></strong><p>Add a note: comments are ignored by the robot.</p></article>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap"><span>© <span id="year"></span> Learn With Champak • <a href="https://www.learnwithchampak.live/">LearnWithChampak.live</a></span><span>Educational virtual simulator • Developed and maintained by Champak Roy</span></div></footer>
+  <script>
+    'use strict';
+    const WIDTH = 9, HEIGHT = 7, headings = ['North','East','South','West'];
+    const dx = [0,1,0,-1], dy = [-1,0,1,0], arrows = ['↑','→','↓','←'];
+    const levels = [
+      {title:'Your first robot steps', short:'Movement', description:'Drive to the green target. The robot is already facing East; it must move three squares.', concept:'A robot follows instructions in order. Each move() advances exactly one square in its current direction.', start:[1,5,1], goal:[4,5], walls:[[7,2],[7,3]], initial:'# Mission 1: Reach the green target\nmove()\n', solution:'move()\nmove()\nmove()', hint:'The target is three squares directly ahead. Add two more move() commands.', requirement:null},
+      {title:'Turning and direction', short:'Turns', description:'Navigate to the target at the top right. Move to the right first, turn left and continue north.', concept:'turn_left() rotates the robot 90° without changing its position. The direction the robot faces controls subsequent moves.', start:[1,5,1], goal:[5,2], walls:[[3,4],[4,4]], initial:'# Mission 2: Go right, then up\nmove()\n', solution:'repeat(4):\n    move()\nturn_left()\nrepeat(3):\n    move()', hint:'From the start: 4 steps East, one left turn, 3 steps North.', requirement:null},
+      {title:'Collect a sample', short:'Pick and drop', description:'Reach the yellow science sample, pick it up, carry it to the purple drop zone and drop it there.', concept:'Robots manipulate objects too. Use pick() only while standing on a sample, and drop() at its destination.', start:[1,5,1], sample:[4,5], drop:[6,3], walls:[[7,5]], initial:'# Mission 3: Pick up and deliver the sample\n', solution:'repeat(3):\n    move()\npick()\nrepeat(2):\n    move()\nturn_left()\nrepeat(2):\n    move()\ndrop()', hint:'Move East 3, pick up the sample, move East 2, turn left, move North 2, then drop.', requirement:null},
+      {title:'Plan around obstacles', short:'Avoid walls', description:'The direct route is blocked by two walls. Find a safe detour to the target.', concept:'A good robot program considers its environment. Think about the free squares before programming a path.', start:[1,5,1], goal:[5,5], walls:[[3,5],[4,5]], initial:'# Mission 4: Avoid the wall\n', solution:'turn_left()\nmove()\nturn_right()\nrepeat(4):\n    move()\nturn_right()\nmove()', hint:'Take one step North, move East across the open row, then return South.', requirement:null},
+      {title:'Master loops', short:'Repeat commands', description:'The goal is six squares away. Reach it using at least one repeat() loop.', concept:'Loops shorten repeated instructions. Indent the commands belonging to repeat(n): by four spaces.', start:[1,5,1], goal:[7,5], walls:[[7,2]], initial:'# Mission 5: Make a loop\nrepeat(3):\n    move()\n', solution:'repeat(6):\n    move()', hint:'Change the number in repeat(3) to the total number of squares: 6.', requirement:'repeat'},
+      {title:'Think like a robot', short:'Use a sensor', description:'Move one square, detect the wall ahead with if wall_ahead():, and automatically take a detour to the target.', concept:'Sensors allow conditional decisions. An if statement checks the environment during execution, not before the program starts.', start:[1,5,1], goal:[6,5], walls:[[3,5],[4,5]], initial:'# Mission 6: React to the wall with a sensor\nmove()\nif wall_ahead():\n    turn_left()\n    move()\n    turn_right()\n', solution:'move()\nif wall_ahead():\n    turn_left()\n    move()\n    turn_right()\nrepeat(4):\n    move()\nturn_right()\nmove()', hint:'After moving once the wall is directly ahead. In the if block, go North and turn East. Then go East 4 and South 1.', requirement:'if'}
+    ];
+    const $ = id => document.getElementById(id);
+    let currentLevel = 0, world = null, program = null, running = false, runEpoch = 0, steps = 0, hintsShown = false;
+    let solved = new Set(), codeCache = {};
+    try { solved = new Set(JSON.parse(localStorage.getItem('robolab.progress.v1') || '[]').filter(Number.isInteger)); } catch (e) {}
+    try { codeCache = JSON.parse(localStorage.getItem('robolab.code.v1') || '{}') || {}; } catch (e) {}
+    function save() { try { localStorage.setItem('robolab.progress.v1',JSON.stringify([...solved])); localStorage.setItem('robolab.code.v1',JSON.stringify(codeCache)); } catch(e) {} }
+    function equal(a,b) { return a && b && a[0]===b[0] && a[1]===b[1]; }
+    function isWall(x,y) { return x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT || world.walls.some(p => equal(p,[x,y])); }
+    function sensor(name) { if (name==='wall_ahead') return isWall(world.x+dx[world.dir],world.y+dy[world.dir]); if (name==='sample_here') return !!world.sample && equal(world.sample,[world.x,world.y]); throw Error('Unknown sensor: '+name); }
+    function resetWorld() {
+      const l = levels[currentLevel];
+      world = {x:l.start[0],y:l.start[1],dir:l.start[2],visited:new Set([`${l.start[0]},${l.start[1]}`]),walls:l.walls,cargo:false,sample:l.sample ? [...l.sample] : null,drop:l.drop || null};
+      steps=0; renderWorld(); setOutcome('Ready to run your program.'); $('consoleOutput').textContent='> Robot ready.'; $('nextMission').classList.remove('visible');
+    }
+    function renderWorld() {
+      const l=levels[currentLevel], cells=[];
+      for (let y=0;y<HEIGHT;y++) for (let x=0;x<WIDTH;x++) {
+        const wall=world.walls.some(p=>equal(p,[x,y]));
+        const isTarget=equal(l.goal,[x,y]), isDrop=equal(l.drop,[x,y]), isSample=equal(world.sample,[x,y]), isRobot=world.x===x&&world.y===y;
+        let symbol = wall?'🧱':isSample?'🧪':isTarget?'🎯':isDrop?'📦':'';
+        const cls=['cell',wall?'wall':'',isTarget?'target':'',isDrop?'dropzone':'',isSample?'sample':'',world.visited.has(`${x},${y}`)?'visited':''].join(' ');
+        cells.push(`<div class="${cls}" aria-hidden="true">${symbol?`<span class="symbol">${symbol}</span>`:''}${isRobot?`<span class="robot">🤖<span class="heading">${arrows[world.dir]}</span></span>`:''}</div>`);
+      }
+      $('board').innerHTML=cells.join('');
+      $('board').setAttribute('aria-label',`Robot at column ${world.x+1}, row ${world.y+1}, facing ${headings[world.dir]}. ${l.goal?'Goal is marked by a target.': 'Deliver the sample to the drop zone.'}`);
+      $('robotPosition').textContent=`Position: (${world.x+1}, ${world.y+1})`;
+      $('robotDirection').textContent=`Facing: ${headings[world.dir]}`;
+      $('robotSteps').textContent=`Commands: ${steps}`;
+      $('robotCargo').textContent=`Cargo: ${world.cargo?'sample':'none'}`;
+    }
+    function setOutcome(message, kind='') { $('outcome').textContent=message; $('outcome').className=`outcome ${kind}`; }
+    function log(message) { const el=$('consoleOutput'); el.textContent+='\n'+message; el.scrollTop=el.scrollHeight; }
+    function countProgress() { const count=solved.size, pct=Math.round(count/levels.length*100); $('progressBar').style.width=pct+'%'; $('progressCaption').textContent=`${count} of ${levels.length} missions`; $('progressPercent').textContent=pct+'%'; $('progressTrack').setAttribute('aria-valuenow',String(count)); }
+    function renderMissions() {
+      $('missionList').innerHTML='';
+      levels.forEach((l,i) => {
+        const btn=document.createElement('button'); btn.type='button'; btn.className=`mission ${currentLevel===i?'active':''} ${solved.has(i)?'done':''}`;
+        btn.setAttribute('aria-current',currentLevel===i?'step':'false');
+        const num=document.createElement('span'); num.className='mission-num'; num.textContent=solved.has(i)?'✓':String(i+1);
+        const info=document.createElement('span'), strong=document.createElement('strong'), small=document.createElement('small');
+        strong.textContent=l.title; small.textContent=l.short; info.append(strong,small); btn.append(num,info); btn.addEventListener('click',()=>selectMission(i)); $('missionList').append(btn);
+      });
+      countProgress();
+    }
+    function stop() { runEpoch++; running=false; program=null; $('runButton').disabled=false; $('stepButton').disabled=false; $('stopButton').disabled=true; }
+    function selectMission(n) {
+      if (!Number.isInteger(n)||n<0||n>=levels.length) return;
+      if (running) stop();
+      currentLevel=n; hintsShown=false; $('hintBox').hidden=true;
+      const l=levels[n]; $('missionTitle').textContent=`Mission ${n+1}: ${l.title}`; $('missionDescription').textContent=l.description;
+      $('lessonExplanation').textContent=`LEARN: ${l.concept}`;
+      $('codeEditor').value=(typeof codeCache[n]==='string'?codeCache[n]:l.initial);
+      resetWorld(); renderMissions();
+    }
+    function parseCode(source) {
+      if(source.length>15000) throw Error('Program too long. Maximum 15,000 characters.');
+      const records=[];
+      source.replace(/\t/g,'    ').split(/\r?\n/).forEach((raw,i)=>{
+        if (!raw.trim()||raw.trim().startsWith('#')) return;
+        const indent=raw.length-raw.trimStart().length, text=raw.trim().replace(/\s+#.*$/,'');
+        if (indent%4!==0) throw Error(`Line ${i+1}: use multiples of four spaces for indentation.`);
+        records.push({line:i+1,indent,text});
+      });
+      if (!records.length) throw Error('Write at least one robot command before running.');
+      if(records.length>200) throw Error('Too many code lines (maximum 200).');
+      let pos=0;
+      function suite(depth) {
+        const nodes=[];
+        while(pos<records.length) {
+          let rec=records[pos];
+          if(rec.indent<depth) break;
+          if(rec.indent>depth) throw Error(`Line ${rec.line}: unexpected indentation.`);
+          if(rec.text==='else:') throw Error(`Line ${rec.line}: else without a matching if.`);
+          pos++;
+          let match=rec.text.match(/^repeat\(\s*(\d+)\s*\):$/);
+          if (match) {
+            const repeat=Number(match[1]); if(repeat<1||repeat>30) throw Error(`Line ${rec.line}: repeat count must be from 1 to 30.`);
+            if(!records[pos]||records[pos].indent<=depth) throw Error(`Line ${rec.line}: indent the body of repeat by four spaces.`);
+            if(records[pos].indent!==depth+4) throw Error(`Line ${records[pos].line}: use exactly four extra spaces.`);
+            nodes.push({type:'repeat',count:repeat,body:suite(depth+4),line:rec.line}); continue;
+          }
+          match=rec.text.match(/^if\s+(wall_ahead|sample_here)\(\):$/);
+          if(match) {
+            if(!records[pos]||records[pos].indent<=depth) throw Error(`Line ${rec.line}: indent the body of if by four spaces.`);
+            if(records[pos].indent!==depth+4) throw Error(`Line ${records[pos].line}: use exactly four extra spaces.`);
+            const node={type:'if',test:match[1],body:suite(depth+4),otherwise:[],line:rec.line};
+            if(records[pos]&&records[pos].indent===depth&&records[pos].text==='else:') {
+              const alt=records[pos++]; if(!records[pos]||records[pos].indent!==depth+4) throw Error(`Line ${alt.line}: else requires an indented body.`);
+              node.otherwise=suite(depth+4);
+            }
+            nodes.push(node); continue;
+          }
+          match=rec.text.match(/^(move|turn_left|turn_right|pick|drop|scan)\(\s*\)$/);
+          if(match) { nodes.push({type:'command',op:match[1],line:rec.line}); continue; }
+          throw Error(`Line ${rec.line}: unsupported syntax: ${rec.text}. See the command reference.`);
+        }
+        return nodes;
+      }
+      if(records[0].indent!==0) throw Error(`Line ${records[0].line}: the first command must not be indented.`);
+      return suite(0);
+    }
+    function hasType(nodes,type) { return nodes.some(n=>n.type===type || (n.body&&hasType(n.body,type)) || (n.otherwise&&hasType(n.otherwise,type))); }
+    function* execute(nodes) {
+      for (const node of nodes) {
+        if(node.type==='repeat') { for(let i=0;i<node.count;i++) yield* execute(node.body); }
+        else if(node.type==='if') { const value=sensor(node.test); yield {type:'sense',test:node.test,value,line:node.line}; yield* execute(value?node.body:node.otherwise); }
+        else yield node;
+      }
+    }
+    function success() {
+      const l=levels[currentLevel];
+      if(l.drop) return world.sample===null && !world.cargo && world.delivered===true && equal([world.x,world.y],l.drop);
+      return equal([world.x,world.y],l.goal);
+    }
+    function executeOne(node) {
+      if(node.type==='sense') { steps++; log(`L${node.line}: ${node.test}() is ${node.value ? 'TRUE':'FALSE'}`); return; }
+      const op=node.op; steps++;
+      if(op==='move') {
+        const nx=world.x+dx[world.dir], ny=world.y+dy[world.dir];
+        if(isWall(nx,ny)) throw Error(`Line ${node.line}: collision! Wall or boundary ahead. Robot stopped.`);
+        world.x=nx; world.y=ny; world.visited.add(`${nx},${ny}`);
+      } else if(op==='turn_left') world.dir=(world.dir+3)%4;
+      else if(op==='turn_right') world.dir=(world.dir+1)%4;
+      else if(op==='pick') { if(!world.sample||!equal(world.sample,[world.x,world.y])||world.cargo) throw Error(`Line ${node.line}: no sample here to pick up.`); world.sample=null; world.cargo=true; }
+      else if(op==='drop') { if(!world.cargo) throw Error(`Line ${node.line}: robot is not carrying a sample.`); world.cargo=false; if(equal([world.x,world.y],world.drop)) world.delivered=true; else world.sample=[world.x,world.y]; }
+      else if(op==='scan') { log(`    Sensor: wall ahead = ${sensor('wall_ahead')?'YES':'NO'}`); }
+      log(`L${node.line}: ${op}()`); renderWorld();
+    }
+    function prepareProgram() {
+      const l=levels[currentLevel], source=$('codeEditor').value;
+      codeCache[currentLevel]=source; save();
+      const ast=parseCode(source);
+      if(l.requirement && !hasType(ast,l.requirement)) throw Error(`This mission requires ${l.requirement==='if'?'an if condition':'a repeat loop'} in your program.`);
+      resetWorld(); program=execute(ast); return true;
+    }
+    function finishIfSolved() {
+      if(!success()) return false;
+      solved.add(currentLevel); save(); renderMissions();
+      setOutcome(`🎉 Mission accomplished! Completed in ${steps} executed commands.`, 'success'); log('✓ Mission complete!');
+      if(currentLevel<levels.length-1) $('nextMission').classList.add('visible');
+      stop(); return true;
+    }
+    function advance() {
+      if(!program) return false;
+      const result=program.next();
+      if(result.done) { setOutcome('Program finished, but the mission is not complete. Adjust your code and try again.'); log('> End of program. Target not reached.'); stop(); return false; }
+      if(steps>=500) throw Error('Safety limit: maximum 500 executed commands.');
+      executeOne(result.value);
+      if (finishIfSolved()) return false;
+      return true;
+    }
+    function reportError(error) { log(`✖ ${error.message}`); setOutcome(`⚠ ${error.message}`,'error'); stop(); }
+    async function runProgram() {
+      if(running) return;
+      stop();
+      try { prepareProgram(); } catch(e) { reportError(e); return; }
+      running=true; $('runButton').disabled=true; $('stepButton').disabled=true; $('stopButton').disabled=false;
+      const ticket=runEpoch;
+      while(running&&ticket===runEpoch) {
+        try { if(!advance()) break; } catch(e) { reportError(e); break; }
+        await new Promise(resolve=>setTimeout(resolve,Number($('speedSelect').value)));
+      }
+      if(ticket===runEpoch && running) stop();
+    }
+    function stepProgram() {
+      if(running) return;
+      try { if(!program) prepareProgram(); advance(); } catch(e) { reportError(e); }
+    }
+    function stopProgram() { if(running||program) { stop(); setOutcome('Program stopped. Press Step or Run to restart from the beginning.'); log('■ Execution stopped.'); } }
+    function resetProgram() { stop(); resetWorld(); }
+    $('runButton').addEventListener('click',runProgram);
+    $('stepButton').addEventListener('click',stepProgram);
+    $('resetButton').addEventListener('click',resetProgram);
+    $('stopButton').addEventListener('click',stopProgram);
+    $('nextMission').addEventListener('click',()=>selectMission(currentLevel+1));
+    $('codeEditor').addEventListener('input',()=>{codeCache[currentLevel]=$('codeEditor').value;save(); if(program&&!running) program=null;});
+    $('codeEditor').addEventListener('keydown',e=>{
+      if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();runProgram();}
+      if(e.key==='Tab'){e.preventDefault();const t=e.target,a=t.selectionStart,b=t.selectionEnd;t.setRangeText('    ',a,b,'end');t.dispatchEvent(new Event('input'));}
+    });
+    document.querySelectorAll('[data-insert]').forEach(b=>b.addEventListener('click',()=>{
+      const t=$('codeEditor'),a=t.selectionStart,bpos=t.selectionEnd,text=b.getAttribute('data-insert').replace(/\\n/g,'\n');
+      t.setRangeText((a&&t.value[a-1]!=='\n'?'\n':'')+text+'\n',a,bpos,'end');t.focus();t.dispatchEvent(new Event('input'));
+    }));
+    $('hintButton').addEventListener('click',()=>{const l=levels[currentLevel];$('hintBox').textContent='💡 '+l.hint;$('hintBox').hidden=false;hintsShown=true;});
+    $('solutionButton').addEventListener('click',()=>{
+      if(!window.confirm('Reveal the example solution for this mission? Try the hint first if you want a challenge.')) return;
+      $('codeEditor').value=levels[currentLevel].solution; $('codeEditor').dispatchEvent(new Event('input'));
+      $('hintBox').textContent='Example loaded. Run it and observe each step, then try rewriting it yourself.'; $('hintBox').hidden=false;
+    });
+    $('copyButton').addEventListener('click',async()=>{
+      try {await navigator.clipboard.writeText($('codeEditor').value);$('copyButton').textContent='✓ Copied';}
+      catch(e) { $('codeEditor').focus();$('codeEditor').select();$('copyButton').textContent='Select code to copy'; }
+      setTimeout(()=>$('copyButton').textContent='Copy code',1600);
+    });
+    $('year').textContent=new Date().getFullYear();
+    selectMission(0);
+    window.RoboLabTest = {parseCode, selectMission, getWorld:()=>({...world}), getProgress:()=>[...solved], advance, prepareProgram};
+  </script>
+</body>
+</html>
