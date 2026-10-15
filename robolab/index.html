@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#edf7ff">
-  <meta name="description" content="Learn robotics programming from zero with interactive robot missions, a safe Python-style coding editor, sensors, loops and a live grid simulator. No robot kit needed.">
+  <meta name="description" content="Learn robotics programming from zero with interactive robot missions, a safe Python-style coding editor, sensors, loops and a rotatable 3D virtual robot simulator. No robot kit needed.">
+  <meta name="robots" content="index,follow">
   <meta property="og:type" content="website">
   <meta property="og:title" content="RoboLab — Learn Robotics by Coding">
   <meta property="og:description" content="Write robot commands, watch a robot move, solve missions and learn robotics from your browser.">
@@ -127,7 +128,30 @@
     @media(max-width:760px) { .wrap { width:min(100% - 24px,670px); } header { position:static; } .topnav { gap:10px; padding:10px 0; flex-wrap:wrap; } nav { gap:13px; } nav a { font-size:.81rem; } .hero { padding:30px 0; grid-template-columns:1fr; gap:16px; } .lab { grid-template-columns:1fr; } .mission-side,.sim-side,.code-side { grid-column:1; grid-row:auto; } .missions-list { grid-template-columns:repeat(2,minmax(0,1fr)); } .learning-grid,.ref-grid { grid-template-columns:1fr; } .board { max-width:600px; } .cell .heading { width:15px; height:15px; right:-3px; top:-5px; } }
     @media(max-width:420px) { .missions-list { grid-template-columns:1fr; } .hero-actions .btn { width:100%; } .cell .robot { border-radius:6px; } }
     @media(prefers-reduced-motion:reduce) { *,*:before,*:after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
-  </style>
+  
+/* RoboLab Level 1: consistent 3D simulator layout with Level 2 */
+#board[hidden]{display:none!important}
+.lab{grid-template-columns:205px minmax(0,1.45fr) minmax(295px,1fr)}
+.arena-layout{display:grid;grid-template-columns:minmax(0,1fr) 114px;gap:9px;align-items:stretch}
+.arena-view{min-width:0;background:linear-gradient(155deg,#e5f4ff,#d8ebfa);border:1px solid #cbddea;border-radius:13px;overflow:hidden}
+.arena-view canvas{display:block;width:100%;height:auto;aspect-ratio:20/13;background:#deefff;cursor:grab;touch-action:pan-y}
+.arena-view canvas.dragging{cursor:grabbing}
+.camera-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:5px;background:#f2f9ff;padding:7px;border-bottom:1px solid #c9deee}
+.camera-label{margin-right:auto;white-space:nowrap;font-size:.64rem;font-weight:900;color:#256897;letter-spacing:.04em}
+.camera-btn{background:#fff;border:1px solid #ccdeeb;border-radius:7px;padding:4px 8px;color:#235b89;font-size:.76rem;font-weight:800;cursor:pointer}
+.camera-btn.active{background:#1c72c9;border-color:#1c72c9;color:#fff}
+.camera-hint{font-size:.61rem;color:#667f96;white-space:nowrap}
+.arena-controls{min-width:0;display:flex;flex-direction:column;gap:8px;align-items:stretch;background:#edf7ff;padding:10px 7px;border:1px solid #d2e7f8;border-radius:12px}
+.arena-controls .btn{width:100%;padding:10px 3px;font-size:.8rem}
+.arena-controls .run-main{padding:14px 3px;font-size:1.03rem;background:#156ed2;box-shadow:0 4px 13px #2672bb39}
+.controls-label{text-align:center;font-size:.58rem;letter-spacing:.04em;font-weight:900;color:#557794}
+.speed-picker{font-size:.75rem;color:#3d6380;text-align:center}
+.speed-picker select{width:100%;padding:7px 2px;border:1px solid #c9deea;border-radius:7px;background:white;color:#2a4f70;margin-top:5px}
+.controls-hint{text-align:center;font-size:.66rem;color:#64809a;line-height:1.45}
+@media(max-width:1270px){.lab{grid-template-columns:210px minmax(0,1fr)}.code-side{grid-column:2}.sim-side{grid-column:2;grid-row:1}.mission-side{grid-row:1 / span 2}}
+@media(max-width:760px){.lab{grid-template-columns:1fr}.mission-side,.sim-side,.code-side{grid-column:1;grid-row:auto}.camera-hint{display:none}}
+@media(max-width:540px){.arena-layout{grid-template-columns:1fr}.arena-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px;align-items:center}.arena-controls .btn{padding:9px 2px;font-size:.73rem}.arena-controls .run-main{padding:9px 2px;font-size:.9rem}.controls-label{grid-column:1/-1;text-align:left}.speed-picker{grid-column:1/3;white-space:nowrap;font-size:.72rem}.speed-picker select{width:auto;max-width:99px;margin:0 0 0 4px}.controls-hint{grid-column:3/5;text-align:left}.arena-view canvas{aspect-ratio:20/13}}
+</style>
   <meta name="author" content="Champak Roy">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://aiml.learnwithchampak.live/robolab/">
@@ -151,9 +175,9 @@
       <div>
         <span class="pill">✦ Hands-on robotics learning • No hardware needed</span>
         <h1>Don't just study robots. <span>Program one.</span></h1>
-        <p class="lead">Write simple robot instructions, run them in a live simulator and solve real programming challenges. Start with movement, then learn loops, sensors, decisions and autonomous behaviour.</p>
-        <div class="hero-actions"><a class="btn primary" href="#lab" style="text-decoration:none">Start coding →</a><a class="btn secondary" href="#curriculum" style="text-decoration:none">Explore the course</a><a class="btn secondary" href="/robolab/level2/" style="text-decoration:none">Continue to Level 2 →</a></div>
-        <div class="hero-features"><span class="pill">🐣 Beginner friendly</span><span class="pill">⌨️ Python-style commands</span><span class="pill">🎮 6 interactive missions</span></div>
+        <p class="lead">Write simple robot instructions, run them in a live 3D simulator and solve real programming challenges. Start with movement, then learn loops, sensors, decisions and autonomous behaviour.</p>
+        <div class="hero-actions"><a class="btn primary" href="#lab" style="text-decoration:none">Start coding →</a><a class="btn secondary" href="#curriculum" style="text-decoration:none">Explore the course</a></div>
+        <div class="hero-features"><span class="pill">🐣 Beginner friendly</span><span class="pill">⌨️ Python-style commands</span><span class="pill">🎮 6 interactive missions</span><span class="pill">🧊 Rotatable 3D arena</span></div>
       </div>
       <aside class="hero-card" aria-label="Your progress">
         <span class="pill">YOUR LEARNING JOURNEY</span>
@@ -175,12 +199,12 @@
           <div class="lesson-card"><h4>💡 How to learn</h4><p>Read the challenge, change the code, press <strong>Run</strong> and study the trace. Mistakes are part of learning.</p></div>
         </aside>
         <div class="panel sim-side">
-          <div class="panel-header"><h3>Robot simulator <span class="pill" style="margin-left:7px">2D virtual robot</span></h3><p>Blue robot • Green target • Grey obstacles</p></div>
+          <div class="panel-header"><h3>Robot simulator <span class="pill" style="margin-left:7px">3D virtual robot</span></h3><p>Orbit the 3D world • Watch motion beside the Run controls</p></div>
           <div class="simulator-body">
             <h3 class="goal-title" id="missionTitle">Mission 1</h3>
             <p class="sim-caption" id="missionDescription"></p>
             <div class="sim-meta"><span id="robotPosition">Position: –</span><span id="robotDirection">Facing: –</span><span id="robotSteps">Commands: 0</span><span id="robotCargo">Cargo: none</span></div>
-            <div id="board" class="board" role="img" aria-label="Robot simulation grid, 9 columns by 7 rows"></div>
+            <div class="arena-layout"><div class="arena-view"><div class="camera-toolbar" aria-label="3D camera controls"><span class="camera-label">✦ 3D CAMERA</span><button class="camera-btn" type="button" id="orbitLeft" aria-label="Rotate view left" title="Rotate left">⟲</button><button class="camera-btn" type="button" id="orbitRight" aria-label="Rotate view right" title="Rotate right">⟳</button><button class="camera-btn active" type="button" id="view3d">3D</button><button class="camera-btn" type="button" id="viewTop">Top</button><span class="camera-hint">Drag to orbit</span></div><canvas id="world3d" width="1000" height="650" role="img" aria-label="Rotatable three-dimensional robotic programming arena, with robot, raised blocks, mission targets and optional samples"></canvas></div><aside class="arena-controls" aria-label="Robot execution controls beside simulator"><span class="controls-label">ROBOT CONTROLS</span><button class="btn primary run-main" id="runButton" type="button">▶ Run</button><button class="btn secondary" id="stepButton" type="button">↷ Step</button><button class="btn danger" id="stopButton" type="button" disabled>■ Stop</button><button class="btn secondary" id="resetButton" type="button">↺ Reset</button><label class="speed-picker" for="speedSelect">Speed <select id="speedSelect"><option value="600">Slow</option><option value="340" selected>Normal</option><option value="110">Fast</option></select></label><small class="controls-hint">Watch the robot as your code runs.</small></aside></div><div id="board" class="board" hidden aria-hidden="true"></div>
             <div class="legend"><span>🤖 Robot</span><span>🎯 Goal</span><span>🧱 Wall</span><span>🧪 Sample</span><span>📦 Drop zone</span></div>
             <div id="outcome" class="outcome" role="status" aria-live="polite">Ready to run your program.</div>
             <div id="consoleOutput" class="console" role="log" aria-label="Robot execution log" aria-live="polite">&gt; Robot ready.</div>
@@ -193,8 +217,8 @@
             <p class="tip" id="lessonExplanation"></p>
             <label class="editor-label" for="codeEditor"><strong>robot_program.py</strong><span>Ctrl / Cmd + Enter to run</span></label>
             <textarea id="codeEditor" spellcheck="false" aria-label="Robot programming code editor" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
-            <div class="tool-row"><button class="btn primary" id="runButton" type="button">▶ Run program</button><button class="btn secondary" id="stepButton" type="button">→ Step</button><button class="btn secondary" id="resetButton" type="button">↺ Reset</button><button class="btn danger" id="stopButton" type="button" disabled>■ Stop</button></div>
-            <div class="tool-row"><label class="small muted" for="speedSelect">Animation speed</label><select id="speedSelect" aria-label="Animation speed" class="btn secondary"><option value="600">Slow</option><option value="340" selected>Normal</option><option value="110">Fast</option></select><button class="btn secondary" id="hintButton" type="button">💡 Hint</button><button class="btn secondary" id="solutionButton" type="button">Show example</button><button class="btn secondary" id="copyButton" type="button">Copy code</button></div>
+            <div class="tip">Use <strong>Run / Step / Stop / Reset beside the 3D board</strong> above. Keep watching the robot while your code executes. You can also press <strong>Ctrl / Cmd + Enter</strong> to run.</div>
+            <div class="tool-row"><button class="btn secondary" id="hintButton" type="button">💡 Hint</button><button class="btn secondary" id="solutionButton" type="button">Show example</button><button class="btn secondary" id="copyButton" type="button">Copy code</button></div>
             <span class="insert-label">INSERT COMMAND (AT CURSOR)</span>
             <div class="chips"><button class="chip" data-insert="move()" type="button">move()</button><button class="chip" data-insert="turn_left()" type="button">turn_left()</button><button class="chip" data-insert="turn_right()" type="button">turn_right()</button><button class="chip" data-insert="pick()" type="button">pick()</button><button class="chip" data-insert="drop()" type="button">drop()</button><button class="chip" data-insert="repeat(3):\n    move()" type="button">repeat(3):</button><button class="chip" data-insert="if wall_ahead():\n    turn_left()" type="button">if wall_ahead():</button><button class="chip" data-insert="scan()" type="button">scan()</button></div>
             <div class="hint" id="hintBox" hidden></div>
@@ -205,10 +229,10 @@
     </section>
 
     <section class="curriculum" id="curriculum">
-      <div class="section-head"><div><span class="pill">FROM ZERO TO REAL ROBOTS</span><h2>A structured robotics journey</h2><p>Complete six Level 1 missions here, then continue to the six interactive motor and sensor missions in Level 2.</p></div></div>
+      <div class="section-head"><div><span class="pill">FROM ZERO TO REAL ROBOTS</span><h2>A structured robotics journey</h2><p>Today's six missions form the first interactive module. Here's where the course grows next.</p></div></div>
       <div class="learning-grid">
         <article class="learning-card"><span class="stage">LEVEL 1 • AVAILABLE</span><h3>Robot logic</h3><p>Learn what a robot does and how to command it.</p><ul><li>Position and direction</li><li>Motion and turns</li><li>Loops and repetition</li><li>Obstacles and sensors</li></ul></article>
-        <article class="learning-card"><span class="stage">LEVEL 2 • PLANNED</span><h3>Python for robots</h3><p>Use real Python syntax and develop smarter behaviour.</p><ul><li>Functions and variables</li><li>Conditions and sensor data</li><li>Debugging and testing</li><li>Reusable robot routines</li></ul></article>
+        <article class="learning-card"><span class="stage">LEVEL 2 • AVAILABLE</span><h3><a href="/robolab/level2/">Motors &amp; sensors →</a></h3><p>Control independent wheel motors and explore a 3D arena with line tracking.</p><ul><li>Differential drive</li><li>Obstacle distance sensing</li><li>Line following</li><li>Autonomous navigation</li></ul></article>
         <article class="learning-card"><span class="stage">LEVEL 3 • PLANNED</span><h3>Electronics & control</h3><p>Meet the physical components used in robots.</p><ul><li>Motors and servos</li><li>Distance and line sensors</li><li>Microcontrollers</li><li>MicroPython and Arduino</li></ul></article>
         <article class="learning-card"><span class="stage">LEVEL 4 • PLANNED</span><h3>Autonomous robotics</h3><p>Make systems plan routes and respond to their environment.</p><ul><li>Grid pathfinding</li><li>Robot state machines</li><li>ROS 2 concepts</li><li>Capstone projects</li></ul></article>
       </div>
@@ -250,7 +274,10 @@
     function equal(a,b) { return a && b && a[0]===b[0] && a[1]===b[1]; }
     function isWall(x,y) { return x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT || world.walls.some(p => equal(p,[x,y])); }
     function sensor(name) { if (name==='wall_ahead') return isWall(world.x+dx[world.dir],world.y+dy[world.dir]); if (name==='sample_here') return !!world.sample && equal(world.sample,[world.x,world.y]); throw Error('Unknown sensor: '+name); }
-    function resetWorld() {
+    let renderPose=null,poseBefore=null,frame3d=0;
+    const camera3d={az:-.44,el:.97,zoom:1};
+    function stopFrame(){if(frame3d)cancelAnimationFrame(frame3d);frame3d=0;renderPose=null;poseBefore=null;}
+    function resetWorld() {stopFrame();
       const l = levels[currentLevel];
       world = {x:l.start[0],y:l.start[1],dir:l.start[2],visited:new Set([`${l.start[0]},${l.start[1]}`]),walls:l.walls,cargo:false,sample:l.sample ? [...l.sample] : null,drop:l.drop || null};
       steps=0; renderWorld(); setOutcome('Ready to run your program.'); $('consoleOutput').textContent='> Robot ready.'; $('nextMission').classList.remove('visible');
@@ -270,6 +297,8 @@
       $('robotDirection').textContent=`Facing: ${headings[world.dir]}`;
       $('robotSteps').textContent=`Commands: ${steps}`;
       $('robotCargo').textContent=`Cargo: ${world.cargo?'sample':'none'}`;
+      if(poseBefore){animatePose(poseBefore,{x:world.x+.5,y:world.y+.5,a:(world.dir-1)*Math.PI/2});poseBefore=null;}
+      else if(!frame3d)drawWorld3D();
     }
     function setOutcome(message, kind='') { $('outcome').textContent=message; $('outcome').className=`outcome ${kind}`; }
     function log(message) { const el=$('consoleOutput'); el.textContent+='\n'+message; el.scrollTop=el.scrollHeight; }
@@ -358,6 +387,7 @@
     function executeOne(node) {
       if(node.type==='sense') { steps++; log(`L${node.line}: ${node.test}() is ${node.value ? 'TRUE':'FALSE'}`); return; }
       const op=node.op; steps++;
+      if(['move','turn_left','turn_right'].includes(op))poseBefore={x:world.x+.5,y:world.y+.5,a:(world.dir-1)*Math.PI/2};
       if(op==='move') {
         const nx=world.x+dx[world.dir], ny=world.y+dy[world.dir];
         if(isWall(nx,ny)) throw Error(`Line ${node.line}: collision! Wall or boundary ahead. Robot stopped.`);
@@ -438,7 +468,93 @@
     });
     $('year').textContent=new Date().getFullYear();
     selectMission(0);
-    window.RoboLabTest = {parseCode, selectMission, getWorld:()=>({...world}), getProgress:()=>[...solved], advance, prepareProgram};
+
+    // Projected three-dimensional scene, adapted from Level 2. No external 3D dependencies.
+    function drawWorld3D(){
+      if(!world)return;
+      const canvas=$('world3d'),g=canvas.getContext('2d');if(!g)return;
+      const CW=canvas.width,CH=canvas.height,az=camera3d.az,el=camera3d.el,ca=Math.cos(az),sa=Math.sin(az),ce=Math.cos(el),se=Math.sin(el);
+      const loc=(x,y,z=0)=>{const u=x-WIDTH/2,v=y-HEIGHT/2;return [ca*u-sa*v,se*(sa*u+ca*v)-ce*z,sa*u+ca*v]};
+      const ext=[[0,0,0],[WIDTH,0,0],[WIDTH,HEIGHT,0],[0,HEIGHT,0],[0,0,-.3],[WIDTH,HEIGHT,-.3]].map(q=>loc(...q));
+      const minX=Math.min(...ext.map(q=>q[0])),maxX=Math.max(...ext.map(q=>q[0]));
+      const minY=Math.min(...ext.map(q=>q[1]))-1.1,maxY=Math.max(...ext.map(q=>q[1]))+.7;
+      const sc=camera3d.zoom*Math.min((CW-56)/(maxX-minX),(CH-65)/(maxY-minY));
+      const ox=CW/2-(minX+maxX)*sc/2,oy=CH/2-(minY+maxY)*sc/2;
+      const project=(x,y,z=0)=>{const q=loc(x,y,z);return [ox+q[0]*sc,oy+q[1]*sc]};
+      const polygon=(pts,fill,stroke,width=1)=>{g.beginPath();pts.forEach((q,i)=>{const [x,y]=project(...q);i?g.lineTo(x,y):g.moveTo(x,y)});g.closePath();if(fill){g.fillStyle=fill;g.fill()}if(stroke){g.strokeStyle=stroke;g.lineWidth=width;g.stroke()}};
+      const path=(pts,stroke,width=2)=>{if(pts.length<2)return;g.beginPath();pts.forEach((q,i)=>{const [x,y]=project(...q);i?g.lineTo(x,y):g.moveTo(x,y)});g.lineWidth=width;g.lineCap='round';g.lineJoin='round';g.strokeStyle=stroke;g.stroke()};
+      const circle=(x,y,z,r,fill,stroke)=>{const pts=[];for(let i=0;i<32;i++){const a=Math.PI*2*i/32;pts.push([x+Math.cos(a)*r,y+Math.sin(a)*r,z])}polygon(pts,fill,stroke,stroke?2:1)};
+      const gradient=g.createLinearGradient(0,0,0,CH);gradient.addColorStop(0,'#c7e5ff');gradient.addColorStop(.65,'#e6f3ff');gradient.addColorStop(1,'#f5faff');g.fillStyle=gradient;g.fillRect(0,0,CW,CH);
+      polygon([[0,0,-.3],[WIDTH,0,-.3],[WIDTH,0,0],[0,0,0]],'#91b1c7');
+      polygon([[WIDTH,0,-.3],[WIDTH,HEIGHT,-.3],[WIDTH,HEIGHT,0],[WIDTH,0,0]],'#7299b2');
+      polygon([[WIDTH,HEIGHT,-.3],[0,HEIGHT,-.3],[0,HEIGHT,0],[WIDTH,HEIGHT,0]],'#608cab');
+      polygon([[0,HEIGHT,-.3],[0,0,-.3],[0,0,0],[0,HEIGHT,0]],'#a5c1d3');
+      polygon([[0,0,0],[WIDTH,0,0],[WIDTH,HEIGHT,0],[0,HEIGHT,0]],'#f5fbff','#6c9bbd',3);
+      for(let y=0;y<HEIGHT;y++)for(let x=0;x<WIDTH;x++){
+        let fill=(x+y)%2?'#f0f7ff':'#e1f0fc';
+        if(world.visited.has(`${x},${y}`))fill='#d6ecff';
+        polygon([[x,y,.008],[x+1,y,.008],[x+1,y+1,.008],[x,y+1,.008]],fill);
+      }
+      for(let x=0;x<=WIDTH;x++)path([[x,0,.01],[x,HEIGHT,.01]],'#c6dceb',1);
+      for(let y=0;y<=HEIGHT;y++)path([[0,y,.01],[WIDTH,y,.01]],'#c6dceb',1);
+      const L=levels[currentLevel];
+      if(L.goal){circle(L.goal[0]+.5,L.goal[1]+.5,.03,.48,'#a7efcb','#1a9f68');circle(L.goal[0]+.5,L.goal[1]+.5,.046,.29,'#3cc88a','#e6fff0');}
+      if(L.drop){circle(L.drop[0]+.5,L.drop[1]+.5,.03,.49,'#e8c8ff','#9b58d3');circle(L.drop[0]+.5,L.drop[1]+.5,.04,.33,'#b97adf','#f9ebff');}
+      if(world.sample)circle(world.sample[0]+.5,world.sample[1]+.5,.06,.29,'#f9c66e','#d68a24');
+      function block(x,y,h,colors){
+        const a=[[x,y,0],[x+1,y,0],[x+1,y+1,0],[x,y+1,0]],b=a.map(q=>[q[0],q[1],h]);
+        const faces=[{p:[a[0],a[1],b[1],b[0]],c:colors[1]},{p:[a[1],a[2],b[2],b[1]],c:colors[2]},{p:[a[2],a[3],b[3],b[2]],c:colors[3]},{p:[a[3],a[0],b[0],b[3]],c:colors[4]}];
+        faces.sort((u,v)=>u.p.reduce((t,q)=>t+loc(...q)[2],0)-v.p.reduce((t,q)=>t+loc(...q)[2],0));
+        faces.forEach(f=>polygon(f.p,f.c,'#466883',.75));polygon(b,colors[0],'#41617c',1);
+      }
+      function robotCuboid(cx,cy,z,szx,szy,szH,ang,col){
+        const cs=Math.cos(ang),sn=Math.sin(ang),r=(u,v,h)=>[cx+cs*u-sn*v,cy+sn*u+cs*v,h];
+        const b=[r(-szx/2,-szy/2,z),r(szx/2,-szy/2,z),r(szx/2,szy/2,z),r(-szx/2,szy/2,z)],top=b.map(q=>[q[0],q[1],q[2]+szH]);
+        const faces=[{p:[b[0],b[1],top[1],top[0]],c:col[1]},{p:[b[1],b[2],top[2],top[1]],c:col[2]},{p:[b[2],b[3],top[3],top[2]],c:col[3]},{p:[b[3],b[0],top[0],top[3]],c:col[4]}];
+        faces.sort((u,v)=>u.p.reduce((t,q)=>t+loc(...q)[2],0)-v.p.reduce((t,q)=>t+loc(...q)[2],0));
+        faces.forEach(f=>polygon(f.p,f.c,'#0d4f8240',1));polygon(top,col[0],'#0c558a',1.2);
+      }
+      const pose=renderPose||{x:world.x+.5,y:world.y+.5,a:(world.dir-1)*Math.PI/2};
+      const items=world.walls.map(q=>({d:loc(q[0]+.5,q[1]+.5,.6)[2],f:()=>block(q[0],q[1],.74,['#c2d2df','#8faabd','#7797b0','#658ba8','#a2b8c7'])}));
+      items.push({d:loc(pose.x,pose.y,.5)[2],f:()=>{
+        circle(pose.x+.08,pose.y+.11,.09,.41,'#8cb1c657');
+        const a=pose.a,side=(k)=>[pose.x-Math.sin(a)*k,pose.y+Math.cos(a)*k];
+        const wheels=['#28384d','#253245','#34485c','#23354a','#263b52'];
+        for(const sign of [-1,1]){const q=side(sign*.34);robotCuboid(q[0],q[1],.08,.62,.15,.34,a,wheels)}
+        robotCuboid(pose.x,pose.y,.16,.78,.57,.32,a,['#268cdb','#1267af','#0c578e','#1e80bd','#2675a9']);
+        robotCuboid(pose.x,pose.y,.48,.52,.43,.16,a,['#6ad9ff','#207ac8','#1169ae','#2a82bf','#2273b7']);
+        const cx=Math.cos(a),sy=Math.sin(a);const tri=[[pose.x+cx*.44,pose.y+sy*.44,.69],[pose.x+cx*.15-sy*.15,pose.y+sy*.15+cx*.15,.69],[pose.x+cx*.15+sy*.15,pose.y+sy*.15-cx*.15,.69]];
+        polygon(tri,'#f3ffff','#b7e9ff',1.5);
+        path([[pose.x-cx*.18,pose.y-sy*.18,.65],[pose.x-cx*.18,pose.y-sy*.18,1.0]],'#243b5c',3);
+        const led=project(pose.x-cx*.18,pose.y-sy*.18,1.05);g.fillStyle='#18b692';g.beginPath();g.arc(led[0],led[1],5,0,Math.PI*2);g.fill();
+        if(world.cargo)circle(pose.x,pose.y,.7,.2,'#ffcf69','#a96c19');
+      }});
+      items.sort((a,b)=>a.d-b.d).forEach(a=>a.f());
+      const tags=[];if(L.goal)tags.push({name:'GOAL',x:L.goal[0]+.5,y:L.goal[1]+.5,z:.11,color:'#0d7548'});
+      if(L.drop)tags.push({name:'DROP',x:L.drop[0]+.5,y:L.drop[1]+.5,z:.11,color:'#823ac0'});
+      if(world.sample)tags.push({name:'SAMPLE',x:world.sample[0]+.5,y:world.sample[1]+.5,z:.15,color:'#b77514'});
+      for(const tag of tags){const [tx,ty]=project(tag.x,tag.y,tag.z);g.textAlign='center';g.textBaseline='middle';g.font=`900 ${Math.max(12,Math.round(sc*.19))}px system-ui`;g.fillStyle='#ffffff';g.fillText(tag.name,tx+1,ty+1);g.fillStyle=tag.color;g.fillText(tag.name,tx,ty)}
+      g.fillStyle='rgba(11,45,72,.84)';g.beginPath();g.roundRect(14,14,151,29,7);g.fill();g.fillStyle='#dcf6ff';g.font='bold 15px system-ui';g.textAlign='left';g.textBaseline='middle';g.fillText('●  3D LIVE VIEW',24,29);
+      $('world3d').setAttribute('aria-label',`3D robot arena: column ${world.x+1}, row ${world.y+1}, facing ${headings[world.dir]}. Use camera controls to rotate the view.`);
+    }
+    function animatePose(before,after){
+      if(frame3d)cancelAnimationFrame(frame3d);
+      const t0=performance.now(),delta=Math.atan2(Math.sin(after.a-before.a),Math.cos(after.a-before.a));
+      const duration=Math.min(430,Math.max(80,Number($('speedSelect').value)*.8));
+      function frame(now){const t=Math.min(1,(now-t0)/duration),ease=t*t*(3-2*t);renderPose={x:before.x+(after.x-before.x)*ease,y:before.y+(after.y-before.y)*ease,a:before.a+delta*ease};drawWorld3D();if(t<1)frame3d=requestAnimationFrame(frame);else{frame3d=0;renderPose=null;drawWorld3D();}}
+      frame3d=requestAnimationFrame(frame);
+    }
+    function changeCamera(az,el){camera3d.az=az;camera3d.el=Math.max(.32,Math.min(Math.PI/2,el));$('view3d').classList.toggle('active',camera3d.el<1.45);$('viewTop').classList.toggle('active',camera3d.el>=1.45);drawWorld3D();}
+    $('orbitLeft').addEventListener('click',()=>changeCamera(camera3d.az-.26,camera3d.el));
+    $('orbitRight').addEventListener('click',()=>changeCamera(camera3d.az+.26,camera3d.el));
+    $('view3d').addEventListener('click',()=>changeCamera(-.44,.97));
+    $('viewTop').addEventListener('click',()=>changeCamera(0,Math.PI/2));
+    const sceneCanvas=$('world3d');let activePointer=null,lastPX=0,lastPY=0;
+    sceneCanvas.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;activePointer=e.pointerId;lastPX=e.clientX;lastPY=e.clientY;sceneCanvas.setPointerCapture(e.pointerId);sceneCanvas.classList.add('dragging')});
+    sceneCanvas.addEventListener('pointermove',e=>{if(e.pointerId!==activePointer)return;const mx=e.clientX-lastPX,my=e.clientY-lastPY;lastPX=e.clientX;lastPY=e.clientY;if(Math.abs(mx)+Math.abs(my)>0)changeCamera(camera3d.az+mx*.012,camera3d.el-my*.009)});
+    function releaseCamera(e){if(e.pointerId===activePointer){activePointer=null;sceneCanvas.classList.remove('dragging')}}
+    sceneCanvas.addEventListener('pointerup',releaseCamera);sceneCanvas.addEventListener('pointercancel',releaseCamera);sceneCanvas.addEventListener('lostpointercapture',()=>{activePointer=null;sceneCanvas.classList.remove('dragging')});
+    window.RoboLabTest = {parseCode, selectMission, getWorld:()=>({...world}), getProgress:()=>[...solved], advance, prepareProgram, getCamera:()=>({...camera3d}), changeCamera};
   </script>
 </body>
 </html>
