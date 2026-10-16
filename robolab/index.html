@@ -275,8 +275,8 @@ body.theater-lock{overflow:hidden!important}
         <article><strong><code>repeat(3):</code></strong><p>Repeat the indented code three times (maximum 30).</p></article>
         <article><strong><code>if wall_ahead():</code></strong><p>Run the indented commands only when a wall is ahead.</p></article>
         <article><strong><code>scan()</code></strong><p>Report whether a wall is in front of the robot.</p></article>
-        <article><strong><code>pick()</code></strong><p>Pick up a sample beneath the robot.</p></article>
-        <article><strong><code>drop()</code></strong><p>Put down the carried sample.</p></article>
+        <article><strong><code>pick()</code></strong><p>Watch the humanoid crouch, grip the sample with both hands and lift it before moving.</p></article>
+        <article><strong><code>drop()</code></strong><p>Lower the held object, open the hands and release it on the floor or drop zone.</p></article>
         <article><strong><code># comment</code></strong><p>Add a note: comments are ignored by the robot.</p></article>
       </div>
     </section>
@@ -303,9 +303,9 @@ body.theater-lock{overflow:hidden!important}
     function equal(a,b) { return a && b && a[0]===b[0] && a[1]===b[1]; }
     function isWall(x,y) { return x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT || world.walls.some(p => equal(p,[x,y])); }
     function sensor(name) { if (name==='wall_ahead') return isWall(world.x+dx[world.dir],world.y+dy[world.dir]); if (name==='sample_here') return !!world.sample && equal(world.sample,[world.x,world.y]); throw Error('Unknown sensor: '+name); }
-    let renderPose=null,poseBefore=null,frame3d=0;
+    let renderPose=null,poseBefore=null,frame3d=0,manipulationBefore=null,manipulationTask=null,finishManipulation=null;
     const camera3d={az:-.44,el:.97,zoom:1,follow:false,previousZoom:1};
-    function stopFrame(){if(frame3d)cancelAnimationFrame(frame3d);frame3d=0;renderPose=null;poseBefore=null;}
+    function stopFrame(){if(frame3d)cancelAnimationFrame(frame3d);frame3d=0;renderPose=null;poseBefore=null;manipulationBefore=null;if(finishManipulation){finishManipulation();finishManipulation=null;}manipulationTask=null;}
     function resetWorld() {stopFrame();
       const l = levels[currentLevel];
       world = {x:l.start[0],y:l.start[1],dir:l.start[2],visited:new Set([`${l.start[0]},${l.start[1]}`]),walls:l.walls,cargo:false,sample:l.sample ? [...l.sample] : null,drop:l.drop || null};
@@ -326,7 +326,8 @@ body.theater-lock{overflow:hidden!important}
       $('robotDirection').textContent=`Facing: ${headings[world.dir]}`;
       $('robotSteps').textContent=`Commands: ${steps}`;
       $('robotCargo').textContent=`Cargo: ${world.cargo?'sample':'none'}`;
-      if(poseBefore){animatePose(poseBefore,{x:world.x+.5,y:world.y+.5,a:(world.dir-1)*Math.PI/2});poseBefore=null;}
+      if(manipulationBefore){animateManipulation(manipulationBefore);manipulationBefore=null;}
+      else if(poseBefore){animatePose(poseBefore,{x:world.x+.5,y:world.y+.5,a:(world.dir-1)*Math.PI/2});poseBefore=null;}
       else if(!frame3d)drawWorld3D();
     }
     function setOutcome(message, kind='') { $('outcome').textContent=message; $('outcome').className=`outcome ${kind}`; }
@@ -423,8 +424,8 @@ body.theater-lock{overflow:hidden!important}
         world.x=nx; world.y=ny; world.visited.add(`${nx},${ny}`);
       } else if(op==='turn_left') world.dir=(world.dir+3)%4;
       else if(op==='turn_right') world.dir=(world.dir+1)%4;
-      else if(op==='pick') { if(!world.sample||!equal(world.sample,[world.x,world.y])||world.cargo) throw Error(`Line ${node.line}: no sample here to pick up.`); world.sample=null; world.cargo=true; }
-      else if(op==='drop') { if(!world.cargo) throw Error(`Line ${node.line}: robot is not carrying a sample.`); world.cargo=false; if(equal([world.x,world.y],world.drop)) world.delivered=true; else world.sample=[world.x,world.y]; }
+      else if(op==='pick') { if(!world.sample||!equal(world.sample,[world.x,world.y])||world.cargo) throw Error(`Line ${node.line}: stand on the sample before pick().`); manipulationBefore={type:'pick'};world.sample=null;world.cargo=true; }
+      else if(op==='drop') { if(!world.cargo) throw Error(`Line ${node.line}: the robot has nothing to drop.`); manipulationBefore={type:'drop'};world.cargo=false; if(equal([world.x,world.y],world.drop)) world.delivered=true; else world.sample=[world.x,world.y]; }
       else if(op==='scan') { log(`    Sensor: wall ahead = ${sensor('wall_ahead')?'YES':'NO'}`); }
       log(`L${node.line}: ${op}()`); renderWorld();
     }
@@ -459,16 +460,16 @@ body.theater-lock{overflow:hidden!important}
       running=true; $('runButton').disabled=true; $('stepButton').disabled=true; $('stopButton').disabled=false;
       const ticket=runEpoch;
       while(running&&ticket===runEpoch) {
-        try { if(!advance()) break; } catch(e) { reportError(e); break; }
+        try { const more=advance();if(manipulationTask) await manipulationTask;if(!more) break; } catch(e) { reportError(e); break; }
         await new Promise(resolve=>setTimeout(resolve,Number($('speedSelect').value)));
       }
       if(ticket===runEpoch && running) stop();
     }
     function stepProgram() {
-      if(running) return;
+      if(running||finishManipulation) return;
       try { if(!program) prepareProgram(); advance(); } catch(e) { reportError(e); }
     }
-    function stopProgram() { if(running||program) { stop(); setOutcome('Program stopped. Press Step or Run to restart from the beginning.'); log('■ Execution stopped.'); } }
+    function stopProgram() { if(running||program||finishManipulation) {stopFrame();stop(); setOutcome('Program stopped. Press Step or Run to restart from the beginning.'); log('■ Execution stopped.'); } }
     function resetProgram() { stop(); resetWorld(); }
     $('runButton').addEventListener('click',runProgram);
     $('stepButton').addEventListener('click',stepProgram);
@@ -507,14 +508,21 @@ body.theater-lock{overflow:hidden!important}
     const x=pose.x,y=pose.y,a=pose.a,ca=Math.cos(a),sa=Math.sin(a);
     // Biomechanics-inspired gait: controlled centre-of-mass sway, mostly level head,
     // 60% stance (planted foot) / 40% swing (toes clear the floor). No cartoon hops.
-    const walking=Math.max(0,Math.min(1,pose.walk||0));
+    // Grasp choreography: plant both feet, crouch at the hips and knees,
+    // reach with both hands, grasp/release, then straighten again.
+    const action=pose.manipulation||null, progress=Math.max(0,Math.min(1,pose.actionProgress||0));
+    const smooth=(lo,hi,t)=>{const k=Math.max(0,Math.min(1,(t-lo)/(hi-lo)));return k*k*(3-2*k)};
+    const reach=action ? smooth(.04,.37,progress)*(1-smooth(.62,.97,progress)) : 0;
+    const crouch=.27*reach;
+    const grasp=action==='pick' ? smooth(.40,.76,progress) : action==='drop' ? (1-smooth(.26,.65,progress)) : (pose.cargo?1:0);
+    const walking=action?0:Math.max(0,Math.min(1,pose.walk||0));
     const phase=pose.gait||0, cycle=phase/(2*Math.PI);
     const clamp01=t=>Math.max(0,Math.min(1,t));
     const ease=t=>{t=clamp01(t);return t*t*(3-2*t)};
     const wrap=t=>((t%1)+1)%1;
     const bob=walking*(.008+.008*Math.cos(2*phase));
     const weightShift=walking*.013*Math.sin(phase);
-    const at=(front,side,z)=>[x+ca*front-sa*(side+weightShift),y+sa*front+ca*(side+weightShift),z+bob];
+    const at=(front,side,z)=>[x+ca*front-sa*(side+weightShift),y+sa*front+ca*(side+weightShift),z+bob-crouch];
     const colors={limb:['#9cd7ef','#4289b1','#26618f','#7ac4e3','#245985'],
       shin:['#d7eaf7','#79adcf','#4a85ad','#b9d8ec','#568bb0'],
       suit:['#75d9f5','#167dc7','#075c9f','#3dabe0','#1970af'],
@@ -562,7 +570,7 @@ body.theater-lock{overflow:hidden!important}
       }
       footForward*=walking;
       clearance*=walking;
-      const hipForward=-.018,hipZ=.915+bob;
+      const hipForward=-.018,hipZ=.915+bob-crouch;
       const footZ=.135+clearance;
       const fx=footForward-hipForward,fz=footZ-hipZ;
       const upper=.445,lower=.435;
@@ -573,14 +581,19 @@ body.theater-lock{overflow:hidden!important}
       const kneeForward=hipForward+ux*along-uz*bend;
       const kneeZ=hipZ+uz*along+ux*bend;
       hip[side]=at(hipForward,side*.205,.915);
-      knee[side]=at(kneeForward,side*.21,kneeZ-bob);
+      knee[side]=at(kneeForward,side*.21,kneeZ-bob+crouch);
       // Subtract pelvis bob here: contact feet remain at floor height.
-      ankle[side]=at(footForward,side*.21,footZ-bob);
+      ankle[side]=at(footForward,side*.21,footZ-bob+crouch);
       shoulder[side]=at(-.015,side*.39,1.35);
       // Opposite arm/leg swing is intentionally subtle, elbows slightly flexed.
       const arm=-walking*.095*Math.cos(phase+(side===1?0:Math.PI));
-      elbow[side]=at(.018+arm*.62,side*.44,1.085);
-      wrist[side]=at(.045+arm,side*.44,.865);
+      // Carry an object with both hands close to the chest; reach low to pick it up.
+      const mix=(from,to,t)=>from+(to-from)*t;
+      const engaged=Math.max(grasp,reach);
+      elbow[side]=at(mix(.018+arm*.62,.16,engaged)+.10*reach,
+                     side*mix(.44,.28,engaged),mix(1.085,1.13,grasp)-.27*reach);
+      wrist[side]=at(mix(.045+arm,.36,engaged)+.10*reach,
+                     side*mix(.44,.13,engaged),mix(.865,1.04,grasp)-.53*reach);
     }
     // Far limbs first, then torso, then near arms and head; self-contained draw order.
     for(const side of [-1,1]){
@@ -594,8 +607,8 @@ body.theater-lock{overflow:hidden!important}
     tube(shoulder[-1],elbow[-1],.092,colors.limb);
     tube(elbow[-1],wrist[-1],.073,colors.shin);joint(elbow[-1],.08);
     const mid=at(0,0,0);
-    box([mid[0],mid[1]],.31,.49,.78+bob,.22,a,colors.core);
-    box([mid[0],mid[1]],.46,.67,.98+bob,.5,a,colors.suit);
+    box([mid[0],mid[1]],.31,.49,.78+bob-crouch,.22,a,colors.core);
+    box([mid[0],mid[1]],.46,.67,.98+bob-crouch,.5,a,colors.suit);
     // Chest power core: three-dimensional front-facing panel.
     const panel=[at(.245,-.22,1.20),at(.245,.22,1.20),at(.245,.22,1.38),at(.245,-.22,1.38)];
     if(depth(...at(.27,0,1.29))>=depth(...at(0,0,1.29))){
@@ -605,9 +618,9 @@ body.theater-lock{overflow:hidden!important}
     tube(shoulder[1],elbow[1],.092,colors.limb);
     tube(elbow[1],wrist[1],.074,colors.shin);joint(elbow[1],.08);
     for(const side of [-1,1]){joint(shoulder[side],.105);joint(wrist[side],.086,'#3c97c6')}
-    box([mid[0],mid[1]],.17,.19,1.45+bob,.16,a,colors.core);
+    box([mid[0],mid[1]],.17,.19,1.45+bob-crouch,.16,a,colors.core);
     const head=at(.04,0,0);
-    box([head[0],head[1]],.40,.44,1.57+bob,.37,a,colors.head);
+    box([head[0],head[1]],.40,.44,1.57+bob-crouch,.37,a,colors.head);
     // Visor and two luminous eyes on the forward-facing side of the head.
     const face=[at(.258,-.18,1.66),at(.258,.18,1.66),at(.258,.18,1.83),at(.258,-.18,1.83)];
     if(depth(...at(.265,0,1.73))>=depth(...at(.04,0,1.73))){
@@ -619,7 +632,17 @@ body.theater-lock{overflow:hidden!important}
     }
     const crown=at(.045,0,1.98),[cx,cy]=project(...crown);
     g.beginPath();g.arc(cx,cy,Math.max(2.1,scale*.037),0,2*Math.PI);g.fillStyle=pose.braked?'#ffa443':'#25dbb3';g.fill();
-    if(pose.cargo){const item=at(.08,0,1.48);const [bx,by]=project(...item);g.beginPath();g.arc(bx,by,Math.max(4,scale*.10),0,2*Math.PI);g.fillStyle='#ffd069';g.fill();g.strokeStyle='#986c24';g.stroke()}
+    if(action||pose.cargo){
+      // The object rises from floor level into both palms and returns on release.
+      const lifted=action?grasp:1;
+      const front=.39+.03*reach;
+      const z=.15+(1.03-.15)*lifted;
+      const item=at(front,0,z+crouch-bob),[bx,by]=project(...item);
+      const rad=Math.max(4.5,scale*.125);
+      g.beginPath();g.ellipse(bx,by,rad,rad*.82,0,0,2*Math.PI);
+      g.fillStyle='#ffc455';g.fill();g.strokeStyle='#955617';g.lineWidth=Math.max(1,scale*.02);g.stroke();
+      g.beginPath();g.arc(bx-rad*.24,by-rad*.22,rad*.21,0,2*Math.PI);g.fillStyle='#fff4b6';g.fill();
+    }
   }
 
     function drawWorld3D(){
@@ -657,7 +680,8 @@ body.theater-lock{overflow:hidden!important}
       const L=levels[currentLevel];
       if(L.goal){circle(L.goal[0]+.5,L.goal[1]+.5,.03,.48,'#a7efcb','#1a9f68');circle(L.goal[0]+.5,L.goal[1]+.5,.046,.29,'#3cc88a','#e6fff0');}
       if(L.drop){circle(L.drop[0]+.5,L.drop[1]+.5,.03,.49,'#e8c8ff','#9b58d3');circle(L.drop[0]+.5,L.drop[1]+.5,.04,.33,'#b97adf','#f9ebff');}
-      if(world.sample)circle(world.sample[0]+.5,world.sample[1]+.5,.06,.29,'#f9c66e','#d68a24');
+      if(world.sample && !(renderPose&&renderPose.manipulation==='drop'))circle(world.sample[0]+.5,world.sample[1]+.5,.06,.29,'#f9c66e','#d68a24');
+      if(world.delivered && world.drop && !(renderPose&&renderPose.manipulation==='drop'))circle(world.drop[0]+.5,world.drop[1]+.5,.09,.19,'#f9c66e','#d68a24');
       function block(x,y,h,colors){
         const a=[[x,y,0],[x+1,y,0],[x+1,y+1,0],[x,y+1,0]],b=a.map(q=>[q[0],q[1],h]);
         const faces=[{p:[a[0],a[1],b[1],b[0]],c:colors[1]},{p:[a[1],a[2],b[2],b[1]],c:colors[2]},{p:[a[2],a[3],b[3],b[2]],c:colors[3]},{p:[a[3],a[0],b[0],b[3]],c:colors[4]}];
@@ -681,10 +705,25 @@ body.theater-lock{overflow:hidden!important}
       items.sort((a,b)=>a.d-b.d).forEach(a=>a.f());
       const tags=[];if(L.goal)tags.push({name:'GOAL',x:L.goal[0]+.5,y:L.goal[1]+.5,z:.11,color:'#0d7548'});
       if(L.drop)tags.push({name:'DROP',x:L.drop[0]+.5,y:L.drop[1]+.5,z:.11,color:'#823ac0'});
-      if(world.sample)tags.push({name:'SAMPLE',x:world.sample[0]+.5,y:world.sample[1]+.5,z:.15,color:'#b77514'});
+      if(world.sample && !(renderPose&&renderPose.manipulation==='drop'))tags.push({name:'SAMPLE',x:world.sample[0]+.5,y:world.sample[1]+.5,z:.15,color:'#b77514'});
       for(const tag of tags){const [tx,ty]=project(tag.x,tag.y,tag.z);g.textAlign='center';g.textBaseline='middle';g.font=`900 ${Math.max(12,Math.round(sc*.19))}px system-ui`;g.fillStyle='#ffffff';g.fillText(tag.name,tx+1,ty+1);g.fillStyle=tag.color;g.fillText(tag.name,tx,ty)}
       g.fillStyle='rgba(11,45,72,.84)';g.beginPath();g.roundRect(14,14,173,29,7);g.fill();g.fillStyle='#dcf6ff';g.font='bold 15px system-ui';g.textAlign='left';g.textBaseline='middle';g.fillText('●  HUMANOID 3D',24,29);
       $('world3d').setAttribute('aria-label',`3D robot arena: column ${world.x+1}, row ${world.y+1}, facing ${headings[world.dir]}. Use camera controls to rotate the view.`);
+    }
+    function animateManipulation(action){
+      if(frame3d)cancelAnimationFrame(frame3d);
+      const x=world.x+.5,y=world.y+.5,a=(world.dir-1)*Math.PI/2;
+      const duration=Math.max(850,Number($('speedSelect').value)*2.9);
+      const started=performance.now();
+      manipulationTask=new Promise(resolve=>{finishManipulation=resolve;});
+      function frame(now){
+        const t=Math.min(1,(now-started)/duration);
+        renderPose={x,y,a,walk:0,gait:0,cargo:action.type==='pick',manipulation:action.type,actionProgress:t};
+        drawWorld3D();
+        if(t<1)frame3d=requestAnimationFrame(frame);
+        else{frame3d=0;renderPose=null;drawWorld3D();if(finishManipulation){finishManipulation();finishManipulation=null;}manipulationTask=null;}
+      }
+      frame3d=requestAnimationFrame(frame);
     }
     function animatePose(before,after){
       if(frame3d)cancelAnimationFrame(frame3d);
